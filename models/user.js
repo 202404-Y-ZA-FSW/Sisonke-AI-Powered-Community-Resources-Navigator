@@ -1,36 +1,21 @@
+// REQUIRED PACKAGE
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const mongoose = require('mongoose');
-
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true, lowercase: true,
-    match: [/^\S+@\S+.\S+$/, 'Please use a valid email address.'] },
-  password: { type: String, required: true },
-  role: { type: String, enum: ['user', 'admin', 'ngo'], default: 'user' },
-  profileData: {
-    firstName: String,
-    lastName: String,
-    bio: String,
+const UserSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    status: { type: String, enum: ["active", "inactive"], default: "active" },
+    verified: { type: Boolean, default: false },
+    role: { type: String, enum: ["user", "administrator", "ngo"], default: "user" },
   },
-    location: {
-        city: String,
-        state: String,
-        country: String,
-        zipCode: String
-      },
-  savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
-  savedResources: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
-  preferences: {
-    jobTypes: [String],
-    industries: [String],
-    salaryRange: {
-        min: Number,
-        max: Number
-      },
-      remoteWork: Boolean
+  {
+    timestamps: true,
   }
-}, { timestamps: true });
+);
 
-const User = mongoose.model('User', userSchema);
-
+// EXPORTING USER MODEL
+const User = mongoose.model("User", UserSchema);
 module.exports = User;
