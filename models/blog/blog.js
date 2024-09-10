@@ -16,18 +16,10 @@ const blogSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  image: {
-    type: String,
-    trim: true
-  },
   tags: [{
     type: String,
     trim: true
   }],
-  isPublished: {
-    type: Boolean,
-    default: false
-  }
-}, { timestamps: true });
+  { timestamps: true });
 
 module.exports = mongoose.model('Blog', blogSchema);
