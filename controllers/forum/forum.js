@@ -1,10 +1,23 @@
+const Joi = require('joi');
 const Forum = require('../models/Forum'); 
 const Comment = require('../models/Comment'); 
-const Like = require('../models/Like'); 
+const Like = require('../models/Like'); // 
 
-// Create a new forum post
+// Define validation schema for forum posts
+const forumPostSchema = Joi.object({
+    title: Joi.string().min(3).max(100).required(),
+    body: Joi.string().min(10).required(),
+});
+
+// Create a new forum post with validation
 exports.createForumPost = async (req, res) => {
     try {
+        // Validate request data
+        const { error } = forumPostSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
         const { title, body } = req.body;
         const newPost = new Forum({
             title,
@@ -19,16 +32,27 @@ exports.createForumPost = async (req, res) => {
     }
 };
 
-// Get all forum posts with pagination
+// Get all forum posts with pagination and basic query validation
 exports.getAllForumPosts = async (req, res) => {
+    const schema = Joi.object({
+        page: Joi.number().integer().min(1).default(1),
+        limit: Joi.number().integer().min(1).default(10)
+    });
+
+    const { error, value } = schema.validate(req.query);
+    if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const { page, limit } = value;
+
     try {
-        const { page = 1, limit = 10 } = req.query;
         const posts = await Forum.find()
             .populate('author', 'name') 
             .populate('comments') 
             .populate('likes') 
             .skip((page - 1) * limit)
-            .limit(parseInt(limit));
+            .limit(limit);
 
         const totalPosts = await Forum.countDocuments();
         return res.status(200).json({ total: totalPosts, posts });
@@ -37,8 +61,17 @@ exports.getAllForumPosts = async (req, res) => {
     }
 };
 
-// Get a specific forum post by ID
+// Get a specific forum post by ID with validation
 exports.getForumPostById = async (req, res) => {
+    const schema = Joi.object({
+        id: Joi.string().hex().length(24).required()
+    });
+
+    const { error } = schema.validate(req.params);
+    if (error) {
+        return res.status(400).json({ error: "Invalid Forum ID" });
+    }
+
     try {
         const post = await Forum.findById(req.params.id)
             .populate('author', 'name')
@@ -55,8 +88,13 @@ exports.getForumPostById = async (req, res) => {
     }
 };
 
-// Update a forum post
+// Update a forum post with validation
 exports.updateForumPost = async (req, res) => {
+    const { error } = forumPostSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+    }
+
     try {
         const { title, body } = req.body;
         const updatedPost = await Forum.findByIdAndUpdate(
@@ -75,8 +113,17 @@ exports.updateForumPost = async (req, res) => {
     }
 };
 
-// Delete a forum post
+// Delete a forum post with validation
 exports.deleteForumPost = async (req, res) => {
+    const schema = Joi.object({
+        id: Joi.string().hex().length(24).required()
+    });
+
+    const { error } = schema.validate(req.params);
+    if (error) {
+        return res.status(400).json({ error: "Invalid Forum ID" });
+    }
+
     try {
         const post = await Forum.findByIdAndDelete(req.params.id);
 
