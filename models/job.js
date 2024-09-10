@@ -43,12 +43,23 @@ const jobListingsSchema = new mongoose.Schema({
     type: String,
     enum: ['small', 'medium', 'large'],
   },
-  distance: {
-    type: Number,
+  requiredSkills: {
+    type: [String],
   },
+  applicationStatus: {
+    type: String,
+    enum: ['applied', 'in review', 'interview', 'offered', 'rejected'],
+    default: 'applied',
+  },
+  matchedUsers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+  }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
     index: true,
   },
   savedBy: [{
@@ -57,7 +68,7 @@ const jobListingsSchema = new mongoose.Schema({
     index: true,
   }],
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 const JobListings = mongoose.model('JobListings', jobListingsSchema);
