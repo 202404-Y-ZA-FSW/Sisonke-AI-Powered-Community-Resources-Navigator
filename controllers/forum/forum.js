@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const Forum = require('../models/Forum'); 
 const Comment = require('../models/Comment'); 
-const Like = require('../models/Like'); // 
+const Like = require('../models/Like'); 
 
 // Define validation schema for forum posts
 const forumPostSchema = Joi.object({
