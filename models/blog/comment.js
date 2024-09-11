@@ -16,6 +16,5 @@ const commentSchema = new mongoose.Schema({
     ref: 'Blog', 
     required: true
   }
-}, { timestamps: true }); // Closing bracket added here
-
+}, { timestamps: true }); 
 module.exports = mongoose.model('Comment', commentSchema);

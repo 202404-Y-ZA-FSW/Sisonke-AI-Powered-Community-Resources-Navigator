@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
-
+const shortid = require('shortid');
 const blogSchema = new mongoose.Schema({
+  _id: {
+    type: String,
+ default: shortid.generate
+},
   title: {
     type: String,
     required: true,
@@ -12,7 +16,7 @@ const blogSchema = new mongoose.Schema({
     trim: true
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'User',
     required: true
   },

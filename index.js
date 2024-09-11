@@ -4,8 +4,7 @@ const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 
 // IMPORT ROUTES
-
-
+const blogRoute = require('./routes/blog');
 // PORT
 const port = 5000;
 
@@ -15,7 +14,6 @@ const app = express();
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
 // CORS FOR FRONTEND ACCESS TO THIS SERVER
 app.use(
   cors({
@@ -26,7 +24,7 @@ app.use(
 );
 
 // ROUTES
-
+app.use('/blogs', blogRoute);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {
