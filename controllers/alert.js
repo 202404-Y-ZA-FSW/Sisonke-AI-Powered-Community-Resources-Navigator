@@ -3,12 +3,12 @@ const Alert = require('../models/alert');
 // Create a new alert
 const createAlert = async (req, res) => {
     try {
-        const { title, message, severity, audience, expiresAt } = req.body;
+        const { title, message, Type, audience, expiresAt } = req.body; 
 
         const newAlert = new Alert({
             title,
             message,
-            severity,
+            Type,  
             audience,
             expiresAt
         });
@@ -46,10 +46,10 @@ const getAlertById = async (req, res) => {
 // Update an alert by ID
 const updateAlert = async (req, res) => {
     try {
-        const { title, message, severity, audience, expiresAt } = req.body;
+        const { title, message, Type, audience, expiresAt } = req.body; 
         const updatedAlert = await Alert.findByIdAndUpdate(
             req.params.id,
-            { title, message, severity, audience, expiresAt },
+            { title, message, Type, audience, expiresAt },  
             { new: true, runValidators: true }
         );
         if (!updatedAlert) {
