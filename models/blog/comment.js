@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
+const shortid = require('shortid');
 
 const commentSchema = new mongoose.Schema({
+  id:{
+    type: String,
+    default: shortid.generate
+  },
   content: {
     type: String,
     required: true,

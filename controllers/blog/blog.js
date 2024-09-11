@@ -31,7 +31,7 @@ const getAllBlocks = async(req,res)=>{
         const endIndex = page*limit;
 
         const totalBlogs = await blogModel.countDocuments();
-        const blogs = await blogModel.find().skip(startIndex).limit(limit);
+        const blogs = await blogModel.find().skip(startIndex).limit(limit).populate('comments');
 
         const pagination = {};
         if(endIndex<totalBlogs){
@@ -62,7 +62,8 @@ const getAllBlocks = async(req,res)=>{
 const getBlogById = async(req,res)=>{
     try{
         const blogId = req.body.id;
-        const blog = await blogModel.findById(blogId);
+        const blog = await blogModel.findById(blogId).populate('comments');
+        
         if(!blog){
             return res.status(404).json({
                 message: "Blog not found"
@@ -101,7 +102,7 @@ const deleteBlog = async(req,res)=>{
         }
         res.status(302).redirect("/dashboard");
     }catch(err){
-        res.status(500).json({message: err.message});
+        res.status(500).json({message: "Please check your server"});
     }
 }
 module.exports = {

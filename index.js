@@ -5,6 +5,8 @@ const { connectToMongoDB } = require("./database/connection");
 
 // IMPORT ROUTES
 const blogRoute = require('./routes/blog');
+const commentRoutes = require('./routes/comment');
+const likeRoutes = require('./routes/like');
 // PORT
 const port = 5000;
 
@@ -25,6 +27,8 @@ app.use(
 
 // ROUTES
 app.use('/blogs', blogRoute);
+app.use('/blogs/:blogId/comments',commentRoutes);
+app.use('/blogs', likeRoutes);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {

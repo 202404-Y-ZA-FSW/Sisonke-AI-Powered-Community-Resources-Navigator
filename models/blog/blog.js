@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const shortid = require('shortid');
+
 const blogSchema = new mongoose.Schema({
   _id: {
     type: String,
- default: shortid.generate
-},
+    default: shortid.generate
+  },
   title: {
     type: String,
     required: true,
@@ -23,6 +24,14 @@ const blogSchema = new mongoose.Schema({
   tags: [{
     type: String,
     trim: true
+  }],
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment'
+  }],
+  likes: [{ 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' 
   }]
 }, { timestamps: true }); 
 

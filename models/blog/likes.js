@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const reactionSchema = new mongoose.Schema({
+const likeSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -18,4 +18,4 @@ const reactionSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Reaction', reactionSchema);
+module.exports = mongoose.model('likes', likeSchema);
