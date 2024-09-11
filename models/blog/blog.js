@@ -19,7 +19,7 @@ const blogSchema = new mongoose.Schema({
   tags: [{
     type: String,
     trim: true
-  }],
-  { timestamps: true });
+  }]
+}, { timestamps: true }); 
 
 module.exports = mongoose.model('Blog', blogSchema);
