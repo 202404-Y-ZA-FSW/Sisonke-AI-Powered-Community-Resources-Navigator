@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
+const shortid = require('shortid');
 
 const commentSchema = new mongoose.Schema({
+  id:{
+    type: String,
+    default: shortid.generate
+  },
   content: {
     type: String,
     required: true,
@@ -16,6 +21,5 @@ const commentSchema = new mongoose.Schema({
     ref: 'Blog', 
     required: true
   }
-}, { timestamps: true }); // Closing bracket added here
-
+}, { timestamps: true }); 
 module.exports = mongoose.model('Comment', commentSchema);
