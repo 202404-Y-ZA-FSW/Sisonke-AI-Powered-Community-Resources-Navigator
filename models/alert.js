@@ -14,10 +14,9 @@ const alertSchema = new mongoose.Schema({
         enum: ['info', 'warning', 'critical'],
         required: true
     },
-    audience: {
-        type: String,
-        enum: ['global', 'users', 'admins'],
-        default: 'global'
+    Location: {
+        type: String
+
     },
     createdAt: {
         type: Date,
