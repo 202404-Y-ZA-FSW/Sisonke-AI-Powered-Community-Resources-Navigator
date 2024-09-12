@@ -3,7 +3,7 @@ const JobListings = require('../models/job.js');
 // Create a new job listing
 const createJob = async (req, res) => {
   try {
-    const job = new JobListings(req.body);  // Receives validated data from middleware
+    const job = new JobListings(req.body);
     const savedJob = await job.save();
     res.status(201).json({ message: 'Job created successfully', job: savedJob });
   } catch (err) {
@@ -15,7 +15,8 @@ const createJob = async (req, res) => {
 // Get all job listings
 const getAllJobs = async (req, res) => {
   try {
-    const jobs = await JobListings.find().populate('matchedUsers userId savedBy');
+    // Populate the references to users who have matched or saved the job
+    const jobs = await JobListings.find().populate('matchedUsers savedBy');
     res.status(200).json(jobs);
   } catch (err) {
     console.error('Error fetching jobs:', err);
@@ -26,7 +27,8 @@ const getAllJobs = async (req, res) => {
 // Get a job listing by ID
 const getJobById = async (req, res) => {
   try {
-    const job = await JobListings.findById(req.params.id).populate('matchedUsers userId savedBy');
+    // Fetch a specific job listing by ID and populate user references
+    const job = await JobListings.findById(req.params.id).populate('matchedUsers savedBy');
     if (!job) {
       return res.status(404).json({ error: 'Job not found' });
     }
@@ -40,11 +42,12 @@ const getJobById = async (req, res) => {
 // Update a job listing
 const updateJob = async (req, res) => {
   try {
+    // Update a specific job listing by ID and populate user references
     const updatedJob = await JobListings.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
-    ).populate('matchedUsers userId savedBy');
+    ).populate('matchedUsers savedBy');
     if (!updatedJob) {
       return res.status(404).json({ error: 'Job not found' });
     }
@@ -58,6 +61,7 @@ const updateJob = async (req, res) => {
 // Delete a job listing
 const deleteJob = async (req, res) => {
   try {
+    // Delete a specific job listing by ID
     const deletedJob = await JobListings.findByIdAndDelete(req.params.id);
     if (!deletedJob) {
       return res.status(404).json({ error: 'Job not found' });
