@@ -2,26 +2,28 @@ const commentModel = require('../../models/blog/comment');
 const Blog = require('../../models/blog/blog');
 const { findByIdAndUpdate, findByIdAndDelete } = require('../../models/blog/comment');
 
+
 const createComment = async(req,res)=>{
     try{
-        const blogId = req.params.id;
+        //const {id} = req.params
+        const blogId = req.params.blogId;
         const {content,author} = req.body;
         const blog = await Blog.findById(blogId);
          if(!blog){
-            return res.status(404).json({message: "Comment not found"})
+            return res.status(404).json({message: "Blog not found"})
          }
-
+         console.log(blogId);
          const comment = new commentModel({
             content,
             author,
             post: blogId
          })
-
+         //console.log(comment);
          await comment.save();
-
          blog.comments.push(comment._id);
-         blog.save();
-
+        // console.log(comment._id);
+        await blog.save();
+         
          res.status(200).json({message: "Comment created successfully", comment});
     }catch(err){
         res.status(500).json({message: err.message});
@@ -31,7 +33,7 @@ const createComment = async(req,res)=>{
 const getAllComments = async(req,res)=>{
     try{
 
-        const blogId = req.params.id;        
+        const blogId = req.params.blogId;
         const comments = await commentModel.find({post: blogId}).populate('author','username');
         
         res.status(200).json({comments});
@@ -43,8 +45,8 @@ const getAllComments = async(req,res)=>{
 const getCommentById = async(req,res)=>{
     try{
 
-    const blogId = req.params.id;
-    const commentId = req.body.commentId;
+    const blogId = req.params.blogId;
+    const commentId = req.params.id;
     const comment = await commentModel.findById({post:blogId, commentId}).populate('author','username');
 
     if(!comment){
@@ -61,8 +63,8 @@ const getCommentById = async(req,res)=>{
 
 const updateComment = async(req,res)=>{
     try{
-        const blogId = req.parms.body.id;
-        const commentId = req.body.commentId;
+        const blogId = req.params.blogId;
+        const commentId = req.params.id;
         const {content} = req.body;
         const comment = await findByIdAndUpdate({post:blogId},commentId,{content},{new:true}).populate('author','username');
 
@@ -78,8 +80,8 @@ const updateComment = async(req,res)=>{
 
 const deleteComment = async(req,res)=>{
     try{
-        const blogId = req.params.id;
-        const commentId = req.body.commentId;
+        const blogId = req.params.blogId;
+        const commentId = req.params.id;
 
         const comment = await findByIdAndDelete(commentId);
 
