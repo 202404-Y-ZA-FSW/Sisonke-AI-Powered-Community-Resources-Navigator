@@ -16,10 +16,10 @@ exports.validateAlert = [
         .isIn(['info', 'warning', 'critical'])
         .withMessage('Type must be one of: info, warning, critical.'),
 
-    check('audience')
+    check('location')
         .optional()
-        .isIn(['global', 'users', 'admins'])
-        .withMessage('Audience must be one of: global, users, admins.'),
+        .isString()
+        .withMessage('Location must be a string'),
 
     check('expiresAt')
         .optional()
