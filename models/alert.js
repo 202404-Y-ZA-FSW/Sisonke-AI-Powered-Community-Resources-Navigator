@@ -14,7 +14,7 @@ const alertSchema = new mongoose.Schema({
         enum: ['info', 'warning', 'critical'],
         required: true
     },
-    Location: {
+    location: {
         type: String
 
     },
