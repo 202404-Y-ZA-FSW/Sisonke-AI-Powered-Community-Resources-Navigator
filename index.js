@@ -28,7 +28,7 @@ app.use(
 // ROUTES
 app.use('/blogs', blogRoute);
 app.use('/blogs/:blogId/comments',commentRoutes);
-app.use('/blogs', likeRoutes);
+app.use('/blogs/:blogId', likeRoutes);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {
