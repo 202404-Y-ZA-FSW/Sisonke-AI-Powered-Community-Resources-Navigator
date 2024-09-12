@@ -30,12 +30,8 @@ app.use(
 // ROUTES
 app.use('/blogs', blogRoute);
 app.use('/blogs/:blogId/comments',commentRoutes);
-<<<<<<< HEAD:index.js
 app.use('/blogs/:blogId', likeRoutes);
-=======
-app.use('/blogs', likeRoutes);
 app.use('/alerts', alertRoutes);
->>>>>>> main:backend/index.js
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {
