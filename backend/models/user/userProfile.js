@@ -56,22 +56,6 @@ const ProfileSchema = new Schema(
   }
 );
 
-// MIDDLEWARE TO HASH PASSWORD BEFORE SAVING
-ProfileSchema.pre("save", async function (next) {
-  const profile = this;
-
-  
-  if (!profile.isModified("password")) return next();
-
-  try {
-    const salt = await bcrypt.genSalt(10);
-    profile.password = await bcrypt.hash(profile.password, salt);
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
-
 // EXPORTING THE USER MODEL
 const Profile = mongoose.model("Profile", ProfileSchema);
 module.exports = Profile;
