@@ -8,7 +8,7 @@ const userModel = require("../../models/user/user");
 
 // REGISTER CONTROLLER
 exports.register = async (req, res) => {
-  // SERVER-SIDE VALIDATION
+  // INPUT VALIDATION
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -79,7 +79,7 @@ exports.register = async (req, res) => {
 
 // LOGIN
 exports.login = async (req, res) => {
-  // SERVER-SIDE VALIDATION
+  // INPUT VALIDATION
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -138,6 +138,59 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+// UPDATE PASSWORD
+exports.updatePassword = async (req, res) => {
+
+    // INPUT VALIDATION
+    try {
+      const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    // EXTRACT USER ID FROM JWT TOKEN
+    const userIdentity = req.userID;
+
+    // VERIFY USER ID IF IT EXISTS
+    const user = await userModel.findById(userIdentity);
+
+    if (!user) {
+      return res.status(401).json({ message: "Incorrect user identity" });
+    }
+
+    const { currentPassword, newPassword } = req.body;
+
+    // VERIFY IF CURRENT PASSWORD MATCHES STORED PASSWORD
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    // CHECK IF NEW PASSWORD IS SAME AS CURRENT PASSWORD
+    if (currentPassword === newPassword) {
+      return res.status(400).json({ message: "New password cannot be the same as the current password" });
+    }
+
+    // HASH NEW PASSWORD
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // UPDATE PASSWORD
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      message: "An unexpected error occurred while processing your request",
+    });
+  }
+};
+
+// FORGOT PASSWORD
+
+// VERIFY EMAIL
+
 
 // LOGOUT
 exports.logout = async (req, res) => {
