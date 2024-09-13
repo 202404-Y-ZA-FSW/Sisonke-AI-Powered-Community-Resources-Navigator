@@ -10,7 +10,6 @@ const blogRoute = require('./routes/blog/blog');
 const commentRoutes = require('./routes/blog/comment');
 const likeRoutes = require('./routes/blog/like');
 const alertRoutes=require('./routes/alert');
-const userRoutes = require('./routes/user');
 
 
 // PORT
@@ -38,7 +37,7 @@ app.use('/blogs', blogRoute);
 app.use('/blogs/:blogId/comments',commentRoutes);
 app.use('/blogs/:blogId', likeRoutes);
 app.use('/alerts', alertRoutes);
-app.use('/users', userRoutes);
+
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {
   try {
