@@ -8,7 +8,7 @@ const userModel = require("../../models/user/user");
 
 // REGISTER CONTROLLER
 exports.register = async (req, res) => {
-  // SERVER-SIDE VALIDATION
+  // INPUT VALIDATION
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -79,7 +79,7 @@ exports.register = async (req, res) => {
 
 // LOGIN
 exports.login = async (req, res) => {
-  // SERVER-SIDE VALIDATION
+  // INPUT VALIDATION
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -141,7 +141,13 @@ exports.login = async (req, res) => {
 
 // UPDATE PASSWORD
 exports.updatePassword = async (req, res) => {
-  try {
+
+    // INPUT VALIDATION
+    try {
+      const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     // EXTRACT USER ID FROM JWT TOKEN
     const userIdentity = req.userID;
 
