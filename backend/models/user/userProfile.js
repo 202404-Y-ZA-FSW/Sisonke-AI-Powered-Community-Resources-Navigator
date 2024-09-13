@@ -1,7 +1,6 @@
 // REQUIRED PACKAGES
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
 
 // SCHEMA FOR USER PROFILES
 const ProfileSchema = new Schema(
