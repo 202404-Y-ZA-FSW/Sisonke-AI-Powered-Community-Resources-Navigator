@@ -1,6 +1,7 @@
 // REQUIRED PACKAGES
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs");
 
 // SCHEMA FOR USER PROFILES
 const ProfileSchema = new Schema(
@@ -26,7 +27,7 @@ const ProfileSchema = new Schema(
       required: true,
       validate: {
         validator: function (value) {
-          return value <= new Date(); // Ensure date of birth is not in the future
+          return value <= new Date();
         },
         message: "Date of birth cannot be in the future",
       },
@@ -39,14 +40,11 @@ const ProfileSchema = new Schema(
     gender: {
       type: String,
       required: true,
-      enum: ["male", "female", "other"],
+      enum: ["male", "female", "other"], 
     },
     bio: { type: String, default: "" },
     address: { type: String, default: "" },
-    location: {
-      type: String,
-      default: "",
-    },
+    location: { type: String, default: "" },
     avatar: { type: String, default: "" },
     savedJobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
     savedEvents: [{ type: Schema.Types.ObjectId, ref: "Event" }],
@@ -57,6 +55,22 @@ const ProfileSchema = new Schema(
     timestamps: true,
   }
 );
+
+// MIDDLEWARE TO HASH PASSWORD BEFORE SAVING
+ProfileSchema.pre("save", async function (next) {
+  const profile = this;
+
+  
+  if (!profile.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    profile.password = await bcrypt.hash(profile.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 // EXPORTING THE USER MODEL
 const Profile = mongoose.model("Profile", ProfileSchema);
