@@ -55,7 +55,12 @@ exports.register = async (req, res) => {
         id: newUser._id,
         status: newUser.status,
         verified: newUser.verified,
-        role: newUser.role === "user" ? "user" : newUser.role === "administrator" ? "administrator" : "ngo",
+        role:
+          newUser.role === "user"
+            ? "user"
+            : newUser.role === "administrator"
+            ? "administrator"
+            : "ngo",
       },
       "This is the secret of the 21st century",
       { expiresIn: "1h" }
@@ -115,7 +120,12 @@ exports.login = async (req, res) => {
           id: existingUser._id,
           status: existingUser.status,
           verified: existingUser.verified,
-          role: existingUser.role === "user" ? "user" : existingUser.role === "administrator" ? "administrator" : "ngo",
+          role:
+            existingUser.role === "user"
+              ? "user"
+              : existingUser.role === "administrator"
+              ? "administrator"
+              : "ngo",
         },
         "This is the secret of the 21st century",
         { expiresIn: "1h" }
@@ -141,10 +151,9 @@ exports.login = async (req, res) => {
 
 // UPDATE PASSWORD
 exports.updatePassword = async (req, res) => {
-
-    // INPUT VALIDATION
-    try {
-      const errors = validationResult(req);
+  // INPUT VALIDATION
+  try {
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
@@ -168,7 +177,11 @@ exports.updatePassword = async (req, res) => {
 
     // CHECK IF NEW PASSWORD IS SAME AS CURRENT PASSWORD
     if (currentPassword === newPassword) {
-      return res.status(400).json({ message: "New password cannot be the same as the current password" });
+      return res
+        .status(400)
+        .json({
+          message: "New password cannot be the same as the current password",
+        });
     }
 
     // HASH NEW PASSWORD
@@ -191,7 +204,6 @@ exports.updatePassword = async (req, res) => {
 
 // VERIFY EMAIL
 
-
 // LOGOUT
 exports.logout = async (req, res) => {
   try {
@@ -202,9 +214,7 @@ exports.logout = async (req, res) => {
     const user = await userModel.findById(userIdentity);
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "Incorrect user identity" });
+      return res.status(401).json({ message: "Incorrect user identity" });
     }
 
     // IF USER EXISTS, CLEAR THE JWT TOKEN AND RESPONSE
@@ -213,9 +223,7 @@ exports.logout = async (req, res) => {
         httpOnly: true,
       });
 
-      return res
-        .status(200)
-        .json({ message: "User signed out successfully" });
+      return res.status(200).json({ message: "User signed out successfully" });
     } else {
       // USER NOT FOUND
       return res.status(403).json({

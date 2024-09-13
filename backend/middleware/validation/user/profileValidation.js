@@ -14,6 +14,12 @@ const profileValidator = [
     .withMessage("Surname is required")
     .trim()
     .escape(),
+  check("dateOfBirth")
+    .not()
+    .isDate()
+    .withMessage("Date of birth is required")
+    .trim()
+    .escape(),
   check("phoneNumer")
     .not()
     .isEmpty()

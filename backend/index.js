@@ -4,10 +4,11 @@ const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 
 // IMPORT ROUTES
-const userRoutes = require('./routes/user/authentication');
-const blogRoute = require('./routes/blog');
-const commentRoutes = require('./routes/comment');
-const likeRoutes = require('./routes/like');
+const userAuthentication = require('./routes/user/authentication');
+const userProfile = require('./routes/user/userProfile');
+const blogRoute = require('./routes/blog/blog');
+const commentRoutes = require('./routes/blog/comment');
+const likeRoutes = require('./routes/blog/like');
 const alertRoutes=require('./routes/alert');
 const userRoutes = require('./routes/user');
 
@@ -31,7 +32,8 @@ app.use(
 );
 
 // ROUTES
-app.use('/users', userRoutes);
+app.use('/authentication', userAuthentication);
+app.use('/profile', userProfile);
 app.use('/blogs', blogRoute);
 app.use('/blogs/:blogId/comments',commentRoutes);
 app.use('/blogs/:blogId', likeRoutes);

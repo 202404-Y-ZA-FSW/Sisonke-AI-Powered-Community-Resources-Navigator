@@ -1,30 +1,15 @@
-// REQUIRED PACKAGE
+// REQUIRED PACKAGES
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // SCHEMA FOR USER PROFILES
 const ProfileSchema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true, unique: true }, // Ensure each profile is linked to a unique user
-    username: {
-      type: String,
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
       unique: true,
-      minlength: [5, "Username must be at least 5 characters long"],
-      maxlength: [20, "Username cannot be longer than 20 characters"],
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
-    },
-    password: { 
-      type: String, 
-      required: true, 
-      minlength: [8, "Password must be at least 8 characters long"],
-      // You should hash the password before saving it, not use a default value
-      // match: [/^[a-zA-Z0-9]+$/, "Please enter a valid password"], 
     },
     firstName: {
       type: String,
@@ -63,7 +48,6 @@ const ProfileSchema = new Schema(
       default: "",
     },
     avatar: { type: String, default: "" },
-    socialLinks: { type: [String], default: [] },
     savedJobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
     savedEvents: [{ type: Schema.Types.ObjectId, ref: "Event" }],
     forums: [{ type: Schema.Types.ObjectId, ref: "Forum" }],
