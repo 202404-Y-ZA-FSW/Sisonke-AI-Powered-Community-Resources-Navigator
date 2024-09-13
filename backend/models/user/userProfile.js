@@ -5,20 +5,69 @@ const Schema = mongoose.Schema;
 // SCHEMA FOR USER PROFILES
 const ProfileSchema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User" },
-    firstName: { type: String, default: "" },
-    lastName: { type: String, default: "" },
-    phoneNumber: { type: String, default: "" },
-    gender: { type: String, default: "" },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true, unique: true }, // Ensure each profile is linked to a unique user
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      minlength: [5, "Username must be at least 5 characters long"],
+      maxlength: [20, "Username cannot be longer than 20 characters"],
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
+    },
+    password: { 
+      type: String, 
+      required: true, 
+      minlength: [8, "Password must be at least 8 characters long"],
+      // You should hash the password before saving it, not use a default value
+      // match: [/^[a-zA-Z0-9]+$/, "Please enter a valid password"], 
+    },
+    firstName: {
+      type: String,
+      required: true,
+      match: [/^[a-zA-Z]+$/, "Please enter a valid first name"],
+    },
+    lastName: {
+      type: String,
+      required: true,
+      match: [/^[a-zA-Z]+$/, "Please enter a valid last name"],
+    },
+    dateOfBirth: {
+      type: Date,
+      required: true,
+      validate: {
+        validator: function (value) {
+          return value <= new Date(); // Ensure date of birth is not in the future
+        },
+        message: "Date of birth cannot be in the future",
+      },
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+      match: [/^\d{10}$/, "Please enter a valid 10-digit phone number"],
+    },
+    gender: {
+      type: String,
+      required: true,
+      enum: ["male", "female", "other"],
+    },
     bio: { type: String, default: "" },
     address: { type: String, default: "" },
-    location: { type: String, default: "" },
+    location: {
+      type: String,
+      default: "",
+    },
     avatar: { type: String, default: "" },
     socialLinks: { type: [String], default: [] },
-    savedJobs: { type: [Schema.Types.ObjectId], ref: "Job", default: [] },
-    savedEvents: { type: [Schema.Types.ObjectId], ref: "Event", default: [] },
-    forums: { type: [Schema.Types.ObjectId], ref: "Forum", default: [] },
-    blogs: { type: [Schema.Types.ObjectId], ref: "Blog", default: [] },
+    savedJobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
+    savedEvents: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+    forums: [{ type: Schema.Types.ObjectId, ref: "Forum" }],
+    blogs: [{ type: Schema.Types.ObjectId, ref: "Blog" }],
   },
   {
     timestamps: true,
