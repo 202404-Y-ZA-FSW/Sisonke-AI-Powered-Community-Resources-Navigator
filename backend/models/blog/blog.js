@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
-const shortid = require('shortid');
+//const shortid = require('shortid');
 
 const blogSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    default: shortid.generate
-  },
+ 
   title: {
     type: String,
     required: true,

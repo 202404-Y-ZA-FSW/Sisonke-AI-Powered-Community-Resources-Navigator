@@ -61,7 +61,7 @@ const getAllBlocks = async(req,res)=>{
 
 const getBlogById = async(req,res)=>{
     try{
-        const blogId = req.body.id;
+        const blogId = req.params.id;
         const blog = await blogModel.findById(blogId).populate('comments');
         
         if(!blog){
@@ -80,7 +80,7 @@ const getBlogById = async(req,res)=>{
 
 const updateBlog = async(req,res)=>{
     try{
-        const blogId = req.body.id;
+        const blogId = req.params.id;
         const {title,content,tags} = req.body;
         const blog = await blogModel.findByIdAndUpdate(blogId,{title,content,tags},{new:true});
 
@@ -95,16 +95,17 @@ const updateBlog = async(req,res)=>{
 
 const deleteBlog = async(req,res)=>{
     try{
-        const blogId = req.body.id;
+        const blogId = req.params.id;
         const blog = await blogModel.findByIdAndDelete(blogId);
         if(!blog){
             return res.status(404).json({message: "Blog not found"});
         }
-        res.status(302).redirect("/dashboard");
+        res.status(302).json({message:"deleted successfully"});
     }catch(err){
         res.status(500).json({message: "Please check your server"});
     }
 }
+
 module.exports = {
     createBlog,
     getAllBlocks,
