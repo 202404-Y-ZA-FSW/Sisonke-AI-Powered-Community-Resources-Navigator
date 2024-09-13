@@ -1,11 +1,12 @@
 // REQUIRED PACKAGE
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs");
 
 // SCHEMA FOR USER PROFILES
 const ProfileSchema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: "User", required: true, unique: true }, // Ensure each profile is linked to a unique user
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true, unique: true }, 
     username: {
       type: String,
       required: true,
@@ -23,8 +24,7 @@ const ProfileSchema = new Schema(
       type: String, 
       required: true, 
       minlength: [8, "Password must be at least 8 characters long"],
-      // You should hash the password before saving it, not use a default value
-      // match: [/^[a-zA-Z0-9]+$/, "Please enter a valid password"], 
+      
     },
     firstName: {
       type: String,
@@ -41,7 +41,7 @@ const ProfileSchema = new Schema(
       required: true,
       validate: {
         validator: function (value) {
-          return value <= new Date(); // Ensure date of birth is not in the future
+          return value <= new Date();
         },
         message: "Date of birth cannot be in the future",
       },
@@ -54,14 +54,11 @@ const ProfileSchema = new Schema(
     gender: {
       type: String,
       required: true,
-      enum: ["male", "female", "other"],
+      enum: ["male", "female", "other"], 
     },
     bio: { type: String, default: "" },
     address: { type: String, default: "" },
-    location: {
-      type: String,
-      default: "",
-    },
+    location: { type: String, default: "" },
     avatar: { type: String, default: "" },
     socialLinks: { type: [String], default: [] },
     savedJobs: [{ type: Schema.Types.ObjectId, ref: "Job" }],
@@ -73,6 +70,22 @@ const ProfileSchema = new Schema(
     timestamps: true,
   }
 );
+
+// MIDDLEWARE TO HASH PASSWORD BEFORE SAVING
+ProfileSchema.pre("save", async function (next) {
+  const profile = this;
+
+  
+  if (!profile.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    profile.password = await bcrypt.hash(profile.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 // EXPORTING THE USER MODEL
 const Profile = mongoose.model("Profile", ProfileSchema);
