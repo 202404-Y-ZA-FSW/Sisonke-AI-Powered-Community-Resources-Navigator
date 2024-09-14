@@ -6,14 +6,9 @@ const likeSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  post: {
+  blog: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Blog', 
-    required: true
-  },
-  type: {
-    type: String,
-    enum: ['like', 'love', 'haha', 'wow', 'sad', 'angry'], 
     required: true
   }
 }, { timestamps: true });
