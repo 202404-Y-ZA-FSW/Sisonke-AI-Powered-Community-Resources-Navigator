@@ -19,8 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.1",
     "mongoose": "^8.6.1",
-    "shortid": "^2.2.16",
-    "sisonke-ai-powered-community-resources-navigator": "file:"
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "chai": "^5.1.1",
