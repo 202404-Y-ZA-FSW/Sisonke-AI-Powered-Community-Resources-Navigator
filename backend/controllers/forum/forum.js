@@ -1,6 +1,5 @@
-const Forum = require('../models/Forum');
-const Comment = require('../models/Comment');
-const Like = require('../models/Like');
+const Forum = require('../../models/forum/forum');
+
 
 // Create a new forum post with validation
 exports.createForumPost = async (req, res) => {
@@ -9,7 +8,7 @@ exports.createForumPost = async (req, res) => {
         const newPost = new Forum({
             title,
             body,
-            author: req.user._id // Assuming `req.user` contains the logged-in user info
+            author: req.user._id // Assuming req.user contains the logged-in user info
         });
 
         const savedPost = await newPost.save();

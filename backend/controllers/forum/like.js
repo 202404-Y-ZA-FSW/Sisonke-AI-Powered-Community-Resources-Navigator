@@ -1,3 +1,5 @@
+const Like = require('../../models/forum/like')
+
 exports.addLike = async (req, res) => {
     try {
         const forumPost = await Forum.findById(req.params.postId);
