@@ -3,15 +3,15 @@ const express = require("express");
 const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 
-// IMPORT ROUTES
+
 const accountRoutes = require("./routes/user/authentication");
 const userProfile = require("./routes/user/userProfile");
 const subscriberRoutes = require("./routes/subscriber");
 
-const blogRoute = require("./routes/blog/blog");
-const commentRoutes = require("./routes/blog/comment");
-const likeRoutes = require("./routes/blog/like");
-const alertRoutes = require("./routes/alert");
+const blogRoute = require('./routes/blog/blog');
+const commentRoutes = require('./routes/blog/comment');
+const likeRoutes = require('./routes/blog/like');
+const alertRoutes=require('./routes/alert');
 
 // PORT
 const port = 5000;
