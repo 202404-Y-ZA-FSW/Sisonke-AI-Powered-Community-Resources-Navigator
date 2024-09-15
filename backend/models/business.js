@@ -1,47 +1,60 @@
 // REQUIRED PACKAGE
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // BUSINESS LISTING SCHEMA
-const BusinessListingSchema = new Schema({
-    businessName: {
-        type: String,
-        required: true
+const BusinessListingSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    businessDescription: {
-        type: String,
-        required: true
+    description: {
+      type: String,
+      required: true,
     },
-    businessAddress: {
-        type: String,
-        required: true
+    address: {
+      type: String,
+      required: true,
     },
-    businessPhone: {
-        type: String,
-        required: true
+    city: {
+      type: String,
+      required: true,  
     },
-    businessEmail: {
-        type: String,
-        required: true
+    phone: {
+      type: String,
+      required: true,
     },
-    businessWebsite: {
-        type: String
+    email: {
+      type: String,
+      required: true,
     },
-    businessCategory: {
-        type: String,
-        required: true,
+    website: {
+      type: String,
     },
-    businessImage: {
-        type: String,
-        required: true
+    category: {
+      type: String,
+      required: true,
     },
-    businessOwner: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }
-}, { timestamps: true });
+    image: {
+      type: String,
+      required: true,
+    },
+    logo: {
+      type: String
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 // EXPORTING THE BUSINESS LISTING MODEL
-const BusinessListing = mongoose.model('BusinessListing', BusinessListingSchema);
+const BusinessListing = mongoose.model(
+  "BusinessListing",
+  BusinessListingSchema
+);
 module.exports = BusinessListing;
