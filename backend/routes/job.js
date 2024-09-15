@@ -8,7 +8,7 @@ const jobController = require('../controllers/job');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
 // VALIDATION
-const jobValidation = require('../validation/job');
+const jobValidation = require('../middleware/validation/jobValidation');
 
 // ROUTES
 router.post("new", isAuthenticated, jobValidation, jobController.newJob);
