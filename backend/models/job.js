@@ -13,64 +13,60 @@ const jobListingsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  jobType: {
+  type: {
     type: String,
     enum: ['full-time', 'part-time', 'contract', 'freelance', 'internship'],
     required: true,
   },
   salary: {
     type: Number,
+    min: 0,
   },
   description: {
     type: String,
     required: true,
   },
-  datePosted: {
+  posted: {
     type: Date,
     default: Date.now,
   },
   qualifications: {
     type: [String],
+    validate: {
+      validator: v => Array.isArray(v) && v.length <= 10,
+      message: 'Cannot have more than 10 qualifications',
+    },
   },
-  experienceLevel: {
+  experience: {
     type: String,
-    enum: ['entry-level', 'mid-level', 'senior-level'],
+    enum: {
+      values: ['entry-level', 'mid-level', 'senior-level'],
+      message: '{VALUE} is not a valid experience level',
+    },
   },
-  education: {
+  skills: {
     type: [String],
+    validate: {
+      validator: v => Array.isArray(v) && v.length <= 10,
+      message: 'Cannot have more than 10 skills',
+    },
   },
-  companySize: {
-    type: String,
-    enum: ['small', 'medium', 'large'],
-  },
-  requiredSkills: {
-    type: [String],
-  },
-  applicationStatus: {
-    type: String,
-    enum: ['applied', 'in review', 'interview', 'offered', 'rejected'],
-    default: 'applied',
-  },
-  matchedUsers: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    index: true,
-  }],
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
-    index: true,
   },
-  savedBy: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    index: true,
-  }],
+  expiresAt: {
+    type: Date,
+    default: () => Date.now() + 30*24*60*60*1000,
+  },
 }, {
   timestamps: true,
 });
 
+jobListingsSchema.index({ company: 1, location: 1 });
+
 const JobListings = mongoose.model('JobListings', jobListingsSchema);
 
 module.exports = JobListings;
+

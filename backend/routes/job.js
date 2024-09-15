@@ -1,14 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-const { createJob, getAllJobs, getJobById, updateJob, deleteJob } = require('../controllers/job');
-const { jobValidationRules } = require('../validators/job');
-const validate = require('../middlewares/validate');
+// JOB CONTROLLERS
+const jobController = require('../controllers/job');
 
-router.post('/jobs', jobValidationRules(), validate, createJob);
-router.get('/jobs', getAllJobs);
-router.get('/jobs/:id', getJobById);
-router.put('/jobs/:id', jobValidationRules(), validate, updateJob);
-router.delete('/jobs/:id', deleteJob);
+// MIDDLEWARE
+const isAuthenticated = require('../middleware/isAuthenticated');
+
+// VALIDATION
+const jobValidation = require('../validation/job');
+
+// ROUTES
+router.post("new", isAuthenticated, jobValidation, jobController.newJob);
+router.get("/all", jobController.getAllJobs);
+router.get("/:id", jobController.getJob);
+router.put("/:id", isAuthenticated, jobValidation, jobController.updateJob);
+router.delete("/:id", isAuthenticated, jobController.deleteJob);
 
 module.exports = router;
