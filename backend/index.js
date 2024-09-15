@@ -4,13 +4,14 @@ const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 
 // IMPORT ROUTES
-const userAuthentication = require('./routes/user/authentication');
-const userProfile = require('./routes/user/userProfile');
-const blogRoute = require('./routes/blog/blog');
-const commentRoutes = require('./routes/blog/comment');
-const likeRoutes = require('./routes/blog/like');
-const alertRoutes=require('./routes/alert');
+const accountRoutes = require("./routes/user/authentication");
+const userProfile = require("./routes/user/userProfile");
+const subscriberRoutes = require("./routes/subscriber");
 
+const blogRoute = require("./routes/blog/blog");
+const commentRoutes = require("./routes/blog/comment");
+const likeRoutes = require("./routes/blog/like");
+const alertRoutes = require("./routes/alert");
 
 // PORT
 const port = 5000;
@@ -31,12 +32,14 @@ app.use(
 );
 
 // ROUTES
-app.use('/authentication', userAuthentication);
-app.use('/profile', userProfile);
-app.use('/blogs', blogRoute);
-app.use('/blogs/:blogId/comments',commentRoutes);
-app.use('/blogs/:blogId', likeRoutes);
-app.use('/alerts', alertRoutes);
+app.use("/account", accountRoutes);
+app.use("/profile", userProfile);
+app.use("/newsletter", subscriberRoutes);
+
+app.use("/blogs", blogRoute);
+app.use("/blogs/:blogId/comments", commentRoutes);
+app.use("/blogs/:blogId", likeRoutes);
+app.use("/alerts", alertRoutes);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {
