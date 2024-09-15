@@ -8,6 +8,7 @@ const accountRoutes = require("./routes/user/authentication");
 const userProfile = require("./routes/user/userProfile");
 const subscriberRoutes = require("./routes/subscriber");
 const businessRoutes = require("./routes/business");
+const jobRoutes = require("./routes/job");
 
 const blogRoute = require('./routes/blog/blog');
 const commentRoutes = require('./routes/blog/comment');
@@ -37,6 +38,7 @@ app.use("/account", accountRoutes);
 app.use("/profile", userProfile);
 app.use("/newsletter", subscriberRoutes);
 app.use("/business", businessRoutes);
+app.use("/jobs", jobRoutes);
 
 app.use("/blogs", blogRoute);
 app.use("/blogs/:blogId/comments", commentRoutes);
