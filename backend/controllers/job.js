@@ -1,76 +1,166 @@
-const JobListings = require('../models/job.js');
+// REQUIRED PACKAGE
+const { validationResult } = require("express-validator");
 
-// Create a new job listing
-const createJob = async (req, res) => {
+// JOB MODEL
+const jobModel = require("../models/job");
+
+// NEW JOB CONTROLLER
+exports.newJob = async (req, res) => {
+  // INPUT VALIDATION
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
-    const job = new JobListings(req.body);
-    const savedJob = await job.save();
-    res.status(201).json({ message: 'Job created successfully', job: savedJob });
-  } catch (err) {
-    console.error('Error creating job:', err);
-    res.status(500).json({ error: 'Error creating job', message: err.message });
+    const userID = req.userID;
+    const {
+      title,
+      company,
+      location,
+      type,
+      salary,
+      description,
+      posted,
+      qualifications,
+      experience,
+      skills,
+    } = req.body;
+
+    // CREATE NEW JOB
+    const newJob = new jobModel({
+      title,
+      company,
+      location,
+      type,
+      salary,
+      description,
+      posted,
+      qualifications,
+      experience,
+      skills,
+      user: userID,
+    });
+
+    // SAVE JOB
+    await newJob.save();
+
+    res.status(201).json({ message: "Job posted successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        message:
+          "An unexpected error has occured while trying to process your request",
+      });
   }
 };
 
-// Get all job listings
-const getAllJobs = async (req, res) => {
+// GET A SINGLE JOB
+exports.getJob = async (req, res) => {
   try {
-    // Populate the references to users who have matched or saved the job
-    const jobs = await JobListings.find().populate('matchedUsers savedBy');
-    res.status(200).json(jobs);
-  } catch (err) {
-    console.error('Error fetching jobs:', err);
-    res.status(500).json({ error: 'Error fetching jobs', message: err.message });
-  }
-};
-
-// Get a job listing by ID
-const getJobById = async (req, res) => {
-  try {
-    // Fetch a specific job listing by ID and populate user references
-    const job = await JobListings.findById(req.params.id).populate('matchedUsers savedBy');
+    const { jobID } = req.params;
+    const job = await jobModel.findById(jobID);
     if (!job) {
-      return res.status(404).json({ error: 'Job not found' });
+      return res.status(404).json({ error: "Job not found" });
     }
-    res.status(200).json(job);
-  } catch (err) {
-    console.error('Error fetching job:', err);
-    res.status(500).json({ error: 'Error fetching job', message: err.message });
+
+    res.status(200).json({ job });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        error:
+          "An unexpected error has occured while trying to process your request",
+      });
   }
 };
 
-// Update a job listing
-const updateJob = async (req, res) => {
+// GET ALL JOBS CONTROLLER
+exports.getAllJobs = async (req, res) => {
   try {
-    // Update a specific job listing by ID and populate user references
-    const updatedJob = await JobListings.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    ).populate('matchedUsers savedBy');
+    const jobs = await jobModel.find();
+    res.status(200).json({ jobs });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        error:
+          "An unexpected error has occured while trying to process your request",
+      });
+  }
+};
+
+// UPDATE JOB CONTROLLER
+exports.updateJob = async (req, res) => {
+  try {
+    const { jobID } = req.params;
+    const {
+      title,
+      company,
+      location,
+      type,
+      salary,
+      description,
+      posted,
+      qualifications,
+      experience,
+      skills,
+    } = req.body;
+
+    // UPDATE JOB
+    const updatedJob = await jobModel.findByIdAndUpdate(
+      jobID,
+      {
+        title,
+        company,
+        location,
+        type,
+        salary,
+        description,
+        posted,
+        qualifications,
+        experience,
+        skills,
+      },
+      { new: true }
+    );
     if (!updatedJob) {
-      return res.status(404).json({ error: 'Job not found' });
+      return res.status(404).json({ error: "Job not found" });
     }
-    res.status(200).json({ message: 'Job updated successfully', job: updatedJob });
-  } catch (err) {
-    console.error('Error updating job:', err);
-    res.status(500).json({ error: 'Error updating job', message: err.message });
+
+    res.status(200).json({ message: "Job updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        error:
+          "An unexpected error has occured while trying to process your request",
+      });
   }
 };
 
-// Delete a job listing
-const deleteJob = async (req, res) => {
+// DELETE JOB CONTROLLER
+exports.deleteJob = async (req, res) => {
   try {
-    // Delete a specific job listing by ID
-    const deletedJob = await JobListings.findByIdAndDelete(req.params.id);
+    const { jobID } = req.params;
+    const deletedJob = await jobModel.findByIdAndDelete(jobID);
     if (!deletedJob) {
-      return res.status(404).json({ error: 'Job not found' });
+      return res.status(404).json({ error: "Job not found" });
     }
-    res.status(200).json({ message: 'Job deleted successfully' });
-  } catch (err) {
-    console.error('Error deleting job:', err);
-    res.status(500).json({ error: 'Error deleting job', message: err.message });
+
+    res.status(200).json({ message: "Job deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        error:
+          "An unexpected error has occured while trying to process your request",
+      });
   }
 };
-
-module.exports = { createJob, getAllJobs, getJobById, updateJob, deleteJob };
