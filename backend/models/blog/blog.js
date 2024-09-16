@@ -35,13 +35,13 @@ const blogSchema = new mongoose.Schema(
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
+        ref: 'BlogComment',
       },
     ],
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'BlogLike',
       },
     ],
   },

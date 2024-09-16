@@ -19,11 +19,11 @@ const ForumSchema = new Schema({
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment',
+        ref: 'ForumComment',
     }],
     likes: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Like',
+        ref: 'ForumLike',
     }],
     createdAt: {
         type: Date,
