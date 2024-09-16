@@ -1,23 +1,41 @@
 const express = require('express');
 const router = express.Router();
-const forumController = require('../../controllers/forum/forum');
-const commentController = require('../../controllers/forum/comment');
-const likeController = require('../../controllers/forum/like');
-const { validateForumPost, validateComment, validateId, handleValidationErrors } = require('../../middleware/validation/forum/forumValidation');
+const {
+    createForum,
+    getAllForums,
+    getForumById,
+    updateForum,
+    deleteForum,
+    createComment,
+    getCommentsByForumPost,
+    updateComment,
+    deleteComment,
+    likeForumPost,
+    unlikeForumPost,
+    getLikesByForumPost
+} = require('../../controllers/forum/forum');
+const {
+    validateForumPost,
+    validateComment,
+    validateLike
+} = require('../../middleware/validation/forum/forumValidator');
 
-// Forum Post Routes
-router.post('/forum', validateForumPost, handleValidationErrors, forumController.createForumPost);
-router.get('/forum', forumController.getAllForumPosts);
-router.get('/forum/:id', validateId, handleValidationErrors, forumController.getForumPostById);
-router.put('/forum/:id', validateId, validateForumPost, handleValidationErrors, forumController.updateForumPost);
-router.delete('/forum/:id', validateId, handleValidationErrors, forumController.deleteForumPost);
+// Forum routes
+router.post('/', validateForumPost, createForum);
+router.get('/', getAllForums);
+router.get('/:forumId', getForumById);
+router.put('/:forumId', validateForumPost, updateForum);
+router.delete('/:forumId', deleteForum);
 
-// Comment Routes
-router.post('/forum/:id/comments', validateId, validateComment, handleValidationErrors, commentController.addComment);
-router.get('/forum/:id/comments', validateId, handleValidationErrors, commentController.getAllCommentsForPost);
+// Comment routes
+router.post('/:forumId/comments', validateComment, createComment);
+router.get('/:forumId/comments', getCommentsByForumPost);
+router.put('/comments/:commentId', validateComment, updateComment);
+router.delete('/comments/:commentId', deleteComment);
 
-// Like Routes
-router.post('/forum/:id/like', validateId, handleValidationErrors, likeController.addLike);
-router.delete('/forum/:id/like', validateId, handleValidationErrors, likeController.removeLike);
+// Like routes
+router.post('/:forumId/like', validateLike, likeForumPost);
+router.delete('/:forumId/unlike', validateLike, unlikeForumPost);
+router.get('/:forumId/likes', getLikesByForumPost);
 
 module.exports = router;
