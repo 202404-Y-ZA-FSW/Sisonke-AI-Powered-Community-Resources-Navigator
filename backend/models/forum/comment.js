@@ -34,4 +34,4 @@ CommentSchema.pre('save', function(next) {
 });
 
 
-module.exports = mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('ForumComment', CommentSchema);

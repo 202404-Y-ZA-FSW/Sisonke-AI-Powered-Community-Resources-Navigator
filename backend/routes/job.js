@@ -11,10 +11,10 @@ const isAuthenticated = require('../middleware/isAuthenticated');
 const jobValidation = require('../middleware/validation/jobValidation');
 
 // ROUTES
-router.post("new", isAuthenticated, jobValidation, jobController.newJob);
+router.post("new", jobValidation, jobController.newJob);
 router.get("/all", jobController.getAllJobs);
 router.get("/:id", jobController.getJob);
-router.put("/:id", isAuthenticated, jobValidation, jobController.updateJob);
-router.delete("/:id", isAuthenticated, jobController.deleteJob);
+router.put("/:id", jobValidation, jobController.updateJob);
+router.delete("/:id", jobController.deleteJob);
 
 module.exports = router;
