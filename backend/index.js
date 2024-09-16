@@ -10,7 +10,7 @@ const subscriberRoutes = require("./routes/subscriber");
 const businessRoutes = require("./routes/business");
 const jobRoutes = require("./routes/job");
 
-const blogRoute = require('./routes/blog/blog');
+const blogRoutes = require('./routes/blog/blog');
 const commentRoutes = require('./routes/blog/comment');
 const likeRoutes = require('./routes/blog/like');
 const alertRoutes=require('./routes/alert');
@@ -40,9 +40,10 @@ app.use("/newsletter", subscriberRoutes);
 app.use("/business", businessRoutes);
 app.use("/jobs", jobRoutes);
 
-app.use("/blogs", blogRoute);
-app.use("/blogs/:blogId/comments", commentRoutes);
-app.use("/blogs/:blogId", likeRoutes);
+app.use("/blogs", blogRoutes);
+app.use("/blog/comment/:blogID", commentRoutes);
+app.use("/blog/like/:blogID", likeRoutes);
+
 app.use("/alerts", alertRoutes);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
