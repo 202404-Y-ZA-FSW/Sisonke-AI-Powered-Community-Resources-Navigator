@@ -12,8 +12,9 @@ const isAuthenticated = require('../../middleware/isAuthenticated');
 const profileValidation = require('../../middleware/validation/user/profileValidation');
 
 // ROUTES
-router.post("/profile", profileValidation, userProfileController.addUserProfile);
+router.post("/create", profileValidation, userProfileController.addUserProfile);
 router.get("/profile", userProfileController.getUserProfile);
+router.get("/all", userProfileController.getAllUserProfiles);
 router.put("/profile", profileValidation, userProfileController.updateUserProfile);
 
 module.exports = router;

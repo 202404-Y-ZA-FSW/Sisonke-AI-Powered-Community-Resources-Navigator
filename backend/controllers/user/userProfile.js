@@ -67,7 +67,16 @@ exports.addUserProfile = async (req, res) => {
     });
   }
 };
-
+exports.getAllUserProfiles = async (req, res) => {
+  try{
+    const userProfiles = await userProfileModel.find();
+    res.status(200).json({userProfiles});
+  }catch(err){
+    res.status(500).json({
+      message: "An unexpected error occurred while processing your request.",
+    });
+  }
+}
 // GET USER PROFILE
 exports.getUserProfile = async (req, res) => {
   try {

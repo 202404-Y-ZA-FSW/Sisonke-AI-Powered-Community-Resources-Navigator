@@ -20,7 +20,7 @@ const profileValidator = [
     .withMessage("Date of birth is required")
     .trim()
     .escape(),
-  check("phoneNumer")
+  check("phoneNumber")
     .not()
     .isEmpty()
     .withMessage("Phone number is required")

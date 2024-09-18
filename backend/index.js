@@ -9,6 +9,7 @@ const subscriberRoutes = require("./routes/subscriber");
 const businessRoutes = require("./routes/business");
 const jobRoutes = require("./routes/job");
 const eventRoutes = require("./routes/event")
+const chatbotRoutes = require("./routes/chatbot");
 
 const blogRoutes = require('./routes/blog/blog');
 const commentRoutes = require('./routes/blog/comment');
@@ -42,6 +43,8 @@ app.use("/newsletter", subscriberRoutes);
 app.use("/business", businessRoutes);
 app.use("/jobs", jobRoutes);
 app.use("/events", eventRoutes);
+app.use("/chatbot", chatbotRoutes);
+
 
 app.use("/blogs", blogRoutes);
 app.use("/blog/comment/:blogID", commentRoutes);
