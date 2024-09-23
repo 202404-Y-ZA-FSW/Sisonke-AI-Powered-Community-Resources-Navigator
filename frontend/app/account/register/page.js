@@ -175,7 +175,9 @@ function Signup() {
               <Grid item>
                 <Button
                   startIcon={<FacebookIcon />}
+
                   variant="contained"
+
                   fullWidth
                   sx={{
                     textTransform: "none",
@@ -183,6 +185,7 @@ function Signup() {
                     backgroundColor: "#4267B2", // Facebook blue
                     color: "white",
                     "&:hover": { backgroundColor: "#365e8d" }, // Darker shade for hover
+
                   }}
                 >
                   Facebook
@@ -195,5 +198,4 @@ function Signup() {
     </Grid>
   );
 }
-
 export default Signup;
