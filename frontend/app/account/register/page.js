@@ -45,7 +45,7 @@ function Signup() {
         sm={4}
         md={7}
         sx={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "#D4A017", // Sign Up button color
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -57,6 +57,15 @@ function Signup() {
           <Typography variant="h4" fontWeight="bold" color="black">
             Discover local resources and
           </Typography>
+          <img
+            src="./assets/sisonke.png" // Update to the correct path if needed
+            alt="Local resources"
+            style={{
+              width: "80%",
+              maxWidth: "300px",
+              margin: "16px 0",
+            }}
+          />
           <Typography variant="h5" color="black">
             Find the perfect match for your needs!
           </Typography>
@@ -135,7 +144,7 @@ function Signup() {
               sx={{
                 mt: 3,
                 mb: 2,
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "#D4A017", // Sign Up button color
                 color: "black",
                 borderRadius: "50px",
                 "&:hover": { backgroundColor: "#D4A017" },
@@ -150,14 +159,14 @@ function Signup() {
               <Grid item>
                 <Button
                   startIcon={<GoogleIcon />}
-                  variant="outlined"
+                  variant="contained"
                   fullWidth
                   sx={{
                     textTransform: "none",
                     borderRadius: "50px",
-                    backgroundColor: "#f5f5f5",
-                    color: "black",
-                    "&:hover": { backgroundColor: "#D4A017" },
+                    backgroundColor: "#DB4437", // Google red
+                    color: "white",
+                    "&:hover": { backgroundColor: "#C53929" }, // Darker shade for hover
                   }}
                 >
                   Google
@@ -166,14 +175,14 @@ function Signup() {
               <Grid item>
                 <Button
                   startIcon={<FacebookIcon />}
-                  variant="outlined"
+                  variant="contained"
                   fullWidth
                   sx={{
                     textTransform: "none",
                     borderRadius: "50px",
-                    backgroundColor: "#f5f5f5",
-                    color: "black",
-                    "&:hover": { backgroundColor: "#D4A017" },
+                    backgroundColor: "#4267B2", // Facebook blue
+                    color: "white",
+                    "&:hover": { backgroundColor: "#365e8d" }, // Darker shade for hover
                   }}
                 >
                   Facebook
