@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import {AppBar,Toolbar,Typography,Button,IconButton,Menu,MenuItem,useMediaQuery,useTheme,
 } from "@mui/material";
 import { useRouter } from "next/navigation";  
-import MenuIcon from "@mui/icons-material/Menu";
+import { MenuIcon } from "@mui/icons-material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function Navbar() {
@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <AppBar
-      sx={{ backgroundColor: "#fbf8e1" }}
+      sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }}
       position="static"
       color="transparent"
       elevation={0}
@@ -72,8 +72,8 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
               <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
               <MenuItem onClick={() => router.push("/community")}>Community</MenuItem>
-              <MenuItem onClick={() => router.push("/login")}>Login</MenuItem>
-              <MenuItem onClick={() => router.push("/register")}>Register</MenuItem>
+              <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
+              <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
             </Menu>
           </>
         ) : (
@@ -99,9 +99,9 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
               <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
             </Menu>
-            <Button onClick={() => router.push("/login")} sx={navLinksStyles}>Login</Button>
+            <Button onClick={() => router.push("/account/login")} sx={navLinksStyles}>Login</Button>
             <Button
-              onClick={() => router.push("/register")} 
+              onClick={() => router.push("/account/register")} 
               sx={{
                 backgroundColor: "#000000",
                 color: "#ffffff",

@@ -1,10 +1,11 @@
-"use client"
-import LoginPage from "../app/account/login/page";
-
+import React from "react";
+import Navbar from "./components/sections/NavBar";
+import Hero from "./components/sections/Hero";
 export default function Home() {
   return (
-    <>
-    <LoginPage />
-    </>
+    <React.Fragment>
+      <Navbar/>
+      <Hero/>
+    </React.Fragment>
   );
 }
