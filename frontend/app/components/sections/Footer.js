@@ -1,143 +1,122 @@
-"use client";
-import React from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Link,
-} from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-
+import React from 'react';
+import { Box, Container, Grid, Typography, TextField, Button, Link } from '@mui/material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const Footer = () => {
-  const footerSections = [
-    {
-      title: "Navigation",
-      links: [
-        "About Us",
-        "Careers",
-        "Terms of Service",
-        "Privacy Policy",
-      ],
-    },
-    {
-      title: "Help",
-      links: ["Contact Us", "My Account", "Help Center", "FAQs"],
-    },
-    {
-      title: "Community",
-      links: ["Jobs", "Blog", "Forum", "Events"],
-    },
-  ];
-
-
-  const bottomFooterStyles = {
-    fontSize: "12px,",
-    textDecoration: "none",
-    color: "#000000"
-  }
-
-
   return (
-    <Box
-      component="footer"
-      sx={{ backgroundColor: "#ffffff", py: 6, flexGrow: 1 }}
-    >
+    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
       <Container maxWidth="lg">
-        <Grid container spacing={4} justifyContent="space-between">
-          {footerSections.map((section) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={section.title}>
-              <Typography variant="h6" color="text.primary" gutterBottom>
-                {section.title}
-              </Typography>
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                {section.links.map((link) => (
-                  <li style={{ marginBottom: "10px" }} key={link}>
-                    <Link sx={{ textDecoration: "none" }} href="#" variant="body2" color="text.secondary">
-                      {link}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-          ))}
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              Subscribe
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>
+              <Box component="span" sx={{ color: 'primary.main' }}>C</Box>
+              AREE
+              <Box component="span" sx={{ color: 'warning.main' }}>R</Box>
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Join our community to receive updates
-            </Typography>
-            <form style={{ display: "flex", gap: "10px", marginBottom: "10px" }} noValidate>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter Your Email"
-                style={{
-                  padding: "10px",
-                  borderRadius: "10px",
-                  border: "1px solid #5d5bff",
-                }}
+            <Box component="form" noValidate sx={{ mt: 2 }}>
+              <TextField
+                fullWidth
+                placeholder="Email address"
+                variant="outlined"
+                size="small"
+                sx={{ mb: 2 }}
               />
-              <button
-                type="submit"
-                style={{
-                  padding: "10px 20px",
-                  borderRadius: "10px",
-                  backgroundColor: "#5d5bff",
-                  color: "#ffffff",
-                  border: "none",
-                  cursor: "pointer",
-                }}
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ mb: 2 }}
               >
                 Subscribe
-              </button>
-            </form>
-            <Typography variant="caption" color="text.secondary">
-              By subscribing, you agree to our Privacy Policy
+              </Button>
+            </Box>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+              Email us
             </Typography>
+            <Typography variant="body1" gutterBottom>
+              email@gmail.com
+            </Typography>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+              Call us
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              000 1234 5678
+            </Typography>
+            <Box sx={{ mt: 2 }}>
+              <Link href="#" color="primary" sx={{ mr: 2 }}>
+                <FacebookIcon />
+              </Link>
+              <Link href="#" color="primary" sx={{ mr: 2 }}>
+                <LinkedInIcon />
+              </Link>
+              <Link href="#" color="primary" sx={{ mr: 2 }}>
+                <TwitterIcon />
+              </Link>
+              <Link href="#" color="primary">
+                <InstagramIcon />
+              </Link>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Typography variant="h6" gutterBottom>
+              Career
+            </Typography>
+            <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
+              {['About us', 'Why Career', 'Testimonials', 'Promotions', 'Blog', 'Podcasts', 'Forum'].map((item) => (
+                <Box component="li" key={item} sx={{ mb: 1 }}>
+                  <Link href="#" color="inherit" underline="hover">
+                    {item}
+                  </Link>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Typography variant="h6" gutterBottom>
+              Help
+            </Typography>
+            <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
+              {['Contact us', 'My account'].map((item) => (
+                <Box component="li" key={item} sx={{ mb: 1 }}>
+                  <Link href="#" color="inherit" underline="hover">
+                    {item}
+                  </Link>
+                </Box>
+              ))}
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Typography variant="h6" gutterBottom>
+              Jobs
+            </Typography>
+            <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
+              {['Design Industry', 'Development Industry', 'Marketing Industry', 'Other Industry'].map((item) => (
+                <Box component="li" key={item} sx={{ mb: 1 }}>
+                  <Link href="#" color="inherit" underline="hover">
+                    {item}
+                  </Link>
+                </Box>
+              ))}
+            </Box>
           </Grid>
         </Grid>
-        <Box mt={5}>
+        <Box sx={{ mt: 5, pt: 3, borderTop: 1, borderColor: 'divider' }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Typography variant="h6">
-                SISONKE
+              <Typography variant="body2" color="text.secondary">
+                Copyright © 2022 UIHUT all rights reserved.
               </Typography>
             </Grid>
             <Grid item>
-              <Box display="flex" gap={2}>
-                <FacebookIcon color="primary" />
-                <InstagramIcon color="primary" />
-                <LinkedInIcon color="primary" />
-                <YouTubeIcon color="primary" />
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box mt={2}>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Box display="flex" gap={2}>
-                <Link href="#" sx={bottomFooterStyles} variant="body2">
-                  Privacy Policy
-                </Link>
-                <Link href="#" sx={bottomFooterStyles} variant="body2">
-                  Terms of Service
-                </Link>
-                <Link href="#" sx={bottomFooterStyles} variant="body2">
-                  Cookie Policy
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Typography sx={bottomFooterStyles} variant="body2">
-                © 2024 Mingers. All rights reserved
-              </Typography>
+              <Link href="#" color="inherit" underline="hover" sx={{ mr: 2 }}>
+                Terms of Service
+              </Link>
+              <Link href="#" color="inherit" underline="hover">
+                Privacy Policy
+              </Link>
             </Grid>
           </Grid>
         </Box>
@@ -145,6 +124,5 @@ const Footer = () => {
     </Box>
   );
 };
-
 
 export default Footer;
