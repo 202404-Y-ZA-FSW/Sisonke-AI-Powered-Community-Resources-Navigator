@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/sections/NavBar";
-
+import Blog from "../app/blog/page";
 
 export default function RootLayout({ children }) {
   return (
@@ -9,6 +9,7 @@ export default function RootLayout({ children }) {
      
     <body>
     <Navbar/>
+    <Blog/>
     </body>
     </html>
   );
