@@ -9,7 +9,7 @@ import {
   Button, 
   Box 
 } from '@mui/material';
-import { addComment } from '../lib/api';
+import { addComment } from '../forum/lib/api';
 
 const CommentSection = ({ comments, postId, onUpdate }) => {
   const [newComment, setNewComment] = useState('');

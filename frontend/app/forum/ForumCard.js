@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { ThumbUp, Comment } from '@mui/icons-material';
 import CommentSection from './CommentSection';
-import { likePost } from '../lib/api';
+import { likePost } from '../forum/lib/api';
 
 const ForumCard = ({ post, onUpdate }) => {
   const [showComments, setShowComments] = useState(false);
