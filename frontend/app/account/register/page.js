@@ -1,110 +1,201 @@
-import { Box, Button, Container, Grid, TextField, Typography } from '@mui/material';
-import { Google, Facebook } from '@mui/icons-material';
+import React from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Link,
+  Grid,
+  Paper,
+  Avatar,
+} from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
-export default function SignupPage() {
+function Signup() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 8 }}>
-      <Grid container spacing={2} alignItems="center">
-        {/* Left side: Image and text */}
-        <Grid item xs={12} md={6} sx={{ textAlign: 'center' }}>
-          <Box
-            component="img"
-            src="/local-resources-image.png" // You'll need to host this image in the public folder.
-            alt="Local resources"
-            sx={{ maxWidth: '100%' }}
-          />
-          <Typography variant="h4" gutterBottom>
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      {/* Header Section */}
+      <Grid
+        item
+        xs={12}
+        sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
+      >
+        <Typography variant="h6" fontWeight="bold">
+          Township Resident
+        </Typography>
+        <Link
+          href="#"
+          variant="body2"
+          sx={{
+            alignSelf: "center",
+            fontWeight: "bold",
+            color: "black",
+            textDecoration: "none",
+          }}
+        >
+          Existing user? Sign in.
+        </Link>
+      </Grid>
+
+      {/* Left Section (Discover) */}
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          backgroundColor: "#D4A017", // Sign Up button color
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          p: 3,
+        }}
+      >
+        <Box>
+          <Typography variant="h4" fontWeight="bold" color="black">
             Discover local resources and
           </Typography>
-          <Typography variant="body1">
-            Find the perfect match for your needs! Explore local opportunities with ease!
-          </Typography>
-        </Grid>
-
-        {/* Right side: Signup form */}
-        <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              p: 4,
-              borderRadius: 2,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-              backgroundColor: 'white',
+          <img
+            src="./assets/sisonke.png" // Update to the correct path if needed
+            alt="Local resources"
+            style={{
+              width: "80%",
+              maxWidth: "300px",
+              margin: "16px 0",
             }}
-          >
-            <Typography variant="h5" gutterBottom>
-              Join SisonkeConnect
-            </Typography>
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Unlock exclusive features. No commitment required.
-            </Typography>
+          />
+          <Typography variant="h5" color="black">
+            Find the perfect match for your needs!
+          </Typography>
 
-            <form>
-              <TextField
-                fullWidth
-                label="Your full name"
-                margin="normal"
-                variant="outlined"
-                required
-              />
-              <TextField
-                fullWidth
-                label="Your unique username"
-                margin="normal"
-                variant="outlined"
-                required
-              />
-              <TextField
-                fullWidth
-                label="Create a password"
-                margin="normal"
-                variant="outlined"
-                type="password"
-                required
-              />
-              <TextField
-                fullWidth
-                label="Confirm password"
-                margin="normal"
-                variant="outlined"
-                type="password"
-                required
-              />
+          <Typography variant="body1" sx={{ mt: 4, color: "black" }}>
+            Explore local opportunities with ease!
+          </Typography>
+        </Box>
+      </Grid>
 
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2, py: 1.5 }}
-              >
-                Sign up
-              </Button>
-            </form>
-
-            <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+      {/* Right Section (Form) */}
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "orange" }} />
+          <Typography component="h1" variant="h5">
+            Join SisonkeConnect
+          </Typography>
+          <Typography component="p" sx={{ color: "gray", mt: 1 }}>
+            Unlock exclusive features, no commitment required
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 2 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="fullName"
+              label="Your Full Name"
+              name="fullName"
+              autoComplete="name"
+              autoFocus
+              InputProps={{ sx: { borderRadius: "50px" } }}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Your Unique Username"
+              name="username"
+              autoComplete="username"
+              InputProps={{ sx: { borderRadius: "50px" } }}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Create a Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              InputProps={{ sx: { borderRadius: "50px" } }}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              id="confirmPassword"
+              InputProps={{ sx: { borderRadius: "50px" } }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: "#D4A017", // Sign Up button color
+                color: "black",
+                borderRadius: "50px",
+                "&:hover": { backgroundColor: "#D4A017" },
+              }}
+            >
+              Sign Up
+            </Button>
+            <Typography align="center" variant="body2">
               or connect with
             </Typography>
+            <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+              <Grid item>
+                <Button
+                  startIcon={<GoogleIcon />}
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "50px",
+                    backgroundColor: "#DB4437", // Google red
+                    color: "white",
+                    "&:hover": { backgroundColor: "#C53929" }, // Darker shade for hover
+                  }}
+                >
+                  Google
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  startIcon={<FacebookIcon />}
 
-            <Box display="flex" justifyContent="center" sx={{ mt: 1 }}>
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<Google />}
-                sx={{ mx: 1 }}
-              >
-                Google
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                startIcon={<Facebook />}
-                sx={{ mx: 1 }}
-              >
-                Facebook
-              </Button>
-            </Box>
+                  variant="contained"
+
+                  fullWidth
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "50px",
+                    backgroundColor: "#4267B2", // Facebook blue
+                    color: "white",
+                    "&:hover": { backgroundColor: "#365e8d" }, // Darker shade for hover
+
+                  }}
+                >
+                  Facebook
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
-        </Grid>
+        </Box>
       </Grid>
-    </Container>
+    </Grid>
   );
 }
+export default Signup;
