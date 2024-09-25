@@ -103,12 +103,12 @@ export default function Navbar() {
             <Button
               onClick={() => router.push("/account/register")} 
               sx={{
-                backgroundColor: "#000000",
+                backgroundColor: "#6c63ff",
                 color: "#ffffff",
                 padding: "8px 30px",
-                border: "1px solid #000000",
+                border: "1px solid #6c63ff",
                 textTransform: "none",
-                borderRadius: "10px",
+                borderRadius: "16px",
                 "&:hover": {
                   backgroundColor: "#333",
                 },
