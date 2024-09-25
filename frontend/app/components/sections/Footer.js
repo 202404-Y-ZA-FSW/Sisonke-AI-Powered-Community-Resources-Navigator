@@ -1,125 +1,73 @@
 import React from 'react';
-import { Box, Container, Grid, Typography, TextField, Button, Link } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import { Box, Container, Grid, Typography, Link, IconButton } from '@mui/material';
+import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
 
 const Footer = () => {
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
+    <Box component="footer" sx={{ background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)', py: 6 }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h6" gutterBottom>
-              <Box component="span" sx={{ color: 'primary.main' }}>C</Box>
-              AREE
-              <Box component="span" sx={{ color: 'warning.main' }}>R</Box>
-            </Typography>
-            <Box component="form" noValidate sx={{ mt: 2 }}>
-              <TextField
-                fullWidth
-                placeholder="Email address"
-                variant="outlined"
-                size="small"
-                sx={{ mb: 2 }}
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mb: 2 }}
-              >
-                Subscribe
-              </Button>
+          <Grid item xs={12} sm={4} md={3}>
+            <Box sx={{ mb: 2 }}>
+              <Typography sx={{ fontWeight: "700" }} variant="h6" color="text.primary" gutterBottom>
+                SIS<span style={{ color: '#6c63ff' }}>O</span>NKE
+              </Typography>
             </Box>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Email us
+            <Typography sx={{ marginBottom: "15px" }} variant="body2" color="text.secondary">
+              143 West Street, Sandown, Sandton, Gauteng, South Africa
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              email@gmail.com
+            <Typography sx={{ marginBottom: "15px" }} variant="body2" color="text.secondary">
+              info@sisonke.co.za
             </Typography>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Call us
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              000 1234 5678
+            <Typography sx={{ marginBottom: "15px" }} variant="body2" color="text.secondary">
+              +27 12 345 6789
             </Typography>
             <Box sx={{ mt: 2 }}>
-              <Link href="#" color="primary" sx={{ mr: 2 }}>
-                <FacebookIcon />
-              </Link>
-              <Link href="#" color="primary" sx={{ mr: 2 }}>
-                <LinkedInIcon />
-              </Link>
-              <Link href="#" color="primary" sx={{ mr: 2 }}>
-                <TwitterIcon />
-              </Link>
-              <Link href="#" color="primary">
-                <InstagramIcon />
-              </Link>
+              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff", marginRight: "10px" }} aria-label="Twitter">
+                <Twitter />
+              </IconButton>
+              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff", marginRight: "10px" }} aria-label="LinkedIn">
+                <LinkedIn />
+              </IconButton>
+              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff", marginRight: "10px" }} aria-label="Instagram">
+                <Instagram />
+              </IconButton>
+              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff" }} aria-label="Facebook">
+                <Facebook />
+              </IconButton>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="h6" gutterBottom>
-              Career
+          <Grid item xs={12} sm={4} md={3}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              Community
             </Typography>
-            <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
-              {['About us', 'Why Career', 'Testimonials', 'Promotions', 'Blog', 'Podcasts', 'Forum'].map((item) => (
-                <Box component="li" key={item} sx={{ mb: 1 }}>
-                  <Link href="#" color="inherit" underline="hover">
-                    {item}
-                  </Link>
-                </Box>
-              ))}
-            </Box>
+            {['Blog', 'Forum', 'Events', 'Education'].map((item) => (
+              <Link href="#" sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block" key={item}>
+                {item}
+              </Link>
+            ))}
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="h6" gutterBottom>
-              Help
+          <Grid item xs={12} sm={4} md={3}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              Company
             </Typography>
-            <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
-              {['Contact us', 'My account'].map((item) => (
-                <Box component="li" key={item} sx={{ mb: 1 }}>
-                  <Link href="#" color="inherit" underline="hover">
-                    {item}
-                  </Link>
-                </Box>
-              ))}
-            </Box>
+            {['Home', 'About Us', 'Careers', 'FAQs'].map((item) => (
+              <Link href="#" sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block" key={item}>
+                {item}
+              </Link>
+            ))}
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Typography variant="h6" gutterBottom>
-              Jobs
+          <Grid item xs={12} sm={4} md={3}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              Support
             </Typography>
-            <Box component="ul" sx={{ p: 0, listStyle: 'none' }}>
-              {['Design Industry', 'Development Industry', 'Marketing Industry', 'Other Industry'].map((item) => (
-                <Box component="li" key={item} sx={{ mb: 1 }}>
-                  <Link href="#" color="inherit" underline="hover">
-                    {item}
-                  </Link>
-                </Box>
-              ))}
-            </Box>
+            {['Contact Us', 'Privacy Policy', 'Terms of Service'].map((item) => (
+              <Link href="#" sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block" key={item}>
+                {item}
+              </Link>
+            ))}
           </Grid>
         </Grid>
-        <Box sx={{ mt: 5, pt: 3, borderTop: 1, borderColor: 'divider' }}>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Typography variant="body2" color="text.secondary">
-                Copyright © 2022 UIHUT all rights reserved.
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Link href="#" color="inherit" underline="hover" sx={{ mr: 2 }}>
-                Terms of Service
-              </Link>
-              <Link href="#" color="inherit" underline="hover">
-                Privacy Policy
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
       </Container>
     </Box>
   );
