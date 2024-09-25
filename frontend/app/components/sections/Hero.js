@@ -14,8 +14,10 @@ import NYDA from "./Images/logos/nyda.png";
 import SA from "./Images/logos/sayouth.png";
 import Projecty from "./Images/logos/projecty.svg";
 
+import NotionLogo from "./Images/logos/notion.png";
+import SlackLogo from "./Images/logos/slack.png";
+import GoogleLogo from "./Images/logos/google.png";
 
-import { Google } from '@mui/icons-material';
 const GradientBackground = styled(Box)({
   background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
   minHeight: '100vh',
@@ -64,10 +66,10 @@ export default function HeroSection() {
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
-              Get most exciting job from all around the world here
+             Discover essential local support and opportunities
             </Typography>
             <Typography variant="subtitle1" gutterBottom sx={{ color: '#666', mb: 4 }}>
-              Work with the largest network of independent professionals and get things done-from quick turnarounds to big transformations.
+             Explore a curated collection of local resources tailored to meet your community's unique needs. Whether you're seeking support, opportunities, or connections, we make it easy to find the help and guidance you're looking for.
             </Typography>
             <SearchBar sx={{ mb: 4 }}>
               <TextField
@@ -129,31 +131,31 @@ export default function HeroSection() {
                   padding: '0.5rem',
                 }}
               >
-                <Google fontSize="large" />
+                <Image src={NotionLogo} alt="Notion logo" width="100%" height={40} />
               </Box>
               <Box
                 sx={{
                   position: 'absolute',
                   bottom: 10,
                   right: 10,
-                  backgroundColor: 'white',
+                  backgroundColor: 'transparent',
                   borderRadius: '50%',
                   padding: '0.5rem',
                 }}
               >
-                <Image src="/placeholder.svg?height=40&width=40" alt="Google logo" width={40} height={40} />
+                <Image src={GoogleLogo} alt="Google logo" width="100%" height={40} />
               </Box>
               <Box
                 sx={{
                   position: 'absolute',
                   bottom: 10,
                   left: 10,
-                  backgroundColor: 'white',
+                  backgroundColor: 'transparent',
                   borderRadius: '50%',
                   padding: '0.5rem',
                 }}
               >
-                <Image src="/placeholder.svg?height=40&width=40" alt="Slack logo" width={40} height={40} />
+                <Image src={SlackLogo} alt="Slack logo" width="100%" height={40} />
               </Box>
             </Box>
           </Grid>
