@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import sisonkeImage from "./sisonke.jpg";
 
 function Signup() {
   return (
@@ -45,7 +46,7 @@ function Signup() {
         sm={4}
         md={7}
         sx={{
-          backgroundColor: "#D4A017", // Sign Up button color
+          backgroundColor: "#D4A017",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -57,18 +58,18 @@ function Signup() {
           <Typography variant="h4" fontWeight="bold" color="black">
             Discover local resources and
           </Typography>
+          <Typography variant="h5" color="black">
+            Find the perfect match for your needs!
+          </Typography>
           <img
-            src="./assets/sisonke.png" // Update to the correct path if needed
-            alt="Local resources"
+            src={sisonkeImage}
+            alt="sisonke"
             style={{
               width: "80%",
               maxWidth: "300px",
               margin: "16px 0",
             }}
           />
-          <Typography variant="h5" color="black">
-            Find the perfect match for your needs!
-          </Typography>
 
           <Typography variant="body1" sx={{ mt: 4, color: "black" }}>
             Explore local opportunities with ease!
@@ -144,7 +145,7 @@ function Signup() {
               sx={{
                 mt: 3,
                 mb: 2,
-                backgroundColor: "#D4A017", // Sign Up button color
+                backgroundColor: "#D4A017",
                 color: "black",
                 borderRadius: "50px",
                 "&:hover": { backgroundColor: "#D4A017" },
@@ -164,9 +165,9 @@ function Signup() {
                   sx={{
                     textTransform: "none",
                     borderRadius: "50px",
-                    backgroundColor: "#DB4437", // Google red
+                    backgroundColor: "#DB4437",
                     color: "white",
-                    "&:hover": { backgroundColor: "#C53929" }, // Darker shade for hover
+                    "&:hover": { backgroundColor: "#C53929" },
                   }}
                 >
                   Google
@@ -175,17 +176,14 @@ function Signup() {
               <Grid item>
                 <Button
                   startIcon={<FacebookIcon />}
-
                   variant="contained"
-
                   fullWidth
                   sx={{
                     textTransform: "none",
                     borderRadius: "50px",
-                    backgroundColor: "#4267B2", // Facebook blue
+                    backgroundColor: "#4267B2",
                     color: "white",
-                    "&:hover": { backgroundColor: "#365e8d" }, // Darker shade for hover
-
+                    "&:hover": { backgroundColor: "#365e8d" },
                   }}
                 >
                   Facebook
