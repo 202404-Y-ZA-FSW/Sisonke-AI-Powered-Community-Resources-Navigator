@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import BlogCard from '../components/BlogCard';
+import BlogCard from '../components/BlogCard'; // Assuming this is your card component
 import Link from 'next/link';
 import { Box, Typography, Grid, Button } from '@mui/material';
 
@@ -40,16 +40,19 @@ export default function BlogPage() {
 
   return (
     <Box sx={{ maxWidth: '1200px', mx: 'auto', textAlign: 'center', mt: 5 }}>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        Blog feed
+      <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
+        Explore Popular Blogs
       </Typography>
       <Typography variant="subtitle1" sx={{ mb: 4 }}>
         Add insight to boost career growth and check out tips on company job vacancies
       </Typography>
-      <Grid container spacing={1}>
+      
+      {/* Grid container for the blog cards */}
+      <Grid container spacing={3} justifyContent="center">
         {Array.isArray(blogPosts) && blogPosts.length > 0 ? (
           blogPosts.map((post) => (
-            <Grid item xs={12} md={4} key={post._id}>
+            <Grid item xs={12} sm={6} md={4} key={post._id}>
+              {/* Blog card link */}
               <Link href={`/blog/${post._id}`} style={{ textDecoration: 'none' }}>
                 <BlogCard post={post} />
               </Link>
@@ -59,7 +62,13 @@ export default function BlogPage() {
           <Typography variant="body1">No blog posts available.</Typography>
         )}
       </Grid>
+
+      {/* Button to browse all blogs */}
+      <Box sx={{ mt: 4 }}>
+        <Button variant="contained" color="primary">
+          Browse All Blogs
+        </Button>
+      </Box>
     </Box>
   );
-  
 }

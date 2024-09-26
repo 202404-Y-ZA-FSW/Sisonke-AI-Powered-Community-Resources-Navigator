@@ -3,57 +3,80 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
 import axios from 'axios';
+import Link from 'next/link';
 
 // Component to display individual blog details
-const BlogCardDetails = ({ title, content, author, timePosted }) => {
+const BlogCardDetails = ({ blog }) => {
   return (
-    <Card sx={{ maxWidth: 345, mb: 4, boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)', border: '1px solid #ddd' }}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        mb: 4,
+        boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
+        border: '1px solid #ddd',
+        transition: 'transform 0.3s ease',
+        '&:hover': {
+          transform: 'scale(1.05)',
+        },
+      }}
+    >
       <CardContent>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="subtitle2" color="text.secondary">
-            By {author}
+            By {blog.author || 'Unknown Author'}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            {timePosted}
+            {new Date(blog.createdAt).toLocaleDateString() || 'Invalid Date'}
           </Typography>
         </Box>
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          {title}
+        <Typography variant="h6" sx={{ mt: 2, fontWeight: 'bold' }}>
+          {blog.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {content ? content.substring(0, 100) : 'No content available'}...
+          {blog.content ? blog.content.substring(0, 100) : 'No content available'}...
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="primary">
-          Read More
-        </Button>
+        <Link href={`http://localhost:5000/blogs/${blog._id}`} passHref>
+          <Button variant="contained" color="primary" sx={{ width: '100%' }}>
+            Read More
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
 };
 
 // Main component to display blog cards and dynamic fetching
-const BlogPosts = () => {
-  const [blogs, setBlogs] = useState([]);
+const BlogCard = () => {
+  const [blogs, setBlogPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);  // Capture API error
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchBlogPosts = async () => {
+      setIsLoading(true);
+      setError(null);
+
       try {
-        const response = await axios.get('http://localhost:5000/blogs');
-        const data = Array.isArray(response.data) ? response.data : Object.values(response.data); // Ensure it's an array
-        setBlogs(data);
-        setIsLoading(false);
+        const response = await fetch('http://localhost:5000/blogs/');
+        console.log(response);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch blog posts.');
+        }
+        const data = await response.json();
+        const formattedData = data.blogs;
+        setBlogPosts(formattedData);
       } catch (error) {
-        console.error('Error fetching blog posts:', error);
         setError(error.message);
+        console.error('Error fetching blog posts:', error);
+      } finally {
         setIsLoading(false);
       }
     };
 
-    fetchBlogs();
+    fetchBlogPosts();
   }, []);
 
   if (isLoading) {
@@ -64,24 +87,13 @@ const BlogPosts = () => {
     return <Typography>Error: {error}</Typography>;
   }
 
-  if (!Array.isArray(blogs) || blogs.length === 0) {
-    return <Typography>No blog posts available.</Typography>;
-  }
-
   return (
-    <Container>
-      <Typography variant="h4" align="center" sx={{ my: 2 }}>
-        Latest Blog Posts
-      </Typography>
+    <Container sx={{ mt: 5 }}>
+      
       <Grid container spacing={3} justifyContent="center">
-        {blogs.map((blog, index) => (
-          <Grid item xs={6} sm={3} md={4} key={index}>
-            <BlogCardDetails 
-              title={blog.title} 
-              content={blog.content} 
-              author={blog.author} 
-              timePosted={new Date(blog.createdAt).toLocaleDateString()}
-            />
+        {blogs.map((blog) => (
+          <Grid item xs={12} sm={6} md={4} key={blog._id}>
+            <BlogCardDetails blog={blog} />
           </Grid>
         ))}
       </Grid>
@@ -89,4 +101,4 @@ const BlogPosts = () => {
   );
 };
 
-export default BlogPosts;
+export default BlogCard;
