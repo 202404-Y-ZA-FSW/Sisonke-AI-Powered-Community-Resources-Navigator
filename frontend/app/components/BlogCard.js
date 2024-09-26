@@ -1,86 +1,92 @@
-'use client'
+"use client";
 
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { styled } from '@mui/system';
-import { Box, Card, CardContent, CardMedia, Typography, Button, Grid } from '@mui/material';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
+import { Container, Grid, Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
+import axios from 'axios';
 
-const ReadMoreButton = styled(Button)({
-  backgroundColor: '#3f51b5',
-  color: '#fff',
-  '&:hover': {
-    backgroundColor: '#283593',
-  },
-});
+// Component to display individual blog details
+const BlogCardDetails = ({ title, content, author, timePosted }) => {
+  return (
+    <Card sx={{ maxWidth: 345, mb: 4, boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)', border: '1px solid #ddd' }}>
+      <CardContent>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle2" color="text.secondary">
+            By {author}
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            {timePosted}
+          </Typography>
+        </Box>
+        <Typography variant="h6" sx={{ mt: 2 }}>
+          {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {content ? content.substring(0, 100) : 'No content available'}...
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button variant="contained" color="primary">
+          Read More
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
-export default function BlogCards() {
-  const [blogPosts, setBlogPosts] = useState([]);
+// Main component to display blog cards and dynamic fetching
+const BlogPosts = () => {
+  const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null);  // Capture API error
 
   useEffect(() => {
-    const fetchBlogPosts = async () => {
-      setIsLoading(true);
-      setError(null);
-  
+    const fetchBlogs = async () => {
       try {
-        const response = await fetch('http://localhost:5000/blogs/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch blog posts.');
-        }
-        const data = await response.json();
-        
-        // Ensure the data is an array before setting state
-        const formattedData = Array.isArray(data) ? data : Object.values(data);
-        
-        setBlogPosts(formattedData);
+        const response = await axios.get('http://localhost:5000/blogs');
+        const data = Array.isArray(response.data) ? response.data : Object.values(response.data); // Ensure it's an array
+        setBlogs(data);
+        setIsLoading(false);
       } catch (error) {
-        setError(error.message);
         console.error('Error fetching blog posts:', error);
-      } finally {
+        setError(error.message);
         setIsLoading(false);
       }
     };
-  
-    fetchBlogPosts();
+
+    fetchBlogs();
   }, []);
-  
+
+  if (isLoading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (error) {
+    return <Typography>Error: {error}</Typography>;
+  }
+
+  if (!Array.isArray(blogs) || blogs.length === 0) {
+    return <Typography>No blog posts available.</Typography>;
+  }
 
   return (
-    <Box sx={{ maxWidth: '1200px', mx: 'auto', textAlign: 'center', mt: 5 }}>
-      <Grid container spacing={1}>
-        {Array.isArray(blogPosts) && blogPosts.length > 0 ? (
-          blogPosts.map((card) => (
-            <Grid item xs={12} md={4} key={card._id}>
-              <Card sx={{ height: '100%' }}>
-                <CardMedia component="img" height="160" image={card.image} alt={card.title} />
-                <CardContent>
-                  <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-                    {card.readTime}
-                  </Typography>
-                  <Typography variant="h6" component="div" sx={{ mb: 1 }}>
-                    {card.title}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-                    {card.description}
-                  </Typography>
-                  <Link href={`/blog/${card._id}`} underline="none">
-                    <ReadMoreButton fullWidth>Read More</ReadMoreButton>
-                  </Link>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))
-        ) : (
-          <Typography variant="body1">No blog posts available.</Typography>
-        )}
+    <Container>
+      <Typography variant="h4" align="center" sx={{ my: 2 }}>
+        Latest Blog Posts
+      </Typography>
+      <Grid container spacing={3} justifyContent="center">
+        {blogs.map((blog, index) => (
+          <Grid item xs={6} sm={3} md={4} key={index}>
+            <BlogCardDetails 
+              title={blog.title} 
+              content={blog.content} 
+              author={blog.author} 
+              timePosted={new Date(blog.createdAt).toLocaleDateString()}
+            />
+          </Grid>
+        ))}
       </Grid>
-      <Link href="/blog" underline="none">
-        <Button variant="outlined" sx={{ mt: 4, px: 4 }}>
-          Browse All
-        </Button>
-      </Link>
-    </Box>
+    </Container>
   );
-} 
+};
+
+export default BlogPosts;
