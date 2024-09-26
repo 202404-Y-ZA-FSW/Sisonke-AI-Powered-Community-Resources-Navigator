@@ -1,4 +1,8 @@
 import React from "react";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import sisonkeImage from "../register/sisonke.jpg";
+
 import {
   Box,
   Button,
@@ -9,9 +13,6 @@ import {
   Paper,
   Avatar,
 } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import sisonkeImage from "./sisonke.jpg";
 
 function Signup() {
   return (
@@ -62,7 +63,7 @@ function Signup() {
             Find the perfect match for your needs!
           </Typography>
           <img
-            src={sisonkeImage}
+            src={"https://www.omniaccounts.co.za/wp-content/uploads/2022/10/How-to-register-a-new-small-business-in-south-africa.jpeg"}
             alt="sisonke"
             style={{
               width: "80%",
