@@ -82,7 +82,7 @@ export default function Events() {
   return (
     <Box sx={{ py: 6, background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)' }}>
       <Container>
-        <Typography variant="h3" align="center" gutterBottom>
+        <Typography variant="h4" align="center" gutterBottom>
           Explore the awesome events <br/> happening in your area
         </Typography>
         <Typography
