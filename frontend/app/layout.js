@@ -1,16 +1,17 @@
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/sections/NavBar";
-import Blog from "../app/blog/page";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata = {
+  title: "Sisonke AI Powered Community Resources Navigator",
+  description: "Sisonke AI Powered Community Resources Navigator",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-     
-    <body>
-    <Navbar/>
-    <Blog/>
-    </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

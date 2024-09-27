@@ -1,19 +1,11 @@
-"use client";
-import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+"use client";  
 
+import React, { useState } from "react";
+import {AppBar,Toolbar,Typography,Button,IconButton,Menu,MenuItem,useMediaQuery,useTheme,
+} from "@mui/material";
+import { useRouter } from "next/navigation";  
+import { MenuIcon } from "@mui/icons-material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function Navbar() {
   const theme = useTheme();
@@ -21,36 +13,32 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [pageAnchorEl, setPageAnchorEl] = useState(null);
 
+  const router = useRouter();  
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
 
   const handlePageOpen = (event) => {
     setPageAnchorEl(event.currentTarget);
   };
 
-
   const handlePageClose = () => {
     setPageAnchorEl(null);
   };
-
 
   const navLinksStyles = {
     color: "#000000",
     textTransform: "none",
   };
 
-
   return (
     <AppBar
-      sx={{ backgroundColor: "#fbf8e1" }}
+      sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }}
       position="static"
       color="transparent"
       elevation={0}
@@ -79,21 +67,21 @@ export default function Navbar() {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <MenuItem href="/" onClick={handleMenuClose}>Home</MenuItem>
-              <MenuItem href="/about" onClick={handleMenuClose}>About</MenuItem>
-              <MenuItem href="/jobs" onClick={handleMenuClose}>Jobs</MenuItem>
-              <MenuItem href="/contact" onClick={handleMenuClose}>Contact</MenuItem>
-              <MenuItem href="/community" onClick={handleMenuClose}>Community</MenuItem>
-              <MenuItem href="/login" onClick={handleMenuClose}>Login</MenuItem>
-              <MenuItem href="/register" onClick={handleMenuClose}>Register</MenuItem>
+              <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
+              <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
+              <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
+              <MenuItem onClick={() => router.push("/community")}>Community</MenuItem>
+              <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
+              <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
             </Menu>
           </>
         ) : (
           <>
-            <Button href="/" sx={navLinksStyles}>Home</Button>
-            <Button href="/about" sx={navLinksStyles}>About</Button>
-            <Button href="/jobs" sx={navLinksStyles}>Jobs</Button>
-            <Button href="/contact" sx={navLinksStyles}>Contact</Button>
+            <Button onClick={() => router.push("/")} sx={navLinksStyles}>Home</Button>
+            <Button onClick={() => router.push("/about")} sx={navLinksStyles}>About</Button>
+            <Button onClick={() => router.push("/jobs")} sx={navLinksStyles}>Jobs</Button>
+            <Button onClick={() => router.push("/contact")} sx={navLinksStyles}>Contact</Button>
             <Button
               sx={navLinksStyles}
               endIcon={<KeyboardArrowDownIcon />}
@@ -106,20 +94,21 @@ export default function Navbar() {
               open={Boolean(pageAnchorEl)}
               onClose={handlePageClose}
             >
-              <MenuItem href="/blog" onClick={handlePageClose}>Blog</MenuItem>
-              <MenuItem href="/forum" onClick={handlePageClose}>Forum</MenuItem>
-              <MenuItem href="/events" onClick={handlePageClose}>Events</MenuItem>
-              <MenuItem href="/education" onClick={handlePageClose}>Education</MenuItem>
+              <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
+              <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
+              <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
+              <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
             </Menu>
-            <Button sx={navLinksStyles}>Login</Button>
+            <Button onClick={() => router.push("/account/login")} sx={navLinksStyles}>Login</Button>
             <Button
+              onClick={() => router.push("/account/register")} 
               sx={{
-                backgroundColor: "#000000",
+                backgroundColor: "#6c63ff",
                 color: "#ffffff",
                 padding: "8px 30px",
-                border: "1px solid #000000",
+                border: "1px solid #6c63ff",
                 textTransform: "none",
-                borderRadius: "10px",
+                borderRadius: "16px",
                 "&:hover": {
                   backgroundColor: "#333",
                 },
