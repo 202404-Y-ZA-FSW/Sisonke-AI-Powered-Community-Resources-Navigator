@@ -1,58 +1,70 @@
-import React from 'react';
-import { Card, CardContent, Typography, Chip, Box } from '@mui/material';
-import { styled } from '@mui/system';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import React from "react";
+import { Card, CardContent, Typography, Chip, Box } from "@mui/material";
+import { styled } from "@mui/system";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 const StyledCard = styled(Card)({
-  background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
+  background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
   maxWidth: 400,
-  margin: 'auto',
+  margin: "auto",
   borderRadius: 16,
-  boxShadow: "none"
+  boxShadow: "none",
+  "&:hover": {
+    transform: "scale(1.02)",
+    transition: "all 0.3s",
+  },
 });
 
 const HeaderContainer = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
+  display: "flex",
+  alignItems: "center",
   marginBottom: 16,
 });
 
-const Logo = styled('div')({
+const Logo = styled("div")({
   width: 48,
   height: 48,
   borderRadius: 8,
-  backgroundColor: '#6c63ff',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'white',
-  fontWeight: 'bold',
+  backgroundColor: "#6c63ff",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "white",
+  fontWeight: "bold",
   fontSize: 24,
   marginRight: 16,
 });
 
 const ChipContainer = styled(Box)({
-  display: 'flex',
+  display: "flex",
   gap: 8,
   marginTop: 16,
   marginBottom: 16,
 });
 
 const FooterContainer = styled(Box)({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   marginTop: 16,
 });
 
 const InfoItem = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
+  display: "flex",
+  alignItems: "center",
   gap: 4,
 });
 
-export default function JobCard({ title, company, salaryRange, timeAgo, employmentType, remote, description }) {
+export default function JobCard({
+  title,
+  company,
+  salaryRange,
+  timeAgo,
+  employmentType,
+  remote,
+  description,
+}) {
   return (
     <StyledCard>
       <CardContent>

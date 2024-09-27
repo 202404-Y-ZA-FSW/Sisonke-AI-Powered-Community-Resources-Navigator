@@ -8,6 +8,7 @@ import Subscriber from "./components/sections/Subscribe";
 import FAQs from "./components/sections/FAQs";
 import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
+import Blogs from "./components/sections/Blogs";
 export default function Home() {
   return (
     <React.Fragment>
@@ -17,6 +18,7 @@ export default function Home() {
       <Events/>
       <Jobs/>
       <FAQs/>
+      <Blogs/>
       <Subscriber/>
       <Footer/>
     </React.Fragment>

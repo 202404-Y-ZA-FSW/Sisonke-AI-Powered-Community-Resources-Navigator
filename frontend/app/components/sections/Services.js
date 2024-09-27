@@ -1,6 +1,11 @@
 import React from "react";
 import { Box, Container, Typography, Grid, Paper, Button } from "@mui/material";
-import { People, EventAvailable, WorkOutline, Forum } from "@mui/icons-material";
+import {
+  People,
+  EventAvailable,
+  WorkOutline,
+  Forum,
+} from "@mui/icons-material";
 
 const steps = [
   {
@@ -18,7 +23,8 @@ const steps = [
   {
     icon: <WorkOutline fontSize="large" />,
     title: "Jobs & Learnerships",
-    description: "Our NGOs help you apply for jobs, learn about careers, and develop your skills.",
+    description:
+      "Our NGOs help you apply for jobs, learn about careers, and develop your skills.",
   },
   {
     icon: <Forum fontSize="large" />,
@@ -36,7 +42,8 @@ export default function Services() {
           What you can do and get on our platform
         </Typography>
         <Typography variant="subtitle1" sx={{ mb: 6 }}>
-        Whether you're seeking support, opportunities, and connections<br/> 
+          Whether you're seeking support, opportunities, and connections
+          <br />
         </Typography>
 
         <Grid container spacing={4} justifyContent="center">
@@ -50,8 +57,13 @@ export default function Services() {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
+                  background:
+                    "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
                   borderRadius: "16px",
+                  "&:hover": {
+                    transform: "scale(1.02)",
+                    transition: "all 0.3s",
+                  },
                 }}
               >
                 <Box
@@ -68,13 +80,25 @@ export default function Services() {
                 <Typography variant="h6" component="h3" gutterBottom>
                   {step.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">{step.description}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {step.description}
+                </Typography>
               </Paper>
             </Grid>
           ))}
         </Grid>
 
-        <Button sx={{ borderRadius: '15px', backgroundColor: "#6c63ff", color: "#ffffff", textTransform: "none", padding: "8px 30px", mt: 6 }} size="large">
+        <Button
+          sx={{
+            borderRadius: "15px",
+            backgroundColor: "#6c63ff",
+            color: "#ffffff",
+            textTransform: "none",
+            padding: "8px 30px",
+            mt: 6,
+          }}
+          size="large"
+        >
           Get Started
         </Button>
       </Container>
