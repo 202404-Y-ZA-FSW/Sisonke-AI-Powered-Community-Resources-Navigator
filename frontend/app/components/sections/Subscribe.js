@@ -46,10 +46,10 @@ export default function Subscribe() {
             zIndex: 1,
           }}
         >
-          <Typography variant="h3" component="h2" gutterBottom>
+          <Typography variant="h4" component="h2" gutterBottom>
             Subscribe to our newsletter
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" color="text.secondary" paragraph>
             Get informed about new jobs, events, and new resources that are{" "}
             <br /> posted daily in your community forums and blogs.
           </Typography>

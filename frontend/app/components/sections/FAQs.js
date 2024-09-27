@@ -28,8 +28,11 @@ const faqs = [
 export default function FAQs() {
   return (
     <Container maxWidth="md" sx={{ my: 6 }}>
-      <Typography variant="h3" component="h1" align="center" gutterBottom>
-        Frequently asked <br/> questions
+      <Typography variant="h4" component="h1" align="center" gutterBottom>
+        Frequently asked questions
+      </Typography>
+      <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
+        If our questions aren't answered here, don't hesitate to contact our support for help.
       </Typography>
       <Box sx={{ mt: 4 }}>
         {faqs.map((faq, index) => (
@@ -52,7 +55,7 @@ export default function FAQs() {
               <Typography variant="h6">{`${index + 1}. ${faq.question}`}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)", padding: "15px", borderRadius: "16px" }}>{faq.answer}</Typography>
+              <Typography sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)", padding: "15px", borderRadius: "16px", color: "text.secondary" }}>{faq.answer}</Typography>
             </AccordionDetails>
           </Accordion>
         ))}
