@@ -87,10 +87,10 @@ const Jobs = () => {
 
   return (
     <Container sx={{ py: 6 }}>
-      <Typography variant="h3" component="h1" align="center" sx={{ my: 1 }}>
-        Explore the latest job <br/> opportunities
+      <Typography variant="h4" component="h1" align="center" sx={{ my: 1 }} gutterBottom>
+        Explore the latest job opportunities
       </Typography>
-      <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 4 }}>
+      <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
         Discover jobs most relevant to you by experience level, salary, location, job type, etc.
       </Typography>
       
