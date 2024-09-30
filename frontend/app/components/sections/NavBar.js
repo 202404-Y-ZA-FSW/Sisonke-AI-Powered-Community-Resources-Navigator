@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";  
 import MenuIcon from '@mui/icons-material/Menu';
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function Navbar() {
@@ -84,6 +85,7 @@ export default function Navbar() {
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
                 <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
               </Menu>
+
               <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
               <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
             </Menu>
