@@ -10,7 +10,7 @@ import FAQs from "./components/sections/FAQs";
 import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
-
+import Chat from "./components/ChatAIUI";
 export default function Home() {
   useEffect(() => {
     const googleTranslateElementInit = () => {
@@ -39,11 +39,12 @@ export default function Home() {
       <Events />
       <Services/>
       <Events/>
-      <Jobs />
-      <FAQs />
-      <Blogs />
-      <Subscriber />
-      <Footer />
+      <Jobs/>
+      <FAQs/>
+      <Blogs/>
+      <Subscriber/>
+      <Footer/>
+      <Chat/>
 
       {/* Load the Google Translate script */}
       <Script
