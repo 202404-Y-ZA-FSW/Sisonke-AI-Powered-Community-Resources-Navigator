@@ -65,11 +65,11 @@ export default function HeroSection() {
       <Container maxWidth="lg">
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
-            <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+            <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
              Discover essential local support and opportunities
             </Typography>
             <Typography variant="subtitle1" gutterBottom sx={{ color: '#666', mb: 4 }}>
-             Explore a curated collection of local resources tailored to meet your community's unique needs. Whether you're seeking support, opportunities, or connections, we make it easy to find the help and guidance you're looking for.
+             Explore a curated collection of local resources tailored to meet your community's unique needs.
             </Typography>
             <SearchBar sx={{ mb: 4 }}>
               <TextField

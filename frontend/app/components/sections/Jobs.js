@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Container, Grid, Card, CardContent, CardActions, Typography, Button, Chip, Box, TextField, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
+import { Container, Grid, Typography, Button, Box, TextField, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
 import JobCard from '../JobCard';
 
 // Display the list of job cards and the search functionality
@@ -87,10 +87,10 @@ const Jobs = () => {
 
   return (
     <Container sx={{ py: 6 }}>
-      <Typography variant="h4" align="center" sx={{ my: 1 }}>
-        Explore the latest job <br/> opportunities
+      <Typography variant="h4" component="h1" align="center" sx={{ my: 1 }} gutterBottom>
+        Explore the latest job opportunities
       </Typography>
-      <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 4 }}>
+      <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
         Discover jobs most relevant to you by experience level, salary, location, job type, etc.
       </Typography>
       
