@@ -11,11 +11,6 @@ import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
 
-import Subscriber from "./components/sections/Subscribe";
-import FAQs from "./components/sections/FAQs";
-import Services from "./components/sections/Services";
-import Events from "./components/sections/Event";
-import Blogs from "./components/sections/Blogs";
 export default function Home() {
   useEffect(() => {
     const googleTranslateElementInit = () => {
@@ -45,9 +40,6 @@ export default function Home() {
       <Services/>
       <Events/>
       <Jobs />
-      <FAQs/>
-      <Blogs/>
-      <Subscriber/>
       <FAQs />
       <Blogs />
       <Subscriber />
