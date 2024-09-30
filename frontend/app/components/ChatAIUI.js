@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { Fab, Paper, TextField, IconButton, Zoom } from "@mui/material";
+import {
+  Fab,
+  Paper,
+  TextField,
+  IconButton,
+  Zoom,
+  CircularProgress,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import ChatIcon from "@mui/icons-material/Chat";
 import CloseIcon from "@mui/icons-material/Close";
@@ -20,8 +27,8 @@ const ChatBox = styled(Paper)(({ isFullScreen }) => ({
   position: "fixed",
   bottom: isFullScreen ? 0 : "5rem",
   right: isFullScreen ? 0 : "2rem",
-  width: isFullScreen ? "100%" : "300px",
-  height: isFullScreen ? "100%" : "400px",
+  width: isFullScreen ? "100%" : "500px",
+  height: isFullScreen ? "100%" : "500px",
   display: "flex",
   flexDirection: "column",
   padding: "1rem",
@@ -44,6 +51,7 @@ const ChatMessages = styled("div")({
   marginBottom: "1rem",
   display: "flex",
   flexDirection: "column",
+  padding: "20px"
 });
 
 const Message = styled("div")(({ isUser }) => ({
@@ -52,7 +60,7 @@ const Message = styled("div")(({ isUser }) => ({
   borderRadius: "1rem",
   marginBottom: "0.5rem",
   alignSelf: isUser ? "flex-end" : "flex-start",
-  backgroundColor: isUser ? "#1976d2" : "#4caf50",
+  backgroundColor: isUser ? "#6c63ff" : "#4caf50",
   color: "white",
 }));
 
@@ -66,6 +74,8 @@ export default function Chat() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -79,18 +89,60 @@ export default function Chat() {
     setMessage(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (message.trim()) {
-      setMessages([...messages, { text: message, isUser: true }]);
-      // Simulate a response (you can replace this with actual API call)
-      setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          { text: "This is a sample response.", isUser: false },
-        ]);
-      }, 1000);
+      setIsLoading(true);
+      setError(null);
+      const userMessage = { text: message, isUser: true };
+      setMessages((prev) => [...prev, userMessage]);
       setMessage("");
+
+      try {
+        const conversationID = "66f8359b99453c114e5356d8";
+        const response = await fetch(
+          `http://localhost:5000/gemini/${conversationID}/messages`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: userMessage.text }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(
+            errorData.message || `HTTP error! status: ${response.status}`
+          );
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data); // Log the entire response for debugging
+
+        if (
+          data.messages &&
+          Array.isArray(data.messages) &&
+          data.messages.length > 0
+        ) {
+          const newMessages = data.messages.map((msg) => ({
+            text: msg.text,
+            isUser: msg.sender !== "Gemini",
+          }));
+          setMessages((prev) => [...prev, ...newMessages]);
+        } else {
+          console.error("Unexpected response format:", data);
+          throw new Error(
+            'Invalid response format. Expected "messages" array.'
+          );
+        }
+      } catch (err) {
+        setError(`Failed to send message: ${err.message}`);
+        console.error("Error:", err);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -127,11 +179,22 @@ export default function Chat() {
                 {msg.text}
               </Message>
             ))}
+            {isLoading && (
+              <Message isUser={false}>
+                <CircularProgress size={20} />
+              </Message>
+            )}
+            {error && (
+              <Message isUser={false}>
+                <span style={{ color: "red" }}>{error}</span>
+              </Message>
+            )}
           </ChatMessages>
           <ChatInputContainer onSubmit={handleSubmit}>
             <input
               value={message}
               onChange={handleMessageChange}
+              name="message"
               placeholder="Type a message..."
               style={{
                 padding: "10px 30px",
@@ -151,7 +214,7 @@ export default function Chat() {
               }}
               type="submit"
             >
-              <SendIcon />
+              {isLoading ? <CircularProgress size={24} /> : <SendIcon />}
             </IconButton>
           </ChatInputContainer>
         </ChatBox>

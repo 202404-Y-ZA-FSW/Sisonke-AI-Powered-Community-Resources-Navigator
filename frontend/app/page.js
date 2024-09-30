@@ -32,13 +32,11 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <Navbar />
       <div id="google_translate_element"></div> 
+      <Navbar />
       <Hero />
       <Services />
       <Events />
-      <Services/>
-      <Events/>
       <Jobs/>
       <FAQs/>
       <Blogs/>
