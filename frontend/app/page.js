@@ -9,6 +9,7 @@ import FAQs from "./components/sections/FAQs";
 import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
+import Chat from "./components/ChatAIUI";
 export default function Home() {
   return (
     <React.Fragment>
@@ -21,6 +22,7 @@ export default function Home() {
       <Blogs/>
       <Subscriber/>
       <Footer/>
+      <Chat/>
     </React.Fragment>
   );
 }
