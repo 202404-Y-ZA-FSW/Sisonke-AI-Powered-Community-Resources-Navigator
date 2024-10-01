@@ -1,10 +1,10 @@
 "use client";  
 
 import React, { useState } from "react";
-import {AppBar,Toolbar,Typography,Button,IconButton,Menu,MenuItem,useMediaQuery,useTheme,
-} from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";  
-import { MenuIcon } from "@mui/icons-material";
+import MenuIcon from '@mui/icons-material/Menu';
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function Navbar() {
@@ -51,6 +51,7 @@ export default function Navbar() {
         >
           SIS<span style={{ color: "#ffffff" }}>O</span>NKE
         </Typography>
+
         {isMobile ? (
           <>
             <IconButton
@@ -71,7 +72,20 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
               <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
               <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
-              <MenuItem onClick={() => router.push("/community")}>Community</MenuItem>
+              <MenuItem onClick={handlePageOpen}>
+                Community <KeyboardArrowDownIcon />
+              </MenuItem>
+              <Menu
+                anchorEl={pageAnchorEl}
+                open={Boolean(pageAnchorEl)}
+                onClose={handlePageClose}
+              >
+                <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
+                <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
+                <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
+                <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+              </Menu>
+
               <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
               <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
             </Menu>
