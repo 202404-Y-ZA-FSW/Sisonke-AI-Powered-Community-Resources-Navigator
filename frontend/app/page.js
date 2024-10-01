@@ -10,13 +10,13 @@ import FAQs from "./components/sections/FAQs";
 import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
-
+import Chat from "./components/ChatAIUI";
 export default function Home() {
   useEffect(() => {
     const googleTranslateElementInit = () => {
       new window.google.translate.TranslateElement({
         pageLanguage: 'en',
-        includedLanguages: 'zu,st,ts,ve', // Zulu, Sesotho, Tsonga, Venda
+        includedLanguages: 'zu,st,ts,ve', 
         layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
       }, 'google_translate_element');
     };
@@ -30,16 +30,18 @@ export default function Home() {
 
   return (
     <React.Fragment>
+
+      <div id="google_translate_element"></div> 
       <Navbar />
-      <div id="google_translate_element"></div> {/* This is where the Google Translate widget will render */}
       <Hero />
       <Services />
       <Events />
-      <Jobs />
-      <FAQs />
-      <Blogs />
-      <Subscriber />
-      <Footer />
+      <Jobs/>
+      <FAQs/>
+      <Blogs/>
+      <Subscriber/>
+      <Footer/>
+      <Chat/>
 
       {/* Load the Google Translate script */}
       <Script
