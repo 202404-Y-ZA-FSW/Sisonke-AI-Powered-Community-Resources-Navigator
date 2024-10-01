@@ -14,13 +14,11 @@ import Blogs from "./components/sections/Blogs";
 export default function Home() {
   useEffect(() => {
     const googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        'google_translate_element'
-      );
+      new window.google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'zu,st,ts,ve', // Zulu, Sesotho, Tsonga, Venda
+        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+      }, 'google_translate_element');
     };
 
     if (window.google && window.google.translate) {
@@ -33,12 +31,10 @@ export default function Home() {
   return (
     <React.Fragment>
       <Navbar />
-      <div id="google_translate_element"></div> 
+      <div id="google_translate_element"></div> {/* This is where the Google Translate widget will render */}
       <Hero />
       <Services />
       <Events />
-      <Services/>
-      <Events/>
       <Jobs />
       <FAQs />
       <Blogs />
