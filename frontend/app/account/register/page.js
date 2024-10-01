@@ -1,8 +1,4 @@
-import React from "react";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import sisonkeImage from "../register/sisonke.jpg";
-
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,6 +10,8 @@ import {
   Avatar,
   CircularProgress,
 } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
 function Signup() {
   const [fullName, setFullName] = useState("");
@@ -26,13 +24,17 @@ function Signup() {
   const [facebookUrl, setFacebookUrl] = useState("");
 
   useEffect(() => {
-    fetch("/get-auth-urls")
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchAuthUrls = async () => {
+      try {
+        const response = await fetch("/get-auth-urls");
+        const data = await response.json();
         setGoogleUrl(data.googleUrl);
         setFacebookUrl(data.facebookUrl);
-      })
-      .catch((error) => console.error(error));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchAuthUrls();
   }, []);
 
   const validateEmail = (email) => {
@@ -40,7 +42,7 @@ function Signup() {
     return regex.test(email);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
     setLoading(true);
@@ -69,29 +71,26 @@ function Signup() {
       return;
     }
 
-    const userData = { fullName, username, password };
-
-    fetch("/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setLoading(false);
-        alert("Registration successful!");
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(`An error occurred during registration: ${error.message}`);
-        setLoading(false);
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName, username, password }),
       });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setLoading(false);
+      alert("Registration successful!");
+    } catch (error) {
+      console.error(error);
+      setError(`An error occurred during registration: ${error.message}`);
+      setLoading(false);
+    }
   };
 
   return (
@@ -105,12 +104,12 @@ function Signup() {
           Local Resident
         </Typography>
         <Link
-          href="/login" // Redirect to login page
+          href="/login"
           variant="body2"
           sx={{
             alignSelf: "center",
             fontWeight: "bold",
-            color: "white", // Change color to white
+            color: "white",
             textDecoration: "none",
           }}
         >
@@ -139,7 +138,7 @@ function Signup() {
             Find the perfect match for your needs!
           </Typography>
           <img
-            src={"https://www.omniaccounts.co.za/wp-content/uploads/2022/10/How-to-register-a-new-small-business-in-south-africa.jpeg"}
+            src="https://www.omniaccounts.co.za/wp-content/uploads/2022/10/How-to-register-a-new-small-business-in-south-africa.jpeg"
             alt="sisonke"
             style={{
               width: "80%",
