@@ -14,13 +14,11 @@ import Chat from "./components/ChatAIUI";
 export default function Home() {
   useEffect(() => {
     const googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        'google_translate_element'
-      );
+      new window.google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'zu,st,ts,ve', 
+        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+      }, 'google_translate_element');
     };
 
     if (window.google && window.google.translate) {
@@ -32,6 +30,7 @@ export default function Home() {
 
   return (
     <React.Fragment>
+
       <div id="google_translate_element"></div> 
       <Navbar />
       <Hero />

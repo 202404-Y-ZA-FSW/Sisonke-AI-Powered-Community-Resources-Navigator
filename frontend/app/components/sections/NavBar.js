@@ -112,6 +112,7 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
               <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+              <MenuItem onClick={() => router.push("/blog/blogform")}>Create Blog Post</MenuItem>
             </Menu>
             <Button onClick={() => router.push("/account/login")} sx={navLinksStyles}>Login</Button>
             <Button
