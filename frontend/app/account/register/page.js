@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import {
   Box,
   Button,
@@ -8,38 +10,111 @@ import {
   Grid,
   Paper,
   Avatar,
+  CircularProgress,
 } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import sisonkeImage from "./sisonke.jpg";
 
 function Signup() {
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [googleUrl, setGoogleUrl] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+
+  useEffect(() => {
+    fetch("/get-auth-urls")
+      .then((response) => response.json())
+      .then((data) => {
+        setGoogleUrl(data.googleUrl);
+        setFacebookUrl(data.facebookUrl);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  const validateEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
+
+    if (!fullName || !username || !password || !confirmPassword) {
+      setError("All fields are required");
+      setLoading(false);
+      return;
+    }
+
+    if (!validateEmail(username)) {
+      setError("Invalid email address. Please use format: example@example.com");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      setLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    const userData = { fullName, username, password };
+
+    fetch("/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setLoading(false);
+        alert("Registration successful!");
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(`An error occurred during registration: ${error.message}`);
+        setLoading(false);
+      });
+  };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
-      {/* Header Section */}
       <Grid
         item
         xs={12}
         sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
       >
         <Typography variant="h6" fontWeight="bold">
-          Township Resident
+          Local Resident
         </Typography>
         <Link
-          href="#"
+          href="/login" // Redirect to login page
           variant="body2"
           sx={{
             alignSelf: "center",
             fontWeight: "bold",
-            color: "black",
+            color: "white", // Change color to white
             textDecoration: "none",
           }}
         >
           Existing user? Sign in.
         </Link>
       </Grid>
-
-      {/* Left Section (Discover) */}
       <Grid
         item
         xs={false}
@@ -62,7 +137,7 @@ function Signup() {
             Find the perfect match for your needs!
           </Typography>
           <img
-            src={sisonkeImage}
+            src="(link unavailable)"
             alt="sisonke"
             style={{
               width: "80%",
@@ -70,14 +145,11 @@ function Signup() {
               margin: "16px 0",
             }}
           />
-
           <Typography variant="body1" sx={{ mt: 4, color: "black" }}>
             Explore local opportunities with ease!
           </Typography>
         </Box>
       </Grid>
-
-      {/* Right Section (Form) */}
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
@@ -95,7 +167,7 @@ function Signup() {
           <Typography component="p" sx={{ color: "gray", mt: 1 }}>
             Unlock exclusive features, no commitment required
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 2 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
             <TextField
               margin="normal"
               required
@@ -105,6 +177,8 @@ function Signup() {
               name="fullName"
               autoComplete="name"
               autoFocus
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               InputProps={{ sx: { borderRadius: "50px" } }}
             />
             <TextField
@@ -112,9 +186,11 @@ function Signup() {
               required
               fullWidth
               id="username"
-              label="Your Unique Username"
+              label="Email Address"
               name="username"
-              autoComplete="username"
+              autoComplete="email"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               InputProps={{ sx: { borderRadius: "50px" } }}
             />
             <TextField
@@ -126,6 +202,8 @@ function Signup() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               InputProps={{ sx: { borderRadius: "50px" } }}
             />
             <TextField
@@ -136,23 +214,34 @@ function Signup() {
               label="Confirm Password"
               type="password"
               id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               InputProps={{ sx: { borderRadius: "50px" } }}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                mt: 3,
-                mb: 2,
-                backgroundColor: "#D4A017",
-                color: "black",
-                borderRadius: "50px",
-                "&:hover": { backgroundColor: "#D4A017" },
-              }}
-            >
-              Sign Up
-            </Button>
+            {error && (
+              <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+                {error}
+              </Typography>
+            )}
+            {loading ? (
+              <CircularProgress sx={{ mt: 3, mb: 2 }} />
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  backgroundColor: "#D4A017",
+                  color: "black",
+                  borderRadius: "50px",
+                  "&:hover": { backgroundColor: "#D4A017" },
+                }}
+              >
+                Sign Up
+              </Button>
+            )}
             <Typography align="center" variant="body2">
               or connect with
             </Typography>
@@ -161,7 +250,7 @@ function Signup() {
                 <Button
                   startIcon={<GoogleIcon />}
                   variant="contained"
-                  fullWidth
+                  onClick={() => (window.location.href = googleUrl)}
                   sx={{
                     textTransform: "none",
                     borderRadius: "50px",
@@ -177,7 +266,7 @@ function Signup() {
                 <Button
                   startIcon={<FacebookIcon />}
                   variant="contained"
-                  fullWidth
+                  onClick={() => (window.location.href = facebookUrl)}
                   sx={{
                     textTransform: "none",
                     borderRadius: "50px",
@@ -196,4 +285,5 @@ function Signup() {
     </Grid>
   );
 }
+
 export default Signup;
