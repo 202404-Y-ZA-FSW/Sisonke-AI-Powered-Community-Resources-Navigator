@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography, InputAdornment } from '@mui/material';
+import ImageIcon from '@mui/icons-material/Image';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ const BlogForm = () => {
     title: '',
     author: '',
     content: '',
+    image: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -70,6 +72,25 @@ const BlogForm = () => {
       <Typography variant="h4" component="h1" sx={{ mb: 3 }}>
         Create a New Blog Post
       </Typography>
+
+      <TextField
+  name="image"
+  placeholder="Image URL"  // Add placeholder instead of label
+  variant="outlined"
+  fullWidth
+  value={formData.image}  // Ensure this is 'image', not 'title'
+  onChange={handleChange}
+  error={!!errors.image}
+  helperText={errors.image}
+  sx={{ mb: 2 }}
+  InputProps={{
+    startAdornment: (
+      <InputAdornment position="start">
+        <ImageIcon />
+      </InputAdornment>
+    ),
+  }}
+/>
 
       <TextField
         name="title"
