@@ -1,40 +1,44 @@
-"use client"
-import React, { useState } from 'react';
-import { 
-  Box, 
-  Typography, 
-  TextField, 
-  Button, 
-  Link, 
-  Card, 
+"use client";
+import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Card,
   CardContent,
   ThemeProvider,
   createTheme,
-} from '@mui/material';
+  Alert,
+} from "@mui/material";
+import axios from "axios";
+import { useAuthentication } from '../../hooks/useAuthentication'; // Adjust the import path as needed
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#f9a825', 
+      main: "#f9a825",
     },
     secondary: {
-      main: '#4267B2', 
+      main: "#4267B2",
     },
   },
   components: {
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: '16px',
+          marginBottom: "16px",
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          borderRadius: '25px',
-          padding: '10px 0',
+          textTransform: "none",
+          borderRadius: "25px",
+          padding: "10px 0",
         },
       },
     },
@@ -42,39 +46,87 @@ const theme = createTheme({
 });
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { login } = useAuthentication();
 
-  const handleLogin = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // login logic to be added
-    console.log('Login attempt with:', email, password);
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await axios.post("http://localhost:5000/account/login", formData);
+      const { token, ...user } = response.data;
+      
+      await login(token, user);
+      console.log(user);
+      console.log(token);
+      if (user.role === "administrator") {
+        router.push("/dashboard");
+      } else if (user.role === "ngo") {
+        router.push("/ngo/dashboard");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message || "An error occurred during login.");
+      } else if (error.request) {
+        setError("No response received from the server. Please try again.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+      console.error("Error logging in:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh',
-          backgroundColor: '#f0f2f5',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          backgroundColor: "#f0f2f5",
         }}
       >
-        <Card sx={{ width: 350, boxShadow: '0 2px 4px rgba(0,0,0,.1)' }}>
-          <CardContent sx={{ padding: '24px' }}>
-            <Typography variant="h5" component="h1" sx={{ mb: 3, fontWeight: 'bold' }}>
+        <Card sx={{ width: 350, boxShadow: "0 2px 4px rgba(0,0,0,.1)" }}>
+          <CardContent sx={{ padding: "24px" }}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ mb: 3, fontWeight: "bold" }}
+            >
               Login
             </Typography>
-            <form onSubmit={handleLogin}>
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+            <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
-                placeholder="you@example.com"
+                placeholder="Username"
                 variant="outlined"
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                label="Username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                disabled={loading}
               />
               <TextField
                 fullWidth
@@ -82,8 +134,10 @@ export default function LoginPage() {
                 placeholder="Password"
                 variant="outlined"
                 label="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                disabled={loading}
               />
               <Button
                 fullWidth
@@ -91,15 +145,26 @@ export default function LoginPage() {
                 color="primary"
                 sx={{ mb: 2 }}
                 type="submit"
+                disabled={loading}
               >
-                Login
+                {loading ? "Logging in..." : "Login"}
               </Button>
             </form>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-              <Link href="#" underline="none" sx={{ color: '#f9a825', fontSize: '0.875rem' }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
+            >
+              <Link
+                href="#"
+                underline="none"
+                sx={{ color: "#f9a825", fontSize: "0.875rem" }}
+              >
                 Forgot password?
               </Link>
-              <Link href="#" underline="none" sx={{ color: '#f9a825', fontSize: '0.875rem' }}>
+              <Link
+                href="/account/register"
+                underline="none"
+                sx={{ color: "#f9a825", fontSize: "0.875rem" }}
+              >
                 Register
               </Link>
             </Box>
@@ -117,7 +182,11 @@ export default function LoginPage() {
             <Button
               fullWidth
               variant="contained"
-              sx={{ backgroundColor: '#DB4437', color: 'white', '&:hover': { backgroundColor: '#C53929' } }}
+              sx={{
+                backgroundColor: "#DB4437",
+                color: "white",
+                "&:hover": { backgroundColor: "#C53929" },
+              }}
             >
               Continue with Google
             </Button>
