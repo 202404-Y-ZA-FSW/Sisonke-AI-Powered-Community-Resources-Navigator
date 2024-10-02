@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import {
   Fab,
   Paper,
-  TextField,
   IconButton,
   Zoom,
   CircularProgress,
@@ -23,19 +22,19 @@ const FloatingButton = styled(Fab)({
   zIndex: 1000,
 });
 
-const ChatBox = styled(Paper)(({ isFullScreen }) => ({
+const ChatBox = styled(Paper)(({ isfullscreen }) => ({
   position: "fixed",
-  bottom: isFullScreen ? 0 : "5rem",
-  right: isFullScreen ? 0 : "2rem",
-  width: isFullScreen ? "100%" : "500px",
-  height: isFullScreen ? "100%" : "500px",
+  bottom: isfullscreen ? 0 : "5rem",
+  right: isfullscreen ? 0 : "2rem",
+  width: isfullscreen ? "100%" : "500px",
+  height: isfullscreen ? "100%" : "500px",
   display: "flex",
   flexDirection: "column",
   padding: "1rem",
   zIndex: 999,
   transition: "all 0.3s ease-in-out",
-  borderRadius: isFullScreen ? 0 : "16px",
-  marginBottom: isFullScreen ? 0 : "2rem",
+  borderRadius: isfullscreen ? 0 : "16px",
+  marginBottom: isfullscreen ? 0 : "2rem",
 }));
 
 const ChatHeader = styled("div")({
@@ -71,7 +70,7 @@ const ChatInputContainer = styled("form")({
 
 export default function Chat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isfullscreen, setIsFullScreen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +81,7 @@ export default function Chat() {
   };
 
   const handleFullScreenToggle = () => {
-    setIsFullScreen(!isFullScreen);
+    setIsFullScreen(!isfullscreen);
   };
 
   const handleMessageChange = (event) => {
@@ -159,14 +158,14 @@ export default function Chat() {
         <ChatIcon />
       </FloatingButton>
       <Zoom in={isOpen}>
-        <ChatBox elevation={3} isFullScreen={isFullScreen}>
+        <ChatBox elevation={3} isfullscreen={isfullscreen}>
           <ChatHeader>
             <h3>
               SIS<span style={{ color: "#6c63ff" }}>O</span>NKE AI
             </h3>
             <div>
               <IconButton onClick={handleFullScreenToggle} size="small">
-                {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+                {isfullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
               </IconButton>
               <IconButton onClick={handleToggle} size="small">
                 <CloseIcon />

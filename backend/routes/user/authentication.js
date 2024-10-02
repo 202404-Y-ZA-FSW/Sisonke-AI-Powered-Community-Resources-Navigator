@@ -16,7 +16,8 @@ const passwordUpdateValidation = require('../../middleware/validation/user/updat
 // ROUTES
 router.post("/register", registerValidation, authenticationController.register);
 router.post("/login", loginValidation, authenticationController.login);
-router.post("/update/password", passwordUpdateValidation, authenticationController.updatePassword);
-router.get("/logout", authenticationController.logout);
+router.get("/user", isAuthenticated, authenticationController.currentUser);
+router.post("/update/password", isAuthenticated, passwordUpdateValidation, authenticationController.updatePassword);
+router.get("/logout", isAuthenticated, authenticationController.logout);
 
 module.exports = router;
