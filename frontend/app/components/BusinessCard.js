@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 
-// Updated South African small businesses with new image URLs
 const businessListings = [
   {
     _id: "1",
@@ -90,7 +89,6 @@ const businessListings = [
   },
 ];
 
-// Styled components
 const StyledAppBar = styled(AppBar)({
   background: "linear-gradient(135deg, #b3e0ff 0%, #ffd6cc 100%)",
   borderRadius: "0 0 16px 16px",
@@ -103,17 +101,17 @@ const StyledCard = styled(Card)({
   margin: "auto",
   borderRadius: 16,
   boxShadow: "none",
-  height: 400, // Fixed height for all cards
+  height: 400,
   transition: "0.3s",
   "&:hover": {
-    transform: "scale(1.1)", // Zoom in card by 10%
+    transform: "scale(1.1)", 
   },
 });
 
 const StyledCardMedia = styled(CardMedia)({
-  width: "100%", // Make image take full width
-  height: "120px", // Fixed height for images to maintain uniformity
-  objectFit: "contain", // Ensure images maintain aspect ratio
+  width: "100%", 
+  height: "120px", 
+  objectFit: "contain", 
   transition: "0.3s",
 });
 
@@ -179,4 +177,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default BusinessCard;
