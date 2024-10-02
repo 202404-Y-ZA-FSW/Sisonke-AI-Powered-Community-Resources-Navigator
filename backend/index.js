@@ -17,6 +17,7 @@ const commentRoutes = require('./routes/blog/comment');
 const likeRoutes = require('./routes/blog/like');
 const alertRoutes = require('./routes/alert');
 const forumRoutes = require('./routes/forum/forum');
+const contactRoutes=require('./routes/contact')
 
 // PORT
 const port = 5000;
@@ -53,6 +54,8 @@ app.use("/blog/like/:blogID", likeRoutes);
 
 app.use("/alerts", alertRoutes);
 app.use("/forums", forumRoutes);
+app.use("/contact", contactRoutes);
+
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {
