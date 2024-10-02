@@ -1,8 +1,6 @@
-import React from "react";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import sisonkeImage from "../register/sisonke.jpg";
-
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -12,11 +10,75 @@ import {
   Grid,
   Paper,
   Avatar,
+  Snackbar,
+  Container,
+  Alert,
 } from "@mui/material";
 
-function Signup() {
+function Register() {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.username) newErrors.username = "Username is required";
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      try {
+        const response = await axios.post("http://localhost:5000/account/register", formData);
+        setSnackbar({
+          open: true,
+          message: "Registration successful!",
+          severity: "success",
+        });
+        // Reset form or redirect user
+      } catch (error) {
+        setSnackbar({
+          open: true,
+          message: error.response?.data?.message || "Registration failed",
+          severity: "error",
+        });
+      }
+    }
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <Container maxWidth="lg">
+      <Grid container component="main" sx={{ height: "100vh" }}>
       {/* Header Section */}
       <Grid
         item
@@ -71,7 +133,6 @@ function Signup() {
               margin: "16px 0",
             }}
           />
-
           <Typography variant="body1" sx={{ mt: 4, color: "black" }}>
             Explore local opportunities with ease!
           </Typography>
@@ -79,7 +140,7 @@ function Signup() {
       </Grid>
 
       {/* Right Section (Form) */}
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} square>
         <Box
           sx={{
             my: 8,
@@ -96,18 +157,7 @@ function Signup() {
           <Typography component="p" sx={{ color: "gray", mt: 1 }}>
             Unlock exclusive features, no commitment required
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 2 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="fullName"
-              label="Your Full Name"
-              name="fullName"
-              autoComplete="name"
-              autoFocus
-              InputProps={{ sx: { borderRadius: "50px" } }}
-            />
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
             <TextField
               margin="normal"
               required
@@ -117,6 +167,25 @@ function Signup() {
               name="username"
               autoComplete="username"
               InputProps={{ sx: { borderRadius: "50px" } }}
+              value={formData.username}
+              onChange={handleChange}
+              error={!!errors.username}
+              helperText={errors.username}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              InputProps={{ sx: { borderRadius: "50px" } }}
+              value={formData.email}
+              onChange={handleChange}
+              error={!!errors.email}
+              helperText={errors.email}
             />
             <TextField
               margin="normal"
@@ -126,8 +195,12 @@ function Signup() {
               label="Create a Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               InputProps={{ sx: { borderRadius: "50px" } }}
+              value={formData.password}
+              onChange={handleChange}
+              error={!!errors.password}
+              helperText={errors.password}
             />
             <TextField
               margin="normal"
@@ -138,6 +211,10 @@ function Signup() {
               type="password"
               id="confirmPassword"
               InputProps={{ sx: { borderRadius: "50px" } }}
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword}
             />
             <Button
               type="submit"
@@ -154,47 +231,26 @@ function Signup() {
             >
               Sign Up
             </Button>
-            <Typography align="center" variant="body2">
-              or connect with
-            </Typography>
-            <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
-              <Grid item>
-                <Button
-                  startIcon={<GoogleIcon />}
-                  variant="contained"
-                  fullWidth
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: "50px",
-                    backgroundColor: "#DB4437",
-                    color: "white",
-                    "&:hover": { backgroundColor: "#C53929" },
-                  }}
-                >
-                  Google
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  startIcon={<FacebookIcon />}
-                  variant="contained"
-                  fullWidth
-                  sx={{
-                    textTransform: "none",
-                    borderRadius: "50px",
-                    backgroundColor: "#4267B2",
-                    color: "white",
-                    "&:hover": { backgroundColor: "#365e8d" },
-                  }}
-                >
-                  Facebook
-                </Button>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Grid>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Grid>
+    </Container>
   );
 }
-export default Signup;
+
+export default Register;

@@ -132,6 +132,7 @@ exports.login = async (req, res) => {
       );
 
       // RESPONSE
+      console.log(token);
       res.cookie("token", token, { httpOnly: true });
       res.status(200).json({
         message: "User signed in successfully",
@@ -203,6 +204,45 @@ exports.updatePassword = async (req, res) => {
 // FORGOT PASSWORD
 
 // VERIFY EMAIL
+
+// CURRENTLY LOGGED IN USER
+exports.currentUser = async (req, res) => {
+  try {
+    // EXTRACT USER ID FROM JWT TOKEN
+    const userIdentity = req.userID;
+
+    // VERIFY USER ID IF IT EXISTS
+    const user = await userModel.findById(userIdentity);
+
+    if (!user) {
+      return res.status(401).json({ message: "Incorrect user identity" });
+    }
+
+    if (user) {
+      return res.status(200).json({
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          status: user.status,
+          verified: user.verified,
+        },
+      });
+    } else {
+      // USER NOT FOUND
+      return res.status(403).json({
+        message:
+          "Access forbidden: You are not authorized to perform this action",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message:
+        "An unexpected error has occured while trying to process your request",
+    });
+  }
+};
 
 // LOGOUT
 exports.logout = async (req, res) => {
