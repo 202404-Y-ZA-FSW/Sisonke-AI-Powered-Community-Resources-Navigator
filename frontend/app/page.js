@@ -10,17 +10,16 @@ import FAQs from "./components/sections/FAQs";
 import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
+import Chat from "./components/ChatAIUI";
 
 export default function Home() {
   useEffect(() => {
     const googleTranslateElementInit = () => {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'en',
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        'google_translate_element'
-      );
+      new window.google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'zu,st,ts,ve', 
+        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+      }, 'google_translate_element');
     };
 
     if (window.google && window.google.translate) {
@@ -32,18 +31,18 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <Navbar />
+
       <div id="google_translate_element"></div> 
+      <Navbar />
       <Hero />
       <Services />
       <Events />
-      <Services/>
-      <Events/>
-      <Jobs />
-      <FAQs />
-      <Blogs />
-      <Subscriber />
-      <Footer />
+      <Jobs/>
+      <FAQs/>
+      <Blogs/>
+      <Subscriber/>
+      <Footer/>
+      <Chat/>
 
       {/* Load the Google Translate script */}
       <Script

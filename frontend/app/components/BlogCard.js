@@ -59,7 +59,7 @@ const BlogCard = () => {
       setError(null);
 
       try {
-        const response = await fetch('http://localhost:5000/blogs/');
+        const response = await fetch('http://localhost:5000/blogs/all');
         console.log(response);
 
         if (!response.ok) {
