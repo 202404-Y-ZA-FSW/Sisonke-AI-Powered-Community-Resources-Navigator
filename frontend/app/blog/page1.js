@@ -16,7 +16,7 @@ export default function BlogPage() {
       setError(null);
   
       try {
-        const response = await fetch('http://localhost:5000/blogs/');
+        const response = await fetch('http://localhost:5000/blogs/all');
         if (!response.ok) {
           throw new Error('Failed to fetch blog posts.');
         }
@@ -62,10 +62,12 @@ export default function BlogPage() {
           <Typography variant="body1">No blog posts available.</Typography>
         )}
       </Grid>
-
-      {/* Button to browse all blogs */}
       <Box sx={{ mt: 4 }}>
-        <Button variant="contained" color="primary">
+        <Button 
+          variant="contained" 
+          color="primary"
+          // onClick={handleBrowseAllClick} 
+        >
           Browse All Blogs
         </Button>
       </Box>

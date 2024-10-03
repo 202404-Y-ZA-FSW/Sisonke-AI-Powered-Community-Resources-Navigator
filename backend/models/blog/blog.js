@@ -16,7 +16,7 @@ const blogSchema = new mongoose.Schema(
       minlength: [20, "Blog content must be at least 20 characters long"], 
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
     },
     tags: [

@@ -9,26 +9,31 @@ const BlogForm = () => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
+    image: '',
     title: '',
     author: '',
-    content: '',
-    image: '',
+    content: ''
   });
 
   const [errors, setErrors] = useState({});
 
+  console.debug("BlogForm", formData)
   const handleBlogSubmit = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:5000/blogs/create', formData, {
+      console.debug("BlogForm2", formData)
+      const response = await axios.post(`http://localhost:5000/blogs/create`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
-      if (response.status === 200) {
+      console.debug("BlogForm3", response)
+      if (response.status === 201) {
+        console.debug("BlogForm4", response)
         alert('Blog post created successfully!');
         router.push('/blog');
+        console.debug("BlogForm5", response)
       } else {
+        console.debug("BlogForm6", response)
         alert('Failed to create the blog post.');
       }
     } catch (error) {
