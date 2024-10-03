@@ -11,7 +11,6 @@ import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
 import Chat from "./components/ChatAIUI";
-import BusinessCard from "./components/BusinessCard";
 
 export default function Home() {
   useEffect(() => {
@@ -42,7 +41,6 @@ export default function Home() {
       <FAQs/>
       <Blogs/>
       <Subscriber/>
-      <BusinessCard/>
       <Footer/>
       <Chat/>
 
