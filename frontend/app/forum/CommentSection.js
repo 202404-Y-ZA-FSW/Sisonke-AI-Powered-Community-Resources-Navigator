@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { 
-  List, 
-  ListItem, 
-  ListItemAvatar, 
-  ListItemText, 
-  Avatar, 
-  TextField, 
-  Button, 
-  Box 
-} from '@mui/material';
-import { addComment } from '../forum/lib/api';
+import React, { useState } from "react";
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+  TextField,
+  Button,
+  Box,
+} from "@mui/material";
+import { addComment } from "../forum/lib/api";
 
 const CommentSection = ({ comments, postId, onUpdate }) => {
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await addComment(postId, newComment);
-    setNewComment('');
+    setNewComment("");
     onUpdate();
   };
 
@@ -27,7 +27,7 @@ const CommentSection = ({ comments, postId, onUpdate }) => {
         {comments.map((comment) => (
           <ListItem key={comment._id} alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar src={comment.author.avatar} alt={comment.author.username}>
+              <Avatar sx={{ backgroundColor: "#6c63ff"}} src={comment.author.avatar} alt={comment.author.username}>
                 {comment.author.username[0]}
               </Avatar>
             </ListItemAvatar>
@@ -42,13 +42,26 @@ const CommentSection = ({ comments, postId, onUpdate }) => {
         <TextField
           fullWidth
           variant="outlined"
-          placeholder="Add a comment..."
+          placeholder="Add a new comment"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           sx={{ marginBottom: 1 }}
+          InputProps={{
+            sx: { borderRadius: "16px" },
+          }}
         />
-        <Button type="submit" variant="contained" color="primary">
-          Post Comment
+        <Button
+          sx={{
+            backgroundColor: "#6c63ff",
+            borderRadius: "16px",
+            padding: "8px 16px",
+            color: "#ffffff",
+            textTransform: "none",
+            "&:hover": { backgroundColor: "#5A52D5" },
+          }}
+          type="submit"
+        >
+          Comment
         </Button>
       </form>
     </Box>
