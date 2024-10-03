@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
-  Typography,
   Button,
   Grid,
   Card,
   CardContent,
   CardMedia,
   Container,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -16,8 +17,7 @@ const businessListings = [
   {
     _id: "1",
     name: "Cranium Medical Products",
-    description:
-      "Innovative medical products designed to improve patient care.",
+    description: "Innovative medical products designed to improve patient care.",
     address: "456 Health Road, Pretoria",
     city: "Pretoria",
     phone: "(012) 234-5678",
@@ -29,8 +29,7 @@ const businessListings = [
   {
     _id: "2",
     name: "Hot 102.7 FM",
-    description:
-      "Your home for the best music and entertainment in Johannesburg.",
+    description: "Your home for the best music and entertainment in Johannesburg.",
     address: "789 Media Street, Johannesburg",
     city: "Johannesburg",
     phone: "(011) 345-6789",
@@ -54,8 +53,7 @@ const businessListings = [
   {
     _id: "4",
     name: "KotaJoe",
-    description:
-      "Delicious kota and street food that will satisfy your cravings.",
+    description: "Delicious kota and street food that will satisfy your cravings.",
     address: "15 Street Food Avenue, Johannesburg",
     city: "Johannesburg",
     phone: "(011) 123-4567",
@@ -90,9 +88,46 @@ const businessListings = [
 ];
 
 const StyledAppBar = styled(AppBar)({
-  background: "linear-gradient(135deg, #b3e0ff 0%, #ffd6cc 100%)",
+  background: "linear-gradient(135deg, #fff5e6 0%, #e6f7ff 100%)",
+  padding: "0 2rem",
+  boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
   borderRadius: "0 0 16px 16px",
-  boxShadow: "none",
+});
+
+const StyledToolbar = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+});
+
+const StyledButton = styled(Button)({
+  backgroundColor: "#1976d2",
+  color: "#fff",
+  padding: "8px 16px",
+  borderRadius: "20px",
+  "&:hover": {
+    backgroundColor: "#115293",
+  },
+});
+
+const SearchBar = styled(TextField)({
+  width: "300px",
+  backgroundColor: "#f0f0f0",
+  borderRadius: "20px",
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "transparent",
+    },
+    "&:hover fieldset": {
+      borderColor: "#1976d2",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#1976d2",
+    },
+  },
+  "& .MuiOutlinedInput-input": {
+    padding: "10px",
+  },
 });
 
 const StyledCard = styled(Card)({
@@ -104,42 +139,45 @@ const StyledCard = styled(Card)({
   height: 400,
   transition: "0.3s",
   "&:hover": {
-    transform: "scale(1.1)", 
+    transform: "scale(1.1)",
   },
 });
 
 const StyledCardMedia = styled(CardMedia)({
-  width: "100%", 
-  height: "120px", 
-  objectFit: "contain", 
+  width: "100%",
+  height: "120px",
+  objectFit: "contain",
   transition: "0.3s",
 });
 
-const StyledButton = styled(Button)({
-  backgroundColor: "#1976d2",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#115293",
-  },
-});
+const BusinessCard = () => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-const App = () => {
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredBusinesses = businessListings.filter((business) =>
+    business.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <StyledAppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Local Business Listings
-          </Typography>
-          <StyledButton href="/app/Business/page.js" variant="contained">
-            Register
-          </StyledButton>
-        </Toolbar>
+        <StyledToolbar>
+          <SearchBar
+            variant="outlined"
+            placeholder="Search businesses..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+          <StyledButton href="/app/Business/page.js">Register</StyledButton>
+        </StyledToolbar>
       </StyledAppBar>
 
       <Container sx={{ pt: 2 }}>
         <Grid container spacing={2}>
-          {businessListings.map((business) => (
+          {filteredBusinesses.map((business) => (
             <Grid item xs={12} sm={6} md={4} key={business._id}>
               <StyledCard>
                 <StyledCardMedia
