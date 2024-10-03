@@ -1,6 +1,8 @@
 "use client"
 
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import axios from 'axios';
 import { 
   TextField, 
   Button, 
@@ -18,11 +20,14 @@ import {
 } from '@mui/material';
 
 const EventForm = () => {
+  const router = useRouter();
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     title: '',
     location: '',
     date: '',
-    category: 'Job Fair',
+    category: '',
+    organizer: '',
     description: '',
     isFree: true,
     eventUrl: '',
@@ -31,7 +36,7 @@ const EventForm = () => {
     endTime: '',
     address: '',
   });
-
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -40,29 +45,54 @@ const EventForm = () => {
     });
   };
 
+    const handleEventSubmit = async (formData) =>{
+      try{
+
+        const response = await axios.post(`http://localhost:5000/events/new`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        if(response.status===201){
+            router.push('/events/new')
+            alert("Event created successfully!");
+        }else{
+          alert("Failed to create an event");
+        }
+        
+      }catch(err){ 
+        console.log(err);
+        alert("An error occured while creating the event.", err.message)
+      }
+    }
   const handleSubmit = async (e) => {
     e.preventDefault();
+     const validationErrors = validateForm
 
-    try {
-      const response = await fetch('/api/events', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log('Event created!');
-        // Optionally redirect or show a success message
-      } else {
-        const errorData = await response.json();
-        console.error('Error creating event:', errorData);
-        // Display error messages to the user
-      }
-    } catch (error) {
-      console.error('Error creating event:', error);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
     }
+
+    setErrors({});
+    handleEventSubmit(formData);
+
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.title) errors.title = 'Title is required';
+    if (!formData.address) errors.address = 'Address is required';
+    if (!formData.startTime) errors.startTime = 'Start time is required';
+    if (!formData.endTime) errors.endTime = 'End time is required';
+    if (!formData.description) errors.description = 'Description is required';
+    if(!formData.organizer) errors.organizer = "Organizer is required";
+    if(!formData.category) errors.category = "Category is required";
+    return errors;
   };
 
   return (
@@ -93,6 +123,17 @@ const EventForm = () => {
                 required
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Event Organiser"
+                name="organizer"
+                value={formData.organizer}
+                onChange={handleChange}
+                required
+              />
+            </Grid>
+            
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
