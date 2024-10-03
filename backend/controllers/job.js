@@ -1,7 +1,5 @@
-// REQUIRED PACKAGE
 const { validationResult } = require("express-validator");
 
-// JOB MODEL
 const jobModel = require("../models/job");
 
 // NEW JOB CONTROLLER
@@ -18,7 +16,7 @@ exports.newJob = async (req, res) => {
       title,
       company,
       location,
-      type,
+      employmentType,
       salary,
       description,
       posted,
@@ -32,7 +30,7 @@ exports.newJob = async (req, res) => {
       title,
       company,
       location,
-      type,
+      employmentType,
       salary,
       description,
       posted,
@@ -52,7 +50,7 @@ exports.newJob = async (req, res) => {
       .status(500)
       .json({
         message:
-          "An unexpected error has occured while trying to process your request",
+          "An unexpected error has occured while trying to process your request"
       });
   }
 };

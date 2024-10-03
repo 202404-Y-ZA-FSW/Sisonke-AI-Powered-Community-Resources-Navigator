@@ -17,7 +17,7 @@ const jobValidationRules = [
     .isString().withMessage('Location must be a string.'),
   
   // Job type validation
-  check('type')
+  check('employmentType')
     .notEmpty().withMessage('Job type is required.')
     .isIn(['full-time', 'part-time', 'contract', 'freelance', 'internship', 'learnership'])
     .withMessage('Invalid job type.'),
