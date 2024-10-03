@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 const jobTypes = [
-  { value: 'full-time', label: 'Full-time' },
+  { value: 'full-time', label: 'full-time' },
   { value: 'part-time', label: 'Part-time' },
   { value: 'contract', label: 'Contract' },
   { value: 'freelance', label: 'Freelance' },
@@ -22,10 +22,11 @@ const JobForm = () => {
   const router = useRouter();
 
   const [jobData, setJobData] = useState({
+    user: '',
     title: '',
     company: '',
     location: '',
-    type: '',
+    employmentType: '',
     salary: '',
     description: '',
     qualifications: '',
@@ -37,26 +38,24 @@ const JobForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setJobData({
-      ...jobData,
+    setJobData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
-  // Validation function to check required fields
   const validateForm = () => {
     const errors = {};
     if (!jobData.title) errors.title = 'Title is required.';
     if (!jobData.company) errors.company = 'Company is required.';
     if (!jobData.location) errors.location = 'Location is required.';
-    if (!jobData.type) errors.type = 'Job Type is required.';
+    if (!jobData.employmentType) errors.employmentType = 'Job Type is required.';
     if (!jobData.description) errors.description = 'Description is required.';
-    
     return errors;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleJobSubmit = async (jobData) => {
+    //e.preventDefault();
 
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -67,17 +66,41 @@ const JobForm = () => {
     setErrors({});
 
     try {
-      const response = await axios.post('http://localhost:5000/jobs/new', jobData);
-      if (response.status === 200) {
+      const response = await axios.post(`http://localhost:5000/jobs/new`, jobData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    
+      if (response.status === 201) {
         alert('Job created successfully');
-        router.push('/jobs');
+        router.push('/jobs/new');
       } else {
         alert('Failed to create job');
       }
     } catch (error) {
-      console.error('Error creating job:', error);
-      alert('Failed to create job');
+      if (error.response) {
+        console.error('Error creating job:', error.response.data); // This will show the server's validation error
+        alert(`Failed to create job: ${error.response.data.message || 'Unknown error'}`);
+      } else {
+        console.error('Error creating job:', error);
+        alert('Failed to create job');
+      }
     }
+    
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+    handleJobSubmit(jobData);
   };
 
   return (
@@ -127,14 +150,14 @@ const JobForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Job Type"
-                name="type"
+                name="employmentType"
                 select
-                value={jobData.type}
+                value={jobData.employmentType}
                 onChange={handleChange}
                 fullWidth
                 required
-                error={!!errors.type}
-                helperText={errors.type}
+                error={!!errors.employmentType}
+                helperText={errors.employmentType}
               >
                 {jobTypes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
