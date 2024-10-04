@@ -54,8 +54,21 @@ const jobListingsSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: false,
   },
+
+  link: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^(ftp|http|https):\/\/[^ "]+$/.test(v);
+      },
+      message: 'Invalid URL',
+    },
+    required: false,
+  },
+
+  
   expiresAt: {
     type: Date,
     default: () => Date.now() + 30*24*60*60*1000,

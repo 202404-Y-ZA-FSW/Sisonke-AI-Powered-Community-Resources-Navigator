@@ -24,7 +24,9 @@ exports.newJob = async (req, res) => {
       posted,
       qualifications,
       experience,
+      link,
       skills,
+      
     } = req.body;
 
     // CREATE NEW JOB
@@ -38,6 +40,7 @@ exports.newJob = async (req, res) => {
       posted,
       qualifications,
       experience,
+      link,
       skills,
       user: userID,
     });
