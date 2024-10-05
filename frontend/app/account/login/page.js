@@ -72,14 +72,13 @@ export default function LoginPage() {
       const { token, ...user } = response.data;
 
       await login(token, user);
-      console.log(user);
-      console.log(token);
+      
       if (user.role === "administrator") {
         router.push("/dashboard");
       } else if (user.role === "ngo") {
         router.push("/ngo/dashboard");
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
     } catch (error) {
       if (error.response) {
