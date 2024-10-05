@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Chip, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import { useRouter } from 'next/router'; // Import useRouter from next/router
+import { useRouter } from 'next/router'; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",

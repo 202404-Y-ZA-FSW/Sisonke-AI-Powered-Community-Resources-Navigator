@@ -4,13 +4,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Grid, Typography, Button, Box, TextField, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
 import JobCard from '../JobCard';
+import { useRouter } from 'next/navigation';
 
-// Display the list of job cards and the search functionality
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('recently added');
   const [jobs, setJobs] = useState([]);  
   const [loading, setLoading] = useState(true);  
+  const router = useRouter();
 
   // Fetch jobs from database
   useEffect(() => {
@@ -28,15 +29,21 @@ const Jobs = () => {
     fetchJobs();
   }, []);
 
-  // Filter jobs based on the search term
+  // Filter jobs based on search term
   const filteredJobs = jobs.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Sort jobs based on the selected criteria
-  const sortedJobs = filteredJobs.sort((a, b) => {
+  // Remove duplicate jobs 
+  const uniqueJobs = jobs.filter(
+    (job, index, self) =>
+      index === self.findIndex((j) => j.title.toLowerCase() === job.title.toLowerCase())
+  );
+
+  // Sort jobs based on selected criteria
+  const sortedJobs = uniqueJobs.sort((a, b) => {
     if (sortBy === 'highest salary') {
       return b.salary - a.salary; 
     } else if (sortBy === 'lowest salary') {
@@ -96,7 +103,11 @@ const Jobs = () => {
       </Grid>
 
       <Box display="flex" justifyContent="center" sx={{ mt: 4 }}>
-        <Button sx={{ borderRadius: '15px', backgroundColor: "#6c63ff", color: "#ffffff", textTransform: "none", padding: "8px 30px" }} size="large">
+        <Button
+          sx={{ borderRadius: '15px', backgroundColor: "#6c63ff", color: "#ffffff", textTransform: "none", padding: "8px 30px" }}
+          size="large"
+          onClick={() => router.push('/jobs')} 
+        >
           Browse All
         </Button>
       </Box>
