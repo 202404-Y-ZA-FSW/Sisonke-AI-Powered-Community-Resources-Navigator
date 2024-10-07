@@ -1,22 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const userForgotSchema = new mongoose.Schema({
-  userEmail: {
+const userSchema = new mongoose.Schema({
+  email: {
     type: String,
     required: true,
-    trim: true,
-    lowercase: true
+    unique: true,
   },
-  resetToken: {
+  password: {
     type: String,
-    required: true
+    required: true,
   },
-  tokenExpiry: {
-    type: Date,
-    required: true
-  }
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
-const UserForgot = mongoose.model('UserForgot', userForgotSchema);
-
-module.exports = UserForgot;
+const User = mongoose.model("User", userSchema);
+module.exports = User;
