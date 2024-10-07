@@ -27,17 +27,15 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Fetch users when the component mounts
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // Fetch users from backend
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/account/users");
+      const response = await axios.get("http://localhost:5000/account/users"); 
       if (response.status === 200) {
-        setUsers(response.data.users); // Correctly set the users state
+        setUsers(response.data);  directly
       } else {
         console.error("Failed to fetch users:", response.data);
         alert("Failed to fetch users.");
@@ -48,13 +46,13 @@ export default function AdminDashboard() {
     }
   };
 
-  // Remove user function
+  
   const removeUser = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/account/remove`,{data:{userId:id}});
+      const response = await axios.delete(`http://localhost:5000/account/remove`, { data: { userId: id } });
       if (response.status === 200) {
         alert('User deleted successfully');
-        setUsers(prevUsers => prevUsers.filter(user => user._id !== id)); // Use _id if that's your identifier
+        setUsers(prevUsers => prevUsers.filter(user => user._id !== id));
       } else {
         console.error('Error deleting user:', response.data);
         alert('Failed to delete user');
@@ -65,12 +63,10 @@ export default function AdminDashboard() {
     }
   };
 
-  
   const toggleUser = async (id, status, role) => {
     try {
-      
       const response = await axios.put(`http://localhost:5000/account/update`, { userId: id, status, role });
-  
+
       if (response.status === 200) {
         setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, status, role } : user));
         alert("User status updated successfully");
@@ -83,24 +79,20 @@ export default function AdminDashboard() {
       alert("Something went wrong. Please try again.");
     }
   };
-  
 
-  // Filter users based on search query
-  const filteredUsers = users.filter(
+  const filteredUsers = (users || []).filter(
     (user) =>
       (user.username && user.username.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-  
 
-  // Calculate user counts
-  const activeUsers = users.filter((user) => user.status === 'active').length;
-  const restrictedUsers = users.filter((user) => user.status === 'restricted').length;
-  const totalUsers = users.length;
+  const activeUsers = (users || []).filter((user) => user.status === 'active').length;
+  const restrictedUsers = (users || []).filter((user) => user.status === 'restricted').length;
+  const totalUsers = (users || []).length;
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Head>s
+      <Head>
         <title>Admin Dashboard</title>
       </Head>
       <Typography variant="h3" gutterBottom>
@@ -180,12 +172,12 @@ export default function AdminDashboard() {
                         <IconButton 
                           onClick={() => toggleUser(
                             user._id, 
-                            user.status === 'active' ? 'restricted' : 'inactive', 
+                            user.status === 'active' ? 'restricted' : 'active', 
                             user.role
                           )}
-                          color={user.status === 'Active' ? 'success' : 'warning'}
+                          color={user.status === 'active' ? 'success' : 'warning'}
                         >
-                          {user.status === 'Active' ? <LockOpen /> : <Lock />}
+                          {user.status === 'active' ? <LockOpen /> : <Lock />}
                         </IconButton>
                         <IconButton onClick={() => removeUser(user._id)} color="error">
                           <Delete />
