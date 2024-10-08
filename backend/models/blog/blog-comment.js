@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// BLOG COMMENT MODEL
 const commentSchema = new Schema({
   content: {
     type: String,
@@ -9,14 +10,19 @@ const commentSchema = new Schema({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User', 
-    required: true 
+    ref: 'User',
+    required: true
   },
-  post: {
+  blog: {
     type: Schema.Types.ObjectId,
     ref: 'Blog',
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
-}, { timestamps: true }); 
-const commentModel = mongoose.model('BlogComment', commentSchema);
-module.exports = commentModel;
+});
+
+const CommentModel = mongoose.model('Comment', commentSchema);
+module.exports = CommentModel;
