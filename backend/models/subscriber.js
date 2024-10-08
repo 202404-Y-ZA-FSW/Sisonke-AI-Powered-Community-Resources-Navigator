@@ -4,10 +4,18 @@ const Schema = mongoose.Schema;
 // SUBSCRIBER SCHEMA
 const SubscriberSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,
       unique: true,
+    },
+    location: {
+      type: String,
+      required: true,
     },
   },
   {

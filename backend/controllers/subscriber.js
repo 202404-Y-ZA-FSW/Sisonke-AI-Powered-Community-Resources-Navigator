@@ -1,9 +1,7 @@
-// REQUIRED PACKAGE
+// subscriberController.js (Controller)
+
 const { validationResult } = require("express-validator");
-
-// SUBSCRIBER MODEL
 const subscriberModel = require("../models/subscriber");
-
 
 // NEW SUBSCRIBER CONTROLLER
 exports.newSubscriber = async (req, res) => {
@@ -14,7 +12,7 @@ exports.newSubscriber = async (req, res) => {
   }
 
   try {
-    const { email } = req.body;
+    const { name, email, location } = req.body; // Capture all fields
 
     // CHECK IF SUBSCRIBER ALREADY EXISTS
     const existingSubscriber = await subscriberModel.findOne({ email });
@@ -23,13 +21,13 @@ exports.newSubscriber = async (req, res) => {
     }
 
     // CREATE NEW SUBSCRIBER
-    const newSubscriber = new subscriberModel({ email });
+    const newSubscriber = new subscriberModel({ name, email, location }); // Include name and location
     await newSubscriber.save();
 
     res.status(201).json({ message: "You have subscribed successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An unexpected error has occured while trying to process your request" });
+    res.status(500).json({ error: "An unexpected error has occurred while trying to process your request" });
   }
 };
 
@@ -40,7 +38,7 @@ exports.getAllSubscribers = async (req, res) => {
     res.status(200).json(subscribers);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An unexpected error has occured while trying to process your request" });
+    res.status(500).json({ error: "An unexpected error has occurred while trying to process your request" });
   }
 };
 
@@ -61,6 +59,6 @@ exports.unsubscribe = async (req, res) => {
     res.status(200).json({ message: "You have unsubscribed successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An unexpected error has occured while trying to process your request" });
+    res.status(500).json({ error: "An unexpected error has occurred while trying to process your request" });
   }
 };
