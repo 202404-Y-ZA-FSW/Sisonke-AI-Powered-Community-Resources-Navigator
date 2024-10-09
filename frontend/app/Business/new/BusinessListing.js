@@ -10,7 +10,9 @@ import {
   Alert,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import axios from "axios"; 
+import axios from "axios";
+import NavBar from "./NavBar"; // Adjust the path if necessary
+import Footer from "./Footer"; // Adjust the path if necessary
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -62,7 +64,7 @@ const industries = [
   "Transportation",
 ];
 
-export default function BusinessForm() {
+const BusinessListing = () => {
   const [businessName, setBusinessName] = useState("");
   const [businessEmail, setBusinessEmail] = useState("");
   const [industry, setIndustry] = useState("");
@@ -137,7 +139,6 @@ export default function BusinessForm() {
       });
       console.log("Response:", response.data);
 
-      
       setBusinessName("");
       setBusinessEmail("");
       setIndustry("");
@@ -155,101 +156,107 @@ export default function BusinessForm() {
   };
 
   return (
-    <StyledCard>
-      <CardContent>
-        <Typography variant="h5" gutterBottom>
-          Register Your Business
-        </Typography>
+    <>
+      <NavBar />
+      <StyledCard>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            Register Your Business
+          </Typography>
 
-        <form onSubmit={handleSubmit}>
-          {errors.general && <Alert severity="error">{errors.general}</Alert>}
+          <form onSubmit={handleSubmit}>
+            {errors.general && <Alert severity="error">{errors.general}</Alert>}
 
-          <FormField
-            label="Business Name"
-            value={businessName}
-            onChange={(e) => setBusinessName(e.target.value)}
-            fullWidth
-            error={!!errors.name}
-            helperText={errors.name}
-          />
+            <FormField
+              label="Business Name"
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+              fullWidth
+              error={!!errors.name}
+              helperText={errors.name}
+            />
 
-          <FormField
-            label="Email"
-            type="email"
-            value={businessEmail}
-            onChange={(e) => setBusinessEmail(e.target.value)}
-            fullWidth
-            error={!!errors.email}
-            helperText={errors.email}
-          />
+            <FormField
+              label="Email"
+              type="email"
+              value={businessEmail}
+              onChange={(e) => setBusinessEmail(e.target.value)}
+              fullWidth
+              error={!!errors.email}
+              helperText={errors.email}
+            />
 
-          <FormField
-            select
-            label="Industry"
-            value={industry}
-            onChange={(e) => setIndustry(e.target.value)}
-            fullWidth
-            error={!!errors.industry}
-            helperText={errors.industry}
-          >
-            {industries.map((ind, idx) => (
-              <MenuItem key={idx} value={ind}>
-                {ind}
-              </MenuItem>
-            ))}
-          </FormField>
+            <FormField
+              select
+              label="Industry"
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+              fullWidth
+              error={!!errors.industry}
+              helperText={errors.industry}
+            >
+              {industries.map((ind, idx) => (
+                <MenuItem key={idx} value={ind}>
+                  {ind}
+                </MenuItem>
+              ))}
+            </FormField>
 
-          <FormField
-            select
-            label="Province"
-            value={province}
-            onChange={(e) => setProvince(e.target.value)}
-            fullWidth
-            error={!!errors.province}
-            helperText={errors.province}
-          >
-            {provinces.map((prov, idx) => (
-              <MenuItem key={idx} value={prov.name}>
-                {prov.name}
-              </MenuItem>
-            ))}
-          </FormField>
+            <FormField
+              select
+              label="Province"
+              value={province}
+              onChange={(e) => setProvince(e.target.value)}
+              fullWidth
+              error={!!errors.province}
+              helperText={errors.province}
+            >
+              {provinces.map((prov, idx) => (
+                <MenuItem key={idx} value={prov.name}>
+                  {prov.name}
+                </MenuItem>
+              ))}
+            </FormField>
 
-          <FormField
-            select
-            label="Area"
-            value={area}
-            onChange={(e) => setArea(e.target.value)}
-            fullWidth
-            disabled={!province}
-            error={!!errors.area}
-            helperText={errors.area}
-          >
-            {areas.map((a, idx) => (
-              <MenuItem key={idx} value={a}>
-                {a}
-              </MenuItem>
-            ))}
-          </FormField>
+            <FormField
+              select
+              label="Area"
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+              fullWidth
+              disabled={!province}
+              error={!!errors.area}
+              helperText={errors.area}
+            >
+              {areas.map((a, idx) => (
+                <MenuItem key={idx} value={a}>
+                  {a}
+                </MenuItem>
+              ))}
+            </FormField>
 
-          <FormField
-            label="Business Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            multiline
-            rows={4}
-            error={!!errors.description}
-            helperText={errors.description}
-          />
+            <FormField
+              label="Business Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              multiline
+              rows={4}
+              error={!!errors.description}
+              helperText={errors.description}
+            />
 
-          <FooterContainer>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </FooterContainer>
-        </form>
-      </CardContent>
-    </StyledCard>
+            <FooterContainer>
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
+            </FooterContainer>
+          </form>
+        </CardContent>
+      </StyledCard>
+      <Footer />
+    </>
   );
-}
+};
+
+export default BusinessListing;

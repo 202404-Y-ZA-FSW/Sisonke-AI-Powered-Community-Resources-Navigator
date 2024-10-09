@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Container,
-  Typography,
   Button,
   Box,
   CircularProgress,
@@ -11,8 +10,8 @@ import ForumCard from "../forum/ForumCard";
 import CreatePostForm from "../forum/CreatePostForm";
 import { getPosts, createPost } from "../forum/lib/api";
 import ForumSearch from "./Search";
-import Navbar from "../components/sections/NavBar";
 import Footer from "../components/sections/Footer";
+import Navigation from "../components/sections/Navigation";
 
 export default function ForumPage() {
   const [posts, setPosts] = useState([]);
@@ -38,7 +37,7 @@ export default function ForumPage() {
 
   return (
     <React.Fragment>
-      <Navbar />
+      <Navigation/>
       <ForumSearch />
       <Container sx={{ marginBottom: 10, marginTop: 10 }} maxWidth="lg">
         <Box sx={{ my: 4 }}>
