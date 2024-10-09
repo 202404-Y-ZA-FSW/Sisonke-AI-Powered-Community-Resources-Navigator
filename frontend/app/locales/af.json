@@ -1,0 +1,156 @@
+{
+  "navbar": {
+    "home": "Tuis",
+    "about": "Oor",
+    "jobs": "Werksgeleenthede",
+    "contact": "Kontak",
+    "community": "Gemeenskap",
+    "blog": "Blog",
+    "forum": "Forum",
+    "events": "Geledere",
+    "education": "Onderwys",
+    "login": "Teken In",
+    "register": "Registreer",
+    "createBlogPost": "Skep Blog Plasing"
+  },
+  "jobCard": {
+    "salary": "R",
+    "location": "Ligging",
+    "experience": "Ervaring",
+    "type": "Tipe",
+    "description": "Beskrywing"
+  },
+  "events": {
+    "exploreEvents": "Verken die wonderlike geledere",
+    "eventDescription": "Geledere word deur plaaslike besighede, organisasies en gemeenskapsgroepe gedeel."
+  },
+  "modal": {
+    "date": "Datum",
+    "location": "Ligging",
+    "time": "Tyd",
+    "close": "Sluit"
+  },
+  "hero": {
+    "title": "Ontdek noodsaaklike plaaslike ondersteuning en geleenthede",
+    "subtitle": "Verken 'n gekureerde versameling plaaslike hulpbronne wat ontwerp is om aan jou gemeenskap se unieke behoeftes te voldoen.",
+    "searchBar": {
+      "jobTypePlaceholder": "Werksoort",
+      "locationPlaceholder": "Ligging",
+      "searchButton": "Soek"
+    },
+    "popularCategories": "Populêre Kategoriene:",
+    "categories": [
+      "UX Ontwerper",
+      "Voorste Ontwikkelaar",
+      "Agterkant Ontwikkelaar"
+    ],
+    "supportTitle": "Ons word ondersteun",
+    "supportSubtitle": "Deur plaaslike regerings, nasionale jeugagentskappe en die private sektor."
+  },
+  "footer": {
+    "company": "SIS<span style=\"color: '#6c63ff';\">O</span>NKE",
+    "address": "143 Wesstraat, Sandown, Sandton, Gauteng, Suid-Afrika",
+    "email": "info@sisonke.co.za",
+    "phone": "+27 12 345 6789",
+    "community": "Gemeenskap",
+    "companyLinks": [
+      "Tuis",
+      "Oor Ons",
+      "Carrière",
+      "Vrae"
+    ],
+    "supportLinks": [
+      "Kontak Ons",
+      "Privaatheidsbeleid",
+      "Voorwaardes van Diens"
+    ]
+  },
+  "services": {
+    "title": "Wat jy kan doen en kry op ons platform",
+    "subtitle": "Of jy nou ondersteuning, geleenthede, en verbindings soek.",
+    "steps": [
+      {
+        "icon": "Mense",
+        "title": "Gemeenskap",
+        "description": "Verbind met soortgelyk-gemoed mense in jou gemeenskap, deel hulpbronne en bly verbind."
+      },
+      {
+        "icon": "Geleenthede",
+        "title": "Gemeenskapsgeleenthede",
+        "description": "Mis nooit belangrike gemeenskapsgeleenthede en netwerkgeleenthede nie."
+      },
+      {
+        "icon": "Werksgeleenthede",
+        "title": "Werke & Leerwerk",
+        "description": "Ons NGO's help jou om vir werke aansoek te doen, meer oor beroepe te leer en jou vaardighede te ontwikkel."
+      },
+      {
+        "icon": "Forum",
+        "title": "Kommunikasie",
+        "description": "Ons gemeenskapsblogs en forums om idees te deel, vrae te vra, en met ander te verbind."
+      }
+    ],
+    "getStarted": "Begin Nou"
+  },
+  "subscribe": {
+    "title": "Teken in op ons nuusbrief",
+    "description": "Bly ingelig oor nuwe werksgeleenthede, geleenthede en nuwe hulpbronne wat daagliks in jou gemeenskaplike forums en blogs geplaas word.",
+    "button": "Teken Nou In",
+    "modalTitle": "Sisonke Inskrywing",
+    "form": {
+      "namePlaceholder": "Naam",
+      "emailPlaceholder": "E-pos",
+      "locationPlaceholder": "Ligging",
+      "submitButton": "Stuur"
+    }
+  },
+  "faq": {
+    "title": "Gereelde vrae",
+    "subtitle": "As ons vrae nie hier beantwoord word nie, kontak gerus ons ondersteuning vir hulp.",
+    "questions": [
+      {
+        "question": "Wat is Sisonke AI-gedrewe Hulpbron Navigasie?",
+        "answer": "Jou aansoek gaan reguit na die spanlede met wie jy sou werk. Jy kan al jou aansoeke op een plek bestuur, binne twee kliks aansoek doen en binne 'n paar dae terugvoer van spanne kry."
+      },
+      {
+        "question": "Watter tipe inligting verskaf die Sisonke platform?",
+        "answer": "Career bied 'n wye reeks werksgeleenthede oor verskeie bedrywe en rolle. Jy kan posisies in tegnologie, bemarking, finansies, ontwerp, en vele ander velde vind."
+      },
+      {
+        "question": "Watter gemeenskappe ondersteun Sisonke? En kan ek 'n profiel skep?",
+        "answer": "Ja, Career is 'n gratis platform vir werksoekers. Jy kan 'n profiel skep, vir werke soek en op posisies aansoek doen sonder enige koste."
+      },
+      {
+        "question": "Is die werke wat op Sisonke geplaas word, geverifieer?",
+        "answer": "Ja, Career is 'n gratis platform vir werksoekers. Jy kan 'n profiel skep, vir werke soek en op posisies aansoek doen sonder enige koste."
+      },
+      {
+        "question": "Is die besighede wat op Sisonke gelys is, betroubaar?",
+        "answer": "Ja, Career is 'n gratis platform vir werksoekers. Jy kan 'n profiel skep, vir werke soek en op posisies aansoek doen sonder enige koste."
+      }
+    ]
+  },
+  "blogs": {
+    "title": "Nuutste nuus oor loopbaanadvies",
+    "subtitle": "Voeg insig by om loopbaangroei te bevorder en kyk na wenke oor maatskappy-werksgeleenthede",
+    "posts": [
+      {
+        "title": "5 Leierskapvaardighede wat jy nodig het om suksesvol te wees",
+        "description": "‘n Groot leier is iemand wat verskeie sterkpunte en vaardighede op een slag beliggaam. Alle groot lei...",
+        "readTime": "8 min Lees"
+      },
+      {
+        "title": "Hoe om vriende te maak terwyl jy op afstand werk",
+        "description": "Sedert afgeleë werk meer algemeen geword het, het werknemers gesê dat die binding met hul span moeil...",
+        "readTime": "11 min Lees"
+      },
+      {
+        "title": "Wat om nie te sê tydens 'n werksonderhoud nie",
+        "description": "Wanneer jy uiteindelik daardie onderhoud kry, is dit maklik om uiters opgewonde (en senuweeagtig) te raak...",
+        "readTime": "9 min Lees"
+      }
+    ],
+    "readMoreButton": "Lees Meer",
+    "browseAllButton": "Blaai Alles"
+  }
+}

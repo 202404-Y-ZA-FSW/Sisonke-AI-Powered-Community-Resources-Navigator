@@ -1,10 +1,31 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Container, Grid, Typography, IconButton, Link as MuiLink } from '@mui/material';
 import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
 import Link from 'next/link';
+import TermsOfServiceModal from './TermsOfServiceModal'; 
+import PrivacyPolicyModal from './PrivacyPolicyModal'; 
 
 const Footer = () => {
+  const [openTermsModal, setOpenTermsModal] = useState(false); 
+  const [openPrivacyModal, setOpenPrivacyModal] = useState(false); 
+
+  const handleOpenTerms = () => {
+    setOpenTermsModal(true);
+  };
+
+  const handleCloseTerms = () => {
+    setOpenTermsModal(false);
+  };
+
+  const handleOpenPrivacy = () => {
+    setOpenPrivacyModal(true);
+  };
+
+  const handleClosePrivacy = () => {
+    setOpenPrivacyModal(false);
+  };
+
   return (
     <Box component="footer" sx={{ background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)', py: 6 }}>
       <Container maxWidth="lg">
@@ -83,11 +104,13 @@ const Footer = () => {
                 Jobs
               </MuiLink>
             </Link>
-            <Link href="/" passHref>
-              <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                FAQs
-              </MuiLink>
-            </Link>
+            <MuiLink 
+              sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
+              onClick={handleOpenTerms}
+              variant="body2" 
+              display="block">
+              Terms of Service
+            </MuiLink>
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
@@ -98,19 +121,18 @@ const Footer = () => {
                 Contact Us
               </MuiLink>
             </Link>
-            <Link href="/" passHref>
-              <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Privacy Policy
-              </MuiLink>
-            </Link>
-            <Link href="/" passHref>
-              <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Terms of Service
-              </MuiLink>
-            </Link>
+            <MuiLink 
+              sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
+              onClick={handleOpenPrivacy}
+              variant="body2" 
+              display="block">
+              Privacy Policy
+            </MuiLink>
           </Grid>
         </Grid>
       </Container>
+      <TermsOfServiceModal open={openTermsModal} handleClose={handleCloseTerms} />
+      <PrivacyPolicyModal open={openPrivacyModal} handleClose={handleClosePrivacy} />
     </Box>
   );
 };
