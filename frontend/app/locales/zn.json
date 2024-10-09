@@ -1,0 +1,157 @@
+{
+    "navbar": {
+      "home": "Ikhaya",
+      "about": "Mayelana",
+      "jobs": "Imisebenzi",
+      "contact": "Xhumana",
+      "community": "Umphakathi",
+      "blog": "Ibhulogi",
+      "forum": "Iforamu",
+      "events": "Imicimbi",
+      "education": "Imfundo",
+      "login": "Ngena",
+      "register": "Bhalisa",
+      "createBlogPost": "Yakha Ibhulogi Okuthunyelwe"
+    },
+    "jobCard": {
+      "salary": "R",
+      "location": "Indawo",
+      "experience": "Isipiliyoni",
+      "type": "Uhlobo",
+      "description": "Incazelo"
+    },
+    "events": {
+      "exploreEvents": "Hlola imicimbi emangalisayo",
+      "eventDescription": "Imicimbi yabelwa amabhizinisi endawo, izinhlangano nemiphakathi."
+    },
+    "modal": {
+      "date": "Usuku",
+      "location": "Indawo",
+      "time": "Isikhathi",
+      "close": "Vala"
+    },
+    "hero": {
+      "title": "Thola ukwesekwa kwendawo okubalulekile nemicimbi",
+      "subtitle": "Hlola iqoqo lezinsiza zendawo ezihlonziwe ezenzelwe ukuhlangabezana nezidingo zomphakathi wakho ezihlukile.",
+      "searchBar": {
+        "jobTypePlaceholder": "Uhlobo Lomsebenzi",
+        "locationPlaceholder": "Indawo",
+        "searchButton": "Sesha"
+      },
+      "popularCategories": "Izigaba Ezidumile:",
+      "categories": [
+        "Umklami we-UX",
+        "Umthuthukisi Wangaphambili",
+        "Umthuthukisi Wangemuva"
+      ],
+      "supportTitle": "Sisekelwe",
+      "supportSubtitle": "Uhulumeni bendawo, izinhlangano zentsha kazwelonke kanye nomkhakha wangasese."
+    },
+    "footer": {
+      "company": "SIS<span style=\"color: '#6c63ff';\">O</span>NKE",
+      "address": "143 West Street, Sandown, Sandton, Gauteng, South Africa",
+      "email": "info@sisonke.co.za",
+      "phone": "+27 12 345 6789",
+      "community": "Umphakathi",
+      "companyLinks": [
+        "Ikhaya",
+        "Mayelana Nathi",
+        "Amathuba Omsebenzi",
+        "Imibuzo Ebuzwa Kaningi"
+      ],
+      "supportLinks": [
+        "Xhumana Nathi",
+        "Inqubomgomo Yobumfihlo",
+        "Imigomo Yesevisi"
+      ]
+    },
+    "services": {
+      "title": "Ongakwenza futhi uthole enkundleni yethu",
+      "subtitle": "Kungakhathalekile ukuthi ufuna ukwesekwa, imicimbi, noma ukuxhumana.",
+      "steps": [
+        {
+          "icon": "Abantu",
+          "title": "Umphakathi",
+          "description": "Xhuma nabantu abanemibono efanayo emphakathini wakho, yabelana ngezinsiza, futhi uhlale uxhumekile."
+        },
+        {
+          "icon": "Imicimbi",
+          "title": "Imicimbi Yomphakathi",
+          "description": "Ungaphuthelwa imicimbi yomphakathi ebalulekile nemicimbi yenethiwekhi."
+        },
+        {
+          "icon": "Imisebenzi",
+          "title": "Imisebenzi & Ukuqeqeshwa",
+          "description": "I-NGO zethu zikusize ukuthi ufake izicelo zemisebenzi, ufunde ngemisebenzi, futhi uthuthukise amakhono akho."
+        },
+        {
+          "icon": "Iforamu",
+          "title": "Ukuxhumana",
+          "description": "Ama-blogomphakathi kanye neforamu ukuze wabelane ngemibono, ubuze imibuzo, futhi uxhumane nabanye."
+        }
+      ],
+      "getStarted": "Qala Manje"
+    },
+    "subscribe": {
+      "title": "Bhalisa kwincwadi yezindaba",
+      "description": "Hlala unolwazi ngemisebenzi emisha, imicimbi nezinsiza ezintsha ezithunyelwa nsuku zonke kuma-foramu kanye namabhulogi omphakathi wakho.",
+      "button": "Bhalisa Manje",
+      "modalTitle": "Ukubhalisa Kwe-Sisonke",
+      "form": {
+        "namePlaceholder": "Igama",
+        "emailPlaceholder": "I-imeyili",
+        "locationPlaceholder": "Indawo",
+        "submitButton": "Thumela"
+      }
+    },
+    "faq": {
+      "title": "Imibuzo Evame Ukubuzwa",
+      "subtitle": "Uma imibuzo yethu ingaphendulwa lapha, zizwe ukhululekile ukuxhumana nokwesekwa kwethu ukuze uthole usizo.",
+      "questions": [
+        {
+          "question": "Iyini i-Sisonke AI-Navigation yezinsiza?",
+          "answer": "Isicelo sakho sihamba ngqo kothimbeni ozosebenza nalo. Ungakwazi ukuphatha zonke izicelo zakho endaweni eyodwa, ufake isicelo ngama-clicks amabili futhi uthole impendulo kuthimba phakathi kwezinsuku ezimbalwa."
+        },
+        {
+          "question": "Hlobo luni lolwazi oluhlinzekwa inkundla ye-Sisonke?",
+          "answer": "I-Career inikeza uhla olubanzi lwemisebenzi kuwo wonke imikhakha nemisebenzi ehlukahlukene. Ungathola izikhundla kwezobuchwepheshe, ezokukhangisa, ezimali, umklamo, nezinye izimboni eziningi."
+        },
+        {
+          "question": "Iziphi izindawo zomphakathi ezisekelwa yi-Sisonke? Futhi ngingakha iphrofayili?",
+          "answer": "Yebo, i-Career iyinkundla yamahhala kubafunayo umsebenzi. Ungakha iphrofayili, useshe imisebenzi futhi ufake izicelo zezikhundla ngaphandle kwezindleko."
+        },
+        {
+          "question": "Ingabe imisebenzi ebekwe kwi-Sisonke ihlolwe?",
+          "answer": "Yebo, i-Career iyinkundla yamahhala kubafunayo umsebenzi. Ungakha iphrofayili, useshe imisebenzi futhi ufake izicelo zezikhundla ngaphandle kwezindleko."
+        },
+        {
+          "question": "Ingabe amabhizinisi abekwe kwi-Sisonke athembekile?",
+          "answer": "Yebo, i-Career iyinkundla yamahhala kubafunayo umsebenzi. Ungakha iphrofayili, useshe imisebenzi futhi ufake izicelo zezikhundla ngaphandle kwezindleko."
+        }
+      ]
+    },
+    "blogs": {
+      "title": "Izindaba Zakamuva Ngezeluleko Zemisebenzi",
+      "subtitle": "Engeza ukuqonda ukuze ukhuthaze ukukhula komsebenzi bese ubheka amathiphu ezinkampani ngemisebenzi",
+      "posts": [
+        {
+          "title": "Amaphrofi Amanhlanu Obuholi Odinga Ukuba Nawo Ukuphumelela",
+          "description": "Umholi omkhulu umuntu oveza amandla nezakhono eziningi ngesikhathi esisodwa. Bonke abaholi abakhulu...",
+          "readTime": "Funda Isikhathi 8 min"
+        },
+        {
+          "title": "Indlela Yokwenza Abangane Ngesikhathi Usebenza Ukude",
+          "description": "Kusukela ukusebenza okude kwande, abasebenzi bathe ukuxhumana nethimba labo kube nzima...",
+          "readTime": "Funda Isikhathi 11 min"
+        },
+        {
+          "title": "Ongakusho Phakathi Nenkulumompikiswano Yomsebenzi",
+          "description": "Uma usuthole inkulumompikiswano yomsebenzi, kulula ukuthokoziswa (futhi ukhathazeke) ngokweqile...",
+          "readTime": "Funda Isikhathi 9 min"
+        }
+      ],
+      "readMoreButton": "Funda Okuningi",
+      "browseAllButton": "Bheka Konke"
+    }
+  }
+  
