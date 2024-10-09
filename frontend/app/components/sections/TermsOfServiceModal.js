@@ -1,5 +1,3 @@
-// components/TermsOfServiceModal.js
-
 import React from 'react';
 import { Modal, Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
