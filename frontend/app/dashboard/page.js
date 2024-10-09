@@ -4,30 +4,19 @@ import React, { useState } from 'react';
 import { withAuthentication } from '../components/authentication/authenticationLayout';
 import { useAuthentication } from '../hooks/useAuthentication';
 import { 
-  AppBar, Toolbar, Typography, IconButton, Avatar, Badge,
-  Drawer, List, ListItem, ListItemIcon, ListItemText,
-  CssBaseline, Box, Container, Button
+  Box, Container, Typography, Grid
 } from '@mui/material';
-import { 
-  Notifications as NotificationsIcon,
-  People as PeopleIcon,
-  Article as ArticleIcon,
-  Forum as ForumIcon,
-  Event as EventIcon,
-  Business as BusinessIcon,
-  Work as WorkIcon
-} from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Navbar from './components/NavBar';  
+import Sidebar from './components/SideBar'; 
 
 // Placeholder components for each section
-const Users = () => <Typography variant="h4">Users Component</Typography>;
-const Blogs = () => <Typography variant="h4">Blogs Component</Typography>;
-const Forums = () => <Typography variant="h4">Forums Component</Typography>;
-const Events = () => <Typography variant="h4">Events Component</Typography>;
-const Businesses = () => <Typography variant="h4">Businesses Component</Typography>;
-const Jobs = () => <Typography variant="h4">Jobs Component</Typography>;
-
-const drawerWidth = 240;
+const Users = () => <Typography variant="h4">Users</Typography>;
+const Blogs = () => <Typography variant="h4">Blogs</Typography>;
+const Forums = () => <Typography variant="h4">Forums</Typography>;
+const Events = () => <Typography variant="h4">Events</Typography>;
+const Businesses = () => <Typography variant="h4">Businesses</Typography>;
+const Jobs = () => <Typography variant="h4">Jobs</Typography>;
 
 const theme = createTheme({
   palette: {
@@ -43,12 +32,12 @@ function Dashboard() {
   const [selectedComponent, setSelectedComponent] = useState('Users');
 
   const sidebarItems = [
-    { text: 'Users', icon: <PeopleIcon />, component: Users },
-    { text: 'Blogs', icon: <ArticleIcon />, component: Blogs },
-    { text: 'Forums', icon: <ForumIcon />, component: Forums },
-    { text: 'Events', icon: <EventIcon />, component: Events },
-    { text: 'Businesses', icon: <BusinessIcon />, component: Businesses },
-    { text: 'Jobs', icon: <WorkIcon />, component: Jobs },
+    { text: 'Users', component: Users },
+    { text: 'Blogs', component: Blogs },
+    { text: 'Forums', component: Forums },
+    { text: 'Events', component: Events },
+    { text: 'Businesses', component: Businesses },
+    { text: 'Jobs', component: Jobs },
   ];
 
   const renderComponent = () => {
@@ -63,64 +52,31 @@ function Dashboard() {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-          <Toolbar>
-            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-              Sisonke Dashboard
-            </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton sx={{ ml: 2 }}>
-              <Avatar alt={user.user.username} src="/placeholder.svg" />
-            </IconButton>
-            <Button color="inherit" onClick={logout}>
-              Logout
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
-          }}
-        >
-          <Toolbar />
-          <Box sx={{ overflow: 'auto' }}>
-            <List>
-              {sidebarItems.map((item) => (
-                <ListItem 
-                  button 
-                  key={item.text}
-                  onClick={() => setSelectedComponent(item.text)}
-                  selected={selectedComponent === item.text}
-                >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Toolbar />
-          <Container maxWidth="lg">
-            <Typography variant="h5" gutterBottom>
-              Welcome to the dashboard, {user.user.username}!
-            </Typography>
-            <Box sx={{ mb: 2 }}>
-              <Typography>Email: {user.user.email}</Typography>
-              <Typography>ID: {user.user.id}</Typography>
-              <Typography>Role: {user.user.role}</Typography>
-            </Box>
-            {renderComponent()}
-          </Container>
-        </Box>
+        {/* Include the Navbar at the top */}
+        <Navbar />
+        
+        <Container maxWidth="lg" sx={{ flexGrow: 1, p: 3, display: 'flex' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={3}>
+              {/* Include the Sidebar on the left */}
+              <Sidebar 
+                selectedComponent={selectedComponent} 
+                setSelectedComponent={setSelectedComponent} 
+              />
+            </Grid>
+            <Grid item xs={12} md={9}>
+              <Typography variant="h5" gutterBottom>
+                Welcome to the dashboard, {user.user.username}!
+              </Typography>
+              <Box sx={{ mb: 2 }}>
+                <Typography>Email: {user.user.email}</Typography>
+                <Typography>ID: {user.user.id}</Typography>
+                <Typography>Role: {user.user.role}</Typography>
+              </Box>
+              {renderComponent()}
+            </Grid>
+          </Grid>
+        </Container>
       </Box>
     </ThemeProvider>
   );
