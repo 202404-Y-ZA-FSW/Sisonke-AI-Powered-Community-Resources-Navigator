@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Fab,
-  Paper,
-  IconButton,
-  Zoom,
-  CircularProgress,
-} from "@mui/material";
+import { Fab, Paper, IconButton, Zoom, CircularProgress } from "@mui/material";
 import { styled } from "@mui/system";
 import ChatIcon from "@mui/icons-material/Chat";
 import CloseIcon from "@mui/icons-material/Close";
@@ -50,7 +44,7 @@ const ChatMessages = styled("div")({
   marginBottom: "1rem",
   display: "flex",
   flexDirection: "column",
-  padding: "20px"
+  padding: "20px",
 });
 
 const Message = styled("div")(({ isUser }) => ({
@@ -68,7 +62,7 @@ const ChatInputContainer = styled("form")({
   alignItems: "center",
 });
 
-export default function Chat() {
+export default function SisonkeX() {
   const [isOpen, setIsOpen] = useState(false);
   const [isfullscreen, setIsFullScreen] = useState(false);
   const [message, setMessage] = useState("");
@@ -98,17 +92,13 @@ export default function Chat() {
       setMessage("");
 
       try {
-        const conversationID = "66f8359b99453c114e5356d8";
-        const response = await fetch(
-          `http://localhost:5000/gemini/${conversationID}/messages`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ message: userMessage.text }),
-          }
-        );
+        const response = await fetch("http://localhost:5000/gemini/sisonke", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: userMessage.text }),
+        });
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
@@ -118,22 +108,15 @@ export default function Chat() {
         }
 
         const data = await response.json();
-        console.log("API Response:", data); // Log the entire response for debugging
+        console.log("API Response:", data);
 
-        if (
-          data.messages &&
-          Array.isArray(data.messages) &&
-          data.messages.length > 0
-        ) {
-          const newMessages = data.messages.map((msg) => ({
-            text: msg.text,
-            isUser: msg.sender !== "Gemini",
-          }));
-          setMessages((prev) => [...prev, ...newMessages]);
+        if (data.response) {
+          const newMessage = { text: data.response, isUser: false };
+          setMessages((prev) => [...prev, newMessage]);
         } else {
           console.error("Unexpected response format:", data);
           throw new Error(
-            'Invalid response format. Expected "messages" array.'
+            'Invalid response format. Expected "response" field.'
           );
         }
       } catch (err) {
