@@ -6,22 +6,19 @@ import {
   Grid,
   Card,
   CardContent,
-  CardActions,
   Typography,
   Button,
-  Chip,
   Box,
   TextField,
   Select,
   FormControl,
   InputLabel,
   MenuItem,
-  Avatar,
   Link,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import Navbar from "../components/sections/NavBar";
 import Footer from "../components/sections/Footer";
+import Navigation from "../components/sections/Navigation";
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -181,7 +178,7 @@ const Job = () => {
 
   return (
     <>
-      <Navbar />
+      <Navigation/>
       <Container>
         {/* Job Search Header */}
         <Box

@@ -1,13 +1,15 @@
 "use client";  
-
 import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";  
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { useAuthentication } from "@/app/hooks/useAuthentication";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-export default function Navbar() {
+export default function AuthNav() {
+  const {  logout } = useAuthentication();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
@@ -114,9 +116,8 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
               <MenuItem onClick={() => router.push("/blog/blogform")}>Create Blog Post</MenuItem>
             </Menu>
-            <Button onClick={() => router.push("/account/login")} sx={navLinksStyles}>Login</Button>
             <Button
-              onClick={() => router.push("/account/register")} 
+              onClick={logout} 
               sx={{
                 backgroundColor: "#6c63ff",
                 color: "#ffffff",
@@ -129,7 +130,7 @@ export default function Navbar() {
                 },
               }}
             >
-              Register
+              Logout
             </Button>
           </>
         )}

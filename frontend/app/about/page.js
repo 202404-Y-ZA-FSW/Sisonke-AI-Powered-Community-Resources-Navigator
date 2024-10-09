@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles"; // Updated import
 import Image from "next/image";
-import Navbar from "../components/sections/NavBar";
 import Hero from "./hero";
 import Footer from "../components/sections/Footer";
 import Subscribe from "../components/sections/Subscribe";
+import Navigation from "../components/sections/Navigation";
 
 const StyledCard = styled(Card)(({ theme }) => {
   const defaultTheme = useTheme(); // Use the default theme
@@ -70,7 +70,7 @@ export default function AboutUs() {
 
   return (
     <React.Fragment>
-      <Navbar />
+      <Navigation/>
       <Hero />
       <Container
         maxWidth="lg"
