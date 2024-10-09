@@ -8,14 +8,44 @@ import {
   Typography,
   Link,
   Grid,
-  Paper,
-  Avatar,
-  Snackbar,
-  Container,
+  Card,
+  CardContent,
+  ThemeProvider,
+  createTheme,
   Alert,
+  Snackbar,
 } from "@mui/material";
 
-function Register() {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#f9a825",
+    },
+    secondary: {
+      main: "#4267B2",
+    },
+  },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: "16px",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          borderRadius: "25px",
+          padding: "10px 0",
+        },
+      },
+    },
+  },
+});
+
+export default function Register() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -62,7 +92,6 @@ function Register() {
           message: "Registration successful!",
           severity: "success",
         });
-        // Reset form or redirect user
       } catch (error) {
         setSnackbar({
           open: true,
@@ -81,158 +110,138 @@ function Register() {
   };
 
   return (
-    <Box>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            p: 3,
-          }}
-        ></Grid>
-
-        {/* Right Section (Form) */}
-        <Grid item xs={12} sm={8} md={5} square>
-          <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography component="h1" variant="h5">
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+        }}
+      >
+        <Card sx={{ width: 450, borderRadius: "16px", boxShadow: 3 }}>
+          <CardContent sx={{ padding: "24px" }}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ mb: 3, fontWeight: "bold" }}
+            >
               Create A Sisonke Account
             </Typography>
             <Typography component="p" sx={{ color: "gray", mt: 1, textAlign: "center" }}>
-              Join Sisonke and discover amazing opportunities, community support and empowerment, employment opportunities, and more.
+              Join Sisonke and discover amazing opportunities, community support, and more.
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 2, boxShadow: "none" }}
-            >
+            <form onSubmit={handleSubmit}>
               <TextField
-                margin="normal"
-                required
                 fullWidth
-                id="username"
+                placeholder="Username"
+                variant="outlined"
                 label="Username"
                 name="username"
-                autoComplete="username"
-                InputProps={{ sx: { borderRadius: "16px" } }}
                 value={formData.username}
                 onChange={handleChange}
                 error={!!errors.username}
                 helperText={errors.username}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
               />
               <TextField
-                margin="normal"
-                required
                 fullWidth
-                id="email"
+                placeholder="Email"
+                variant="outlined"
                 label="Email"
                 name="email"
-                autoComplete="email"
-                autoFocus
-                InputProps={{ sx: { borderRadius: "16px" } }}
                 value={formData.email}
                 onChange={handleChange}
                 error={!!errors.email}
                 helperText={errors.email}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
               />
               <TextField
-                margin="normal"
-                required
                 fullWidth
-                name="password"
-                label="Password"
                 type="password"
-                id="password"
-                autoComplete="new-password"
-                InputProps={{ sx: { borderRadius: "16px" } }}
+                placeholder="Password"
+                variant="outlined"
+                label="Password"
+                name="password"
                 value={formData.password}
                 onChange={handleChange}
                 error={!!errors.password}
                 helperText={errors.password}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
               />
               <TextField
-                margin="normal"
-                required
                 fullWidth
-                name="confirmPassword"
-                label="Confirm Password"
                 type="password"
-                id="confirmPassword"
-                InputProps={{ sx: { borderRadius: "16px" } }}
+                placeholder="Confirm Password"
+                variant="outlined"
+                label="Confirm Password"
+                name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
               />
-              {/* Already have an account? */}
-              <Link href="/account/login" variant="body2" sx={{ mt: "16px", color: "#111111", textDecoration: "none" }}>
-                Already have an account? <span style={{ color: "#6c63ff" }}>Login</span>
+              <Link
+                href="/account/login"
+                sx={{ display: "block", color: "#6c63ff", mt: "16px", textDecoration: "none" }}
+              >
+                Already have an account? Login
               </Link>
               <Button
-                type="submit"
                 fullWidth
+                type="submit"
                 sx={{
                   mt: 3,
                   mb: 2,
-                  backgroundColor: "#6c63ff",
-                  color: "#ffffff",
-                  borderRadius: "16px",
-                  padding: "10px 20px",
                   textTransform: "none",
+                  color: "#ffffff",
+                  backgroundColor: "#6c63ff",
+                  borderRadius: "16px",
                   "&:hover": { backgroundColor: "#5A52D5" },
                 }}
               >
                 Register
               </Button>
-              <Typography align="center" sx={{ mb: 2 }}>
-                OR
-              </Typography>
-              <Button
-                fullWidth
-                color="secondary"
-                sx={{
-                  mb: 2,
-                  backgroundColor: "#1877F2",
-                  color: "white",
-                  padding: "10px 20px",
-                  textTransform: "none",
-                  borderRadius: "16px",
-                  "&:hover": { backgroundColor: "#5A52D5" },
-                }}
-              >
-                Continue with Facebook
-              </Button>
-              <Button
-                fullWidth
-                sx={{
-                  borderRadius: "16px",
-                  backgroundColor: "#DB4437",
-                  padding: "10px 20px",
-                  textTransform: "none",
-                  color: "white",
-                  "&:hover": { backgroundColor: "#C53929" },
-                }}
-              >
-                Continue with Google
-              </Button>
-            </Box>
-          </Box>
-        </Grid>
+            </form>
+            <Typography align="center" sx={{ mb: 2 }}>
+              OR
+            </Typography>
+            <Button
+              fullWidth
+              color="secondary"
+              sx={{
+                mb: 2,
+                backgroundColor: "#1877F2",
+                color: "white",
+                borderRadius: "16px",
+                "&:hover": { backgroundColor: "#5A52D5" },
+              }}
+            >
+              Continue with Facebook
+            </Button>
+            <Button
+              fullWidth
+              sx={{
+                borderRadius: "16px",
+                backgroundColor: "#DB4437",
+                color: "white",
+                "&:hover": { backgroundColor: "#C53929" },
+              }}
+            >
+              Continue with Google
+            </Button>
+          </CardContent>
+        </Card>
         <Snackbar
           open={snackbar.open}
           autoHideDuration={6000}
@@ -247,9 +256,7 @@ function Register() {
             {snackbar.message}
           </Alert>
         </Snackbar>
-      </Grid>
-    </Box>
+      </Box>
+    </ThemeProvider>
   );
 }
-
-export default Register;
