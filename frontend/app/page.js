@@ -9,8 +9,8 @@ import FAQs from "./components/sections/FAQs";
 import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
-import Chat from "./components/ChatAIUI";
 import Navigation from "./components/sections/Navigation";
+import SisonkeX from "./components/SisonkeX";
 
 export default function Home() {
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function Home() {
       <Blogs/>
       <Subscriber/>
       <Footer/>
-      <Chat/>
+      <SisonkeX/>
 
       {/* Load the Google Translate script */}
       <Script
