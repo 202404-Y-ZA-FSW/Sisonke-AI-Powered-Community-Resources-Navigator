@@ -73,9 +73,9 @@ export default function LoginPage() {
 
       await login(token, user);
       
-      if (user.role === "administrator") {
+      if (user.user.role === "administrator") {
         router.push("/dashboard");
-      } else if (user.role === "ngo") {
+      } else if (user.user.role === "ngo") {
         router.push("/ngo/dashboard");
       } else {
         router.push("/");

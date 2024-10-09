@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import Script from 'next/script';
-import Navbar from "./components/sections/NavBar";
 import Hero from "./components/sections/Hero";
 import Footer from "./components/sections/Footer";
 import Jobs from "./components/sections/Jobs";
@@ -11,6 +10,7 @@ import Services from "./components/sections/Services";
 import Events from "./components/sections/Event";
 import Blogs from "./components/sections/Blogs";
 import Chat from "./components/ChatAIUI";
+import Navigation from "./components/sections/Navigation";
 
 export default function Home() {
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Home() {
     <React.Fragment>
 
       <div id="google_translate_element"></div> 
-      <Navbar />
+      <Navigation/>
       <Hero />
       <Services />
       <Events />
