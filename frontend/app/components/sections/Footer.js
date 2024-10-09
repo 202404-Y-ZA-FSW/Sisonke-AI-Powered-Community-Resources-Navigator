@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { Box, Container, Grid, Typography, IconButton, Link as MuiLink } from '@mui/material';
 import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
@@ -52,14 +53,14 @@ const Footer = () => {
                 Forum
               </MuiLink>
             </Link>
-            <Link href="/" passHref>
+            <Link href="/events" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
                 Events
               </MuiLink>
             </Link>
-            <Link href="/" passHref>
+            <Link href="/Businesses" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Education
+                Businesses
               </MuiLink>
             </Link>
           </Grid>
@@ -79,7 +80,7 @@ const Footer = () => {
             </Link>
             <Link href="/jobs" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Careers
+                Jobs
               </MuiLink>
             </Link>
             <Link href="/" passHref>
