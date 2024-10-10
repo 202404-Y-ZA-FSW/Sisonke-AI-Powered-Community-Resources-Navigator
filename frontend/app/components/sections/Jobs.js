@@ -1,31 +1,42 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Container, Grid, Typography, Button, Box, TextField, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
-import JobCard from '../JobCard';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Box,
+  TextField,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
+import JobCard from "../JobCard";
+import { useRouter } from "next/navigation";
 
 const Jobs = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('recently added');
-  const [jobs, setJobs] = useState([]);  
-  const [loading, setLoading] = useState(true);  
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("recently added");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   // Fetch jobs from database
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/jobs/all');  
-        setJobs(response.data.jobs);  
+        const response = await axios.get("http://localhost:5000/jobs/all");
+        setJobs(response.data.jobs);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching jobs:", error);
         setLoading(false);
       }
     };
-    
+
     fetchJobs();
   }, []);
 
@@ -36,20 +47,21 @@ const Jobs = () => {
       job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Remove duplicate jobs 
-  const uniqueJobs = jobs.filter(
+  // Remove duplicate jobs
+  const uniqueJobs = filteredJobs.filter(
     (job, index, self) =>
-      index === self.findIndex((j) => j.title.toLowerCase() === job.title.toLowerCase())
+      index ===
+      self.findIndex((j) => j.title.toLowerCase() === job.title.toLowerCase())
   );
 
   // Sort jobs based on selected criteria
   const sortedJobs = uniqueJobs.sort((a, b) => {
-    if (sortBy === 'highest salary') {
-      return b.salary - a.salary; 
-    } else if (sortBy === 'lowest salary') {
-      return a.salary - b.salary; 
+    if (sortBy === "highest salary") {
+      return b.salary - a.salary;
+    } else if (sortBy === "lowest salary") {
+      return a.salary - b.salary;
     } else {
-      return new Date(b.posted) - new Date(a.posted); 
+      return new Date(b.posted) - new Date(a.posted);
     }
   });
 
@@ -62,13 +74,20 @@ const Jobs = () => {
 
   return (
     <Container sx={{ py: 6 }}>
-      <Typography variant="h4" component="h1" align="center" sx={{ my: 1 }} gutterBottom>
+      <Typography
+        variant="h4"
+        component="h1"
+        align="center"
+        sx={{ my: 1 }}
+        gutterBottom
+      >
         Explore the latest job opportunities
       </Typography>
       <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
-        Discover jobs most relevant to you by experience level, salary, location, job type, etc.
+        Discover jobs most relevant to you by experience level, salary,
+        location, job type, etc.
       </Typography>
-      
+
       <Box display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
         <TextField
           placeholder="Search Job Position or Company"
@@ -76,14 +95,17 @@ const Jobs = () => {
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ width: '300px' }}
+          sx={{ width: "300px" }}
+          InputProps={{
+            sx: { borderRadius: "16px" },
+          }}
         />
-        
+
         <FormControl sx={{ minWidth: 180 }}>
           <InputLabel>Sort By</InputLabel>
           <Select
             value={sortBy}
-            sx={{ borderRadius: '16px'}}
+            sx={{ borderRadius: "16px" }}
             onChange={(e) => setSortBy(e.target.value)}
             label="Sort By"
           >
@@ -104,9 +126,15 @@ const Jobs = () => {
 
       <Box display="flex" justifyContent="center" sx={{ mt: 4 }}>
         <Button
-          sx={{ borderRadius: '15px', backgroundColor: "#6c63ff", color: "#ffffff", textTransform: "none", padding: "8px 30px" }}
+          sx={{
+            borderRadius: "15px",
+            backgroundColor: "#6c63ff",
+            color: "#ffffff",
+            textTransform: "none",
+            padding: "8px 30px",
+          }}
           size="large"
-          onClick={() => router.push('/jobs')} 
+          onClick={() => router.push("/jobs")}
         >
           Browse All
         </Button>
