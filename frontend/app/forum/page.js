@@ -1,22 +1,22 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Button,
-  Box,
-  CircularProgress,
-} from "@mui/material";
+import axios from "axios";
+import { Container, Box, CircularProgress, Typography, Button } from "@mui/material";
 import ForumCard from "../forum/ForumCard";
-import CreatePostForm from "../forum/CreatePostForm";
-import { getPosts, createPost } from "../forum/lib/api";
 import ForumSearch from "./Search";
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
+import { useAuthentication } from "../hooks/useAuthentication";
+import CreatePostForm from "./CreatePostForm";
+import Subscribe from "../components/sections/Subscribe";
 
 export default function ForumPage() {
   const [posts, setPosts] = useState([]);
   const [isCreating, setIsCreating] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useAuthentication();
 
   useEffect(() => {
     fetchPosts();
@@ -24,24 +24,24 @@ export default function ForumPage() {
 
   const fetchPosts = async () => {
     setIsLoading(true);
-    const fetchedPosts = await getPosts();
-    setPosts(fetchedPosts);
-    setIsLoading(false);
-  };
-
-  const handleCreatePost = async (newPost) => {
-    const createdPost = await createPost(newPost);
-    setPosts([createdPost, ...posts]);
-    setIsCreating(false);
+    try {
+      const response = await axios.get("http://localhost:5000/forums/");
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <React.Fragment>
-      <Navigation/>
+      <Navigation />
       <ForumSearch />
       <Container sx={{ marginBottom: 10, marginTop: 10 }} maxWidth="lg">
         <Box sx={{ my: 4 }}>
-          <Button
+          {user ? (
+            <Button
             color="primary"
             onClick={() => setIsCreating(true)}
             sx={{
@@ -56,9 +56,16 @@ export default function ForumPage() {
           >
             Create New Post
           </Button>
+          ) : (
+            <Typography
+              variant="body2"
+              sx={{ marginBottom: 2, color: "#6c63ff" }}
+            >
+              You need to login to create a new post.
+            </Typography>
+          )}
           {isCreating && (
             <CreatePostForm
-              onSubmit={handleCreatePost}
               onCancel={() => setIsCreating(false)}
             />
           )}
@@ -68,11 +75,12 @@ export default function ForumPage() {
             </Box>
           ) : (
             posts.map((post) => (
-              <ForumCard key={post._id} post={post} onUpdate={fetchPosts} />
+              <ForumCard key={post._id} post={post} userId={user.user.id} onUpdate={fetchPosts} />
             ))
           )}
         </Box>
       </Container>
+      <Subscribe/>
       <Footer/>
     </React.Fragment>
   );

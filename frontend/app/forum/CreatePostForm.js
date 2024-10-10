@@ -1,15 +1,38 @@
 import React, { useState } from "react";
 import { TextField, Button, Box } from "@mui/material";
+import axios from "axios";
 
-const CreatePostForm = ({ onSubmit, onCancel }) => {
+import { useAuthentication } from "../hooks/useAuthentication";
+
+const CreatePostForm = ({ onCancel }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const { user } = useAuthentication();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ title, body });
-    setTitle("");
-    setBody("");
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const newPost = {
+        title,
+        body,
+        author: user.user.id,
+      };
+
+      await axios.post("http://localhost:5000/forums/", newPost);
+      setTitle("");
+      setBody("");
+    } catch (err) {
+      setError("Failed to create post. Please try again.");
+      console.error("Error creating post:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -24,6 +47,7 @@ const CreatePostForm = ({ onSubmit, onCancel }) => {
           sx: { borderRadius: "16px" },
         }}
         required
+        disabled={isSubmitting}
       />
       <TextField
         fullWidth
@@ -37,7 +61,9 @@ const CreatePostForm = ({ onSubmit, onCancel }) => {
         required
         multiline
         rows={4}
+        disabled={isSubmitting}
       />
+      {error && <Box sx={{ color: "error.main", mt: 2 }}>{error}</Box>}
       <Box sx={{ mt: 2 }}>
         <Button
           type="submit"
@@ -50,8 +76,9 @@ const CreatePostForm = ({ onSubmit, onCancel }) => {
             textTransform: "none",
             "&:hover": { backgroundColor: "#5A52D5" },
           }}
+          disabled={isSubmitting}
         >
-          Create Post
+          {isSubmitting ? "Creating..." : "Create Post"}
         </Button>
         <Button
           sx={{
@@ -62,6 +89,7 @@ const CreatePostForm = ({ onSubmit, onCancel }) => {
             textTransform: "none",
           }}
           onClick={onCancel}
+          disabled={isSubmitting}
         >
           Cancel
         </Button>
