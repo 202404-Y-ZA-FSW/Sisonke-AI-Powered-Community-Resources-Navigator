@@ -1,4 +1,4 @@
-const { check } = require("express-validator");
+const { check, body } = require("express-validator");
 
 // PROFILE VALIDATION
 const profileValidator = [
@@ -14,13 +14,14 @@ const profileValidator = [
     .withMessage("Surname is required")
     .trim()
     .escape(),
-  check("dateOfBirth")
+  body("dateOfBirth")
     .not()
-    .isDate()
+    .isEmpty()
     .withMessage("Date of birth is required")
+    .isDate()
     .trim()
     .escape(),
-  check("phoneNumer")
+  body("phoneNumber")
     .not()
     .isEmpty()
     .withMessage("Phone number is required")

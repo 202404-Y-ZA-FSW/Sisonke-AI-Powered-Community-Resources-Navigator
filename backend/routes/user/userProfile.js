@@ -15,5 +15,4 @@ const profileValidation = require('../../middleware/validation/user/profileValid
 router.post("/profile", profileValidation, userProfileController.addUserProfile);
 router.get("/profile", userProfileController.getUserProfile);
 router.put("/profile", profileValidation, userProfileController.updateUserProfile);
-
 module.exports = router;

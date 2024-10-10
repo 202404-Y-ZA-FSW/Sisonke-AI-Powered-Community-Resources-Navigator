@@ -11,7 +11,7 @@ exports.addUserProfile = async (req, res) => {
     }
 
     // Extract user identity from JWT
-    const userIdentity = req.userID;
+    const userIdentity ="66fc14c309e68fce66d79928";
 
     // Verify if the user exists in the database
     const user = await userModel.findById(userIdentity);
@@ -40,7 +40,7 @@ exports.addUserProfile = async (req, res) => {
 
     // Create new profile instance
     const userProfile = new userProfileModel({
-      userID: userIdentity,
+      user: userIdentity,
       firstName,
       lastName,
       dateOfBirth,
@@ -133,3 +133,4 @@ exports.updateUserProfile = async (req, res) => {
     });
   }
 };
+

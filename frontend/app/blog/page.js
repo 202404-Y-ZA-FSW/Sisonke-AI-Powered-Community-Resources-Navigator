@@ -1,145 +1,76 @@
-'use client';
-import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, InputAdornment } from '@mui/material';
-import ImageIcon from '@mui/icons-material/Image';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
+"use client";
 
-const BlogForm = () => {
-  const router = useRouter();
+import { useState, useEffect } from 'react';
+import BlogCard from '../components/BlogCard'; // Assuming this is your card component
+import Link from 'next/link';
+import { Box, Typography, Grid, Button } from '@mui/material';
 
-  const [formData, setFormData] = useState({
-    image: '',
-    title: '',
-    author: '',
-    content: ''
-  });
+export default function BlogPage() {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [errors, setErrors] = useState({});
-
-  console.debug("BlogForm", formData)
-  const handleBlogSubmit = async (formData) => {
-    try {
-      console.debug("BlogForm2", formData)
-      const response = await axios.post(`http://localhost:5000/blogs/create`, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.debug("BlogForm3", response)
-      if (response.status === 201) {
-        console.debug("BlogForm4", response)
-        alert('Blog post created successfully!');
-        router.push('/blog');
-        console.debug("BlogForm5", response)
-      } else {
-        console.debug("BlogForm6", response)
-        alert('Failed to create the blog post.');
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      setIsLoading(true);
+      setError(null);
+  
+      try {
+        const response = await fetch('http://localhost:5000/blogs/all');
+        if (!response.ok) {
+          throw new Error('Failed to fetch blog posts.');
+        }
+        const data = await response.json();
+        
+        // If data is not an array, transform it
+        const formattedData = Array.isArray(data) ? data : Object.values(data);
+        
+        setBlogPosts(formattedData);
+      } catch (error) {
+        setError(error.message);
+        console.error('Error fetching blog posts:', error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Error submitting blog post:', error);
-      alert('An error occurred while submitting the blog post.');
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    setErrors({});
-    handleBlogSubmit(formData);
-  };
-
-  // Validate form fields
-  const validateForm = () => {
-    const errors = {};
-    if (!formData.title) errors.title = 'Title is required';
-    if (!formData.author) errors.author = 'Author is required';
-    if (!formData.content) errors.content = 'Content is required';
-    return errors;
-  };
+    };
+  
+    fetchBlogPosts();
+  }, []);
+  
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, bgcolor: '#f5f5f5', p: 3, borderRadius: 2 }}>
-      <Typography variant="h4" component="h1" sx={{ mb: 3 }}>
-        Create a New Blog Post
+    <Box sx={{ maxWidth: '1200px', mx: 'auto', textAlign: 'center', mt: 5 }}>
+      <Typography variant="h4" sx={{ mb: 2, fontWeight: 'bold' }}>
+        Explore Popular Blogs
       </Typography>
-
-      <TextField
-  name="image"
-  placeholder="Image URL"  // Add placeholder instead of label
-  variant="outlined"
-  fullWidth
-  value={formData.image}  // Ensure this is 'image', not 'title'
-  onChange={handleChange}
-  error={!!errors.image}
-  helperText={errors.image}
-  sx={{ mb: 2 }}
-  InputProps={{
-    startAdornment: (
-      <InputAdornment position="start">
-        <ImageIcon />
-      </InputAdornment>
-    ),
-  }}
-/>
-
-      <TextField
-        name="title"
-        label="Blog Title"
-        variant="outlined"
-        fullWidth
-        value={formData.title}
-        onChange={handleChange}
-        error={!!errors.title}
-        helperText={errors.title}
-        sx={{ mb: 2 }}
-      />
-
-      <TextField
-        name="author"
-        label="Author"
-        variant="outlined"
-        fullWidth
-        value={formData.author}
-        onChange={handleChange}
-        error={!!errors.author}
-        helperText={errors.author}
-        sx={{ mb: 2 }}
-      />
-
-      <TextField
-        name="content"
-        label="Blog Content"
-        variant="outlined"
-        fullWidth
-        multiline
-        rows={6}
-        value={formData.content}
-        onChange={handleChange}
-        error={!!errors.content}
-        helperText={errors.content}
-        sx={{ mb: 2 }}
-      />
-
-      <Button type="submit" variant="contained" color="primary">
-        Submit Blog Post
-      </Button>
+      <Typography variant="subtitle1" sx={{ mb: 4 }}>
+        Add insight to boost career growth and check out tips on company job vacancies
+      </Typography>
+      
+      {/* Grid container for the blog cards */}
+      <Grid container spacing={3} justifyContent="center">
+        {Array.isArray(blogPosts) && blogPosts.length > 0 ? (
+          blogPosts.map((post) => (
+            <Grid item xs={12} sm={6} md={4} key={post._id}>
+              {/* Blog card link */}
+              <Link href={`/blog/${post._id}`} style={{ textDecoration: 'none' }}>
+                <BlogCard post={post} />
+              </Link>
+            </Grid>
+          ))
+        ) : (
+          <Typography variant="body1">No blog posts available.</Typography>
+        )}
+      </Grid>
+      <Box sx={{ mt: 4 }}>
+        <Button 
+          variant="contained" 
+          color="primary"
+          // onClick={handleBrowseAllClick} 
+        >
+          Browse All Blogs
+        </Button>
+      </Box>
     </Box>
   );
-};
-
-export default BlogForm;
+}

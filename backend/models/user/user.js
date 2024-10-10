@@ -7,7 +7,7 @@ const UserSchema = new Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    status: { type: String, enum: ["active", "inactive"], default: "active" },
+    status: { type: String, enum: ["active", "inactive","restricted"], default: "active" },
     verified: { type: Boolean, default: false },
     role: { type: String, enum: ["user", "administrator", "ngo"], default: "user" },
   },
