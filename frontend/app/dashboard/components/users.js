@@ -1,20 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Box, Typography, Card, CardContent, Table, TableBody, TableCell, 
-  TableContainer, TableHead, TableRow, IconButton, InputBase, 
-  Button, Dialog, DialogTitle, DialogContent, DialogActions,
-  TextField, Select, MenuItem, FormControl, InputLabel
-} from '@mui/material';
-import { Delete, Edit, Add } from '@mui/icons-material';
+"use client";
+import Head from 'next/head';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Grid,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { Lock, LockOpen, Delete } from '@mui/icons-material';
 
-export default function UserManagement() {
+export default function UserDashboard() {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
-  const [newUser, setNewUser] = useState({ username: '', email: '', status: 'Active', role: 'User' });
-  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     fetchUsers();
@@ -22,186 +33,185 @@ export default function UserManagement() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/account/users');
-      if (response.status !== 200) {
-        alert('Failed to fetch users.');
+      const response = await axios.get("http://localhost:5000/account/users");
+      if (response.status === 200) {
+        setUsers(response.data);
       } else {
-        setUsers(response.data.users);
-        alert('Users fetched successfully');
+        console.error("Failed to fetch users:", response.data);
+        alert("Failed to fetch users.");
       }
     } catch (err) {
-      alert('Error fetching users. Please try again later.');
+      console.error("Error fetching users:", err);
+      alert("Error fetching users. Please try again later.");
     }
   };
 
   const removeUser = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/account/remove/${id}`);
+      const response = await axios.delete(`http://localhost:5000/account/remove`, { data: { userId: id } });
       if (response.status === 200) {
         alert('User deleted successfully');
-        setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+        setUsers(prevUsers => prevUsers.filter(user => user._id !== id));
       } else {
         console.error('Error deleting user:', response.data);
         alert('Failed to delete user');
       }
     } catch (error) {
       console.error('Error deleting user:', error);
+      alert('Error deleting user. Please try again.');
     }
   };
 
   const toggleUser = async (id, status, role) => {
     try {
-      const response = await axios.put(`http://localhost:5000/account/update/${id}`, { status, role });
+      const response = await axios.put(`http://localhost:5000/account/update`, { userId: id, status, role });
       if (response.status === 200) {
-        setUsers((prevUsers) =>
-          prevUsers.map((user) => (user._id === id ? { ...user, status: status === 'Active' ? 'Inactive' : 'Active', role } : user))
-        );
-        alert('User status updated successfully');
+        setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, status, role } : user));
+        alert("User status updated successfully");
       } else {
-        console.error('Failed to update user status');
-        alert('Failed to update user status');
+        console.error("Failed to update user status");
+        alert("Failed to update user status");
       }
     } catch (err) {
       console.error(err);
-      alert('Failed to update user status');
+      alert("Something went wrong. Please try again.");
     }
   };
 
-  const handleOpenDialog = (user = null) => {
-    setEditingUser(user);
-    setNewUser(user || { username: '', email: '', status: 'Active', role: 'User' });
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setEditingUser(null);
-    setNewUser({ username: '', email: '', status: 'Active', role: 'User' });
-  };
-
-  const handleSaveUser = async () => {
-    if (editingUser) {
-      try {
-        const response = await axios.put(`http://localhost:5000/account/update/${editingUser._id}`, newUser);
-        if (response.status === 200) {
-          setUsers((prevUsers) => prevUsers.map((user) => (user._id === editingUser._id ? { ...user, ...newUser } : user)));
-          alert('User updated successfully');
-        } else {
-          alert('Failed to update user');
-        }
-      } catch (err) {
-        alert('Error updating user. Please try again later.');
-      }
-    } else {
-      try {
-        const response = await axios.post('http://localhost:5000/account/create', newUser);
-        if (response.status === 200) {
-          setUsers([...users, { ...newUser, _id: response.data._id }]);
-          alert('User added successfully');
-        } else {
-          alert('Failed to add user');
-        }
-      } catch (err) {
-        alert('Error adding user. Please try again later.');
-      }
-    }
-    handleCloseDialog();
-  };
-
-  const filteredUsers = users.filter(
-    (user) => user.username.toLowerCase().includes(searchQuery.toLowerCase()) || user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = (users || []).filter(
+    (user) =>
+      (user.username && user.username.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
-    <Box>
-      <Typography variant="h4" gutterBottom>User Management</Typography>
-      <Card sx={{ mb: 4 }}>
-        <CardContent>
-          <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-            <InputBase
-              placeholder="Search users..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              sx={{ width: '70%', p: 1, border: '1px solid #ccc', borderRadius: '4px' }}
-            />
-            <Button variant="contained" startIcon={<Add />} onClick={() => handleOpenDialog()}>
-              Add User
-            </Button>
-          </Box>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Username</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Role</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredUsers.map((user) => (
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Head>
+        <title>Admin Dashboard</title>
+      </Head>
+      <Typography variant="h3" gutterBottom>
+        Admin Dashboard
+      </Typography>
+
+      <UserStatistics users={users} />
+      <UserSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <UserManagement 
+        users={filteredUsers} 
+        removeUser={removeUser} 
+        toggleUser={toggleUser} 
+      />
+    </Container>
+  );
+}
+
+const UserStatistics = ({ users }) => {
+  const activeUsers = (users || []).filter((user) => user.status === 'active').length;
+  const restrictedUsers = (users || []).filter((user) => user.status === 'restricted').length;
+  const totalUsers = (users || []).length;
+
+  return (
+    <Card sx={{ mb: 4 }}>
+      <CardHeader title="User Statistics" />
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Typography variant="h6">Active Users: {activeUsers}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6">Restricted Users: {restrictedUsers}</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6">Total Users: {totalUsers}</Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
+};
+
+const UserSearch = ({ searchQuery, setSearchQuery }) => {
+  return (
+    <Card sx={{ mb: 4 }}>
+      <CardHeader title="Search Users" />
+      <CardContent>
+        <InputBase
+          placeholder="Search by name or email"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          fullWidth
+          sx={{
+            mb: 2,
+            padding: '8px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+          }}
+        />
+      </CardContent>
+    </Card>
+  );
+};
+
+const UserManagement = ({ users, removeUser, toggleUser }) => {
+  return (
+    <Card sx={{ mb: 4 }}>
+      <CardHeader title="User Management" />
+      <CardContent>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell><strong>Username</strong></TableCell>
+                <TableCell><strong>Email</strong></TableCell>
+                <TableCell><strong>Role</strong></TableCell>
+                <TableCell><strong>Status</strong></TableCell>
+                <TableCell><strong>Actions</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users.length > 0 ? (
+                users.map((user) => (
                   <TableRow key={user._id}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.status}</TableCell>
-                    <TableCell>{user.role}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => handleOpenDialog(user)}>
-                        <Edit />
+                      <Select
+                        value={user.role}
+                        onChange={(e) => toggleUser(user._id, user.status, e.target.value)}
+                      >
+                        <MenuItem value="user">User</MenuItem>
+                        <MenuItem value="administrator">Admin</MenuItem>
+                        <MenuItem value="ngo">NGO</MenuItem>
+                      </Select>
+                    </TableCell>
+                    <TableCell>{user.status}</TableCell>
+                    <TableCell>
+                      <IconButton 
+                        onClick={() => toggleUser(
+                          user._id, 
+                          user.status === 'active' ? 'restricted' : 'active', 
+                          user.role
+                        )}
+                        color={user.status === 'active' ? 'success' : 'warning'}
+                      >
+                        {user.status === 'active' ? <LockOpen /> : <Lock />}
                       </IconButton>
-                      <IconButton onClick={() => removeUser(user._id)}>
+                      <IconButton onClick={() => removeUser(user._id)} color="error">
                         <Delete />
                       </IconButton>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
-      </Card>
-
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{editingUser ? 'Edit User' : 'Add New User'}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Username"
-            type="text"
-            fullWidth
-            value={newUser.username}
-            onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-          />
-          <TextField
-            margin="dense"
-            label="Email"
-            type="email"
-            fullWidth
-            value={newUser.email}
-            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-          />
-          <FormControl fullWidth margin="dense">
-            <InputLabel>Status</InputLabel>
-            <Select value={newUser.status} onChange={(e) => setNewUser({ ...newUser, status: e.target.value })}>
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl fullWidth margin="dense">
-            <InputLabel>Role</InputLabel>
-            <Select value={newUser.role} onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}>
-              <MenuItem value="User">User</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-            </Select>
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={handleSaveUser}>Save</Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} align="center">
+                    No users found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </CardContent>
+    </Card>
   );
-}
+};

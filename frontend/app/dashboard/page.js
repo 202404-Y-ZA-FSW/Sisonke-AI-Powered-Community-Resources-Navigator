@@ -6,13 +6,14 @@ import {
 } from '@mui/material';
 import Navbar from './components/NavBar';
 import Sidebar from './components/SideBar';
-import UserManagement from './components/users';
+import UserDashboard from './components/users';
 import Blogs from './components/blogs';
 import Businesses from './components/businesses';
 import Events from './components/events';
 import Forums from './components/forums';
 import Jobs from './components/jobs';
 import DashboardOverview from './components/DashboardOverview';
+import AdminDashboard from './components/users';
 
 export default function Dashboard() {
   const [selectedComponent, setSelectedComponent] = useState('Overview');
@@ -27,9 +28,9 @@ export default function Dashboard() {
   const renderComponent = () => {
     switch (selectedComponent) {
       case 'Overview':
-        return <DashboardOverview />;
+        return <UserDashboard />;
       case 'Users':
-        return <UserManagement />;
+        return <AdminDashboard />;
       case 'Blogs':
         return <Blogs />;
       case 'Businesses':
