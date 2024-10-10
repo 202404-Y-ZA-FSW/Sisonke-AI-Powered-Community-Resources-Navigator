@@ -24,7 +24,7 @@ import {
 import { styled } from '@mui/system';
 import { Lock, LockOpen, Delete } from '@mui/icons-material';
 
-// Styled components similar to JobCard
+
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
   borderRadius: 16,

@@ -1,4 +1,3 @@
-//components/NavBar
 "use client";  
 
 import React, { useState } from "react";
@@ -39,13 +38,18 @@ export default function Navbar() {
 
   return (
     <AppBar
-      sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }}
-      position="static"
+      sx={{ 
+        background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)", 
+        position: 'fixed', // Fixed position to ensure it stays on top
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1200
+      }}
       color="transparent"
       elevation={0}
     >
       <Toolbar>
-        {/* Logo on the far left */}
         <Link href="/" passHref>
           <Typography
             variant="h6"
@@ -56,7 +60,6 @@ export default function Navbar() {
           </Typography>
         </Link>
 
-        {/* Navigation items on the far right */}
         <Box sx={{ ml: 'auto', display: 'flex', gap: 2, alignItems: 'center' }}>
           {isMobile ? (
             <>
@@ -141,4 +144,5 @@ export default function Navbar() {
       </Toolbar>
     </AppBar>
   );
-}
+} 
+
