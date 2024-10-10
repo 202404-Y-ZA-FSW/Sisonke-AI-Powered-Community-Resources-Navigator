@@ -20,62 +20,69 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Fade,
+  Modal,
+  Switch,
+  Skeleton,
+  Pagination
 } from '@mui/material';
-import { Lock, LockOpen, Delete } from '@mui/icons-material';
+import { Lock, LockOpen, Delete, Info } from '@mui/icons-material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export default function UserDashboard() {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
+  const [page, setPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+      primary: {
+        main: '#3f51b5',
+      },
+      secondary: {
+        main: '#f50057',
+      },
+    },
+  });
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [page]);
 
   const fetchUsers = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/account/users");
+      const response = await axios.get("http://localhost:5000/account/users", {
+        params: { page, limit: 10 }
+      });
       if (response.status === 200) {
         setUsers(response.data);
       } else {
         console.error("Failed to fetch users:", response.data);
-        alert("Failed to fetch users.");
       }
     } catch (err) {
       console.error("Error fetching users:", err);
-      alert("Error fetching users. Please try again later.");
     }
+    setLoading(false);
   };
 
-  const removeUser = async (id) => {
-    try {
-      const response = await axios.delete(`http://localhost:5000/account/remove`, { data: { userId: id } });
-      if (response.status === 200) {
-        alert('User deleted successfully');
-        setUsers(prevUsers => prevUsers.filter(user => user._id !== id));
-      } else {
-        console.error('Error deleting user:', response.data);
-        alert('Failed to delete user');
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      alert('Error deleting user. Please try again.');
-    }
+  const handleModalOpen = (user) => {
+    setSelectedUser(user);
+    setModalOpen(true);
   };
 
-  const toggleUser = async (id, status, role) => {
-    try {
-      const response = await axios.put(`http://localhost:5000/account/update`, { userId: id, status, role });
-      if (response.status === 200) {
-        setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, status, role } : user));
-        alert("User status updated successfully");
-      } else {
-        console.error("Failed to update user status");
-        alert("Failed to update user status");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong. Please try again.");
-    }
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setSelectedUser(null);
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   const filteredUsers = (users || []).filter(
@@ -85,24 +92,84 @@ export default function UserDashboard() {
   );
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Head>
-        <title>Admin Dashboard</title>
-      </Head>
-      <Typography variant="h3" gutterBottom>
-        Admin Dashboard
-      </Typography>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
+        <Head>
+          <title>Admin Dashboard</title>
+        </Head>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 4 }}>
+            Admin Dashboard
+          </Typography>
+          <Box display="flex" alignItems="center">
+            <Typography variant="subtitle1" sx={{ mr: 2 }}>
+              Dark Mode
+            </Typography>
+            <Switch checked={darkMode} onChange={toggleDarkMode} />
+          </Box>
+        </Box>
 
-      <UserStatistics users={users} />
-      <UserSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <UserManagement 
-        users={filteredUsers} 
-        removeUser={removeUser} 
-        toggleUser={toggleUser} 
-      />
-    </Container>
+        {loading ? (
+          <Skeleton variant="rectangular" width="100%" height={400} />
+        ) : (
+          <Fade in timeout={1000}>
+            <Box>
+              <UserStatistics users={users} />
+              <UserSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+              <UserManagement
+                users={filteredUsers}
+                handleModalOpen={handleModalOpen}
+              />
+            </Box>
+          </Fade>
+        )}
+
+        {/* Pagination */}
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Pagination
+            count={10} // Assuming 10 pages, can dynamically calculate based on data
+            page={page}
+            onChange={(e, value) => setPage(value)}
+            color="primary"
+          />
+        </Box>
+
+        {/* User Details Modal */}
+        {selectedUser && (
+          <Modal open={modalOpen} onClose={handleModalClose}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 400,
+                bgcolor: 'background.paper',
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <Typography variant="h6" component="h2" mb={2}>
+                {selectedUser.username}'s Profile
+              </Typography>
+              <Typography variant="body1" mb={1}>
+                <strong>Email:</strong> {selectedUser.email}
+              </Typography>
+              <Typography variant="body1" mb={1}>
+                <strong>Role:</strong> {selectedUser.role}
+              </Typography>
+              <Typography variant="body1" mb={1}>
+                <strong>Status:</strong> {selectedUser.status}
+              </Typography>
+            </Box>
+          </Modal>
+        )}
+      </Container>
+    </ThemeProvider>
   );
 }
+
+// Rest of the code for UserStatistics, UserSearch, UserManagement...
 
 const UserStatistics = ({ users }) => {
   const activeUsers = (users || []).filter((user) => user.status === 'active').length;
@@ -110,18 +177,18 @@ const UserStatistics = ({ users }) => {
   const totalUsers = (users || []).length;
 
   return (
-    <Card sx={{ mb: 4 }}>
-      <CardHeader title="User Statistics" />
+    <Card sx={{ mb: 4, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)' }}>
+      <CardHeader title="User Statistics" sx={{ backgroundColor: '#3f51b5', color: '#fff', textAlign: 'center' }} />
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <Typography variant="h6">Active Users: {activeUsers}</Typography>
+            <Typography variant="h6" color="primary">Active Users: {activeUsers}</Typography>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="h6">Restricted Users: {restrictedUsers}</Typography>
+            <Typography variant="h6" color="warning.main">Restricted Users: {restrictedUsers}</Typography>
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="h6">Total Users: {totalUsers}</Typography>
+            <Typography variant="h6" color="secondary">Total Users: {totalUsers}</Typography>
           </Grid>
         </Grid>
       </CardContent>
@@ -131,8 +198,8 @@ const UserStatistics = ({ users }) => {
 
 const UserSearch = ({ searchQuery, setSearchQuery }) => {
   return (
-    <Card sx={{ mb: 4 }}>
-      <CardHeader title="Search Users" />
+    <Card sx={{ mb: 4, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)' }}>
+      <CardHeader title="Search Users" sx={{ backgroundColor: '#3f51b5', color: '#fff', textAlign: 'center' }} />
       <CardContent>
         <InputBase
           placeholder="Search by name or email"
@@ -144,6 +211,8 @@ const UserSearch = ({ searchQuery, setSearchQuery }) => {
             padding: '8px',
             border: '1px solid #ccc',
             borderRadius: '4px',
+            transition: 'border-color 0.3s ease',
+            '&:focus-within': { borderColor: '#3f51b5' }
           }}
         />
       </CardContent>
@@ -151,26 +220,26 @@ const UserSearch = ({ searchQuery, setSearchQuery }) => {
   );
 };
 
-const UserManagement = ({ users, removeUser, toggleUser }) => {
+const UserManagement = ({ users, handleModalOpen }) => {
   return (
-    <Card sx={{ mb: 4 }}>
-      <CardHeader title="User Management" />
+    <Card sx={{ mb: 4, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)' }}>
+      <CardHeader title="User Management" sx={{ backgroundColor: '#3f51b5', color: '#fff', textAlign: 'center' }} />
       <CardContent>
         <TableContainer>
           <Table>
-            <TableHead>
+            <TableHead sx={{ backgroundColor: '#424242' }}>
               <TableRow>
-                <TableCell><strong>Username</strong></TableCell>
-                <TableCell><strong>Email</strong></TableCell>
-                <TableCell><strong>Role</strong></TableCell>
-                <TableCell><strong>Status</strong></TableCell>
-                <TableCell><strong>Actions</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Username</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Email</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Role</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Status</strong></TableCell>
+                <TableCell sx={{ color: '#fff' }}><strong>Actions</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.length > 0 ? (
                 users.map((user) => (
-                  <TableRow key={user._id}>
+                  <TableRow key={user._id} hover>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>
@@ -183,7 +252,16 @@ const UserManagement = ({ users, removeUser, toggleUser }) => {
                         <MenuItem value="ngo">NGO</MenuItem>
                       </Select>
                     </TableCell>
-                    <TableCell>{user.status}</TableCell>
+                    <TableCell>
+                      <Typography 
+                        sx={{ 
+                          color: user.status === 'active' ? 'success.main' : 'error.main', 
+                          fontWeight: 'bold' 
+                        }}
+                      >
+                        {user.status}
+                      </Typography>
+                    </TableCell>
                     <TableCell>
                       <IconButton 
                         onClick={() => toggleUser(
@@ -192,11 +270,23 @@ const UserManagement = ({ users, removeUser, toggleUser }) => {
                           user.role
                         )}
                         color={user.status === 'active' ? 'success' : 'warning'}
+                        sx={{ transition: 'color 0.3s ease' }}
                       >
                         {user.status === 'active' ? <LockOpen /> : <Lock />}
                       </IconButton>
-                      <IconButton onClick={() => removeUser(user._id)} color="error">
+                      <IconButton 
+                        onClick={() => removeUser(user._id)} 
+                        color="error" 
+                        sx={{ transition: 'color 0.3s ease' }}
+                      >
                         <Delete />
+                      </IconButton>
+                      <IconButton 
+                        onClick={() => handleModalOpen(user)} 
+                        color="info" 
+                        sx={{ transition: 'color 0.3s ease' }}
+                      >
+                        <Info />
                       </IconButton>
                     </TableCell>
                   </TableRow>
