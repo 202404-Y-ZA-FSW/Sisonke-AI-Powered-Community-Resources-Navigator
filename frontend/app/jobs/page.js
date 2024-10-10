@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Add this line at the top of the file
 
 import React, { useState, useEffect } from "react";
 import {
@@ -98,9 +98,17 @@ const Job = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Button
-                variant="contained"
-                color="primary"
-                sx={{ ml: 2, height: "56px", width: "150px" }}
+                sx={{
+                  backgroundColor: "#6c63ff",
+                  color: "#ffffff",
+                  padding: "8px 30px",
+                  border: "1px solid #6c63ff",
+                  textTransform: "none",
+                  borderRadius: "16px",
+                  "&:hover": {
+                    backgroundColor: "#333",
+                  },
+                }}
                 onClick={() => fetchJobs(searchTerm)}
               >
                 Explore Now
@@ -160,7 +168,20 @@ const Job = () => {
 
         {/* Load More Button */}
         <Box display="flex" justifyContent="center" mt={4}>
-          <Button variant="contained" color="primary" onClick={loadMoreJobs}>
+          <Button
+            sx={{
+              backgroundColor: "#6c63ff",
+              color: "#ffffff",
+              padding: "8px 30px",
+              border: "1px solid #6c63ff",
+              textTransform: "none",
+              borderRadius: "16px",
+              "&:hover": {
+                backgroundColor: "#333",
+              },
+            }}
+            onClick={loadMoreJobs}
+          >
             Load More
           </Button>
         </Box>
