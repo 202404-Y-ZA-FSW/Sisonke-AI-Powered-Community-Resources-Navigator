@@ -4,126 +4,19 @@ import React, { useState, useEffect } from "react";
 import {
   Container,
   Grid,
-  Card,
-  CardContent,
-  Typography,
-  Button,
   Box,
   TextField,
-  Select,
+  Button,
   FormControl,
   InputLabel,
+  Select,
   MenuItem,
+  Typography,
   Link,
 } from "@mui/material";
-import { styled } from "@mui/system";
+import JobCard from "../components/JobCard"; 
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
-
-const StyledCard = styled(Card)({
-  background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-  maxWidth: 340,
-  height: 250,
-  borderRadius: 16,
-  boxShadow: "none",
-  transition: "transform 0.3s",
-  "&:hover": {
-    transform: "scale(1.02)",
-  },
-});
-
-const HeaderContainer = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  marginBottom: 8,
-});
-
-const Logo = styled("div")({
-  width: 50,
-  height: 50,
-  borderRadius: 8,
-  backgroundColor: "#6c63ff",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: "white",
-  fontWeight: "bold",
-  fontSize: 24,
-});
-
-const FooterContainer = styled(Box)({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginTop: 16,
-});
-
-const getRandomSalary = () => {
-  const min = 10000;
-  const max = 100000;
-  return `R ${Math.floor(Math.random() * (max - min + 1)) + min}`;
-};
-
-
-const JobCardDetails = ({
-  title,
-  company,
-  salaryRange,
-  timeAgo,
-  description,
-  redirectUrl,
-}) => {
-  const companyName = company?.display_name || "Unknown Company";
-  const salary = salaryRange?.minimum
-    ? `R${salaryRange.minimum} - R${salaryRange.maximum}`
-    : getRandomSalary();
-
-  return (
-    <Link href={redirectUrl} target="_blank" underline="none">
-      <StyledCard>
-        <CardContent>
-          <HeaderContainer>
-            <Logo>{companyName[0]}</Logo>
-            <Box sx={{ flex: 1, ml: 1, minWidth: 0 }}> {/* Add minWidth: 0 */}
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {companyName}
-              </Typography>
-            </Box>
-          </HeaderContainer>
-
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mt: 2, height: 40, overflow: "hidden", textOverflow: "ellipsis" }}
-          >
-            {description.length > 100 ? `${description.substring(0, 100)}...` : description}
-          </Typography>
-
-          <FooterContainer>
-            <Typography variant="body2" color="text.secondary">
-              {timeAgo}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {salary}
-            </Typography>
-          </FooterContainer>
-        </CardContent>
-      </StyledCard>
-    </Link>
-  );
-};
 
 const Job = () => {
   const [jobs, setJobs] = useState([]);
@@ -132,19 +25,14 @@ const Job = () => {
   const [sortBy, setSortBy] = useState("recently added");
   const [page, setPage] = useState(1);
 
-  const fetchJobs = async (query = [""], loadMore = false) => {
+  const fetchJobs = async (query = "", loadMore = false) => {
     try {
-      const response = await fetch(
-        `https://api.adzuna.com/v1/api/jobs/us/search/${page}?app_id=21f6cc28&app_key=32909bbcc5e3765086cef6e4bb8954f7&results_per_page=20&what=${query}&where=United%20States&distance=1.0&content-type=application/json`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch(`http://localhost:5000/jobs/all`);
       const data = await response.json();
       if (loadMore) {
-        setJobs((prevJobs) => [...prevJobs, ...(data.results || [])]);
+        setJobs((prevJobs) => [...prevJobs, ...(data.jobs || [])]);
       } else {
-        setJobs(data.results || []);
+        setJobs(data.jobs || []);
       }
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -153,7 +41,7 @@ const Job = () => {
 
   useEffect(() => {
     fetchJobs(searchTerm);
-  }, [page, searchTerm]);
+  }, [page]);
 
   const loadMoreJobs = () => {
     setPage((prevPage) => prevPage + 1);
@@ -163,14 +51,14 @@ const Job = () => {
   const filteredJobs = jobs.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.company.display_name.toLowerCase().includes(searchTerm.toLowerCase())
+      job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const sortedJobs = filteredJobs.sort((a, b) => {
     if (sortBy === "highest salary") {
-      return (b.salary?.minimum || 0) - (a.salary?.minimum || 0);
+      return (b.salary || 0) - (a.salary || 0);
     } else if (sortBy === "lowest salary") {
-      return (a.salary?.minimum || 0) - (b.salary?.minimum || 0);
+      return (a.salary || 0) - (b.salary || 0);
     } else {
       return new Date(b.created) - new Date(a.created);
     }
@@ -178,7 +66,7 @@ const Job = () => {
 
   return (
     <>
-      <Navigation/>
+      <Navigation />
       <Container>
         {/* Job Search Header */}
         <Box
@@ -220,16 +108,16 @@ const Job = () => {
             </Box>
 
             <Grid container justifyContent="center" sx={{ mt: 4 }}>
-              <Typography variant="subtitle1" align="center" sx={{ mr:1 }}>
+              <Typography variant="subtitle1" align="center" sx={{ mr: 1 }}>
                 Popular Categories:
               </Typography>
-              <Link href="#" underline="none" sx={{ mr: 2,mt:1 }}>
+              <Link href="#" underline="none" sx={{ mr: 2, mt: 1 }}>
                 UX Designer
               </Link>
-              <Link href="#" underline="none" sx={{ mr: 2,mt:1 }}>
+              <Link href="#" underline="none" sx={{ mr: 2, mt: 1 }}>
                 Front-end Dev
               </Link>
-              <Link href="#" underline="none"  sx={{ mr: 2,mt:1 }}>
+              <Link href="#" underline="none" sx={{ mr: 2, mt: 1 }}>
                 Back-end Dev
               </Link>
             </Grid>
@@ -256,16 +144,15 @@ const Job = () => {
         <Grid container spacing={3} justifyContent="center">
           {sortedJobs.slice(0, displayedJobs).map((job, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <JobCardDetails
+              <JobCard
                 title={job.title}
                 company={job.company}
-                salaryRange={job.salary}
-                timeAgo={job.created}
-                employmentType={job.employment_type}
-                remote={job.remote}
+                salary={job.salary}
+                type={job.type} 
+                location={job.location} 
+                experience={job.experience} 
                 description={job.description}
-                companyLogo={job.company?.logo}
-                redirectUrl={job.redirect_url}
+                link={job.link} 
               />
             </Grid>
           ))}
@@ -278,11 +165,10 @@ const Job = () => {
           </Button>
         </Box>
       </Container>
-      <br/>
+      <br />
       <Footer />
     </>
   );
 };
 
 export default Job;
-

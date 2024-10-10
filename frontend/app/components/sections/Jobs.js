@@ -1,118 +1,174 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Container, Grid, Typography, Button, Box, TextField, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
-import JobCard from '../JobCard';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Grid,
+  Box,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+  Link,
+} from "@mui/material";
+import JobCard from "../components/JobCard"; 
+import Footer from "../components/sections/Footer";
+import Navigation from "../components/sections/Navigation";
 
-const Jobs = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('recently added');
-  const [jobs, setJobs] = useState([]);  
-  const [loading, setLoading] = useState(true);  
-  const router = useRouter();
+const Job = () => {
+  const [jobs, setJobs] = useState([]);
+  const [displayedJobs, setDisplayedJobs] = useState(15);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("recently added");
+  const [page, setPage] = useState(1);
 
-  // Fetch jobs from database
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/jobs/all');  
-        setJobs(response.data.jobs);  
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-        setLoading(false);
+  const fetchJobs = async (query = "", loadMore = false) => {
+    try {
+      const response = await fetch(`http://localhost:5000/jobs/all`);
+      const data = await response.json();
+      if (loadMore) {
+        setJobs((prevJobs) => [...prevJobs, ...(data.jobs || [])]);
+      } else {
+        setJobs(data.jobs || []);
       }
-    };
-    
-    fetchJobs();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
 
-  // Filter jobs based on search term
+  useEffect(() => {
+    fetchJobs(searchTerm);
+  }, [page]);
+
+  const loadMoreJobs = () => {
+    setPage((prevPage) => prevPage + 1);
+    setDisplayedJobs(jobs.length);
+  };
+
   const filteredJobs = jobs.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Remove duplicate jobs 
-  const uniqueJobs = jobs.filter(
-    (job, index, self) =>
-      index === self.findIndex((j) => j.title.toLowerCase() === job.title.toLowerCase())
-  );
-
-  // Sort jobs based on selected criteria
-  const sortedJobs = uniqueJobs.sort((a, b) => {
-    if (sortBy === 'highest salary') {
-      return b.salary - a.salary; 
-    } else if (sortBy === 'lowest salary') {
-      return a.salary - b.salary; 
+  const sortedJobs = filteredJobs.sort((a, b) => {
+    if (sortBy === "highest salary") {
+      return (b.salary || 0) - (a.salary || 0);
+    } else if (sortBy === "lowest salary") {
+      return (a.salary || 0) - (b.salary || 0);
     } else {
-      return new Date(b.posted) - new Date(a.posted); 
+      return new Date(b.created) - new Date(a.created);
     }
   });
 
-  // Limit the jobs displayed to 6
-  const displayedJobs = sortedJobs.slice(0, 6);
-
-  if (loading) {
-    return <Typography>Loading jobs...</Typography>;
-  }
-
   return (
-    <Container sx={{ py: 6 }}>
-      <Typography variant="h4" component="h1" align="center" sx={{ my: 1 }} gutterBottom>
-        Explore the latest job opportunities
-      </Typography>
-      <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
-        Discover jobs most relevant to you by experience level, salary, location, job type, etc.
-      </Typography>
-      
-      <Box display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
-        <TextField
-          placeholder="Search Job Position or Company"
-          variant="outlined"
-          fullWidth
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{ width: '300px' }}
-        />
-        
-        <FormControl sx={{ minWidth: 180 }}>
-          <InputLabel>Sort By</InputLabel>
-          <Select
-            value={sortBy}
-            sx={{ borderRadius: '16px'}}
-            onChange={(e) => setSortBy(e.target.value)}
-            label="Sort By"
-          >
-            <MenuItem value="recently added">Recently Added</MenuItem>
-            <MenuItem value="highest salary">Highest Salary</MenuItem>
-            <MenuItem value="lowest salary">Lowest Salary</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-
-      <Grid container spacing={3} justifyContent="center">
-        {displayedJobs.map((job, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <JobCard {...job} />
-          </Grid>
-        ))}
-      </Grid>
-
-      <Box display="flex" justifyContent="center" sx={{ mt: 4 }}>
-        <Button
-          sx={{ borderRadius: '15px', backgroundColor: "#6c63ff", color: "#ffffff", textTransform: "none", padding: "8px 30px" }}
-          size="large"
-          onClick={() => router.push('/jobs')} 
+    <>
+      <Navigation />
+      <Container>
+        {/* Job Search Header */}
+        <Box
+          sx={{
+            py: 10,
+            background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+            width: "100vw",
+            position: "relative",
+            left: "50%",
+            right: "50%",
+            marginLeft: "-50vw",
+            marginRight: "-50vw",
+          }}
         >
-          Browse All
-        </Button>
-      </Box>
-    </Container>
+          <Container maxWidth="lg">
+            <Typography variant="h3" component="h1" align="center" gutterBottom>
+              Browse Latest Jobs
+            </Typography>
+            <Typography variant="subtitle1" align="center" paragraph>
+              Searching for your dream job is now easier than ever. Just browse a job and apply if you need to.
+            </Typography>
+
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+              <TextField
+                variant="outlined"
+                placeholder="Job title, Salary, or Companies..."
+                sx={{ width: "50%", backgroundColor: "white", borderRadius: "4px" }}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ ml: 2, height: "56px", width: "150px" }}
+                onClick={() => fetchJobs(searchTerm)}
+              >
+                Explore Now
+              </Button>
+            </Box>
+
+            <Grid container justifyContent="center" sx={{ mt: 4 }}>
+              <Typography variant="subtitle1" align="center" sx={{ mr: 1 }}>
+                Popular Categories:
+              </Typography>
+              <Link href="#" underline="none" sx={{ mr: 2, mt: 1 }}>
+                UX Designer
+              </Link>
+              <Link href="#" underline="none" sx={{ mr: 2, mt: 1 }}>
+                Front-end Dev
+              </Link>
+              <Link href="#" underline="none" sx={{ mr: 2, mt: 1 }}>
+                Back-end Dev
+              </Link>
+            </Grid>
+          </Container>
+        </Box>
+
+        {/* Job Sorting */}
+        <Box display="flex" justifyContent="flex-end" sx={{ mb: 8, mt: 8 }}>
+          <FormControl variant="outlined" sx={{ minWidth: 180 }}>
+            <InputLabel>Sort By</InputLabel>
+            <Select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              label="Sort By"
+            >
+              <MenuItem value="recently added">Recently Added</MenuItem>
+              <MenuItem value="highest salary">Highest Salary</MenuItem>
+              <MenuItem value="lowest salary">Lowest Salary</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        {/* Job Cards */}
+        <Grid container spacing={3} justifyContent="center">
+          {sortedJobs.slice(0, displayedJobs).map((job, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <JobCard
+                title={job.title}
+                company={job.company}
+                salary={job.salary}
+                type={job.type} 
+                location={job.location} 
+                experience={job.experience} 
+                description={job.description}
+                link={job.link} 
+              />
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Load More Button */}
+        <Box display="flex" justifyContent="center" mt={4}>
+          <Button variant="contained" color="primary" onClick={loadMoreJobs}>
+            Load More
+          </Button>
+        </Box>
+      </Container>
+      <br />
+      <Footer />
+    </>
   );
 };
 
-export default Jobs;
+export default Job;

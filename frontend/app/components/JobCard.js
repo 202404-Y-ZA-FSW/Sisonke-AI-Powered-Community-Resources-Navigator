@@ -1,9 +1,7 @@
 import React from "react";
-import { Card, CardContent, Typography, Chip, Box } from "@mui/material";
+import { Card, CardContent, Typography, Chip, Box, Grid } from "@mui/material";
 import { styled } from "@mui/system";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import { useRouter } from 'next/router'; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -11,10 +9,10 @@ const StyledCard = styled(Card)({
   margin: "auto",
   borderRadius: 16,
   boxShadow: "none",
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
   "&:hover": {
     transform: "scale(1.02)",
     transition: "all 0.3s",
@@ -53,6 +51,7 @@ const FooterContainer = styled(Box)({
   justifyContent: "space-between",
   alignItems: "center",
   marginTop: 16,
+  padding: "0 16px",
 });
 
 const InfoItem = styled(Box)({
@@ -62,7 +61,7 @@ const InfoItem = styled(Box)({
 });
 
 const formatSalary = (salary) => {
-  return salary ? `R${Number(salary).toLocaleString()}` : "R0";
+  return salary ? `R${Number(salary).toLocaleString()}` : "R0"; 
 };
 
 export default function JobCard({
@@ -73,16 +72,14 @@ export default function JobCard({
   location,
   experience,
   description,
-  link, 
+  link,
 }) {
-
   const handleCardClick = () => {
-    
     window.location.href = link;
   };
 
   return (
-    <StyledCard onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+    <StyledCard onClick={handleCardClick} style={{ cursor: "pointer" }}>
       <CardContent>
         <HeaderContainer>
           <Logo>{company[0]}</Logo>
@@ -100,34 +97,38 @@ export default function JobCard({
           color="text.secondary"
           sx={{
             mt: 2,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            display: '-webkit-box',
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
             WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
+            WebkitBoxOrient: "vertical",
           }}
         >
           {description}
         </Typography>
         <ChipContainer>
+          <Chip label={type} variant="outlined" />
           <Chip label={location} variant="outlined" />
           <Chip label={experience} variant="outlined" />
         </ChipContainer>
-        <FooterContainer>
-          <InfoItem>
-            <AccessTimeIcon fontSize="small" color="action" />
-            <Typography variant="body2" color="text.secondary">
-              {type}
-            </Typography>
-          </InfoItem>
-          <InfoItem>
-            <AttachMoneyIcon fontSize="small" color="action" />
-            <Typography variant="body2" color="text.secondary">
-              {formatSalary(salary)}
-            </Typography>
-          </InfoItem>
-        </FooterContainer>
       </CardContent>
+      <FooterContainer>
+        <Grid container spacing={1} justifyContent="space-between">
+          <Grid item>
+            <InfoItem>
+              <AccessTimeIcon fontSize="small" />
+              <Typography variant="body2">{type}</Typography>
+            </InfoItem>
+          </Grid>
+          <Grid item>
+            <InfoItem>
+              <Typography variant="body2">{formatSalary(salary)}</Typography>
+            </InfoItem>
+          </Grid>
+        </Grid>
+      </FooterContainer>
     </StyledCard>
   );
 }
+
+
