@@ -6,22 +6,22 @@ import {
   Grid,
   Card,
   CardContent,
-  CardActions,
   Typography,
   Button,
-  Chip,
   Box,
   TextField,
   Select,
   FormControl,
   InputLabel,
   MenuItem,
-  Avatar,
   Link,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/system";
-import Navbar from "../components/sections/NavBar";
 import Footer from "../components/sections/Footer";
+import Navigation from "../components/sections/Navigation";
+import Subscribe from "../components/sections/Subscribe";
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -68,7 +68,6 @@ const getRandomSalary = () => {
   return `R ${Math.floor(Math.random() * (max - min + 1)) + min}`;
 };
 
-
 const JobCardDetails = ({
   title,
   company,
@@ -88,7 +87,9 @@ const JobCardDetails = ({
         <CardContent>
           <HeaderContainer>
             <Logo>{companyName[0]}</Logo>
-            <Box sx={{ flex: 1, ml: 1, minWidth: 0 }}> {/* Add minWidth: 0 */}
+            <Box sx={{ flex: 1, ml: 1, minWidth: 0 }}>
+              {" "}
+              {/* Add minWidth: 0 */}
               <Typography
                 variant="h6"
                 component="div"
@@ -109,9 +110,16 @@ const JobCardDetails = ({
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ mt: 2, height: 40, overflow: "hidden", textOverflow: "ellipsis" }}
+            sx={{
+              mt: 2,
+              height: 40,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
           >
-            {description.length > 100 ? `${description.substring(0, 100)}...` : description}
+            {description.length > 100
+              ? `${description.substring(0, 100)}...`
+              : description}
           </Typography>
 
           <FooterContainer>
@@ -181,7 +189,7 @@ const Job = () => {
 
   return (
     <>
-      <Navbar />
+      <Navigation />
       <Container>
         {/* Job Search Header */}
         <Box
@@ -197,45 +205,63 @@ const Job = () => {
           }}
         >
           <Container maxWidth="lg">
-            <Typography variant="h3" component="h1" align="center" gutterBottom>
-              Browse Latest Jobs
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                fontWeight: "bold",
+                mb: 2,
+                fontSize: { xs: "2.5rem", md: "3.75rem" },
+                textAlign: "center",
+              }}
+            >
+              Browse Jobs In Your Community
             </Typography>
-            <Typography variant="subtitle1" align="center" paragraph>
-              Searching for your dream job is now easier than ever. Just browse a job and apply if you need to.
+            <Typography
+              variant="subtitle1"
+              sx={{
+                mb: 4,
+                color: "text.secondary",
+                fontSize: { xs: "1rem", md: "1.25rem" },
+                textAlign: "center",
+              }}
+            >
+              Find the job of your dreams in our curated list of jobs from
+              verified companies, or search for a specific job title or company.
             </Typography>
 
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
               <TextField
                 variant="outlined"
-                placeholder="Job title, Salary, or Companies..."
-                sx={{ width: "50%", backgroundColor: "white", borderRadius: "4px" }}
+                placeholder="Search"
+                InputProps={{
+                  sx: { borderRadius: "16px", width: "100%" },
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Button
-                variant="contained"
-                color="primary"
-                sx={{ ml: 2, height: "56px", width: "150px" }}
+                size="large"
+                sx={{
+                  bgcolor: "#6c63ff",
+                  borderRadius: "16px",
+                  padding: "15px 24px",
+                  color: "#ffffff",
+                  textTransform: "none",
+                  marginLeft: "10px",
+                  "&:hover": { bgcolor: "#5A52D5" },
+                  px: 4,
+                }}
                 onClick={() => fetchJobs(searchTerm)}
               >
                 Explore Now
               </Button>
             </Box>
-
-            <Grid container justifyContent="center" sx={{ mt: 4 }}>
-              <Typography variant="subtitle1" align="center" sx={{ mr:1 }}>
-                Popular Categories:
-              </Typography>
-              <Link href="#" underline="none" sx={{ mr: 2,mt:1 }}>
-                UX Designer
-              </Link>
-              <Link href="#" underline="none" sx={{ mr: 2,mt:1 }}>
-                Front-end Dev
-              </Link>
-              <Link href="#" underline="none"  sx={{ mr: 2,mt:1 }}>
-                Back-end Dev
-              </Link>
-            </Grid>
           </Container>
         </Box>
 
@@ -276,12 +302,22 @@ const Job = () => {
 
         {/* Load More Button */}
         <Box display="flex" justifyContent="center" mt={4}>
-          <Button variant="contained" color="primary" onClick={loadMoreJobs}>
+          <Button
+          sx={{
+            borderRadius: "15px",
+            backgroundColor: "#6c63ff",
+            color: "#ffffff",
+            textTransform: "none",
+            padding: "8px 30px",
+          }}
+          size="large"
+          onClick={loadMoreJobs}>
             Load More
           </Button>
         </Box>
       </Container>
-      <br/>
+      <br />
+      <Subscribe/>
       <Footer />
     </>
   );

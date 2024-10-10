@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Accordion,
   AccordionSummary,
@@ -6,47 +7,75 @@ import {
   Typography,
   Container,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const faqs = [
-  {
-    question: "What is Sisonke AI-Powered Resource Navigator?",
-    answer:
-      "Your application goes right to team members you would be working with. You can manage all your applications in one place, apply in two clicks, and get feedback from teams in just a few days.",
-  },
-  {
-    question: "What type of information does the Sisonke platform provide?",
-    answer:
-      "Career offers a wide range of job opportunities across various industries and roles. You can find positions in technology, marketing, finance, design, and many other fields.",
-  },
-  {
-    question:
-      "Which communities does Sisonke support? And can I create a profile?",
-    answer:
-      "Yes, Career is a free platform for job seekers. You can create a profile, search for jobs, and apply to positions without any cost.",
-  },
-  {
-    question: "Are the jobs posted on Sisonke verified?",
-    answer:
-      "Yes, Career is a free platform for job seekers. You can create a profile, search for jobs, and apply to positions without any cost.",
-  },
-  {
-    question: "The businesses that are listed on Sisonke are they legitimate?",
-    answer:
-      "Yes, Career is a free platform for job seekers. You can create a profile, search for jobs, and apply to positions without any cost.",
-  },
-];
-
 export default function FAQs() {
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/faqs/all");
+        setFaqs(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+        setError("Failed to load FAQs. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchFaqs();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
   return (
-    <Box sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)", paddingBottom: 6, paddingTop: 6 }}>
+    <Box
+      sx={{
+        background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+        paddingBottom: 6,
+        paddingTop: 6,
+      }}
+    >
       <Container maxWidth="md" sx={{ my: 6 }}>
         <Typography variant="h4" component="h1" align="center" gutterBottom>
           Frequently asked questions
         </Typography>
         <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
-          If our questions aren't answered here, don't hesitate to contact our
+          If your questions aren't answered here, don't hesitate to contact our
           support for help.
         </Typography>
         <Box sx={{ mt: 4 }}>

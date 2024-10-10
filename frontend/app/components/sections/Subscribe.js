@@ -5,22 +5,68 @@ import {
   Box,
   Container,
   Modal,
-  TextField,
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function Subscribe() {
   const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', location: '' });
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setErrors({});
+    setSuccessMessage('');
+    setErrorMessage('');
+  };
 
-  const handleSubmit = (event) => {
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.name) errors.name = 'Name is required';
+    if (!formData.email) errors.email = 'Email is required';
+    if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid';
+    if (!formData.location) errors.location = 'Location is required';
+    return errors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted");
-    handleClose();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/newsletter/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSuccessMessage("Subscription successful! Thank you for subscribing.");
+        setFormData({ name: '', email: '', location: '' });
+      } else {
+        const data = await response.json();
+        setErrorMessage(data.error || "Subscription failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+      setErrorMessage("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -50,8 +96,8 @@ export default function Subscribe() {
             Subscribe to our newsletter
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Get informed about new jobs, events, and new resources that are{" "}
-            <br /> posted daily in your community forums and blogs.
+            Get informed about new jobs, events, and new resources that are <br />
+            posted daily in your community forums and blogs.
           </Typography>
           <Button
             size="large"
@@ -71,6 +117,7 @@ export default function Subscribe() {
           </Button>
         </Box>
       </Container>
+
       {/* Modal */}
       <Modal
         open={open}
@@ -102,7 +149,9 @@ export default function Subscribe() {
           >
             <CloseIcon />
           </IconButton>
+          
           <Typography sx={{ mb: 2 }} id="modal-title" variant="h6" component="h2" gutterBottom>
+
             Sisonke Subscription
           </Typography>
           <form onSubmit={handleSubmit}>
@@ -117,8 +166,11 @@ export default function Subscribe() {
               type="text"
               name="name"
               placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
               required
             />
+            {errors.name && <Typography color="error">{errors.name}</Typography>}
             <input
               style={{
                 padding: "15px",
@@ -130,8 +182,11 @@ export default function Subscribe() {
               type="email"
               name="email"
               placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
               required
             />
+            {errors.email && <Typography color="error">{errors.email}</Typography>}
             <input
               style={{
                 padding: "15px",
@@ -143,8 +198,12 @@ export default function Subscribe() {
               type="text"
               name="location"
               placeholder="Location"
+              value={formData.location}
+              onChange={handleChange}
               required
             />
+            {errors.location && <Typography color="error">{errors.location}</Typography>}
+
             <Button
               type="submit"
               fullWidth
@@ -162,6 +221,16 @@ export default function Subscribe() {
             >
               Submit
             </Button>
+            {successMessage && (
+              <Typography color="primary" sx={{ mt: 2 }}>
+                {successMessage}
+              </Typography>
+            )}
+            {errorMessage && (
+              <Typography color="error" sx={{ mt: 2 }}>
+                {errorMessage}
+              </Typography>
+            )}
           </form>
         </Box>
       </Modal>
