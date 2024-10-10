@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -11,17 +12,45 @@ import {
 } from "@mui/material";
 import { ThumbUp, Comment } from "@mui/icons-material";
 import CommentSection from "./CommentSection";
-import { likePost } from "../forum/lib/api";
+import { likePost, getLikes } from "./utils/utils";
 
-const ForumCard = ({ post, onUpdate }) => {
+const ForumCard = ({ post, onUpdate, userId }) => {
   const [showComments, setShowComments] = useState(false);
-  const [likes, setLikes] = useState(post.likes);
+  const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const likesData = await getLikes(post._id);
+        setLikes(likesData.count || 0);
+        setLiked(Array.isArray(likesData.users) && likesData.users.includes(userId));
+      } catch (err) {
+        console.error("Error fetching likes:", err);
+        setError("Failed to fetch likes");
+      }
+    };
+
+    fetchLikes();
+  }, [post._id, userId]);
 
   const handleLike = async () => {
-    const updatedLikes = await likePost(post._id);
-    setLikes(updatedLikes);
-    setLiked(!liked);
+    try {
+      const updatedLikes = await likePost(post._id, userId);
+
+      if (typeof updatedLikes === 'object' && updatedLikes !== null) {
+        setLikes(updatedLikes.count || 0);
+        setLiked(Array.isArray(updatedLikes.likes.user) && updatedLikes.user.includes(userId));
+      } else {
+        throw new Error("Invalid response from server");
+      }
+
+      onUpdate();
+    } catch (err) {
+      console.error("Error liking post:", err);
+      setError("Failed to like post");
+    }
   };
 
   return (
@@ -41,7 +70,6 @@ const ForumCard = ({ post, onUpdate }) => {
         avatar={
           <Avatar
             sx={{ backgroundColor: "#6c63ff" }}
-            src={post.author.avatar}
             alt={post.author.username}
           >
             {post.author.username[0]}
@@ -59,9 +87,9 @@ const ForumCard = ({ post, onUpdate }) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
-          backgroundColor={liked ? "#6c63ff" : "default"}
           aria-label={liked ? "Unlike" : "Like"}
           onClick={handleLike}
+          color={liked ? "primary" : "default"}
         >
           <ThumbUp />
         </IconButton>
@@ -83,11 +111,17 @@ const ForumCard = ({ post, onUpdate }) => {
           {post.comments.length} Comments
         </Button>
       </CardActions>
+      {error && (
+        <Typography variant="body2" color="error" sx={{ padding: 2 }}>
+          {error}
+        </Typography>
+      )}
       {showComments && (
         <CommentSection
           comments={post.comments}
           postId={post._id}
           onUpdate={onUpdate}
+          forumId={post._id}
         />
       )}
     </Card>
