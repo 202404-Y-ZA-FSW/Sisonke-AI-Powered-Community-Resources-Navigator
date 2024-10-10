@@ -366,18 +366,24 @@ const unlikeForumPost = async (req, res) => {
   }
 };
 
-// Get all likes for a specific forum post
+// Get all likes and count for a specific forum post
 const getLikesByForumPost = async (req, res) => {
   try {
     const { forumId } = req.params;
-    const likes = await ForumLike.find({ forumPost: forumId }).populate(
-      "user",
-      "username"
-    );
 
-    res.status(200).json(likes);
+    // Use Promise.all to run both queries concurrently
+    const [likes, count] = await Promise.all([
+      ForumLike.find({ forumPost: forumId }).populate("user", "username"),
+      ForumLike.countDocuments({ forumPost: forumId })
+    ]);
+
+    res.status(200).json({
+      likes: likes,
+      count: count
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error fetching likes:', error);
+    res.status(500).json({ error: "An error occurred while fetching likes" });
   }
 };
 
