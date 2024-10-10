@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
+require('dotenv').config();
 
 const accountRoutes = require("./routes/user/authentication");
 const userProfile = require("./routes/user/userProfile");
@@ -9,6 +10,8 @@ const subscriberRoutes = require("./routes/subscriber");
 const businessRoutes = require("./routes/business");
 const jobRoutes = require("./routes/job");
 const eventRoutes = require("./routes/event");
+
+const forgotPassword = require("./routes/user/forgotPassword");
 
 const geminiRoutes = require("./routes/gemini");
 
@@ -56,6 +59,7 @@ app.use("/alerts", alertRoutes);
 app.use("/forums", forumRoutes);
 app.use("/contact", contactRoutes);
 
+app.use("/forgotpassword", forgotPassword);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {

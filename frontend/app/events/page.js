@@ -48,7 +48,7 @@ const EventForm = () => {
     const handleEventSubmit = async (formData) =>{
       try{
 
-        const response = await axios.post(`http://localhost:5000/events/new`,
+        const response = await axios.post("http://localhost:5000/events/new",
           formData,
           {
             headers: {
@@ -57,7 +57,7 @@ const EventForm = () => {
           }
         );
 
-        if(response.status===201){
+        if(response.status===200){
             router.push('/events/new')
             alert("Event created successfully!");
         }else{
@@ -65,23 +65,25 @@ const EventForm = () => {
         }
         
       }catch(err){ 
-        console.log(err);
+        console.log(err, formData);
         alert("An error occured while creating the event.", err.message)
       }
     }
   const handleSubmit = async (e) => {
-    e.preventDefault();
-     const validationErrors = validateForm
+  e.preventDefault();
+  
+  const validationErrors = validateForm();
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
 
-    setErrors({});
-    handleEventSubmit(formData);
+  setErrors({});
+  console.log("Submitting:", formData); // Log formData for debugging
+  await handleEventSubmit(formData);
+};
 
-  };
 
   const validateForm = () => {
     const errors = {};
