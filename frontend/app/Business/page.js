@@ -38,7 +38,6 @@ const FooterContainer = styled(Box)({
   marginTop: 16,
 });
 
-// Define your industries
 const industries = [
   "Agriculture",
   "Construction",
@@ -140,10 +139,10 @@ export default function BusinessForm() {
         website,
         image,
         logo,
+        owner,
       });
       console.log("Response:", response.data);
 
-      // Reset form fields after successful submission
       setBusinessName("");
       setBusinessEmail("");
       setPhone("");

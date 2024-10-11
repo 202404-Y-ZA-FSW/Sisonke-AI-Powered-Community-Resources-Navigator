@@ -28,7 +28,8 @@ exports.newBusiness = async (req, res) => {
       category,
       image,
       logo,
-      owner,
+      owner: userID,
+
     });
     
     await newBusiness.save();
