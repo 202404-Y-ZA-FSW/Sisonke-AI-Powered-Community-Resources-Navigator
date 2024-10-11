@@ -227,7 +227,7 @@ const Job = () => {
               }}
             >
               Find the job of your dreams in our curated list of jobs from
-              verified companies, or search for a specific job title or company.
+              verified companies, <br/> or search for a specific job title or company.
             </Typography>
 
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
@@ -245,22 +245,6 @@ const Job = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Button
-                size="large"
-                sx={{
-                  bgcolor: "#6c63ff",
-                  borderRadius: "16px",
-                  padding: "15px 24px",
-                  color: "#ffffff",
-                  textTransform: "none",
-                  marginLeft: "10px",
-                  "&:hover": { bgcolor: "#5A52D5" },
-                  px: 4,
-                }}
-                onClick={() => fetchJobs(searchTerm)}
-              >
-                Explore Now
-              </Button>
             </Box>
           </Container>
         </Box>
