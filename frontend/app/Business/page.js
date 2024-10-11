@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   Card,
@@ -37,18 +38,7 @@ const FooterContainer = styled(Box)({
   marginTop: 16,
 });
 
-const provinces = [
-  { name: "Eastern Cape", areas: ["East London", "Port Elizabeth"] },
-  { name: "Free State", areas: ["Bloemfontein"] },
-  { name: "Gauteng", areas: ["Johannesburg", "Pretoria"] },
-  { name: "KwaZulu-Natal", areas: ["Durban", "Pietermaritzburg"] },
-  { name: "Limpopo", areas: ["Polokwane"] },
-  { name: "Mpumalanga", areas: ["Nelspruit"] },
-  { name: "Northern Cape", areas: ["Kimberley"] },
-  { name: "North West", areas: ["Rustenburg"] },
-  { name: "Western Cape", areas: ["Cape Town"] },
-];
-
+// Define your industries
 const industries = [
   "Agriculture",
   "Construction",
@@ -65,18 +55,15 @@ const industries = [
 export default function BusinessForm() {
   const [businessName, setBusinessName] = useState("");
   const [businessEmail, setBusinessEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
   const [industry, setIndustry] = useState("");
-  const [province, setProvince] = useState("");
-  const [area, setArea] = useState("");
   const [description, setDescription] = useState("");
-  const [areas, setAreas] = useState([]);
+  const [website, setWebsite] = useState("");
+  const [image, setImage] = useState("");
+  const [logo, setLogo] = useState("");
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    const selectedProvince = provinces.find((prov) => prov.name === province);
-    setAreas(selectedProvince ? selectedProvince.areas : []);
-    setArea(""); 
-  }, [province]);
 
   const validateForm = () => {
     let valid = true;
@@ -95,23 +82,38 @@ export default function BusinessForm() {
       valid = false;
     }
 
+    if (!phone) {
+      errorObj.phone = "Phone is required";
+      valid = false;
+    }
+
+    if (!address) {
+      errorObj.address = "Address is required";
+      valid = false;
+    }
+
+    if (!city) {
+      errorObj.city = "City is required";
+      valid = false;
+    }
+
     if (!industry) {
       errorObj.industry = "Industry is required";
       valid = false;
     }
 
-    if (!province) {
-      errorObj.province = "Province is required";
-      valid = false;
-    }
-
-    if (!area) {
-      errorObj.area = "Area is required";
-      valid = false;
-    }
-
     if (!description) {
       errorObj.description = "Description is required";
+      valid = false;
+    }
+
+    if (!image) {
+      errorObj.image = "Image URL is required";
+      valid = false;
+    }
+
+    if (!logo) {
+      errorObj.logo = "Logo URL is required";
       valid = false;
     }
 
@@ -127,23 +129,31 @@ export default function BusinessForm() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/business", {
-        businessName,
-        businessEmail,
-        industry,
-        province,
-        area,
+      const response = await axios.post("http://localhost:5000/business/new", {
+        name: businessName,
+        email: businessEmail,
+        phone,
+        address,
+        city,
+        category: industry,
         description,
+        website,
+        image,
+        logo,
       });
       console.log("Response:", response.data);
 
-      
+      // Reset form fields after successful submission
       setBusinessName("");
       setBusinessEmail("");
+      setPhone("");
+      setAddress("");
+      setCity("");
       setIndustry("");
-      setProvince("");
-      setArea("");
       setDescription("");
+      setWebsite("");
+      setImage("");
+      setLogo("");
       setErrors({});
     } catch (error) {
       console.error("Error submitting the form", error);
@@ -184,6 +194,33 @@ export default function BusinessForm() {
           />
 
           <FormField
+            label="Phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            fullWidth
+            error={!!errors.phone}
+            helperText={errors.phone}
+          />
+
+          <FormField
+            label="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            fullWidth
+            error={!!errors.address}
+            helperText={errors.address}
+          />
+
+          <FormField
+            label="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            fullWidth
+            error={!!errors.city}
+            helperText={errors.city}
+          />
+
+          <FormField
             select
             label="Industry"
             value={industry}
@@ -200,39 +237,6 @@ export default function BusinessForm() {
           </FormField>
 
           <FormField
-            select
-            label="Province"
-            value={province}
-            onChange={(e) => setProvince(e.target.value)}
-            fullWidth
-            error={!!errors.province}
-            helperText={errors.province}
-          >
-            {provinces.map((prov, idx) => (
-              <MenuItem key={idx} value={prov.name}>
-                {prov.name}
-              </MenuItem>
-            ))}
-          </FormField>
-
-          <FormField
-            select
-            label="Area"
-            value={area}
-            onChange={(e) => setArea(e.target.value)}
-            fullWidth
-            disabled={!province}
-            error={!!errors.area}
-            helperText={errors.area}
-          >
-            {areas.map((a, idx) => (
-              <MenuItem key={idx} value={a}>
-                {a}
-              </MenuItem>
-            ))}
-          </FormField>
-
-          <FormField
             label="Business Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -241,6 +245,31 @@ export default function BusinessForm() {
             rows={4}
             error={!!errors.description}
             helperText={errors.description}
+          />
+
+          <FormField
+            label="Website"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            fullWidth
+          />
+
+          <FormField
+            label="Image URL"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            fullWidth
+            error={!!errors.image}
+            helperText={errors.image}
+          />
+
+          <FormField
+            label="Logo URL"
+            value={logo}
+            onChange={(e) => setLogo(e.target.value)}
+            fullWidth
+            error={!!errors.logo}
+            helperText={errors.logo}
           />
 
           <FooterContainer>
