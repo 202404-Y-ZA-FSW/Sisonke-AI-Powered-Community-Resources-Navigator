@@ -193,17 +193,7 @@ export default function ContactPage() {
                           required
                           variant="outlined"
                         />
-                        <Box
-                          sx={{
-                            position: 'absolute',
-                            width: '50px',
-                            height: '50px',
-                            backgroundColor: '#f5a623',
-                            borderRadius: '50%',
-                            bottom: '-10px', 
-                            right: '-10px', 
-                          }}
-                        />
+                        
                       </Box>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -219,17 +209,7 @@ export default function ContactPage() {
                           error={!!errors.email}
                           helperText={errors.email}
                         />
-                        <Box
-                          sx={{
-                            position: 'absolute',
-                            width: '50px',
-                            height: '50px',
-                            backgroundColor: '#f5a623',
-                            borderRadius: '50%',
-                            bottom: '-10px', 
-                            right: '-10px', 
-                          }}
-                        />
+                        
                       </Box>
                     </Grid>
                     <Grid item xs={12}>
@@ -242,17 +222,7 @@ export default function ContactPage() {
                           fullWidth
                           variant="outlined"
                         />
-                        <Box
-                          sx={{
-                            position: 'absolute',
-                            width: '50px',
-                            height: '50px',
-                            backgroundColor: '#f5a623',
-                            borderRadius: '50%',
-                            bottom: '-10px', 
-                            right: '-10px', 
-                          }}
-                        />
+                        
                       </Box>
                     </Grid>
                     <Grid item xs={12}>
@@ -270,17 +240,7 @@ export default function ContactPage() {
                           error={!!errors.message}
                           helperText={errors.message}
                         />
-                        <Box
-                          sx={{
-                            position: 'absolute',
-                            width: '50px',
-                            height: '50px',
-                            backgroundColor: '#f5a623',
-                            borderRadius: '50%',
-                            bottom: '-10px', 
-                            right: '-10px', 
-                          }}
-                        />
+                        
                       </Box>
                     </Grid>
                   </Grid>
@@ -289,7 +249,7 @@ export default function ContactPage() {
                       type="submit"
                       variant="contained"
                       sx={{
-                        backgroundColor: '#7033F7',
+                        backgroundColor: '#6c63ff',
                         color: 'white',
                         padding: '10px 20px',
                         borderRadius: '50px',
@@ -298,8 +258,10 @@ export default function ContactPage() {
                         },
                       }}
                     >
+                      
                       Send Message
                     </Button>
+                    
                   </Box>
                 </form>
               </Grid>
