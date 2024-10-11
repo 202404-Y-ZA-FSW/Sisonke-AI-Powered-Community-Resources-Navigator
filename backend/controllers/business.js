@@ -14,7 +14,7 @@ exports.newBusiness = async (req, res) => {
 
   try {
     const userID = req.userID
-    const { name, description, address, city, phone, email, website, category, image, logo } = req.body;
+    const { name, description, address, city, phone, email, website, category, image, logo,owner } = req.body;
 
     // CREATE NEW BUSINESS
     const newBusiness = new businessModel({
@@ -28,14 +28,15 @@ exports.newBusiness = async (req, res) => {
       category,
       image,
       logo,
-      owner: userID
+      owner,
     });
+    
     await newBusiness.save();
 
     res.status(201).json({ message: "Business registered successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An unexpected error has occured while trying to process your request" });
+    res.status(500).json({ message: "An unexpected error has occured while trying to process your request" });
   }
 };
 
