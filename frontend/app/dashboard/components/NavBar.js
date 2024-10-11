@@ -1,11 +1,12 @@
-"use client";  
+"use client";
 
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme, Box, Avatar } from "@mui/material";
 import { useRouter } from "next/navigation";  
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from "next/link";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import SettingsMenu from './userProfile'; 
 
 export default function Navbar() {
   const theme = useTheme();
@@ -35,6 +36,29 @@ export default function Navbar() {
     color: "#000000",
     textTransform: "none",
   };
+
+  // Example user data to pass to the SettingsMenu component
+  const user = {
+    name: "John Doe",
+    username: "johndoe",
+    email: "johndoe@example.com",
+    profileImage: "",
+    bio: "This is my bio",
+    phone: "123456789",
+    location: "New York, USA",
+    socialLinks: { twitter: "", linkedIn: "" },
+  };
+
+  const handleLogout = () => {
+    // Your logout logic here
+    console.log("User logged out");
+  };
+
+  const toggleIncognito = () => {
+    // Handle incognito mode toggle here
+  };
+
+  const isIncognito = false;
 
   return (
     <AppBar
@@ -122,22 +146,14 @@ export default function Navbar() {
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
                 <MenuItem onClick={() => router.push("/Businesses")}>Businesses</MenuItem>
               </Menu>
-              <Button
-                onClick={() => router.push("/")} 
-                sx={{
-                  backgroundColor: "#6c63ff",
-                  color: "#ffffff",
-                  padding: "8px 30px",
-                  border: "1px solid #6c63ff",
-                  textTransform: "none",
-                  borderRadius: "16px",
-                  "&:hover": {
-                    backgroundColor: "#333",
-                  },
-                }}
-              >
-                logout
-              </Button>
+              
+              
+              <SettingsMenu
+                user={user}
+                onLogout={handleLogout}
+                toggleIncognito={toggleIncognito}
+                isIncognito={isIncognito}
+              />
             </>
           )}
         </Box>
@@ -145,4 +161,3 @@ export default function Navbar() {
     </AppBar>
   );
 } 
-
