@@ -62,6 +62,7 @@ export default function BusinessForm() {
   const [website, setWebsite] = useState("");
   const [image, setImage] = useState("");
   const [logo, setLogo] = useState("");
+  const [owner, setOwner] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -115,6 +116,10 @@ export default function BusinessForm() {
       errorObj.logo = "Logo URL is required";
       valid = false;
     }
+    if (!owner) {
+      errorObj.owner = "Owner is required";
+      valid = false;
+    }
 
     setErrors(errorObj);
     return valid;
@@ -122,6 +127,7 @@ export default function BusinessForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
 
     if (!validateForm()) {
       return;
@@ -153,6 +159,7 @@ export default function BusinessForm() {
       setWebsite("");
       setImage("");
       setLogo("");
+      setOwner("");
       setErrors({});
     } catch (error) {
       console.error("Error submitting the form", error);
@@ -269,6 +276,14 @@ export default function BusinessForm() {
             fullWidth
             error={!!errors.logo}
             helperText={errors.logo}
+          />
+          <FormField
+            label="Owner"
+            value={owner}
+            onChange={(e) => setOwner(e.target.value)}
+            fullWidth
+            error={!!errors.owner}
+            helperText={errors.owner}
           />
 
           <FooterContainer>
