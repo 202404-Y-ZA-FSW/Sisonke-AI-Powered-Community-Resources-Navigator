@@ -1,16 +1,22 @@
 const mongoose = require('mongoose');
-//const shortid = require('shortid');
+const Schema = mongoose.Schema;
 
-const commentSchema = new mongoose.Schema({
+const commentSchema = new Schema({
   content: {
     type: String,
     required: true,
     trim: true 
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: 'User', 
     required: true 
+  },
+  post: {
+    type: Schema.Types.ObjectId,
+    ref: 'Blog',
+    required: true
   }
 }, { timestamps: true }); 
-module.exports = mongoose.model('BlogComment', commentSchema);
+const commentModel = mongoose.model('BlogComment', commentSchema);
+module.exports = commentModel;

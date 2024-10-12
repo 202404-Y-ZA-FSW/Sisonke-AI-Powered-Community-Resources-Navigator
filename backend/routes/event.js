@@ -11,6 +11,9 @@ router.post('/', validateEvent, handleValidationErrors, eventController.createEv
 // Get all events
 router.get('/', eventController.getAllEvents);
 
+// Get latest events
+router.get('/latest', eventController.getRecentEvents);
+
 // Get a single event by ID
 router.get('/:id', handleValidationErrors, eventController.getEventById);
 

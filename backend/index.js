@@ -3,6 +3,10 @@ const express = require("express");
 const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 
+require("./models/blog/blog");
+require("./models/forum/forum");
+require("./models/job");
+
 const accountRoutes = require("./routes/user/authentication");
 const userProfile = require("./routes/user/userProfile");
 const subscriberRoutes = require("./routes/subscriber");
@@ -17,6 +21,9 @@ const commentRoutes = require('./routes/blog/comment');
 const likeRoutes = require('./routes/blog/like');
 const alertRoutes = require('./routes/alert');
 const forumRoutes = require('./routes/forum/forum');
+const contactRoutes=require('./routes/contact');
+
+const faqsRoutes = require('./routes/faqs');
 
 // PORT
 const port = 5000;
@@ -48,11 +55,14 @@ app.use("/events", eventRoutes);
 app.use("/gemini", geminiRoutes);
 
 app.use("/blogs", blogRoutes);
-app.use("/blog/comment/:blogID", commentRoutes);
-app.use("/blog/like/:blogID", likeRoutes);
+app.use("/blog/comment", commentRoutes);
+app.use("/blog/like/:blogId", likeRoutes);
 
 app.use("/alerts", alertRoutes);
 app.use("/forums", forumRoutes);
+app.use("/contact", contactRoutes);
+
+app.use("/faqs", faqsRoutes);
 
 // STARTING THE SERVER AND CONNECTING TO MONGODB
 async function startServer() {

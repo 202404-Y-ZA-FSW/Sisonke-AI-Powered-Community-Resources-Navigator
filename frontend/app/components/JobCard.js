@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Chip, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import { useRouter } from 'next/router'; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -10,6 +11,10 @@ const StyledCard = styled(Card)({
   margin: "auto",
   borderRadius: 16,
   boxShadow: "none",
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   "&:hover": {
     transform: "scale(1.02)",
     transition: "all 0.3s",
@@ -56,17 +61,28 @@ const InfoItem = styled(Box)({
   gap: 4,
 });
 
+const formatSalary = (salary) => {
+  return salary ? `R${Number(salary).toLocaleString()}` : "R0";
+};
+
 export default function JobCard({
   title,
   company,
-  salaryRange,
-  timeAgo,
-  employmentType,
-  remote,
+  salary,
+  type,
+  location,
+  experience,
   description,
+  link, 
 }) {
+
+  const handleCardClick = () => {
+    
+    window.location.href = link;
+  };
+
   return (
-    <StyledCard>
+    <StyledCard onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <CardContent>
         <HeaderContainer>
           <Logo>{company[0]}</Logo>
@@ -79,24 +95,35 @@ export default function JobCard({
             </Typography>
           </Box>
         </HeaderContainer>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{
+            mt: 2,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
           {description}
         </Typography>
         <ChipContainer>
-          <Chip label={employmentType} variant="outlined" />
-          <Chip label={remote} variant="outlined" />
+          <Chip label={location} variant="outlined" />
+          <Chip label={experience} variant="outlined" />
         </ChipContainer>
         <FooterContainer>
           <InfoItem>
             <AccessTimeIcon fontSize="small" color="action" />
             <Typography variant="body2" color="text.secondary">
-              {timeAgo}
+              {type}
             </Typography>
           </InfoItem>
           <InfoItem>
             <AttachMoneyIcon fontSize="small" color="action" />
             <Typography variant="body2" color="text.secondary">
-              {salaryRange}
+              {formatSalary(salary)}
             </Typography>
           </InfoItem>
         </FooterContainer>
