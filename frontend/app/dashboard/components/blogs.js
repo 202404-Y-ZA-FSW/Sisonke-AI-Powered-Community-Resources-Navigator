@@ -8,7 +8,6 @@ import {
   CardHeader,
   Container,
   Grid,
-  IconButton,
   InputBase,
   Table,
   TableBody,
@@ -17,12 +16,19 @@ import {
   TableHead,
   TableRow,
   Typography,
+  CircularProgress,
+  Snackbar,
+  Button,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   useEffect(() => {
     fetchBlogs();
@@ -30,16 +36,17 @@ export default function Blogs() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/blogs"); 
+      const response = await axios.get("http://localhost:5000/blogs/all");
       if (response.status === 200) {
         setBlogs(response.data);
       } else {
-        console.error("Failed to fetch blogs:", response.data);
-        alert("Failed to fetch blogs.");
+        setError("Failed to fetch blogs.");
       }
     } catch (err) {
       console.error("Error fetching blogs:", err);
-      alert("Error fetching blogs. Please try again later.");
+      setError("Error fetching blogs. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,15 +54,15 @@ export default function Blogs() {
     try {
       const response = await axios.delete(`http://localhost:5000/blogs/${id}`);
       if (response.status === 200) {
-        alert('Blog deleted successfully');
         setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== id));
+        setSnackbarMessage('Blog deleted successfully');
+        setSnackbarOpen(true);
       } else {
-        console.error('Error deleting blog:', response.data);
-        alert('Failed to delete blog');
+        setError('Failed to delete blog');
       }
     } catch (error) {
       console.error('Error deleting blog:', error);
-      alert('Error deleting blog. Please try again.');
+      setError('Error deleting blog. Please try again.');
     }
   };
 
@@ -69,12 +76,7 @@ export default function Blogs() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h3" gutterBottom>
-        Blogs Management
-      </Typography>
-
-      {/* Blog Statistics Section */}
-      <Card sx={{ mb: 4 }}>
+      <Card sx={{ mb: 4, textAlign: 'center' }}>
         <CardHeader title="Blog Statistics" />
         <CardContent>
           <Grid container spacing={2}>
@@ -85,8 +87,7 @@ export default function Blogs() {
         </CardContent>
       </Card>
 
-      {/* Blog Search Section */}
-      <Card sx={{ mb: 4 }}>
+      <Card sx={{ mb: 4, textAlign: 'center' }}>
         <CardHeader title="Search Blogs" />
         <CardContent>
           <InputBase
@@ -104,46 +105,69 @@ export default function Blogs() {
         </CardContent>
       </Card>
 
-      {/* Blog Management Section */}
-      <Card sx={{ mb: 4 }}>
+      <Card sx={{ mb: 4, textAlign: 'center' }}>
         <CardHeader title="Blog Management" />
         <CardContent>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>Title</strong></TableCell>
-                  <TableCell><strong>Author</strong></TableCell>
-                  <TableCell><strong>Date Published</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredBlogs.length > 0 ? (
-                  filteredBlogs.map((blog) => (
-                    <TableRow key={blog._id}>
-                      <TableCell>{blog.title}</TableCell>
-                      <TableCell>{blog.author}</TableCell>
-                      <TableCell>{new Date(blog.publishedAt).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <IconButton onClick={() => removeBlog(blog._id)} color="error">
-                          <Delete />
-                        </IconButton>
+          {loading ? (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100px">
+              <CircularProgress />
+            </Box>
+          ) : (
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><strong>Title</strong></TableCell>
+                    <TableCell><strong>Author</strong></TableCell>
+                    <TableCell><strong>Date Published</strong></TableCell>
+                    <TableCell><strong>Actions</strong></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {filteredBlogs.length > 0 ? (
+                    filteredBlogs.map((blog) => (
+                      <TableRow key={blog._id}>
+                        <TableCell>{blog.title}</TableCell>
+                        <TableCell>{blog.author?.username || blog.author}</TableCell>
+                        <TableCell>{new Date(blog.publishedAt).toLocaleDateString()}</TableCell>
+                        <TableCell>
+                          <Button
+                            startIcon={<DeleteIcon />}
+                            onClick={() => removeBlog(blog._id)}
+                            color="error"
+                            variant="contained"
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} align="center">
+                        No blogs found
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No blogs found
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </CardContent>
       </Card>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+      />
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError('')}
+        message={error}
+      />
     </Container>
   );
 }
