@@ -36,12 +36,11 @@ export default function DashboardOverview() {
   const fetchData = async () => {
     try {
       setLoading(true);  
-      const [blogsRes, businessesRes, eventsRes, forumsRes, jobsRes, usersRes] = await Promise.all([
+      const [blogsRes, businessesRes, eventsRes, forumsRes, usersRes] = await Promise.all([
         axios.get('http://localhost:5000/blogs'),
-        axios.get('http://localhost:5000/businesses'),
+        axios.get('http://localhost:5000/businesses/all'),
         axios.get('http://localhost:5000/events'),
-        axios.get('http://localhost:5000/forums'),
-        axios.get('http://localhost:5000/jobs'),
+        axios.get('http://localhost:5000/forums/${id}'),
         axios.get('http://localhost:5000/account/users'),
       ]);
 
@@ -50,10 +49,9 @@ export default function DashboardOverview() {
         businesses: businessesRes.data,
         events: eventsRes.data,
         forums: forumsRes.data,
-        jobs: jobsRes.data,
         users: usersRes.data,
       });
-      setLoading(false);  // Stop loading
+      setLoading(false); 
     } catch (error) {
       console.error('Error fetching data:', error);
       setError('Failed to load data');
@@ -63,13 +61,12 @@ export default function DashboardOverview() {
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6384', '#36A2EB'];
 
-  // Prepare data for pie chart
+
   const pieData = [
     { name: 'Blogs', value: data.blogs.length },
     { name: 'Businesses', value: data.businesses.length },
     { name: 'Events', value: data.events.length },
     { name: 'Forums', value: data.forums.length },
-    { name: 'Jobs', value: data.jobs.length },
     { name: 'Users', value: data.users.length },
   ];
 
