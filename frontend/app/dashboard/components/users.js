@@ -1,88 +1,81 @@
-"use client";
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
+'use client'
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Grid,
-  IconButton,
-  InputBase,
-  MenuItem,
-  Select,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
+import { 
+  Paper, 
+  Typography, 
+  TextField, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
   TableRow,
-  Typography,
-  Fade,
-  Modal,
-  Switch,
-  Skeleton,
-  Pagination
+  Select,
+  MenuItem,
+  Button,
+  Grid,
+  Box,
+  CircularProgress,
+  Snackbar
 } from '@mui/material';
-import { Lock, LockOpen, Delete, Info } from '@mui/icons-material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockIcon from '@mui/icons-material/Lock';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function UserDashboard() {
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
-  const [page, setPage] = useState(1);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-      primary: {
-        main: '#3f51b5',
-      },
-      secondary: {
-        main: '#f50057',
-      },
-    },
-  });
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchUsers();
-  }, [page]);
+  }, []);
 
   const fetchUsers = async () => {
-    setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/account/users", {
-        params: { page, limit: 10 }
-      });
+      setLoading(true);
+      const response = await axios.get("http://localhost:5000/account/users");
       if (response.status === 200) {
         setUsers(response.data);
       } else {
-        console.error("Failed to fetch users:", response.data);
+        setError("Failed to fetch users.");
       }
     } catch (err) {
-      console.error("Error fetching users:", err);
+      setError("Error fetching users. Please try again later.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const handleModalOpen = (user) => {
-    setSelectedUser(user);
-    setModalOpen(true);
+  const removeUser = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/account/remove`, { data: { userId: id } });
+      if (response.status === 200) {
+        setUsers(prevUsers => prevUsers.filter(user => user._id !== id));
+        setError("User deleted successfully");
+      } else {
+        setError('Failed to delete user');
+      }
+    } catch (error) {
+      setError('Error deleting user. Please try again.');
+    }
   };
 
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setSelectedUser(null);
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+  const toggleUser = async (id, status, role) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/account/update`, { userId: id, status, role });
+      if (response.status === 200) {
+        setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, status, role } : user));
+        setError("User status updated successfully");
+      } else {
+        setError("Failed to update user status");
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   const filteredUsers = (users || []).filter(
@@ -92,216 +85,107 @@ export default function UserDashboard() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Head>
-          <title>Admin Dashboard</title>
-        </Head>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold', color: '#333', mb: 4 }}>
-            Admin Dashboard
-          </Typography>
-          <Box display="flex" alignItems="center">
-            <Typography variant="subtitle1" sx={{ mr: 2 }}>
-              Dark Mode
-            </Typography>
-            <Switch checked={darkMode} onChange={toggleDarkMode} />
-          </Box>
-        </Box>
-
-        {loading ? (
-          <Skeleton variant="rectangular" width="100%" height={400} />
-        ) : (
-          <Fade in timeout={1000}>
-            <Box>
-              <UserStatistics users={users} />
-              <UserSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-              <UserManagement
-                users={filteredUsers}
-                handleModalOpen={handleModalOpen}
-              />
-            </Box>
-          </Fade>
-        )}
-
-        {/* Pagination */}
-        <Box display="flex" justifyContent="center" mt={4}>
-          <Pagination
-            count={10} // Assuming 10 pages, can dynamically calculate based on data
-            page={page}
-            onChange={(e, value) => setPage(value)}
-            color="primary"
-          />
-        </Box>
-
-        {/* User Details Modal */}
-        {selectedUser && (
-          <Modal open={modalOpen} onClose={handleModalClose}>
-            <Box
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 400,
-                bgcolor: 'background.paper',
-                boxShadow: 24,
-                p: 4,
-              }}
-            >
-              <Typography variant="h6" component="h2" mb={2}>
-                {selectedUser.username}'s Profile
-              </Typography>
-              <Typography variant="body1" mb={1}>
-                <strong>Email:</strong> {selectedUser.email}
-              </Typography>
-              <Typography variant="body1" mb={1}>
-                <strong>Role:</strong> {selectedUser.role}
-              </Typography>
-              <Typography variant="body1" mb={1}>
-                <strong>Status:</strong> {selectedUser.status}
-              </Typography>
-            </Box>
-          </Modal>
-        )}
-      </Container>
-    </ThemeProvider>
-  );
-}
-
-// Rest of the code for UserStatistics, UserSearch, UserManagement...
-
-const UserStatistics = ({ users }) => {
-  const activeUsers = (users || []).filter((user) => user.status === 'active').length;
-  const restrictedUsers = (users || []).filter((user) => user.status === 'restricted').length;
-  const totalUsers = (users || []).length;
-
-  return (
-    <Card sx={{ mb: 4, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)' }}>
-      <CardHeader title="User Statistics" sx={{ backgroundColor: '#3f51b5', color: '#fff', textAlign: 'center' }} />
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Typography variant="h6" color="primary">Active Users: {activeUsers}</Typography>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+        <Typography variant="h6" gutterBottom sx = {{textAlign : 'center'}}>User Statistics</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1">Active Users: {users.filter(user => user.status === 'active').length}</Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Typography variant="h6" color="warning.main">Restricted Users: {restrictedUsers}</Typography>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1">Restricted Users: {users.filter(user => user.status === 'restricted').length}</Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Typography variant="h6" color="secondary">Total Users: {totalUsers}</Typography>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1">Total Users: {users.length}</Typography>
           </Grid>
         </Grid>
-      </CardContent>
-    </Card>
-  );
-};
+      </Paper>
 
-const UserSearch = ({ searchQuery, setSearchQuery }) => {
-  return (
-    <Card sx={{ mb: 4, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)' }}>
-      <CardHeader title="Search Users" sx={{ backgroundColor: '#3f51b5', color: '#fff', textAlign: 'center' }} />
-      <CardContent>
-        <InputBase
+      <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+        <Typography variant="h6" gutterBottom sx = {{ textAlign : 'center' }}>Search Users</Typography>
+        <TextField
+          fullWidth
+          variant="outlined"
           placeholder="Search by name or email"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          fullWidth
-          sx={{
-            mb: 2,
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            transition: 'border-color 0.3s ease',
-            '&:focus-within': { borderColor: '#3f51b5' }
-          }}
         />
-      </CardContent>
-    </Card>
-  );
-};
+      </Paper>
 
-const UserManagement = ({ users, handleModalOpen }) => {
-  return (
-    <Card sx={{ mb: 4, boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.2)' }}>
-      <CardHeader title="User Management" sx={{ backgroundColor: '#3f51b5', color: '#fff', textAlign: 'center' }} />
-      <CardContent>
-        <TableContainer>
-          <Table>
-            <TableHead sx={{ backgroundColor: '#424242' }}>
-              <TableRow>
-                <TableCell sx={{ color: '#fff' }}><strong>Username</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Email</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Role</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Status</strong></TableCell>
-                <TableCell sx={{ color: '#fff' }}><strong>Actions</strong></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.length > 0 ? (
-                users.map((user) => (
-                  <TableRow key={user._id} hover>
-                    <TableCell>{user.username}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      <Select
-                        value={user.role}
-                        onChange={(e) => toggleUser(user._id, user.status, e.target.value)}
-                      >
-                        <MenuItem value="user">User</MenuItem>
-                        <MenuItem value="administrator">Admin</MenuItem>
-                        <MenuItem value="ngo">NGO</MenuItem>
-                      </Select>
-                    </TableCell>
-                    <TableCell>
-                      <Typography 
-                        sx={{ 
-                          color: user.status === 'active' ? 'success.main' : 'error.main', 
-                          fontWeight: 'bold' 
-                        }}
-                      >
-                        {user.status}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton 
-                        onClick={() => toggleUser(
-                          user._id, 
-                          user.status === 'active' ? 'restricted' : 'active', 
-                          user.role
-                        )}
-                        color={user.status === 'active' ? 'success' : 'warning'}
-                        sx={{ transition: 'color 0.3s ease' }}
-                      >
-                        {user.status === 'active' ? <LockOpen /> : <Lock />}
-                      </IconButton>
-                      <IconButton 
-                        onClick={() => removeUser(user._id)} 
-                        color="error" 
-                        sx={{ transition: 'color 0.3s ease' }}
-                      >
-                        <Delete />
-                      </IconButton>
-                      <IconButton 
-                        onClick={() => handleModalOpen(user)} 
-                        color="info" 
-                        sx={{ transition: 'color 0.3s ease' }}
-                      >
-                        <Info />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))
-              ) : (
+      <Paper elevation={3} sx={{ p: 2, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+        <Typography variant="h6" gutterBottom sx = {{textAlign : 'center'}}>User Management</Typography>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <TableContainer component={Box} sx={{ flexGrow: 1, overflow: 'auto' }}>
+            <Table stickyHeader aria-label="user management table">
+              <TableHead>
                 <TableRow>
-                  <TableCell colSpan={5} align="center">
-                    No users found
-                  </TableCell>
+                  <TableCell>Username</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Role</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Actions</TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent>
-    </Card>
+              </TableHead>
+              <TableBody>
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user) => (
+                    <TableRow key={user._id}>
+                      <TableCell>{user.username}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>
+                        <Select
+                          value={user.role}
+                          onChange={(e) => toggleUser(user._id, user.status, e.target.value)}
+                          fullWidth
+                        >
+                          <MenuItem value="user">User</MenuItem>
+                          <MenuItem value="administrator">Admin</MenuItem>
+                          <MenuItem value="ngo">NGO</MenuItem>
+                        </Select>
+                      </TableCell>
+                      <TableCell>{user.status}</TableCell>
+                      <TableCell>
+                        <Button
+                          startIcon={user.status === 'active' ? <LockIcon /> : <LockOpenIcon />}
+                          onClick={() => toggleUser(user._id, user.status === 'active' ? 'restricted' : 'active', user.role)}
+                          color={user.status === 'active' ? 'primary' : 'secondary'}
+                          variant="contained"
+                          sx={{ mr: 1 }}
+                        >
+                          {user.status === 'active' ? 'Lock' : 'Unlock'}
+                        </Button>
+                        <Button
+                          startIcon={<DeleteIcon />}
+                          onClick={() => removeUser(user._id)}
+                          color="error"
+                          variant="contained"
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">No users found.</TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Paper>
+
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+        message={error}
+      />
+    </Box>
   );
-};
+}
