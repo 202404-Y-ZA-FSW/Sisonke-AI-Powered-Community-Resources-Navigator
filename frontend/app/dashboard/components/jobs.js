@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -8,7 +7,6 @@ import {
   CardHeader,
   Container,
   Grid,
-  IconButton,
   InputBase,
   Table,
   TableBody,
@@ -17,12 +15,20 @@ import {
   TableHead,
   TableRow,
   Typography,
+  CircularProgress,
+  Snackbar,
+  Button,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     fetchJobs();
@@ -35,29 +41,31 @@ export default function Jobs() {
       if (response.status === 200) {
         setJobs(response.data.jobs || response.data || []); // Ensure it's an array
       } else {
-        console.error("Failed to fetch jobs:", response.data);
-        alert("Failed to fetch jobs.");
+        setError("Unexpected data format. Expected an array.");
       }
     } catch (err) {
-      console.error("Error fetching jobs:", err);
-      alert("Error fetching jobs. Please try again later.");
+      setError("Error fetching jobs. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
   
 
   const removeJob = async (id) => {
+    setIsDeleting(true); 
     try {
       const response = await axios.delete(`http://localhost:5000/jobs/${id}`);
       if (response.status === 200) {
-        alert('Job deleted successfully');
         setJobs(prevJobs => prevJobs.filter(job => job._id !== id));
+        setSnackbarMessage('Job deleted successfully');
+        setSnackbarOpen(true);
       } else {
-        console.error('Error deleting job:', response.data);
-        alert('Failed to delete job');
+        setError('Failed to delete job');
       }
     } catch (error) {
-      console.error('Error deleting job:', error);
-      alert('Error deleting job. Please try again.');
+      setError('Error deleting job. Please try again.');
+    } finally {
+      setIsDeleting(false); 
     }
   };
 
@@ -72,28 +80,22 @@ export default function Jobs() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h3" gutterBottom>
-        Jobs Management
-      </Typography>
-
-      {/* Job Statistics Section */}
-      <Card sx={{ mb: 4 }}>
-        <CardHeader title="Job Statistics" />
+      <Card sx={{ mb: 4, textAlign: 'center' }}>
+        <CardHeader title="Jobs Statistics" />
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <Typography variant="h6">Total Jobs: {totalJobs}</Typography>
+              <Typography variant="h6">Total Jobs: {jobs.length}</Typography>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
 
-      {/* Job Search Section */}
-      <Card sx={{ mb: 4 }}>
+      <Card sx={{ mb: 4, textAlign: 'center' }}>
         <CardHeader title="Search Jobs" />
         <CardContent>
           <InputBase
-            placeholder="Search by title or company"
+            placeholder="Search by title or author"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             fullWidth
@@ -107,46 +109,68 @@ export default function Jobs() {
         </CardContent>
       </Card>
 
-      {/* Job Management Section */}
-      <Card sx={{ mb: 4 }}>
-        <CardHeader title="Job Management" />
+      <Card sx={{ mb: 4, textAlign: 'center' }}>
+        <CardHeader title="Jobs Management" />
         <CardContent>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>Title</strong></TableCell>
-                  <TableCell><strong>Company</strong></TableCell>
-                  <TableCell><strong>Date Posted</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredJobs.length > 0 ? (
-                  filteredJobs.map((job) => (
-                    <TableRow key={job._id}>
-                      <TableCell>{job.title}</TableCell>
-                      <TableCell>{job.company}</TableCell>
-                      <TableCell>{new Date(job.datePosted).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <IconButton onClick={() => removeJob(job._id)} color="error">
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
+          {loading ? (
+            <Box display="flex" justifyContent="center" alignItems="center" height="100px">
+              <CircularProgress />
+            </Box>
+          ) : (
+            <TableContainer>
+              <Table>
+                <TableHead>
                   <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No jobs found
-                    </TableCell>
+                    <TableCell><strong>Title</strong></TableCell>
+                    <TableCell><strong>Author</strong></TableCell>
+                    <TableCell><strong>Date Published</strong></TableCell>
+                    <TableCell><strong>Actions</strong></TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {filteredJobs.length > 0 ? (
+                    filteredJobs.map((job) => (
+                      <TableRow key={job._id}>
+                        <TableCell>{job.title}</TableCell>
+                        <TableCell>{job.location?.username || job.location}</TableCell>
+                        <TableCell>{new Date(job.publishedAt).toLocaleDateString()}</TableCell>
+                        <TableCell>
+                          <Button
+                            startIcon={<DeleteIcon />}
+                            onClick={() => removeJob(job._id)}
+                            color="error"
+                            variant="contained"
+                            disabled={isDeleting} 
+                          >
+                            {isDeleting ? <CircularProgress size={20} /> : 'Delete'}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} align="center">No jobs found</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </CardContent>
       </Card>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+      />
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError('')}
+        message={error}
+      />
     </Container>
   );
 }

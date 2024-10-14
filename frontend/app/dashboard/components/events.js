@@ -70,10 +70,6 @@ export default function Events() {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h3" gutterBottom>
-        Events Management
-      </Typography>
-
       {/* Event Statistics Section */}
       <Card sx={{ mb: 4 }}>
         <CardHeader title="Event Statistics" />
