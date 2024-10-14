@@ -55,18 +55,18 @@ export default function Forums() {
   const fetchUsers = async () => {
     try {
         const response = await axios.get("http://localhost:5000/account/users");
-        console.log('Users response:', response.data); // Log the response data
+        console.log('Users response:', response.data); 
         if (Array.isArray(response.data)) {
             setUsers(response.data);
         } else if (response.data.users && Array.isArray(response.data.users)) {
-            setUsers(response.data.users); // Adjust based on the expected structure
+            setUsers(response.data.users); 
         } else {
             setError("Failed to fetch users. Expected an array.");
         }
     } catch (err) {
         setError("Error fetching users. Please try again later.");
     }
-};
+  };
 
   const removeForum = async (id) => {
     try {
@@ -82,15 +82,21 @@ export default function Forums() {
     }
   };
 
-  const getUsernameById = (userId) => {
-    const user = users.find((user) => user._id === userId);
-    return user ? user.username : "Unknown";
+  const getUsernameById = (author) => {
+    if (typeof author === 'object' && author.username) {
+      
+      return author.username;
+    } else {
+      
+      const user = users.find((user) => user._id === author);
+      return user ? user.username : "Unknown";
+    }
   };
 
   const filteredForums = forums.filter(
     (forum) =>
       (forum.title && forum.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (getUsernameById(forum.author.username) && getUsernameById(forum.author.username).toLowerCase().includes(searchQuery.toLowerCase()))
+      (getUsernameById(forum.author) && getUsernameById(forum.author).toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const totalForums = forums.length;
@@ -154,7 +160,7 @@ export default function Forums() {
                     filteredForums.map((forum) => (
                       <TableRow key={forum._id}>
                         <TableCell>{forum.title}</TableCell>
-                        <TableCell>{getUsernameById(forum.author.username)}</TableCell>
+                        <TableCell>{getUsernameById(forum.author)}</TableCell>
                         <TableCell>
                           <IconButton color="error" onClick={() => removeForum(forum._id)}>
                             <Delete />
