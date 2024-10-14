@@ -14,10 +14,14 @@ const loginValidation = require('../../middleware/validation/user/loginValidatio
 const passwordUpdateValidation = require('../../middleware/validation/user/updatePasswordValidation');
 
 // ROUTES
+router.get("/users", authenticationController.getUsers);
+router.get("/logout", isAuthenticated, authenticationController.logout);
+router.get("/user", isAuthenticated, authenticationController.currentUser);
+
 router.post("/register", registerValidation, authenticationController.register);
 router.post("/login", loginValidation, authenticationController.login);
-router.get("/user", isAuthenticated, authenticationController.currentUser);
 router.post("/update/password", isAuthenticated, passwordUpdateValidation, authenticationController.updatePassword);
+
 router.get("/logout", isAuthenticated, authenticationController.logout);
 router.get( "/users", authenticationController.fetchUsers)
 router.delete("/remove", authenticationController.remove);

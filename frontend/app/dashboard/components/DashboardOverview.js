@@ -23,7 +23,7 @@ export default function DashboardOverview() {
     businesses: [],
     events: [],
     forums: [],
-    jobs: [],
+    jobs:[],
     users: [],
   });
   const [loading, setLoading] = useState(true);
@@ -36,40 +36,43 @@ export default function DashboardOverview() {
   const fetchData = async () => {
     try {
       setLoading(true);  
-      const [blogsRes, businessesRes, eventsRes, forumsRes, jobsRes, usersRes] = await Promise.all([
-        axios.get('http://localhost:5000/blogs'),
-        axios.get('http://localhost:5000/businesses'),
+      const [blogsRes, businessesRes, eventsRes, forumsRes, usersRes] = await Promise.all([
+        axios.get('http://localhost:5000/blogs/all'),
+        axios.get('http://localhost:5000/business/all'),
         axios.get('http://localhost:5000/events'),
-        axios.get('http://localhost:5000/forums'),
-        axios.get('http://localhost:5000/jobs'),
+        axios.get('http://localhost:5000/forums'), 
         axios.get('http://localhost:5000/account/users'),
+        axios.get('http://localhost:5000/jobs/all')
       ]);
+
+      console.log('Blogs:', blogsRes.data);
+      console.log('Businesses:', businessesRes.data);
+      console.log('Events:', eventsRes.data);
+      console.log('Forums:', forumsRes.data);
+      console.log('Users:', usersRes.data);
 
       setData({
         blogs: blogsRes.data,
         businesses: businessesRes.data,
         events: eventsRes.data,
         forums: forumsRes.data,
-        jobs: jobsRes.data,
         users: usersRes.data,
       });
-      setLoading(false);  // Stop loading
     } catch (error) {
       console.error('Error fetching data:', error);
       setError('Failed to load data');
-      setLoading(false);
+    } finally {
+      setLoading(false); 
     }
   };
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6384', '#36A2EB'];
 
-  // Prepare data for pie chart
   const pieData = [
     { name: 'Blogs', value: data.blogs.length },
     { name: 'Businesses', value: data.businesses.length },
     { name: 'Events', value: data.events.length },
     { name: 'Forums', value: data.forums.length },
-    { name: 'Jobs', value: data.jobs.length },
     { name: 'Users', value: data.users.length },
   ];
 
@@ -134,10 +137,10 @@ export default function DashboardOverview() {
               <Typography variant="h6">User Growth (Line Chart)</Typography>
               <ResponsiveContainer width="100%" height={400}>
                 <LineChart
-                  data={data.users.map((user, index) => ({
+                  data={Array.isArray(data.users) ? data.users.map((user, index) => ({
                     name: `User ${index + 1}`,
                     value: index + 1,
-                  }))}
+                  })) : []} // Default to empty array if not an array
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />

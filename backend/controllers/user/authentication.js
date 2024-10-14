@@ -2,6 +2,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+//const { redirect } = require("next/navigation");
+const userProfileModel = require("../../models/user/userProfile");
+
 
 // REQUIRED MODELS
 const userModel = require("../../models/user/user");
@@ -81,6 +84,19 @@ exports.register = async (req, res) => {
     });
   }
 };
+
+exports.getUsers = async(req,res)=>{
+  try{
+    const users = await userModel.find();
+    if(!users){
+      return res.status(404).json({message:"No users found"});
+    }
+
+    res.status(200).json({users});
+  }catch(err){
+    res.status(500).json({message:"An unexpected error has occured. Please try again later."})
+  }
+}
 
 // LOGIN
 exports.login = async (req, res) => {
@@ -279,6 +295,7 @@ exports.logout = async (req, res) => {
   }
 };
 
+
 exports.fetchUsers = async (req, res) => {
   try{
     const users = await userModel.find();
@@ -306,6 +323,7 @@ exports.remove = async (req, res) => {
     res.status(500).json({ message: "An unexpected error has occurred. Please try again later." });
   }
 };
+
 
 exports.updateUser = async (req, res) => {
   try {
