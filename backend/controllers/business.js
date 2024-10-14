@@ -44,7 +44,7 @@ exports.newBusiness = async (req, res) => {
 // GET ALL BUSINESS CONTROLLER
 exports.getAllBusinesses = async (req, res) => {
   try {
-    const businesses = await businessModel.find();
+    const businesses = await businessModel.find().populate("owner", "username");
     res.status(200).json({ businesses });
   } catch (error) {
     console.error(error);
@@ -92,14 +92,15 @@ exports.updateBusiness = async (req, res) => {
 // DELETE BUSINESS CONTROLLER
 exports.deleteBusiness = async (req, res) => {
   try {
-    const { businessID } = req.params;
-    const deletedBusiness = await businessModel.findByIdAndDelete(businessID);
+    const { name } = req.body;
+    console.log(name);
+    const deletedBusiness = await businessModel.findOneAndDelete(name);
     if (!deletedBusiness) {
-      return res.status(404).json({ error: "Business not found" });
+      return res.status(404).json({ message:"",error});
     }
     res.status(200).json({ message: "Business deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "An unexpected error has occured while trying to process your request" });
+    res.status(500).json({ message:"" });
   }
 };

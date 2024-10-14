@@ -11,10 +11,10 @@ const isAuthenticated = require('../middleware/isAuthenticated');
 const businessValidation = require('../middleware/validation/businessValidation');
 
 // ROUTES
-router.post("/new", businessValidation, businessController.newBusiness);
-router.get("/all", businessController.getAllBusinesses);
-router.get("/:id", businessController.getBusiness);
-router.put("/:id", businessValidation, businessController.updateBusiness);
-router.delete("/:id", businessController.deleteBusiness);
+router.post("/new",isAuthenticated, businessValidation, businessController.newBusiness);
+router.get("/all", businessValidation,businessController.getAllBusinesses);
+router.get("/:id",isAuthenticated, businessController.getBusiness);
+router.put("/:id", isAuthenticated,businessValidation, businessController.updateBusiness);
+router.delete("/:id",isAuthenticated,businessValidation, businessController.deleteBusiness);
 
 module.exports = router;
