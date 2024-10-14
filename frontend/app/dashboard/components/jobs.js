@@ -39,6 +39,7 @@ export default function Jobs() {
 
       const response = await axios.get("http://localhost:5000/jobs/all");
       if (Array.isArray(response.data.jobs)) {
+        console.log(response.data.jobs);
         setJobs(response.data.jobs);
       } else {
         setError("Unexpected data format. Expected an array.");
@@ -120,7 +121,7 @@ export default function Jobs() {
                 <TableHead>
                   <TableRow>
                     <TableCell><strong>Title</strong></TableCell>
-                    <TableCell><strong>Author</strong></TableCell>
+                    <TableCell><strong>Location</strong></TableCell>
                     <TableCell><strong>Date Published</strong></TableCell>
                     <TableCell><strong>Actions</strong></TableCell>
                   </TableRow>
@@ -130,8 +131,8 @@ export default function Jobs() {
                     filteredJobs.map((job) => (
                       <TableRow key={job._id}>
                         <TableCell>{job.title}</TableCell>
-                        <TableCell>{job.location?.username || job.location}</TableCell>
-                        <TableCell>{new Date(job.publishedAt).toLocaleDateString()}</TableCell>
+                        <TableCell>{job.user?.username || job.location}</TableCell> 
+                        <TableCell>{new Date(job.posted).toLocaleDateString()}</TableCell> 
                         <TableCell>
                           <Button
                             startIcon={<DeleteIcon />}

@@ -24,7 +24,8 @@ const createEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
     try {
-        const events = await Event.find().populate('organizer','username');
+
+        const events = await Event.find().populate('organizer', 'name');
         res.status(200).json(events);
     } catch (err) {
         res.status(500).json({ error: 'Error fetching events', message: err.message });

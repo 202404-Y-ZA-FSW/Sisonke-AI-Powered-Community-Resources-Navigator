@@ -68,7 +68,7 @@ export default function Blogs() {
   const filteredBlogs = (blogs || []).filter(
     (blog) =>
       (blog.title && blog.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (blog.author && blog.author.toLowerCase().includes(searchQuery.toLowerCase()))
+      (blog.author && typeof blog.author === 'string' && blog.author.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const totalBlogs = (blogs || []).length;
@@ -128,7 +128,7 @@ export default function Blogs() {
                       <TableRow key={blog._id}>
                         <TableCell>{blog.title}</TableCell>
                         <TableCell>{blog.author?.username || blog.author}</TableCell>
-                        <TableCell>{new Date(blog.publishedAt).toLocaleDateString()}</TableCell>
+                        <TableCell>{new Date(blog.createdAt).toLocaleDateString()}</TableCell>
                         <TableCell>
                           <Button
                             startIcon={<DeleteIcon />}

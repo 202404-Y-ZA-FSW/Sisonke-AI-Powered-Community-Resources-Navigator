@@ -61,8 +61,8 @@ export default function Events() {
 
   const filteredEvents = (events || []).filter(
     (event) =>
-      (event.name && event.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (event.organizer && event.organizer.toLowerCase().includes(searchQuery.toLowerCase()))
+      (event.location && event.location.toLowerCase().includes(searchQuery.toLowerCase())) || 
+      (event.organizer?.username && event.organizer.username.toLowerCase().includes(searchQuery.toLowerCase())) 
   );
 
   const totalEvents = (events || []).length;
@@ -86,7 +86,7 @@ export default function Events() {
         <CardHeader title="Search Events" />
         <CardContent>
           <InputBase
-            placeholder="Search by name or organizer"
+            placeholder="Search by location or organizer"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             fullWidth
@@ -108,7 +108,7 @@ export default function Events() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell><strong>Name</strong></TableCell>
+                  <TableCell><strong>Location</strong></TableCell> 
                   <TableCell><strong>Organizer</strong></TableCell>
                   <TableCell><strong>Date</strong></TableCell>
                   <TableCell><strong>Actions</strong></TableCell>
@@ -118,8 +118,8 @@ export default function Events() {
                 {filteredEvents.length > 0 ? (
                   filteredEvents.map((event) => (
                     <TableRow key={event._id}>
-                      <TableCell>{event.name}</TableCell>
-                      <TableCell>{event.organizer}</TableCell>
+                      <TableCell>{event.location}</TableCell> 
+                       <TableCell>{event.organizer?.username || "Unknown"}</TableCell>
                       <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
                       <TableCell>
                         <IconButton onClick={() => removeEvent(event._id)} color="error">
