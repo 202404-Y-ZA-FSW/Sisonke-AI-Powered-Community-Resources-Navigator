@@ -140,7 +140,7 @@ export default function DashboardOverview() {
                   data={Array.isArray(data.users) ? data.users.map((user, index) => ({
                     name: `User ${index + 1}`,
                     value: index + 1,
-                  })) : []} // Default to empty array if not an array
+                  })) : []} 
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
