@@ -60,16 +60,14 @@ export default function UserDashboard() {
       const response = await axios.get("http://localhost:5000/account/users", {
         params: { page, limit: 10 }
       });
-      if (response.status === 200) {
-        setUsers(response.data);
-      } else {
-        console.error("Failed to fetch users:", response.data);
-      }
+      console.log(response.data); 
+      setUsers(response.data.users || response.data || []); 
     } catch (err) {
       console.error("Error fetching users:", err);
     }
     setLoading(false);
   };
+  
 
   const handleModalOpen = (user) => {
     setSelectedUser(user);

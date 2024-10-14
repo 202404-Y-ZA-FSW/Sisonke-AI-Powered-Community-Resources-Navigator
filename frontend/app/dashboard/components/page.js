@@ -21,40 +21,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { styled } from '@mui/system';
 import { Lock, LockOpen, Delete } from '@mui/icons-material';
 
-
-const StyledCard = styled(Card)({
-  background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-  borderRadius: 16,
-  boxShadow: "none",
-  transition: "transform 0.3s ease",
-  "&:hover": {
-    transform: "scale(1.02)",
-  },
-});
-
-const StyledContainer = styled(Container)({
-  marginTop: 32,
-});
-
-const StyledInput = styled(InputBase)({
-  marginBottom: 16,
-  padding: '8px',
-  border: '1px solid #ccc',
-  borderRadius: 8,
-  width: '100%',
-});
-
-const UserTableContainer = styled(TableContainer)({
-  marginTop: 16,
-  borderRadius: 16,
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-});
-
 export default function AdminDashboard() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -65,7 +35,7 @@ export default function AdminDashboard() {
     try {
       const response = await axios.get("http://localhost:5000/account/users");
       if (response.status === 200) {
-        setUsers(response.data);
+        setUsers(response.data.users); 
       } else {
         console.error("Failed to fetch users:", response.data);
         alert("Failed to fetch users.");
@@ -76,6 +46,7 @@ export default function AdminDashboard() {
     }
   };
 
+  // Remove user function
   const removeUser = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:5000/account/remove`, { data: { userId: id } });
@@ -109,18 +80,20 @@ export default function AdminDashboard() {
     }
   };
 
+  // Ensure users is defined before filtering
   const filteredUsers = (users || []).filter(
     (user) =>
       (user.username && user.username.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (user.email && user.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
+  // Calculate user counts safely
   const activeUsers = (users || []).filter((user) => user.status === 'active').length;
   const restrictedUsers = (users || []).filter((user) => user.status === 'restricted').length;
   const totalUsers = (users || []).length;
 
   return (
-    <StyledContainer maxWidth="lg">
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Head>
         <title>Admin Dashboard</title>
       </Head>
@@ -129,7 +102,7 @@ export default function AdminDashboard() {
       </Typography>
 
       {/* User Statistics Section */}
-      <StyledCard sx={{ mb: 4 }}>
+      <Card sx={{ mb: 4 }}>
         <CardHeader title="User Statistics" />
         <CardContent>
           <Grid container spacing={2}>
@@ -144,25 +117,32 @@ export default function AdminDashboard() {
             </Grid>
           </Grid>
         </CardContent>
-      </StyledCard>
+      </Card>
 
-      {/* Search Users Section */}
-      <StyledCard sx={{ mb: 4 }}>
+      {/* User Search Section */}
+      <Card sx={{ mb: 4 }}>
         <CardHeader title="Search Users" />
         <CardContent>
-          <StyledInput
+          <InputBase
             placeholder="Search by name or email"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            fullWidth
+            sx={{
+              mb: 2,
+              padding: '8px',
+              border: '1px solid #ccc',
+              borderRadius: '4px',
+            }}
           />
         </CardContent>
-      </StyledCard>
+      </Card>
 
       {/* User Management Section */}
-      <StyledCard>
+      <Card sx={{ mb: 4 }}>
         <CardHeader title="User Management" />
         <CardContent>
-          <UserTableContainer>
+          <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>
@@ -194,7 +174,7 @@ export default function AdminDashboard() {
                         <IconButton 
                           onClick={() => toggleUser(
                             user._id, 
-                            user.status === 'active' ? 'restricted' : 'active', 
+                            user.status === 'active' ? 'restricted' : 'inactive', 
                             user.role
                           )}
                           color={user.status === 'active' ? 'success' : 'warning'}
@@ -216,9 +196,9 @@ export default function AdminDashboard() {
                 )}
               </TableBody>
             </Table>
-          </UserTableContainer>
+          </TableContainer>
         </CardContent>
-      </StyledCard>
-    </StyledContainer>
+      </Card>
+    </Container>
   );
 }

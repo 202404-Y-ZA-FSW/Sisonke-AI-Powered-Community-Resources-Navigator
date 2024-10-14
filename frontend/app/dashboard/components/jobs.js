@@ -30,9 +30,10 @@ export default function Jobs() {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/jobs");
+      const response = await axios.get("http://localhost:5000/jobs/all");
+      console.log("Response Data:", response.data); // Add this to check the structure
       if (response.status === 200) {
-        setJobs(response.data);
+        setJobs(response.data.jobs || response.data || []); // Ensure it's an array
       } else {
         console.error("Failed to fetch jobs:", response.data);
         alert("Failed to fetch jobs.");
@@ -42,6 +43,7 @@ export default function Jobs() {
       alert("Error fetching jobs. Please try again later.");
     }
   };
+  
 
   const removeJob = async (id) => {
     try {
@@ -59,11 +61,12 @@ export default function Jobs() {
     }
   };
 
-  const filteredJobs = (jobs || []).filter(
+  const filteredJobs = Array.isArray(jobs) ? jobs.filter(
     (job) =>
       (job.title && job.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  ) : [];
+  
 
   const totalJobs = (jobs || []).length;
 

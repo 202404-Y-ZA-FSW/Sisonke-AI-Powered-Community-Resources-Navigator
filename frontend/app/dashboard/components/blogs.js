@@ -30,18 +30,22 @@ export default function Blogs() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/blogs"); 
-      if (response.status === 200) {
-        setBlogs(response.data);
-      } else {
-        console.error("Failed to fetch blogs:", response.data);
-        alert("Failed to fetch blogs.");
-      }
+        const response = await axios.get("http://localhost:5000/blogs/all"); 
+        console.log("Response Data:", response.data); // Log the response for debugging
+
+        if (response.status === 200) {
+            // Ensure response.data is an array
+            setBlogs(Array.isArray(response.data) ? response.data : []);
+        } else {
+            console.error("Failed to fetch blogs:", response.data);
+            alert("Failed to fetch blogs.");
+        }
     } catch (err) {
-      console.error("Error fetching blogs:", err);
-      alert("Error fetching blogs. Please try again later.");
+        console.error("Error fetching blogs:", err);
+        alert("Error fetching blogs. Please try again later.");
     }
-  };
+};
+
 
   const removeBlog = async (id) => {
     try {
