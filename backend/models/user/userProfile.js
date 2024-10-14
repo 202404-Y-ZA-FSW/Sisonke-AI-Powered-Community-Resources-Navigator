@@ -22,11 +22,11 @@ const ProfileSchema = new Schema(
       match: [/^[a-zA-Z]+$/, "Please enter a valid last name"],
     },
     dateOfBirth: {
-      type: Date,
+      type: String,
       required: true,
       validate: {
         validator: function (value) {
-          return value <= new Date();
+          //return value => new Date();
         },
         message: "Date of birth cannot be in the future",
       },

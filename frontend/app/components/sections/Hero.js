@@ -98,20 +98,6 @@ export default function HeroSection() {
                 Search
               </ExploreButton>
             </SearchBar>
-            <Box>
-              <Typography variant="subtitle2" gutterBottom sx={{ color: '#666', mb: 1 }}>
-                Popular Categories:
-              </Typography>
-              <CategoryButton variant="contained" disableElevation>
-                UX Designer
-              </CategoryButton>
-              <CategoryButton variant="contained" disableElevation>
-                Front-end Dev
-              </CategoryButton>
-              <CategoryButton variant="contained" disableElevation>
-                Back-end Dev
-              </CategoryButton>
-            </Box>
           </Grid>
           <Grid item xs={12} md={6}>
             <Box sx={{ position: 'relative', height: '400px', width: '100%' }}>

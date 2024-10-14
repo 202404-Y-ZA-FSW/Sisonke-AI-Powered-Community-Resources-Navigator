@@ -49,7 +49,7 @@ export default function Navbar() {
           component="div"
           sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }}
         >
-          SIS<span style={{ color: "#ffffff" }}>O</span>NKE
+          SIS<span style={{ color: "#6c63ff" }}>O</span>NKE
         </Typography>
 
         {isMobile ? (
@@ -83,7 +83,7 @@ export default function Navbar() {
                 <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-                <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+                <MenuItem onClick={() => router.push("/businesses")}>Education</MenuItem>
               </Menu>
 
               <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
@@ -111,8 +111,7 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
-              <MenuItem onClick={() => router.push("/blog/blogform")}>Create Blog Post</MenuItem>
+              <MenuItem onClick={() => router.push("/businesses")}>Businesses</MenuItem>
             </Menu>
             <Button onClick={() => router.push("/account/login")} sx={navLinksStyles}>Login</Button>
             <Button
@@ -125,7 +124,7 @@ export default function Navbar() {
                 textTransform: "none",
                 borderRadius: "16px",
                 "&:hover": {
-                  backgroundColor: "#333",
+                  backgroundColor: "#5A52D5"
                 },
               }}
             >

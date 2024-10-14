@@ -8,14 +8,44 @@ import {
   Typography,
   Link,
   Grid,
-  Paper,
-  Avatar,
-  Snackbar,
-  Container,
+  Card,
+  CardContent,
+  ThemeProvider,
+  createTheme,
   Alert,
+  Snackbar,
 } from "@mui/material";
 
-function Register() {
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#f9a825",
+    },
+    secondary: {
+      main: "#4267B2",
+    },
+  },
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: "16px",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          borderRadius: "25px",
+          padding: "10px 0",
+        },
+      },
+    },
+  },
+});
+
+export default function Register() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -42,6 +72,7 @@ function Register() {
     if (!formData.username) newErrors.username = "Username is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
+    if (!formData.confirmPassword) newErrors.confirmPassword = "Confirm password is required";
     if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
     setErrors(newErrors);
@@ -52,13 +83,15 @@ function Register() {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await axios.post("http://localhost:5000/account/register", formData);
+        const response = await axios.post(
+          "http://localhost:5000/account/register",
+          formData
+        );
         setSnackbar({
           open: true,
           message: "Registration successful!",
           severity: "success",
         });
-        // Reset form or redirect user
       } catch (error) {
         setSnackbar({
           open: true,
@@ -77,180 +110,153 @@ function Register() {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Grid container component="main" sx={{ height: "100vh" }}>
-      {/* Header Section */}
-      <Grid
-        item
-        xs={12}
-        sx={{ display: "flex", justifyContent: "space-between", p: 2 }}
-      >
-        <Typography variant="h6" fontWeight="bold">
-          Township Resident
-        </Typography>
-        <Link
-          href="#"
-          variant="body2"
-          sx={{
-            alignSelf: "center",
-            fontWeight: "bold",
-            color: "black",
-            textDecoration: "none",
-          }}
-        >
-          Existing user? Sign in.
-        </Link>
-      </Grid>
-
-      {/* Left Section (Discover) */}
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
+    <ThemeProvider theme={theme}>
+      <Box
         sx={{
-          backgroundColor: "#D4A017",
           display: "flex",
-          alignItems: "center",
           justifyContent: "center",
-          textAlign: "center",
-          p: 3,
+          alignItems: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
         }}
       >
-        <Box>
-          <Typography variant="h4" fontWeight="bold" color="black">
-            Discover local resources and
-          </Typography>
-          <Typography variant="h5" color="black">
-            Find the perfect match for your needs!
-          </Typography>
-          <img
-            src={"https://www.omniaccounts.co.za/wp-content/uploads/2022/10/How-to-register-a-new-small-business-in-south-africa.jpeg"}
-            alt="sisonke"
-            style={{
-              width: "80%",
-              maxWidth: "300px",
-              margin: "16px 0",
-            }}
-          />
-          <Typography variant="body1" sx={{ mt: 4, color: "black" }}>
-            Explore local opportunities with ease!
-          </Typography>
-        </Box>
-      </Grid>
-
-      {/* Right Section (Form) */}
-      <Grid item xs={12} sm={8} md={5} component={Paper} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "orange" }} />
-          <Typography component="h1" variant="h5">
-            Join SisonkeConnect
-          </Typography>
-          <Typography component="p" sx={{ color: "gray", mt: 1 }}>
-            Unlock exclusive features, no commitment required
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Your Unique Username"
-              name="username"
-              autoComplete="username"
-              InputProps={{ sx: { borderRadius: "50px" } }}
-              value={formData.username}
-              onChange={handleChange}
-              error={!!errors.username}
-              helperText={errors.username}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              InputProps={{ sx: { borderRadius: "50px" } }}
-              value={formData.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Create a Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              InputProps={{ sx: { borderRadius: "50px" } }}
-              value={formData.password}
-              onChange={handleChange}
-              error={!!errors.password}
-              helperText={errors.password}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              id="confirmPassword"
-              InputProps={{ sx: { borderRadius: "50px" } }}
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
-            />
+        <Card sx={{ width: 450, borderRadius: "16px", boxShadow: 3 }}>
+          <CardContent sx={{ padding: "24px" }}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ mb: 3, fontWeight: "bold" }}
+            >
+              Create A Sisonke Account
+            </Typography>
+            <Typography component="p" sx={{ color: "gray", mt: 1, textAlign: "center" }}>
+              Join Sisonke and discover amazing opportunities, community support, and more.
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                fullWidth
+                placeholder="Username"
+                variant="outlined"
+                label="Username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                error={!!errors.username}
+                helperText={errors.username}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
+              />
+              <TextField
+                fullWidth
+                placeholder="Email"
+                variant="outlined"
+                label="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={!!errors.email}
+                helperText={errors.email}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
+              />
+              <TextField
+                fullWidth
+                type="password"
+                placeholder="Password"
+                variant="outlined"
+                label="Password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                error={!!errors.password}
+                helperText={errors.password}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
+              />
+              <TextField
+                fullWidth
+                type="password"
+                placeholder="Confirm Password"
+                variant="outlined"
+                label="Confirm Password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
+              />
+              <Link
+                href="/account/login"
+                sx={{ display: "block", color: "#6c63ff", mt: "16px", textDecoration: "none" }}
+              >
+                Already have an account? Login
+              </Link>
+              <Button
+                fullWidth
+                type="submit"
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  textTransform: "none",
+                  color: "#ffffff",
+                  backgroundColor: "#6c63ff",
+                  borderRadius: "16px",
+                  "&:hover": { backgroundColor: "#5A52D5" },
+                }}
+              >
+                Register
+              </Button>
+            </form>
+            <Typography align="center" sx={{ mb: 2 }}>
+              OR
+            </Typography>
             <Button
-              type="submit"
               fullWidth
-              variant="contained"
+              color="secondary"
               sx={{
-                mt: 3,
                 mb: 2,
-                backgroundColor: "#D4A017",
-                color: "black",
-                borderRadius: "50px",
-                "&:hover": { backgroundColor: "#D4A017" },
+                backgroundColor: "#1877F2",
+                color: "white",
+                borderRadius: "16px",
+                "&:hover": { backgroundColor: "#5A52D5" },
               }}
             >
-              Sign Up
+              Continue with Facebook
             </Button>
-          </Box>
-        </Box>
-      </Grid>
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
+            <Button
+              fullWidth
+              sx={{
+                borderRadius: "16px",
+                backgroundColor: "#DB4437",
+                color: "white",
+                "&:hover": { backgroundColor: "#C53929" },
+              }}
+            >
+              Continue with Google
+            </Button>
+          </CardContent>
+        </Card>
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
           onClose={handleSnackbarClose}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Grid>
-    </Container>
+          <Alert
+            onClose={handleSnackbarClose}
+            severity={snackbar.severity}
+            sx={{ width: "100%", borderRadius: "16px" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </ThemeProvider>
   );
 }
-
-export default Register;

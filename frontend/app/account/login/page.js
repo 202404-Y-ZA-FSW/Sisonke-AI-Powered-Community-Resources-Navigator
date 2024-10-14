@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import {
   Box,
   Typography,
@@ -14,7 +14,7 @@ import {
   Alert,
 } from "@mui/material";
 import axios from "axios";
-import { useAuthentication } from '../../hooks/useAuthentication'; // Adjust the import path as needed
+import { useAuthentication } from "../../hooks/useAuthentication";
 
 const theme = createTheme({
   palette: {
@@ -65,24 +65,28 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/account/login", formData);
+      const response = await axios.post(
+        "http://localhost:5000/account/login",
+        formData
+      );
       const { token, ...user } = response.data;
-      
+
       await login(token, user);
-      console.log(user);
-      console.log(token);
-      if (user.role === "administrator") {
+      
+      if (user.user.role === "administrator") {
         router.push("/dashboard");
-      } else if (user.role === "ngo") {
+      } else if (user.user.role === "ngo") {
         router.push("/ngo/dashboard");
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
     } catch (error) {
       if (error.response) {
-        setError(error.response.data.message || "An error occurred during login.");
+        setError(
+          error.response.data.message || "An error occurred during login."
+        );
       } else if (error.request) {
-        setError("No response received from the server. Please try again.");
+        setError("No response received from the server.");
       } else {
         setError("An error occurred. Please try again.");
       }
@@ -100,10 +104,10 @@ export default function LoginPage() {
           justifyContent: "center",
           alignItems: "center",
           minHeight: "100vh",
-          backgroundColor: "#f0f2f5",
+          background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
         }}
       >
-        <Card sx={{ width: 350, boxShadow: "0 2px 4px rgba(0,0,0,.1)" }}>
+        <Card sx={{ width: 450, borderRadius: "16px", boxShadow: 3 }}>
           <CardContent sx={{ padding: "24px" }}>
             <Typography
               variant="h5"
@@ -113,7 +117,7 @@ export default function LoginPage() {
               Login
             </Typography>
             {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
+              <Alert severity="error" sx={{ mb: 2, borderRadius: "16px" }}>
                 {error}
               </Alert>
             )}
@@ -127,6 +131,9 @@ export default function LoginPage() {
                 value={formData.username}
                 onChange={handleChange}
                 disabled={loading}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
               />
               <TextField
                 fullWidth
@@ -138,16 +145,24 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 disabled={loading}
+                InputProps={{
+                  sx: { borderRadius: "16px" },
+                }}
               />
               <Button
                 fullWidth
-                variant="contained"
-                color="primary"
-                sx={{ mb: 2 }}
+                sx={{
+                  mb: 2,
+                  textTransform: "none",
+                  color: "#ffffff",
+                  backgroundColor: "#6c63ff",
+                  borderRadius: "16px",
+                  "&:hover": { backgroundColor: "#5A52D5" },
+                }}
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? "Working" : "Login"}
               </Button>
             </form>
             <Box
@@ -169,20 +184,25 @@ export default function LoginPage() {
               </Link>
             </Box>
             <Typography align="center" sx={{ mb: 2 }}>
-              or
+              OR
             </Typography>
             <Button
               fullWidth
-              variant="contained"
               color="secondary"
-              sx={{ mb: 2 }}
+              sx={{ 
+                mb: 2,
+                backgroundColor: "#1877F2",
+                color: "white",
+                borderRadius: "16px",
+                  "&:hover": { backgroundColor: "#5A52D5" },
+              }}
             >
               Continue with Facebook
             </Button>
             <Button
               fullWidth
-              variant="contained"
               sx={{
+                borderRadius: "16px",
                 backgroundColor: "#DB4437",
                 color: "white",
                 "&:hover": { backgroundColor: "#C53929" },

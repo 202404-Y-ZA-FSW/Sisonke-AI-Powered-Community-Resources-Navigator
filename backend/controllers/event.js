@@ -1,4 +1,4 @@
-const Event = require('../models/Event');
+const Event = require('../models/event');
 
 // Create a new event
 const createEvent = async (req, res) => {
@@ -24,11 +24,21 @@ const createEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
     try {
-        const events = await Event.find();
+        const events = await Event.find().populate('organizer','username');
         res.status(200).json(events);
     } catch (err) {
         res.status(500).json({ error: 'Error fetching events', message: err.message });
     }
+};
+
+// GET 6 RECENT EVENTS
+const getRecentEvents = async (req, res) => {
+  try {
+    const events = await Event.find().sort({ createdAt: -1 }).limit(6);
+    res.status(200).json(events);
+  } catch (err) {
+    res.status(500).json({ error: 'Error fetching recent events', message: err.message });
+  }
 };
 
 // Get a single event by ID
@@ -82,6 +92,7 @@ const deleteEvent = async (req, res) => {
 module.exports = {
     createEvent,
     getAllEvents,
+    getRecentEvents,
     getEventById,
     updateEvent,
     deleteEvent
