@@ -16,7 +16,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled } from "@mui/system";
 import Footer from "../components/sections/Footer";
-import Navigation from "../components/sections/Navigation";
+import Navigation from "../components/sections/NavBar";
 import Subscribe from "../components/sections/Subscribe";
 
 const StyledCard = styled(Card)({
