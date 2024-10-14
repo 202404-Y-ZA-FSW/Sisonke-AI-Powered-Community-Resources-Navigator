@@ -36,6 +36,7 @@ export default function Jobs() {
 
   const fetchJobs = async () => {
     try {
+
       const response = await axios.get("http://localhost:5000/jobs/all");
       if (Array.isArray(response.data.jobs)) {
         setJobs(response.data.jobs);
@@ -67,11 +68,13 @@ export default function Jobs() {
     }
   };
 
-  const filteredJobs = jobs.filter(
+  const filteredJobs = (jobs || []).filter(
     (job) =>
       (job.title && job.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (job.location && job.location.toLowerCase().includes(searchQuery.toLowerCase()))
+      (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+  const totalJobs = (jobs || []).length;
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
