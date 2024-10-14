@@ -91,7 +91,7 @@ export default function EventForm() {
       console.error(err);
       setSnackbar({
         open: true,
-        message: `An error occurred while creating the event: ${err.message}`,
+        message: "An error occurred while creating the event: ${err.message}",
         severity: "error",
       });
     }
