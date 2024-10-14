@@ -49,7 +49,7 @@ export default function Navbar() {
           component="div"
           sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }}
         >
-          SIS<span style={{ color: "#ffffff" }}>O</span>NKE
+          SIS<span style={{ color: "#6c63ff" }}>O</span>NKE
         </Typography>
 
         {isMobile ? (
@@ -80,6 +80,7 @@ export default function Navbar() {
                 open={Boolean(pageAnchorEl)}
                 onClose={handlePageClose}
               >
+                <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
                 <MenuItem onClick={() => router.push("/businesses")}>Education</MenuItem>
@@ -107,6 +108,7 @@ export default function Navbar() {
               open={Boolean(pageAnchorEl)}
               onClose={handlePageClose}
             >
+              <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
               <MenuItem onClick={() => router.push("/businesses")}>Businesses</MenuItem>
@@ -122,7 +124,7 @@ export default function Navbar() {
                 textTransform: "none",
                 borderRadius: "16px",
                 "&:hover": {
-                  backgroundColor: "#333",
+                  backgroundColor: "#5A52D5"
                 },
               }}
             >

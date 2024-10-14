@@ -20,6 +20,14 @@ const blogSchema = new Schema({
     ref: "User",
     required: true,
   },
+  imageURI: {
+    type: String,
+    trim: true,
+  },
+  readTime: {
+    type: Number,
+    required: true,
+  },
   comments: [
     {
       type: Schema.Types.ObjectId,
