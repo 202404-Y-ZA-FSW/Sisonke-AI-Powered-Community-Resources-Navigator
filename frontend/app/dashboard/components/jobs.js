@@ -36,9 +36,10 @@ export default function Jobs() {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/jobs");
-      if (response.status === 200) {
-        setJobs(response.data);
+
+      const response = await axios.get("http://localhost:5000/jobs/all");
+      if (Array.isArray(response.data.jobs)) {
+        setJobs(response.data.jobs);
       } else {
         setError("Unexpected data format. Expected an array.");
       }

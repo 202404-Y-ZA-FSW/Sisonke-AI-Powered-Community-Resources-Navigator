@@ -39,7 +39,7 @@ export default function UserDashboard() {
       setLoading(true);
       const response = await axios.get("http://localhost:5000/account/users");
       if (response.status === 200) {
-        setUsers(response.data);
+        setUsers(response.data.users);
       } else {
         setError("Failed to fetch users.");
       }

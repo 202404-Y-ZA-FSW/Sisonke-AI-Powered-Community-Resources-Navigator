@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Avatar,
   Box,
@@ -16,25 +16,53 @@ import {
   Typography,
 } from '@mui/material';
 import { AccountCircle, ExitToApp, Edit, VisibilityOff, Delete } from '@mui/icons-material';
+import axios from 'axios';
 
-const SettingsMenu = ({ user, onLogout, toggleIncognito, isIncognito }) => {
+const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openAccountSettings, setOpenAccountSettings] = useState(false);
   const [formData, setFormData] = useState({
-    name: user.name,
-    username: user.username || '',
-    email: user.email,
-    phone: user.phone || '',
-    location: user.location || '',
-    bio: user.bio || '',
-    socialLinks: user.socialLinks || { twitter: '', linkedIn: '' },
+    name: '',
+    username: '',
+    email: '',
+    phone: '',
+    location: '',
+    bio: '',
+    socialLinks: { twitter: '', linkedIn: '' },
     country: '',
     city: '',
     postalCode: '',
     taxId: '',
   });
+  
+  const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || null);
 
-  const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || user.profileImage || null);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/account/users`);
+        const userData = response.data;
+        setFormData({
+          name: userData.name,
+          username: userData.username || '',
+          email: userData.email,
+          phone: userData.phone || '',
+          location: userData.location || '',
+          bio: userData.bio || '',
+          socialLinks: userData.socialLinks || { twitter: '', linkedIn: '' },
+          country: '',
+          city: '',
+          postalCode: '',
+          taxId: '',
+        });
+        setSelectedImage(userData.profileImage || null);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [userId]);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,7 +115,7 @@ const SettingsMenu = ({ user, onLogout, toggleIncognito, isIncognito }) => {
   return (
     <Box>
       <IconButton onClick={handleMenuOpen}>
-        <Avatar alt={user.name} src={selectedImage} />
+        <Avatar alt={formData.name} src={selectedImage} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -103,9 +131,9 @@ const SettingsMenu = ({ user, onLogout, toggleIncognito, isIncognito }) => {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
-          <Avatar alt={user.name} src={selectedImage} sx={{ mr: 2 }} />
+          <Avatar alt={formData.name} src={selectedImage} sx={{ mr: 2 }} />
           <Box>
-            <Typography variant="subtitle1" fontWeight="bold">{user.name}</Typography>
+            <Typography variant="subtitle1" fontWeight="bold">{formData.name}</Typography>
             <Typography variant="body2" color="text.secondary">{formData.username}</Typography>
           </Box>
         </Box>
@@ -141,9 +169,7 @@ const SettingsMenu = ({ user, onLogout, toggleIncognito, isIncognito }) => {
                   <Avatar alt="Profile Image Preview" src={selectedImage} sx={{ width: 64, height: 64, mr: 2 }} />
                   <Box>
                     <Typography variant="h6">{formData.name}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {formData.username}
-                    </Typography>
+                    <Typography variant="body2" color="textSecondary">{formData.username}</Typography>
                   </Box>
                   <IconButton sx={{ ml: 'auto' }} onClick={() => document.getElementById('profile-image-upload').click()}>
                     <Edit />
@@ -249,7 +275,7 @@ const SettingsMenu = ({ user, onLogout, toggleIncognito, isIncognito }) => {
                       onChange={handleFormChange}
                       fullWidth
                     />
-                  </Grid>                  
+                  </Grid>
                 </Grid>
 
                 <Button variant="contained" onClick={handleFormSubmit} fullWidth sx={{ mt: 3 }}>
