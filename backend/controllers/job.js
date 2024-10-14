@@ -13,7 +13,11 @@ exports.newJob = async (req, res) => {
   }
 
   try {
-    const userID = req.userID;
+    const userID = req.userID; // Ensure userID is correctly set
+    if (!userID) {
+      return res.status(401).json({ error: "User not authenticated" });
+    }
+
     const {
       title,
       company,

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Box, Typography, Grid, Paper } from '@mui/material';
+import { TextField, Button, MenuItem, Box, Typography, Grid, Paper, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
@@ -21,19 +22,21 @@ const experienceLevels = [
 const JobForm = () => {
   const router = useRouter();
 
-  const [jobData, setJobData] = useState({
-    user: '',
+  const initialJobData = {
+    // user: '',
     title: '',
     company: '',
     location: '',
-    employmentType: '',
+    type: '',
     salary: '',
     description: '',
     qualifications: '',
     experience: '',
     skills: '',
-  });
+    link: '',
+  };
 
+  const [jobData, setJobData] = useState(initialJobData);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -49,14 +52,15 @@ const JobForm = () => {
     if (!jobData.title) errors.title = 'Title is required.';
     if (!jobData.company) errors.company = 'Company is required.';
     if (!jobData.location) errors.location = 'Location is required.';
-    if (!jobData.employmentType) errors.employmentType = 'Job Type is required.';
+    if (!jobData.type) errors.type = 'Job Type is required.';
     if (!jobData.description) errors.description = 'Description is required.';
+    if (jobData.link && !/^(ftp|http|https):\/\/[^ "]+$/.test(jobData.link)) {
+      errors.link = 'Invalid URL.';
+    }
     return errors;
   };
 
   const handleJobSubmit = async (jobData) => {
-    //e.preventDefault();
-
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -80,14 +84,13 @@ const JobForm = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.error('Error creating job:', error.response.data); // This will show the server's validation error
+        console.error('Error creating job:', error.response.data); 
         alert(`Failed to create job: ${error.response.data.message || 'Unknown error'}`);
       } else {
         console.error('Error creating job:', error);
         alert('Failed to create job');
       }
     }
-    
   };
 
   const handleSubmit = (e) => {
@@ -103,9 +106,17 @@ const JobForm = () => {
     handleJobSubmit(jobData);
   };
 
+  const handleClose = () => {
+    setJobData(initialJobData); 
+    setErrors({}); 
+  };
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
-      <Paper elevation={3} sx={{ p: 4, maxWidth: 600, width: '100%' }}>
+      <Paper elevation={3} sx={{ p: 1, maxWidth: 600, width: '100%', height: '80vh', overflow: 'auto', position: 'relative', background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)' }}>
+        <IconButton onClick={handleClose} sx={{ position: 'absolute', top: 10, right: 10 }}>
+          <CloseIcon />
+        </IconButton>
         <Typography variant="h5" gutterBottom align="center" sx={{ mb: 4 }}>
           Post a Job
         </Typography>
@@ -150,14 +161,14 @@ const JobForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Job Type"
-                name="employmentType"
+                name="type"
                 select
-                value={jobData.employmentType}
+                value={jobData.type}
                 onChange={handleChange}
                 fullWidth
                 required
-                error={!!errors.employmentType}
-                helperText={errors.employmentType}
+                error={!!errors.type}
+                helperText={errors.type}
               >
                 {jobTypes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -225,12 +236,29 @@ const JobForm = () => {
                 multiline
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Application Link"
+                name="link"
+                value={jobData.link}
+                onChange={handleChange}
+                fullWidth
+                error={!!errors.link}
+                helperText={errors.link}
+              />
+            </Grid>
           </Grid>
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            sx={{ mt: 3, p: 1.5, bgcolor: 'primary.main' }}
+            sx={{ bgcolor: "#6c63ff",
+              borderRadius: "16px",
+              color: "#ffffff",
+              textTransform: "none",
+              padding: "12px 24px", 
+              fontSize: "1rem", 
+              "&:hover": { bgcolor: "#5A52D5" },mt:2 }}
           >
             Create Job
           </Button>
