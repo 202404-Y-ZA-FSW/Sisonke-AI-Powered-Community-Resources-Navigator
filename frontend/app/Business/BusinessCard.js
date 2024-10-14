@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,30 +12,35 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import Footer from "../components/sections/Footer";
+import Footer from "../src/Footer";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const businessListings = [
   {
     _id: "1",
     name: "Cranium Medical Products",
-    description: "Innovative medical products designed to improve patient care.",
+    description:
+      "Innovative medical products designed to improve patient care.",
     address: "456 Health Road, Pretoria",
     city: "Pretoria",
     phone: "(012) 234-5678",
     email: "info@craniummedical.co.za",
     website: "https://craniumsa.co.za/",
-    image: "https://craniumsa.co.za/wp-content/uploads/2024/07/cranium-sa-secondary-logo-white-with-tagline-white.png",
+    image:
+      "https://craniumsa.co.za/wp-content/uploads/2024/07/cranium-sa-secondary-logo-white-with-tagline-white.png",
   },
   {
     _id: "2",
     name: "Hot 102.7 FM",
-    description: "Your home for the best music and entertainment in Johannesburg.",
+    description:
+      "Your home for the best music and entertainment in Johannesburg.",
     address: "789 Media Street, Johannesburg",
     city: "Johannesburg",
     phone: "(011) 345-6789",
     email: "info@hot1027.co.za",
     website: "https://hot1027.co.za/",
-    image: "https://hot1027.co.za/wp-content/uploads/2024/06/logo-white-border.png",
+    image:
+      "https://hot1027.co.za/wp-content/uploads/2024/06/logo-white-border.png",
   },
   {
     _id: "3",
@@ -46,18 +51,21 @@ const businessListings = [
     phone: "(021) 456-7890",
     email: "info@madebymosaic.co.za",
     website: "https://madebymosaic.co.za/",
-    image: "https://madebymosaic.co.za/wp-content/uploads/2024/02/Eco-Stamp.png",
+    image:
+      "https://madebymosaic.co.za/wp-content/uploads/2024/02/Eco-Stamp.png",
   },
   {
     _id: "4",
     name: "KotaJoe",
-    description: "Delicious kota and street food that will satisfy your cravings.",
+    description:
+      "Delicious kota and street food that will satisfy your cravings.",
     address: "15 Street Food Avenue, Johannesburg",
     city: "Johannesburg",
     phone: "(011) 123-4567",
     email: "info@kotajoe.co.za",
     website: "https://www.kotajoe.co.za/",
-    image: "https://images.squarespace-cdn.com/content/v1/5be168c750a54f114181c104/1606825761778-F0SE3XPHG89WRIDM9NCU/Kota+Joe+Logo.png?format=1500w",
+    image:
+      "https://images.squarespace-cdn.com/content/v1/5be168c750a54f114181c104/1606825761778-F0SE3XPHG89WRIDM9NCU/Kota+Joe+Logo.png?format=1500w",
   },
   {
     _id: "5",
@@ -68,7 +76,8 @@ const businessListings = [
     phone: "(021) 111-2222",
     email: "info@saratogasoftware.co.za",
     website: "https://saratogasoftware.com/",
-    image: "https://saratogasoftware.com/storage/2024/01/Saratoga-Software-Logo-White-and-Blue.png",
+    image:
+      "https://saratogasoftware.com/storage/2024/01/Saratoga-Software-Logo-White-and-Blue.png",
   },
   {
     _id: "6",
@@ -161,6 +170,9 @@ const BusinessCard = () => {
     <div>
       <StyledAppBar position="static">
         <StyledToolbar>
+          <Button href="/" startIcon={<ArrowBackIcon fontSize="small" />}>
+            Home
+          </Button>
           <SearchBar
             variant="outlined"
             placeholder="Search businesses..."
