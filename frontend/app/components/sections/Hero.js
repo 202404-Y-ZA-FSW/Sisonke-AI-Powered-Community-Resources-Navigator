@@ -16,54 +16,53 @@ import CityOfTshwane from "./Images/logos/tshwane.png";
 import NYDA from "./Images/logos/nyda.png";
 import SA from "./Images/logos/sayouth.png";
 import Projecty from "./Images/logos/projecty.svg";
-import NotionLogo from "./Images/logos/notion.png"; // Add your Notion logo import
-import GoogleLogo from "./Images/logos/google.png"; // Add your Google logo import
-import SlackLogo from "./Images/logos/slack.png"; // Add your Slack logo import
+import NotionLogo from "./Images/logos/notion.png"; 
+import GoogleLogo from "./Images/logos/google.png"; 
+import SlackLogo from "./Images/logos/slack.png"; 
 
-const GradientBackground = styled(Box)({
+const GradientBackground = styled(Box)( {
   background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
   minHeight: '100vh',
   padding: '2rem',
 });
 
-const RoundedImage = styled(Image)({
+const RoundedImage = styled(Image)( {
   borderRadius: '20px',
 });
 
-const ExploreButton = styled(Button)({
+const ExploreButton = styled(Button)( {
   borderRadius: '10px',
   textTransform: 'none',
   padding: '0.5rem 2rem',
   backgroundColor: '#6c63ff',
   color: 'white',
   '&:hover': {
-    backgroundColor: '#5a52d5',
+    backgroundColor: '#4e42c2', // Changed hover color slightly
   },
 });
 
-// Responsive design improvement with margin for larger screens
-const StatsContainer = styled(Grid)(({ theme }) => ({
+const StatsContainer = styled(Grid)( ( { theme } ) => ( {
   textAlign: 'center',
   marginTop: '2rem',
   marginLeft: '-8%',
-  [theme.breakpoints.down('md')]: {
-    marginLeft: '0',  // Centered on smaller screens
+  [ theme.breakpoints.down('md') ]: {
+    marginLeft: '0',  
   },
 }));
 
-const StatBox = styled(Box)({
+const StatBox = styled(Box)( {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   padding: '0.3rem',
-  transition: 'transform 0.3s',  // Added hover animation
+  transition: 'transform 0.3s',  
   '&:hover': {
     transform: 'scale(1.05)',
   },
 });
 
-const StatIcon = styled(Box)({
+const StatIcon = styled(Box)( {
   backgroundColor: "#6c63ff",
   color: "#ffffff",
   padding: "12px",
@@ -75,8 +74,7 @@ const StatIcon = styled(Box)({
   },
 });
 
-// Keyframe animation for stat numbers
-const AnimatedNumber = styled(Typography)({
+const AnimatedNumber = styled(Typography)( {
   fontWeight: 'bold',
   color: '#333',
   fontSize: '1.2rem',
@@ -93,7 +91,6 @@ export default function HeroSection() {
       <Container maxWidth="lg">
         <Grid container spacing={4} alignItems="center">
           
-          {/* Hero Text */}
           <Grid item xs={12} md={6}>
             <Typography 
               variant="h3" 
@@ -111,9 +108,7 @@ export default function HeroSection() {
               Explore a curated collection of local resources tailored to meet your community's unique needs.
             </Typography>
 
-            {/* Stats Section with distinct icons and animations */}
             <StatsContainer container spacing={2} justifyContent="center">
-              {/* Stat 1 */}
               <Grid item xs={6} md={3}>
                 <StatBox>
                   <StatIcon>
@@ -128,7 +123,6 @@ export default function HeroSection() {
                 </StatBox>
               </Grid>
 
-              {/* Stat 2 */}
               <Grid item xs={6} md={3}>
                 <StatBox>
                   <StatIcon>
@@ -143,7 +137,6 @@ export default function HeroSection() {
                 </StatBox>
               </Grid>
 
-              {/* Stat 3 */}
               <Grid item xs={6} md={3}>
                 <StatBox>
                   <StatIcon>
@@ -158,7 +151,6 @@ export default function HeroSection() {
                 </StatBox>
               </Grid>
 
-              {/* Stat 4 */}
               <Grid item xs={6} md={3}>
                 <StatBox>
                   <StatIcon>
@@ -175,7 +167,6 @@ export default function HeroSection() {
             </StatsContainer>
           </Grid>
 
-          {/* Hero Image with Logos */}
           <Grid item xs={12} md={6}>
             <Box sx={{ position: 'relative', height: '400px', width: '100%' }}>
               <RoundedImage
@@ -224,7 +215,6 @@ export default function HeroSection() {
           </Grid>
         </Grid>
 
-        {/* Partner Logos */}
         <Box sx={{ mt: 8, textAlign: 'center' }}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
             We are supported
