@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Box,
   Typography,
@@ -20,12 +21,18 @@ import Subscribe from "../components/sections/Subscribe";
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
 
+import { useAuthentication } from "../hooks/useAuthentication";
+
 export default function BlogPage() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { user } = useAuthentication();
+  const canCreatePost =
+    user && (user.user.role === "administrator" || user.user.role === "ngo");
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -71,6 +78,31 @@ export default function BlogPage() {
     );
 
     setFilteredPosts(filtered);
+  };
+
+  const limitContent = (content, lines = 3) => {
+    const words = content.split(" ");
+    const lineHeight = 1.5;
+    const maxHeight = lineHeight * lines;
+    let result = "";
+    let currentHeight = 0;
+
+    for (let word of words) {
+      const testString = result + word + " ";
+      const testHeight =
+        (testString.split("\n").length +
+          (testString.match(/\S+/g) || []).length / 10) *
+        lineHeight;
+
+      if (testHeight > maxHeight) {
+        return result.trim() + "...";
+      }
+
+      result = testString;
+      currentHeight = testHeight;
+    }
+
+    return result.trim();
   };
 
   if (isLoading) {
@@ -158,61 +190,91 @@ export default function BlogPage() {
           </Box>
         </Container>
       </Box>
-      <Box
+      <Container
+        maxWidth="lg"
         sx={{
-          maxWidth: "1200px",
-          mx: "auto",
-          textAlign: "center",
           mt: 5,
           px: 2,
         }}
       >
+        {canCreatePost ? (
+          <Button
+            color="primary"
+            href="/blog/new"
+            sx={{
+              mb: 2,
+              backgroundColor: "#6c63ff",
+              color: "#ffffff",
+              borderRadius: "16px",
+              padding: "15px 24px",
+              textTransform: "none",
+              "&:hover": { backgroundColor: "#5A52D5" },
+            }}
+          >
+            Create New Post
+          </Button>
+        ) : (
+          <Typography
+            variant="body2"
+            sx={{ marginBottom: 2, color: "#6c63ff" }}
+          >
+            {user
+              ? "You don't have permission to create a new post."
+              : "You need to login to create a new post."}
+          </Typography>
+        )}
         {filteredPosts && filteredPosts.length > 0 ? (
           <Grid container spacing={3} justifyContent="center">
             {filteredPosts.map((post) => (
               <Grid item xs={12} sm={6} md={4} key={post._id}>
                 <Card
                   sx={{
-                    maxWidth: 345,
-                    mb: 4,
-                    boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.1)",
-                    border: "1px solid #ddd",
-                    transition: "transform 0.3s ease",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: "16px",
+                    boxShadow: "none",
+                    background:
+                      "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
                     "&:hover": {
-                      transform: "scale(1.05)",
+                      transform: "scale(1.02)",
+                      transition: "all 0.3s",
                     },
                   }}
                 >
-                  <CardContent>
-                    <Box display="flex" justifyContent="space-between">
-                      <Typography variant="subtitle2" color="text.secondary">
-                        By {post.author.username || "Unknown Author"}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {new Date(post.createdAt).toLocaleDateString() ||
-                          "Invalid Date"}
-                      </Typography>
-                    </Box>
-                    <Typography variant="h6" sx={{ mt: 2, fontWeight: "bold" }}>
+                  <Image
+                    height="200"
+                    width="361"
+                    src={post.imageURI}
+                    alt={post.title}
+                    style={{ borderRadius: "16px", objectFit: "cover" }}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      {post.readTime} Minutes Read | {post.author.username}
+                    </Typography>
+                    <Typography variant="h5" component="h2" gutterBottom>
                       {post.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {post.content
-                        ? post.content.substring(0, 100)
-                        : "No content available"}
-                      ...
+                      {limitContent(post.content, 3)}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Link href={`/blog/${post._id}`} passHref legacyBehavior>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        sx={{ width: "100%" }}
-                      >
-                        Read More
-                      </Button>
-                    </Link>
+                  <CardActions sx={{ marginLeft: 1 }}>
+                    <Button
+                      size="small"
+                      href={`/blog/${post._id}`}
+                      sx={{
+                        borderRadius: "16px",
+                        backgroundColor: "#ffffff",
+                        color: "#6c63ff",
+                        border: "1px solid #6c63ff",
+                        textTransform: "none",
+                        padding: "5px 15px",
+                      }}
+                    >
+                      Read More
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
@@ -223,13 +285,7 @@ export default function BlogPage() {
             No blog posts available at the moment.
           </Typography>
         )}
-
-        <Box sx={{ mt: 4 }}>
-          <Button variant="contained" color="primary">
-            Browse All Blogs
-          </Button>
-        </Box>
-      </Box>
+      </Container>
       <Subscribe />
       <Footer />
     </React.Fragment>

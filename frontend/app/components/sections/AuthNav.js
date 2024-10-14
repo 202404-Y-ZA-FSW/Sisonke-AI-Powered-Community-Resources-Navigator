@@ -51,7 +51,7 @@ export default function AuthNav() {
           component="div"
           sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }}
         >
-          SIS<span style={{ color: "#ffffff" }}>O</span>NKE
+          SIS<span style={{ color: "#6c63ff" }}>O</span>NKE
         </Typography>
 
         {isMobile ? (
@@ -114,7 +114,6 @@ export default function AuthNav() {
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
               <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
-              <MenuItem onClick={() => router.push("/blog/blogform")}>Create Blog Post</MenuItem>
             </Menu>
             <Button
               onClick={logout} 
@@ -126,7 +125,7 @@ export default function AuthNav() {
                 textTransform: "none",
                 borderRadius: "16px",
                 "&:hover": {
-                  backgroundColor: "#333",
+                  backgroundColor: "#5A52D5"
                 },
               }}
             >
