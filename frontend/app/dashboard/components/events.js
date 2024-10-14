@@ -30,8 +30,7 @@ export default function Events() {
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/events/");
-      console.log(response);
+      const response = await axios.get("http://localhost:5000/events");
       if (response.status === 200) {
         setEvents(response.data);
       } else {
@@ -62,7 +61,7 @@ export default function Events() {
 
   const filteredEvents = (events || []).filter(
     (event) =>
-      (event.title && event.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (event.name && event.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (event.organizer && event.organizer.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
@@ -119,8 +118,8 @@ export default function Events() {
                 {filteredEvents.length > 0 ? (
                   filteredEvents.map((event) => (
                     <TableRow key={event._id}>
-                      <TableCell>{event.title}</TableCell>
-                      <TableCell>{event.organizer ? event.organizer.username : null}</TableCell>
+                      <TableCell>{event.name}</TableCell>
+                      <TableCell>{event.organizer}</TableCell>
                       <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
                       <TableCell>
                         <IconButton onClick={() => removeEvent(event._id)} color="error">

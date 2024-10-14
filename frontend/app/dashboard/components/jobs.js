@@ -36,10 +36,9 @@ export default function Jobs() {
 
   const fetchJobs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/jobs/all");
-      console.log("Response Data:", response.data); // Add this to check the structure
+      const response = await axios.get("http://localhost:5000/jobs");
       if (response.status === 200) {
-        setJobs(response.data.jobs || response.data || []); // Ensure it's an array
+        setJobs(response.data);
       } else {
         setError("Unexpected data format. Expected an array.");
       }
@@ -49,7 +48,6 @@ export default function Jobs() {
       setLoading(false);
     }
   };
-  
 
   const removeJob = async (id) => {
     setIsDeleting(true); 
@@ -69,12 +67,11 @@ export default function Jobs() {
     }
   };
 
-  const filteredJobs = Array.isArray(jobs) ? jobs.filter(
+  const filteredJobs = (jobs || []).filter(
     (job) =>
       (job.title && job.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase()))
-  ) : [];
-  
+  );
 
   const totalJobs = (jobs || []).length;
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Avatar,
   Box,
@@ -34,15 +34,7 @@ const SettingsMenu = ({ user, onLogout, toggleIncognito, isIncognito }) => {
     taxId: '',
   });
 
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  useEffect(() => {
-    // Only access localStorage in the client-side environment
-    if (typeof window !== 'undefined') {
-      const profileImage = localStorage.getItem('profileImage') || user.profileImage || null;
-      setSelectedImage(profileImage);
-    }
-  }, [user]);
+  const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || user.profileImage || null);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);

@@ -21,7 +21,6 @@ import {
 import { Delete } from '@mui/icons-material';
 
 export default function Businesses() {
-  const [users, setUsers] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -31,10 +30,9 @@ export default function Businesses() {
 
   const fetchBusinesses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/business/all");
-      console.log(response);
+      const response = await axios.get("http://localhost:5000/businesses");
       if (response.status === 200) {
-        setBusinesses(response.data.businesses ||response.data || []);
+        setBusinesses(response.data);
       } else {
         console.error("Failed to fetch businesses:", response.data);
         alert("Failed to fetch businesses.");
@@ -47,8 +45,7 @@ export default function Businesses() {
 
   const removeBusiness = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/business/${id}`);
-
+      const response = await axios.delete(`http://localhost:5000/businesses/${id}`);
       if (response.status === 200) {
         alert('Business deleted successfully');
         setBusinesses(prevBusinesses => prevBusinesses.filter(business => business._id !== id));
@@ -62,12 +59,11 @@ export default function Businesses() {
     }
   };
 
-  const filteredBusinesses = Array.isArray(businesses) ? businesses.filter(
+  const filteredBusinesses = (businesses || []).filter(
     (business) =>
       (business.name && business.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (business.owner && business.owner.toLowerCase().includes(searchQuery.toLowerCase()))
-  ) : [];
-  
+  );
 
   const totalBusinesses = (businesses || []).length;
 
@@ -124,10 +120,10 @@ export default function Businesses() {
               </TableHead>
               <TableBody>
                 {filteredBusinesses.length > 0 ? (
-                  filteredBusinesses.map((business,user) => (
+                  filteredBusinesses.map((business) => (
                     <TableRow key={business._id}>
                       <TableCell>{business.name}</TableCell>
-                      <TableCell>{business.owner?business.owner.username: null}</TableCell>
+                      <TableCell>{business.owner}</TableCell>
                       <TableCell>{new Date(business.createdAt).toLocaleDateString()}</TableCell>
                       <TableCell>
                         <IconButton onClick={() => removeBusiness(business._id)} color="error">

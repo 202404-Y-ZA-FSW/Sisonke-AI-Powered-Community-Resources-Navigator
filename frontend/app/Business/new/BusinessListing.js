@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import axios from "axios";
-import NavBar from "../../components/sections/NavBar"; // Adjust the path if necessary
-import Footer from "../../components/sections/Footer"; // Adjust the path if necessary
+import NavBar from "./NavBar"; // Adjust the path if necessary
+import Footer from "./Footer"; // Adjust the path if necessary
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -130,14 +130,23 @@ const BusinessListing = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/business/all");
+      const response = await axios.post("http://localhost:5000/api/business", {
+        businessName,
+        businessEmail,
+        industry,
+        province,
+        area,
+        description,
+      });
+      console.log("Response:", response.data);
 
-      if(!response.ok) {
-        throw new Error("Failed to fetch businesses");
-      }
-
-      const data = await response.json();
-      
+      setBusinessName("");
+      setBusinessEmail("");
+      setIndustry("");
+      setProvince("");
+      setArea("");
+      setDescription("");
+      setErrors({});
     } catch (error) {
       console.error("Error submitting the form", error);
       setErrors((prevErrors) => ({
