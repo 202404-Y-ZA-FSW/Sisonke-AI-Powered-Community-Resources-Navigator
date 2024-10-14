@@ -1,10 +1,13 @@
 "use client";
+
 import React from 'react';
-import { Box, Typography, TextField, Button, Container, Grid, InputAdornment } from '@mui/material';
+import { Box, Typography, Button, Container, Grid } from '@mui/material';
 import { styled } from '@mui/system';
 import Image from 'next/image';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import SchoolIcon from '@mui/icons-material/School';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import GroupIcon from '@mui/icons-material/Group';
 import HeroImage from "./Images/hero-image.jpg";
 
 import CityOfJHB from "./Images/logos/jhb.png";
@@ -13,10 +16,9 @@ import CityOfTshwane from "./Images/logos/tshwane.png";
 import NYDA from "./Images/logos/nyda.png";
 import SA from "./Images/logos/sayouth.png";
 import Projecty from "./Images/logos/projecty.svg";
-
-import NotionLogo from "./Images/logos/notion.png";
-import SlackLogo from "./Images/logos/slack.png";
-import GoogleLogo from "./Images/logos/google.png";
+import NotionLogo from "./Images/logos/notion.png"; // Add your Notion logo import
+import GoogleLogo from "./Images/logos/google.png"; // Add your Google logo import
+import SlackLogo from "./Images/logos/slack.png"; // Add your Slack logo import
 
 const GradientBackground = styled(Box)({
   background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
@@ -26,26 +28,6 @@ const GradientBackground = styled(Box)({
 
 const RoundedImage = styled(Image)({
   borderRadius: '20px',
-});
-
-const CategoryButton = styled(Button)({
-  borderRadius: '20px',
-  textTransform: 'none',
-  marginRight: '0.5rem',
-  marginBottom: '0.5rem',
-  padding: '0.25rem 1rem',
-  backgroundColor: '#f0f0f0',
-  color: '#333',
-  '&:hover': {
-    backgroundColor: '#e0e0e0',
-  },
-});
-
-const SearchBar = styled(Box)({
-  display: 'flex',
-  backgroundColor: 'white',
-  borderRadius: '10px',
-  overflow: 'hidden',
 });
 
 const ExploreButton = styled(Button)({
@@ -59,46 +41,141 @@ const ExploreButton = styled(Button)({
   },
 });
 
+// Responsive design improvement with margin for larger screens
+const StatsContainer = styled(Grid)(({ theme }) => ({
+  textAlign: 'center',
+  marginTop: '2rem',
+  marginLeft: '-8%',
+  [theme.breakpoints.down('md')]: {
+    marginLeft: '0',  // Centered on smaller screens
+  },
+}));
+
+const StatBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0.3rem',
+  transition: 'transform 0.3s',  // Added hover animation
+  '&:hover': {
+    transform: 'scale(1.05)',
+  },
+});
+
+const StatIcon = styled(Box)({
+  backgroundColor: "#6c63ff",
+  color: "#ffffff",
+  padding: "12px",
+  borderRadius: '50%',
+  marginBottom: '10px',
+  transition: 'background-color 0.3s',
+  "&:hover": {
+    backgroundColor: "#5A52D5",
+  },
+});
+
+// Keyframe animation for stat numbers
+const AnimatedNumber = styled(Typography)({
+  fontWeight: 'bold',
+  color: '#333',
+  fontSize: '1.2rem',
+  animation: 'fade-in 0.5s ease-in-out',
+  '@keyframes fade-in': {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+});
+
 export default function HeroSection() {
   return (
     <GradientBackground>
       <Container maxWidth="lg">
         <Grid container spacing={4} alignItems="center">
+          
+          {/* Hero Text */}
           <Grid item xs={12} md={6}>
-            <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
-             Discover essential local support and opportunities
+            <Typography 
+              variant="h3" 
+              component="h1" 
+              gutterBottom 
+              sx={{ 
+                fontWeight: 'bold', 
+                color: '#333', 
+                marginTop: '3rem' 
+              }}
+            >
+              Discover essential local support and opportunities
             </Typography>
             <Typography variant="subtitle1" gutterBottom sx={{ color: '#666', mb: 4 }}>
-             Explore a curated collection of local resources tailored to meet your community's unique needs.
+              Explore a curated collection of local resources tailored to meet your community's unique needs.
             </Typography>
-            <SearchBar sx={{ mb: 4 }}>
-              <TextField
-                placeholder="Job Type"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <WorkOutlineIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{ '& fieldset': { border: 'none' } }}
-              />
-              <TextField
-                placeholder="Location"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LocationOnOutlinedIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{ '& fieldset': { border: 'none' } }}
-              />
-              <ExploreButton variant="contained" disableElevation>
-                Search
-              </ExploreButton>
-            </SearchBar>
+
+            {/* Stats Section with distinct icons and animations */}
+            <StatsContainer container spacing={2} justifyContent="center">
+              {/* Stat 1 */}
+              <Grid item xs={6} md={3}>
+                <StatBox>
+                  <StatIcon>
+                    <GroupIcon style={{ fontSize: 28 }} />
+                  </StatIcon>
+                  <AnimatedNumber variant="h6">
+                    2.1 Million
+                  </AnimatedNumber>
+                  <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
+                    People Engaged
+                  </Typography>
+                </StatBox>
+              </Grid>
+
+              {/* Stat 2 */}
+              <Grid item xs={6} md={3}>
+                <StatBox>
+                  <StatIcon>
+                    <SchoolIcon style={{ fontSize: 28 }} />
+                  </StatIcon>
+                  <AnimatedNumber variant="h6">
+                    Over 70
+                  </AnimatedNumber>
+                  <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
+                    Learning Centers
+                  </Typography>
+                </StatBox>
+              </Grid>
+
+              {/* Stat 3 */}
+              <Grid item xs={6} md={3}>
+                <StatBox>
+                  <StatIcon>
+                    <BusinessCenterIcon style={{ fontSize: 28 }} />
+                  </StatIcon>
+                  <AnimatedNumber variant="h6">
+                    150,000
+                  </AnimatedNumber>
+                  <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
+                    Jobs Created
+                  </Typography>
+                </StatBox>
+              </Grid>
+
+              {/* Stat 4 */}
+              <Grid item xs={6} md={3}>
+                <StatBox>
+                  <StatIcon>
+                    <WorkOutlineIcon style={{ fontSize: 28 }} />
+                  </StatIcon>
+                  <AnimatedNumber variant="h6">
+                    500+ Businesses
+                  </AnimatedNumber>
+                  <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
+                    Partners Supported
+                  </Typography>
+                </StatBox>
+              </Grid>
+            </StatsContainer>
           </Grid>
+
+          {/* Hero Image with Logos */}
           <Grid item xs={12} md={6}>
             <Box sx={{ position: 'relative', height: '400px', width: '100%' }}>
               <RoundedImage
@@ -146,6 +223,8 @@ export default function HeroSection() {
             </Box>
           </Grid>
         </Grid>
+
+        {/* Partner Logos */}
         <Box sx={{ mt: 8, textAlign: 'center' }}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
             We are supported
@@ -154,24 +233,24 @@ export default function HeroSection() {
             By local governments, national youth agencies, and the private sector.
           </Typography>
           <Grid container spacing={4} justifyContent="center" alignItems="center">
-              <Grid item>
-                <Image src={CityOfJHB} alt="City Of Johannesburg" width="100%" height={50} />
-              </Grid>
-              <Grid item>
-                <Image src={CityOfEkurhuleni} alt="City Of Ekurhuleni" width="100%" height={50} />
-              </Grid>
-              <Grid item>
-                <Image src={CityOfTshwane} alt="City Of Tshwane" width="100%" height={50} />
-              </Grid>
-              <Grid item>
-                <Image src={NYDA} alt="National Youth Development" width="100%" height={50} />
-              </Grid>
-              <Grid item>
-                <Image src={SA} alt="National Youth Development" width="100%" height={50} />
-              </Grid>
-              <Grid item>
-                <Image src={Projecty} alt="Project Y World" width="100%" height={50} />
-              </Grid>
+            <Grid item>
+              <Image src={CityOfJHB} alt="City Of Johannesburg" width="100%" height={50} />
+            </Grid>
+            <Grid item>
+              <Image src={CityOfEkurhuleni} alt="City Of Ekurhuleni" width="100%" height={50} />
+            </Grid>
+            <Grid item>
+              <Image src={CityOfTshwane} alt="City Of Tshwane" width="100%" height={50} />
+            </Grid>
+            <Grid item>
+              <Image src={NYDA} alt="National Youth Development" width="100%" height={50} />
+            </Grid>
+            <Grid item>
+              <Image src={SA} alt="SA Youth" width="100%" height={50} />
+            </Grid>
+            <Grid item>
+              <Image src={Projecty} alt="Project Y World" width="100%" height={50} />
+            </Grid>
           </Grid>
         </Box>
       </Container>
