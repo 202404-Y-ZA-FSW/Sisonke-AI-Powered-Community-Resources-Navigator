@@ -16,22 +16,33 @@ import {
   MenuItem,
   Link,
   InputAdornment,
+  Paper,
+  IconButton,
+  Chip,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import AccessTimeIcon from "@mui/icons-material/AccessTime"; 
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney"; 
 import { styled } from "@mui/system";
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
 import Subscribe from "../components/sections/Subscribe";
+import JobForm from "./new/page";
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-  maxWidth: 340,
-  height: 250,
+  maxWidth: 400,
+  margin: "auto",
   borderRadius: 16,
   boxShadow: "none",
-  transition: "transform 0.3s",
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   "&:hover": {
     transform: "scale(1.02)",
+    transition: "all 0.3s",
   },
 });
 
@@ -62,34 +73,37 @@ const FooterContainer = styled(Box)({
   marginTop: 16,
 });
 
-const getRandomSalary = () => {
-  const min = 10000;
-  const max = 100000;
-  return `R ${Math.floor(Math.random() * (max - min + 1)) + min}`;
-};
+const InfoItem = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  marginRight: 16,
+});
+
 
 const JobCardDetails = ({
   title,
   company,
-  salaryRange,
-  timeAgo,
+  salary,
+  type,
   description,
-  redirectUrl,
+  link,
+  location,
+  experience,
 }) => {
-  const companyName = company?.display_name || "Unknown Company";
-  const salary = salaryRange?.minimum
-    ? `R${salaryRange.minimum} - R${salaryRange.maximum}`
-    : getRandomSalary();
+  const companyName = company || "Unknown Company";
+
+  const formatSalary = (salary) => {
+    if (salary === null || salary === undefined) return "N/A";
+    return `R ${salary.toLocaleString()}`; 
+  };
 
   return (
-    <Link href={redirectUrl} target="_blank" underline="none">
+    <Link href={link} target="_blank" underline="none">
       <StyledCard>
         <CardContent>
           <HeaderContainer>
             <Logo>{companyName[0]}</Logo>
             <Box sx={{ flex: 1, ml: 1, minWidth: 0 }}>
-              {" "}
-              {/* Add minWidth: 0 */}
               <Typography
                 variant="h6"
                 component="div"
@@ -123,12 +137,23 @@ const JobCardDetails = ({
           </Typography>
 
           <FooterContainer>
-            <Typography variant="body2" color="text.secondary">
-              {timeAgo}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {salary}
-            </Typography>
+            <Chip label={location} variant="outlined" />
+            <Chip label={experience} variant="outlined" />
+          </FooterContainer>
+
+          <FooterContainer>
+            <InfoItem>
+              <AccessTimeIcon fontSize="small" color="action" />
+              <Typography variant="body2" color="text.secondary">
+                {type}
+              </Typography>
+            </InfoItem>
+            <InfoItem>
+              <AttachMoneyIcon fontSize="small" color="action" />
+              <Typography variant="body2" color="text.secondary">
+                {formatSalary(salary)}
+              </Typography>
+            </InfoItem>
           </FooterContainer>
         </CardContent>
       </StyledCard>
@@ -138,24 +163,22 @@ const JobCardDetails = ({
 
 const Job = () => {
   const [jobs, setJobs] = useState([]);
-  const [displayedJobs, setDisplayedJobs] = useState(15);
+  const [displayedJobs, setDisplayedJobs] = useState(9);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("recently added");
-  const [page, setPage] = useState(1);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const fetchJobs = async (query = [""], loadMore = false) => {
+  const fetchJobs = async () => {
     try {
-      const response = await fetch(
-        `https://api.adzuna.com/v1/api/jobs/us/search/${page}?app_id=21f6cc28&app_key=32909bbcc5e3765086cef6e4bb8954f7&results_per_page=20&what=${query}&where=United%20States&distance=1.0&content-type=application/json`,
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch("http://localhost:5000/jobs/all");
       const data = await response.json();
-      if (loadMore) {
-        setJobs((prevJobs) => [...prevJobs, ...(data.results || [])]);
+      console.log("Fetched jobs:", data);
+
+      // Check if the 'jobs' property exists and is an array
+      if (Array.isArray(data.jobs)) {
+        setJobs(data.jobs);
       } else {
-        setJobs(data.results || []);
+        console.error("Expected an array under 'jobs' but got:", data.jobs);
       }
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -163,29 +186,42 @@ const Job = () => {
   };
 
   useEffect(() => {
-    fetchJobs(searchTerm);
-  }, [page, searchTerm]);
+    fetchJobs();
+  }, []);
 
-  const loadMoreJobs = () => {
-    setPage((prevPage) => prevPage + 1);
-    setDisplayedJobs(jobs.length);
-  };
+  
 
   const filteredJobs = jobs.filter(
     (job) =>
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.company.display_name.toLowerCase().includes(searchTerm.toLowerCase())
+      job.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const sortedJobs = filteredJobs.sort((a, b) => {
+  const uniqueJobs = filteredJobs.filter(
+    (job, index, self) =>
+      index ===
+      self.findIndex((j) => j.title.toLowerCase() === job.title.toLowerCase())
+  );
+
+  const sortedJobs = uniqueJobs.sort((a, b) => {
     if (sortBy === "highest salary") {
-      return (b.salary?.minimum || 0) - (a.salary?.minimum || 0);
+      return (b.salary || 0) - (a.salary || 0);
     } else if (sortBy === "lowest salary") {
-      return (a.salary?.minimum || 0) - (b.salary?.minimum || 0);
+      return (a.salary || 0) - (b.salary || 0);
     } else {
-      return new Date(b.created) - new Date(a.created);
+      return new Date(b.posted) - new Date(a.posted);
     }
   });
+
+  const loadMoreJobs = () => {
+    setDisplayedJobs((prev) => prev + 5);
+  };
+
+  const handleClickOutside = (e) => {
+    if (e.target.id === "modalBackground") {
+      setIsFormOpen(false);
+    }
+  };
 
   return (
     <>
@@ -227,7 +263,7 @@ const Job = () => {
               }}
             >
               Find the job of your dreams in our curated list of jobs from
-              verified companies, <br/> or search for a specific job title or company.
+              verified companies, or search for a specific job title or company.
             </Typography>
 
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
@@ -245,12 +281,29 @@ const Job = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              <Button
+                size="large"
+                sx={{
+                  bgcolor: "#6c63ff",
+                  borderRadius: "16px",
+                  padding: "15px 24px",
+                  color: "#ffffff",
+                  textTransform: "none",
+                  marginLeft: "10px",
+                  "&:hover": { bgcolor: "#5A52D5" },
+                  px: 4,
+                }}
+                onClick={fetchJobs}
+              >
+                Explore Now
+              </Button>
             </Box>
           </Container>
         </Box>
 
-        {/* Job Sorting */}
-        <Box display="flex" justifyContent="flex-end" sx={{ mb: 8, mt: 8 }}>
+        {/* Job Sorting and Post Button flex */}
+        <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 8, mt: 8 }}>
+          {/* Sort By Dropdown */}
           <FormControl variant="outlined" sx={{ minWidth: 180 }}>
             <InputLabel>Sort By</InputLabel>
             <Select
@@ -263,30 +316,45 @@ const Job = () => {
               <MenuItem value="lowest salary">Lowest Salary</MenuItem>
             </Select>
           </FormControl>
+
+          {/* Post a Job Button */}
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#6c63ff",
+              borderRadius: "16px",
+              color: "#ffffff",
+              textTransform: "none",
+              padding: "10px 20px",
+              "&:hover": { bgcolor: "#5A52D5" },
+            }}
+            onClick={() => setIsFormOpen(true)}
+          >
+            Post a Job
+          </Button>
         </Box>
 
         {/* Job Cards */}
-        <Grid container spacing={3} justifyContent="center">
-          {sortedJobs.slice(0, displayedJobs).map((job, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
+        <Grid container spacing={3}>
+          {sortedJobs.slice(0, displayedJobs).map((job) => (
+            <Grid item xs={12} sm={6} md={4} key={job.id}>
               <JobCardDetails
                 title={job.title}
                 company={job.company}
-                salaryRange={job.salary}
-                timeAgo={job.created}
-                employmentType={job.employment_type}
-                remote={job.remote}
+                salary={job.salary}
+                type={job.type}
                 description={job.description}
-                companyLogo={job.company?.logo}
-                redirectUrl={job.redirect_url}
+                link={job.link}
+                location={job.location}
+                experience={job.experience}
               />
             </Grid>
           ))}
         </Grid>
-
-        {/* Load More Button */}
-        <Box display="flex" justifyContent="center" mt={4}>
-          <Button
+        {displayedJobs < sortedJobs.length && (
+          
+          <Box display="flex" justifyContent="center" my={4}>
+           <Button
           sx={{
             borderRadius: "15px",
             backgroundColor: "#6c63ff",
@@ -296,9 +364,47 @@ const Job = () => {
           }}
           size="large"
           onClick={loadMoreJobs}>
-            Load More
-          </Button>
-        </Box>
+              Load More
+            </Button>
+          </Box>
+        )}
+
+        {/* Job Posting Form Modal */}
+        {isFormOpen && (
+          <Paper
+            id="modalBackground"
+            onClick={handleClickOutside}
+            elevation={5}
+            sx={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0,0,0,0.5)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "white",
+                padding: 4,
+                borderRadius: 2,
+                width: { xs: "90%", sm: "60%", md: "40%" },
+              }}
+            >
+              <JobForm />
+              <IconButton
+                sx={{ position: "absolute", top: 10, right: 10 }}
+                onClick={() => setIsFormOpen(false)}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </Paper>
+        )}
       </Container>
       <br />
       <Subscribe/>
@@ -308,4 +414,3 @@ const Job = () => {
 };
 
 export default Job;
-

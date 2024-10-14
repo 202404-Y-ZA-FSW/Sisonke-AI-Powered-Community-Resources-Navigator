@@ -54,16 +54,19 @@ export default function Forums() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/account/users");
-      if (response.status === 200) {
-        setUsers(response.data);
-      } else {
-        setError("Failed to fetch users.");
-      }
+        const response = await axios.get("http://localhost:5000/account/users");
+        console.log('Users response:', response.data); // Log the response data
+        if (Array.isArray(response.data)) {
+            setUsers(response.data);
+        } else if (response.data.users && Array.isArray(response.data.users)) {
+            setUsers(response.data.users); // Adjust based on the expected structure
+        } else {
+            setError("Failed to fetch users. Expected an array.");
+        }
     } catch (err) {
-      setError("Error fetching users. Please try again later.");
+        setError("Error fetching users. Please try again later.");
     }
-  };
+};
 
   const removeForum = async (id) => {
     try {
