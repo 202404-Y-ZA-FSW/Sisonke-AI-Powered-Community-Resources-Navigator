@@ -45,7 +45,7 @@ export default function Businesses() {
 
   const removeBusiness = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/businesses/all`);
+      const response = await axios.delete(`http://localhost:5000/businesses/${id}`);
       if (response.status === 200) {
         alert('Business deleted successfully');
         setBusinesses(prevBusinesses => prevBusinesses.filter(business => business._id !== id));

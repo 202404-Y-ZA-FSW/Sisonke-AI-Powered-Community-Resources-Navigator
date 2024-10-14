@@ -1,6 +1,10 @@
 // REQUIRED MODELS AND PACKAGES
 const Blog = require("../../models/blog/blog-model");
 const { validationResult } = require("express-validator");
+const textToSpeech = require("@google-cloud/text-to-speech");
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const util = require("util");
 
 // CREATE A NEW BLOG POST
 exports.newBlog = async (req, res) => {
@@ -10,9 +14,9 @@ exports.newBlog = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, content, author, tags } = req.body;
+    const { title, content, author, imageURI, readTime } = req.body;
 
-    if (!title || !content || !author || !tags) {
+    if (!title || !content || !author || !imageURI || !readTime) {
       return res
         .status(400)
         .json({ message: "Please provide all required fields" });
@@ -23,21 +27,26 @@ exports.newBlog = async (req, res) => {
     }
 
     if (!title) {
-        return res.status(400).json({ message: "Title is required" });
+      return res.status(400).json({ message: "Title is required" });
     }
     if (!author) {
-        return res.status(400).json({ message: "Author is required" });
+      return res.status(400).json({ message: "Author is required" });
     }
     if (!content) {
-        return res.status(400).json({ message: "Content is required" });
+      return res.status(400).json({ message: "Content is required" });
     }
-    if (!tags) {
-        return res.status(400).json({ message: "Tags are required" });
+    if (!imageURI) {
+      return res.status(400).json({ message: "Tags are required" });
+    }
+    if (!readTime) {
+      return res.status(400).json({ message: "Read time is required" });
     }
 
-    const newBlog = new Blog({ title, content, author });
+    const newBlog = new Blog({ title, content, author, imageURI, readTime });
     const savedBlog = await newBlog.save();
-    res.status(201).json({ message: "Your blog has been created successfully", savedBlog });
+    res
+      .status(201)
+      .json({ message: "Your blog has been created successfully", savedBlog });
   } catch (error) {
     console.error("Error in creating a new comment", error);
     res
@@ -56,15 +65,17 @@ exports.getAllBlogs = async (req, res) => {
     res.status(200).json(blogs);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error while trying to get all blogs", error });
+    res
+      .status(500)
+      .json({ message: "An error while trying to get all blogs", error });
   }
 };
 
 // GET A SINGLE BLOG
 exports.getBlogById = async (req, res) => {
   try {
-    const { blogId } = req.params;
-    const blog = await Blog.findById(blogId)
+    const { id } = req.params;
+    const blog = await Blog.findById(id)
       .populate("author", "username")
       .populate({
         path: "comments",
@@ -80,7 +91,9 @@ exports.getBlogById = async (req, res) => {
     res.status(200).json(blog);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error while trying to get a blog", error });
+    res
+      .status(500)
+      .json({ message: "An error while trying to get a blog", error });
   }
 };
 

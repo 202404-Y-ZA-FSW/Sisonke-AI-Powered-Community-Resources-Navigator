@@ -24,6 +24,7 @@ const createEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
     try {
+
         const events = await Event.find().populate('organizer', 'name');
         res.status(200).json(events);
     } catch (err) {
