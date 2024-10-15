@@ -30,7 +30,7 @@ export default function Businesses() {
 
   const fetchBusinesses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/businesses");
+      const response = await axios.get("http://localhost:5000/business/all");
       if (response.status === 200) {
         setBusinesses(response.data);
       } else {
