@@ -8,8 +8,9 @@ import {
   CardHeader,
   Container,
   Grid,
-  IconButton,
+  Button,
   InputBase,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -17,13 +18,14 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Snackbar,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
 export default function Businesses() {
-  const [users, setUsers] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState(null); // State for error messages
 
   useEffect(() => {
     fetchBusinesses();
@@ -32,33 +34,31 @@ export default function Businesses() {
   const fetchBusinesses = async () => {
     try {
       const response = await axios.get("http://localhost:5000/business/all");
-      console.log(response);
       if (response.status === 200) {
-        setBusinesses(response.data.businesses ||response.data || []);
+        setBusinesses(response.data.businesses || response.data || []);
       } else {
         console.error("Failed to fetch businesses:", response.data);
-        alert("Failed to fetch businesses.");
+        setError("Failed to fetch businesses.");
       }
     } catch (err) {
       console.error("Error fetching businesses:", err);
-      alert("Error fetching businesses. Please try again later.");
+      setError("Error fetching businesses. Please try again later.");
     }
   };
 
   const removeBusiness = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:5000/business/${id}`);
-
       if (response.status === 200) {
-        alert('Business deleted successfully');
         setBusinesses(prevBusinesses => prevBusinesses.filter(business => business._id !== id));
+        setError("Business deleted successfully");
       } else {
         console.error('Error deleting business:', response.data);
-        alert('Failed to delete business');
+        setError('Failed to delete business');
       }
     } catch (error) {
       console.error('Error deleting business:', error);
-      alert('Error deleting business. Please try again.');
+      setError('Error deleting business. Please try again.');
     }
   };
 
@@ -67,25 +67,19 @@ export default function Businesses() {
       (business.name && business.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (business.owner && business.owner.toLowerCase().includes(searchQuery.toLowerCase()))
   ) : [];
-  
 
   const totalBusinesses = (businesses || []).length;
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h3" gutterBottom>
-        Businesses Management
-      </Typography>
 
       {/* Business Statistics Section */}
       <Card sx={{ mb: 4 }}>
         <CardHeader title="Business Statistics" />
         <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="h6">Total Businesses: {totalBusinesses}</Typography>
-            </Grid>
-          </Grid>
+          <Paper sx={{ padding: 2, textAlign: 'center' }}>
+            <Typography variant="h6">Total Businesses: {totalBusinesses}</Typography>
+          </Paper>
         </CardContent>
       </Card>
 
@@ -112,7 +106,7 @@ export default function Businesses() {
       <Card sx={{ mb: 4 }}>
         <CardHeader title="Business Management" />
         <CardContent>
-          <TableContainer>
+          <TableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -124,15 +118,20 @@ export default function Businesses() {
               </TableHead>
               <TableBody>
                 {filteredBusinesses.length > 0 ? (
-                  filteredBusinesses.map((business,user) => (
+                  filteredBusinesses.map((business) => (
                     <TableRow key={business._id}>
                       <TableCell>{business.name}</TableCell>
-                      <TableCell>{business.owner?business.owner.username: null}</TableCell>
+                      <TableCell>{business.owner ? business.owner.username : "Unknown"}</TableCell>
                       <TableCell>{new Date(business.createdAt).toLocaleDateString()}</TableCell>
                       <TableCell>
-                        <IconButton onClick={() => removeBusiness(business._id)} color="error">
-                          <Delete />
-                        </IconButton>
+                      <Button
+                        startIcon={<Delete />}
+                        onClick={() => removeEvent(event._id)} 
+                        color="error"
+                        variant="contained"
+                      >
+                        Delete
+                      </Button>
                       </TableCell>
                     </TableRow>
                   ))
@@ -148,6 +147,14 @@ export default function Businesses() {
           </TableContainer>
         </CardContent>
       </Card>
+
+      {/* Snackbar for error messages */}
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+        message={error}
+      />
     </Container>
   );
 }

@@ -1,24 +1,22 @@
-"use client";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
+  CircularProgress,
   Grid,
-  InputBase,
+  Paper,
+  Snackbar,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
-  CircularProgress,
-  Snackbar,
   Button,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -29,6 +27,7 @@ export default function Blogs() {
   const [error, setError] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     fetchBlogs();
@@ -36,16 +35,17 @@ export default function Blogs() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/blogs"); 
+      const response = await axios.get("http://localhost:5000/blogs/all");
       if (response.status === 200) {
         setBlogs(response.data);
       } else {
-        console.error("Failed to fetch blogs:", response.data);
-        alert("Failed to fetch blogs.");
+        setError("Failed to fetch blogs.");
       }
     } catch (err) {
       console.error("Error fetching blogs:", err);
-      alert("Error fetching blogs. Please try again later.");
+      setError("Error fetching blogs. Please try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,7 +53,7 @@ export default function Blogs() {
     try {
       const response = await axios.delete(`http://localhost:5000/blogs/${id}`);
       if (response.status === 200) {
-        setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== id));
+        setBlogs((prevBlogs) => prevBlogs.filter(blog => blog._id !== id));
         setSnackbarMessage('Blog deleted successfully');
         setSnackbarOpen(true);
       } else {
@@ -65,96 +65,109 @@ export default function Blogs() {
     }
   };
 
-  const filteredBlogs = (blogs || []).filter(
+  const filteredBlogs = blogs.filter(
     (blog) =>
       (blog.title && blog.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (blog.author && typeof blog.author === 'string' && blog.author.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  ).filter(blog => !filter || blog.category === filter);
 
-  const totalBlogs = (blogs || []).length;
+  const totalBlogs = blogs.length;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Card sx={{ mb: 4, textAlign: 'center' }}>
-        <CardHeader title="Blog Statistics" />
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="h6">Total Blogs: {totalBlogs}</Typography>
-            </Grid>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', padding: 2 }}>
+      {/* Blog Statistics */}
+      <Paper elevation={3} sx={{ mb: 2, p: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>Blog Statistics</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1">Total Blogs: {totalBlogs}</Typography>
           </Grid>
-        </CardContent>
-      </Card>
+        </Grid>
+      </Paper>
 
-      <Card sx={{ mb: 4, textAlign: 'center' }}>
-        <CardHeader title="Search Blogs" />
-        <CardContent>
-          <InputBase
-            placeholder="Search by title or author"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            fullWidth
-            sx={{
-              mb: 2,
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-            }}
-          />
-        </CardContent>
-      </Card>
+      {/* Search Blogs */}
+      <Paper elevation={3} sx={{ mb: 2, p: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>Search Blogs</Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Search by title or author"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Select
+              fullWidth
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              displayEmpty
+              variant="outlined"
+            >
+              <MenuItem value="">
+                <em>All Categories</em>
+              </MenuItem>
+              <MenuItem value="Category1">1</MenuItem>
+              <MenuItem value="Category2">2</MenuItem>
+              <MenuItem value="Category3">3</MenuItem>
+            </Select>
+          </Grid>
+        </Grid>
+      </Paper>
 
-      <Card sx={{ mb: 4, textAlign: 'center' }}>
-        <CardHeader title="Blog Management" />
-        <CardContent>
-          {loading ? (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100px">
-              <CircularProgress />
-            </Box>
-          ) : (
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell><strong>Title</strong></TableCell>
-                    <TableCell><strong>Author</strong></TableCell>
-                    <TableCell><strong>Date Published</strong></TableCell>
-                    <TableCell><strong>Actions</strong></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredBlogs.length > 0 ? (
-                    filteredBlogs.map((blog) => (
-                      <TableRow key={blog._id}>
-                        <TableCell>{blog.title}</TableCell>
-                        <TableCell>{blog.author?.username || blog.author}</TableCell>
-                        <TableCell>{new Date(blog.createdAt).toLocaleDateString()}</TableCell>
-                        <TableCell>
-                          <Button
-                            startIcon={<DeleteIcon />}
-                            onClick={() => removeBlog(blog._id)}
-                            color="error"
-                            variant="contained"
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={4} align="center">
-                        No blogs found
+      {/* Blog Management */}
+      <Paper elevation={3} sx={{ p: 2, flexGrow: 1 }}>
+        <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>Blog Management</Typography>
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <TableContainer>
+            <Table stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell><strong>Title</strong></TableCell>
+                  <TableCell><strong>Author</strong></TableCell>
+                  <TableCell><strong>Date Published</strong></TableCell>
+                  <TableCell><strong>Actions</strong></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredBlogs.length > 0 ? (
+                  filteredBlogs.map((blog) => (
+                    <TableRow key={blog._id}>
+                      <TableCell>{blog.title}</TableCell>
+                      <TableCell>{blog.author?.username || blog.author}</TableCell>
+                      <TableCell>{new Date(blog.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>
+                        <Button
+                          startIcon={<DeleteIcon />}
+                          onClick={() => removeBlog(blog._id)}
+                          color="error"
+                          variant="contained"
+                        >
+                          Delete
+                        </Button>
                       </TableCell>
                     </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          )}
-        </CardContent>
-      </Card>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={4} align="center">
+                      No blogs found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Paper>
 
+      {/* Snackbar for success or error messages */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
@@ -167,6 +180,6 @@ export default function Blogs() {
         onClose={() => setError('')}
         message={error}
       />
-    </Container>
+    </Box>
   );
 }

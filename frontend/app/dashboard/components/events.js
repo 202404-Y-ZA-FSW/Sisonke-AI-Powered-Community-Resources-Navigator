@@ -2,13 +2,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Grid,
-  IconButton,
+  Paper,
+  Typography,
   InputBase,
   Table,
   TableBody,
@@ -16,13 +11,19 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
+  IconButton,
+  Grid,
+  Box,
+  Snackbar,
+  Button
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null); 
 
   useEffect(() => {
     fetchEvents();
@@ -34,12 +35,10 @@ export default function Events() {
       if (response.status === 200) {
         setEvents(response.data);
       } else {
-        console.error("Failed to fetch events:", response.data);
-        alert("Failed to fetch events.");
+        setError("Failed to fetch events.");
       }
     } catch (err) {
-      console.error("Error fetching events:", err);
-      alert("Error fetching events. Please try again later.");
+      setError("Error fetching events. Please try again later.");
     }
   };
 
@@ -47,15 +46,13 @@ export default function Events() {
     try {
       const response = await axios.delete(`http://localhost:5000/events/${id}`);
       if (response.status === 200) {
-        alert('Event deleted successfully');
         setEvents(prevEvents => prevEvents.filter(event => event._id !== id));
+        setSuccessMessage("Event deleted successfully."); 
       } else {
-        console.error('Error deleting event:', response.data);
-        alert('Failed to delete event');
+        setError('Failed to delete event');
       }
     } catch (error) {
-      console.error('Error deleting event:', error);
-      alert('Error deleting event. Please try again.');
+      setError('Error deleting event. Please try again.');
     }
   };
 
@@ -68,78 +65,93 @@ export default function Events() {
   const totalEvents = (events || []).length;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', p: 2 }}>
       {/* Event Statistics Section */}
-      <Card sx={{ mb: 4 }}>
-        <CardHeader title="Event Statistics" />
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="h6">Total Events: {totalEvents}</Typography>
-            </Grid>
+      <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>Event Statistics</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="body1" textAlign="center">Total Events: {totalEvents}</Typography>
           </Grid>
-        </CardContent>
-      </Card>
+        </Grid>
+      </Paper>
 
       {/* Event Search Section */}
-      <Card sx={{ mb: 4 }}>
-        <CardHeader title="Search Events" />
-        <CardContent>
-          <InputBase
-            placeholder="Search by location or organizer"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            fullWidth
-            sx={{
-              mb: 2,
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-            }}
-          />
-        </CardContent>
-      </Card>
+      <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+        <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>Search Events</Typography>
+        <InputBase
+          placeholder="Search by location or organizer"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          fullWidth
+          sx={{
+            mb: 2,
+            padding: '8px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+          }}
+        />
+      </Paper>
 
       {/* Event Management Section */}
-      <Card sx={{ mb: 4 }}>
-        <CardHeader title="Event Management" />
-        <CardContent>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell><strong>Location</strong></TableCell> 
-                  <TableCell><strong>Organizer</strong></TableCell>
-                  <TableCell><strong>Date</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredEvents.length > 0 ? (
-                  filteredEvents.map((event) => (
-                    <TableRow key={event._id}>
-                      <TableCell>{event.location}</TableCell> 
-                       <TableCell>{event.organizer?.username || "Unknown"}</TableCell>
-                      <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <IconButton onClick={() => removeEvent(event._id)} color="error">
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={4} align="center">
-                      No events found
+      <Paper elevation={3} sx={{ p: 2, flexGrow: 1 }}>
+        <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>Event Management</Typography>
+        <TableContainer component={Box} sx={{ overflow: 'auto' }}>
+          <Table stickyHeader aria-label="event management table">
+            <TableHead>
+              <TableRow>
+                <TableCell><strong>Location</strong></TableCell>
+                <TableCell><strong>Organizer</strong></TableCell>
+                <TableCell><strong>Date</strong></TableCell>
+                <TableCell><strong>Actions</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredEvents.length > 0 ? (
+                filteredEvents.map((event) => (
+                  <TableRow key={event._id}>
+                    <TableCell>{event.location}</TableCell>
+                    <TableCell>{event.organizer?.username || "Unknown"}</TableCell>
+                    <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Button
+                        startIcon={<Delete />}
+                        onClick={() => removeEvent(event._id)} 
+                        color="error"
+                        variant="contained"
+                      >
+                        Delete
+                      </Button>
                     </TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
-      </Card>
-    </Container>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No events found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+
+      {/* Snackbar for error messages */}
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+        message={error}
+      />
+
+      {/* Snackbar for success messages */}
+      <Snackbar
+        open={!!successMessage}
+        autoHideDuration={6000}
+        onClose={() => setSuccessMessage(null)}
+        message={successMessage}
+      />
+    </Box>
   );
 }
