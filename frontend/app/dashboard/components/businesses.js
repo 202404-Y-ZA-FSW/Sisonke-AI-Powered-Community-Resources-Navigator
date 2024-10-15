@@ -21,6 +21,7 @@ import {
 import { Delete } from '@mui/icons-material';
 
 export default function Businesses() {
+  const [users, setUsers] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -31,8 +32,9 @@ export default function Businesses() {
   const fetchBusinesses = async () => {
     try {
       const response = await axios.get("http://localhost:5000/business/all");
+      console.log(response);
       if (response.status === 200) {
-        setBusinesses(response.data);
+        setBusinesses(response.data.businesses ||response.data || []);
       } else {
         console.error("Failed to fetch businesses:", response.data);
         alert("Failed to fetch businesses.");
@@ -45,7 +47,8 @@ export default function Businesses() {
 
   const removeBusiness = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/businesses/${id}`);
+      const response = await axios.delete(`http://localhost:5000/business/${id}`);
+
       if (response.status === 200) {
         alert('Business deleted successfully');
         setBusinesses(prevBusinesses => prevBusinesses.filter(business => business._id !== id));
@@ -59,11 +62,12 @@ export default function Businesses() {
     }
   };
 
-  const filteredBusinesses = (businesses || []).filter(
+  const filteredBusinesses = Array.isArray(businesses) ? businesses.filter(
     (business) =>
       (business.name && business.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (business.owner && business.owner.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  ) : [];
+  
 
   const totalBusinesses = (businesses || []).length;
 
@@ -120,10 +124,10 @@ export default function Businesses() {
               </TableHead>
               <TableBody>
                 {filteredBusinesses.length > 0 ? (
-                  filteredBusinesses.map((business) => (
+                  filteredBusinesses.map((business,user) => (
                     <TableRow key={business._id}>
                       <TableCell>{business.name}</TableCell>
-                      <TableCell>{business.owner}</TableCell>
+                      <TableCell>{business.owner?business.owner.username: null}</TableCell>
                       <TableCell>{new Date(business.createdAt).toLocaleDateString()}</TableCell>
                       <TableCell>
                         <IconButton onClick={() => removeBusiness(business._id)} color="error">
