@@ -169,7 +169,7 @@ export default function LoginPage() {
               sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
             >
               <Link
-                href="#"
+                href="/account/forgotPassword"
                 underline="none"
                 sx={{ color: "#f9a825", fontSize: "0.875rem" }}
               >
