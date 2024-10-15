@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
   Container,
   Grid,
-  IconButton,
-  InputBase,
+  Snackbar,
+  TextField,
   Table,
   TableBody,
   TableCell,
@@ -19,7 +20,6 @@ import {
   TableRow,
   Typography,
   Paper,
-  Snackbar,
   CircularProgress,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -54,17 +54,17 @@ export default function Forums() {
 
   const fetchUsers = async () => {
     try {
-        const response = await axios.get("http://localhost:5000/account/users");
-        console.log('Users response:', response.data); 
-        if (Array.isArray(response.data)) {
-            setUsers(response.data);
-        } else if (response.data.users && Array.isArray(response.data.users)) {
-            setUsers(response.data.users); 
-        } else {
-            setError("Failed to fetch users. Expected an array.");
-        }
+      const response = await axios.get("http://localhost:5000/account/users");
+      console.log('Users response:', response.data);
+      if (Array.isArray(response.data)) {
+        setUsers(response.data);
+      } else if (response.data.users && Array.isArray(response.data.users)) {
+        setUsers(response.data.users);
+      } else {
+        setError("Failed to fetch users. Expected an array.");
+      }
     } catch (err) {
-        setError("Error fetching users. Please try again later.");
+      setError("Error fetching users. Please try again later.");
     }
   };
 
@@ -72,7 +72,6 @@ export default function Forums() {
     try {
       const response = await axios.delete(`http://localhost:5000/forums/${id}`);
       if (response.status === 200) {
-        alert("Forum deleted successfully");
         setForums((prevForums) => prevForums.filter((forum) => forum._id !== id));
       } else {
         setError("Failed to delete forum");
@@ -84,10 +83,8 @@ export default function Forums() {
 
   const getUsernameById = (author) => {
     if (typeof author === 'object' && author.username) {
-      
       return author.username;
     } else {
-      
       const user = users.find((user) => user._id === author);
       return user ? user.username : "Unknown";
     }
@@ -119,19 +116,14 @@ export default function Forums() {
       <Card sx={{ mb: 4, boxShadow: 3, borderRadius: 2 }}>
         <CardHeader title={<Typography variant="h6" align="center">Search Forums</Typography>} />
         <CardContent>
-          <InputBase
+          <TextField
+            fullWidth
+            variant="outlined"
             placeholder="Search by title or username"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            fullWidth
             sx={{
               mb: 2,
-              padding: "12px 15px",
-              border: "1px solid #ddd",
-              borderRadius: 2,
-              boxShadow: 1,
-              transition: "border-color 0.3s ease",
-              "&:focus": { borderColor: "#007BFF" },
             }}
           />
         </CardContent>
@@ -162,9 +154,14 @@ export default function Forums() {
                         <TableCell>{forum.title}</TableCell>
                         <TableCell>{getUsernameById(forum.author)}</TableCell>
                         <TableCell>
-                          <IconButton color="error" onClick={() => removeForum(forum._id)}>
-                            <Delete />
-                          </IconButton>
+                          <Button
+                            startIcon={<Delete />}
+                            onClick={() => removeForum(forum._id)} // Fixed reference here
+                            color="error"
+                            variant="contained"
+                          >
+                            Delete
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))

@@ -36,10 +36,8 @@ export default function Jobs() {
 
   const fetchJobs = async () => {
     try {
-
       const response = await axios.get("http://localhost:5000/jobs/all");
       if (Array.isArray(response.data.jobs)) {
-        console.log(response.data.jobs);
         setJobs(response.data.jobs);
       } else {
         setError("Unexpected data format. Expected an array.");
@@ -75,26 +73,24 @@ export default function Jobs() {
       (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const totalJobs = (jobs || []).length;
-
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Card sx={{ mb: 4, textAlign: 'center' }}>
+      <Card elevation={3} sx={{ mb: 2, p: 2 }}>
         <CardHeader title="Jobs Statistics" />
         <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="h6">Total Jobs: {jobs.length}</Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="body1">Total Jobs: {jobs.length}</Typography>
             </Grid>
           </Grid>
         </CardContent>
       </Card>
 
-      <Card sx={{ mb: 4, textAlign: 'center' }}>
+      <Card elevation={3} sx={{ mb: 2, p: 2 }}>
         <CardHeader title="Search Jobs" />
         <CardContent>
           <InputBase
-            placeholder="Search by title or author"
+            placeholder="Search by title or company"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             fullWidth
@@ -108,7 +104,7 @@ export default function Jobs() {
         </CardContent>
       </Card>
 
-      <Card sx={{ mb: 4, textAlign: 'center' }}>
+      <Card elevation={3} sx={{ mb: 2, p: 2 }}>
         <CardHeader title="Jobs Management" />
         <CardContent>
           {loading ? (
@@ -117,7 +113,7 @@ export default function Jobs() {
             </Box>
           ) : (
             <TableContainer>
-              <Table>
+              <Table stickyHeader>
                 <TableHead>
                   <TableRow>
                     <TableCell><strong>Title</strong></TableCell>
@@ -131,7 +127,7 @@ export default function Jobs() {
                     filteredJobs.map((job) => (
                       <TableRow key={job._id}>
                         <TableCell>{job.title}</TableCell>
-                        <TableCell>{job.user?.username || job.location}</TableCell> 
+                        <TableCell>{job.location || job.user?.username}</TableCell> 
                         <TableCell>{new Date(job.posted).toLocaleDateString()}</TableCell> 
                         <TableCell>
                           <Button
