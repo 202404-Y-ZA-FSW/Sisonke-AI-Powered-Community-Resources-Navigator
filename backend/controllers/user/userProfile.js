@@ -11,7 +11,7 @@ exports.addUserProfile = async (req, res) => {
     }
 
     // Extract user identity from JWT
-    const userIdentity ="66fc14c309e68fce66d79928";
+    const userIdentity = req.userID;
 
     // Verify if the user exists in the database
     const user = await userModel.findById(userIdentity);
