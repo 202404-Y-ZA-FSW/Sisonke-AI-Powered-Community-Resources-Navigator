@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -22,13 +21,15 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import AccessTimeIcon from "@mui/icons-material/AccessTime"; 
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney"; 
+
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { styled } from "@mui/system";
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
 import Subscribe from "../components/sections/Subscribe";
-import JobForm from "./new/page";
+import JobForm from "./new/page"; 
+import { useAuthentication } from "../hooks/useAuthentication"; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -45,7 +46,6 @@ const StyledCard = styled(Card)({
     transition: "all 0.3s",
   },
 });
-
 const HeaderContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
@@ -80,6 +80,8 @@ const InfoItem = styled(Box)({
 });
 
 
+
+
 const JobCardDetails = ({
   title,
   company,
@@ -94,16 +96,17 @@ const JobCardDetails = ({
 
   const formatSalary = (salary) => {
     if (salary === null || salary === undefined) return "N/A";
-    return `R ${salary.toLocaleString()}`; 
+    return `R ${salary.toLocaleString()}`;
   };
 
   return (
     <Link href={link} target="_blank" underline="none">
       <StyledCard>
         <CardContent>
-          <HeaderContainer>
+        <HeaderContainer>
             <Logo>{companyName[0]}</Logo>
             <Box sx={{ flex: 1, ml: 1, minWidth: 0 }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
               <Typography
                 variant="h6"
                 component="div"
@@ -119,6 +122,7 @@ const JobCardDetails = ({
                 {companyName}
               </Typography>
             </Box>
+          </Box>
           </HeaderContainer>
 
           <Typography
@@ -168,13 +172,18 @@ const Job = () => {
   const [sortBy, setSortBy] = useState("recently added");
   const [isFormOpen, setIsFormOpen] = useState(false);
 
+
+  const { user } = useAuthentication();
+  const canPostAJob =
+    user && (user.user.role === "administrator" || user.user.role === "ngo");
+    
   const fetchJobs = async () => {
     try {
       const response = await fetch("http://localhost:5000/jobs/all");
+      if (!response.ok) throw new Error("Failed to fetch jobs");
       const data = await response.json();
       console.log("Fetched jobs:", data);
 
-      // Check if the 'jobs' property exists and is an array
       if (Array.isArray(data.jobs)) {
         setJobs(data.jobs);
       } else {
@@ -188,8 +197,6 @@ const Job = () => {
   useEffect(() => {
     fetchJobs();
   }, []);
-
-  
 
   const filteredJobs = jobs.filter(
     (job) =>
@@ -222,12 +229,10 @@ const Job = () => {
       setIsFormOpen(false);
     }
   };
-
   return (
     <>
       <Navigation />
       <Container>
-        {/* Job Search Header */}
         <Box
           sx={{
             py: 10,
@@ -262,8 +267,7 @@ const Job = () => {
                 textAlign: "center",
               }}
             >
-              Find the job of your dreams in our curated list of jobs from
-              verified companies, or search for a specific job title or company.
+              Find the job of your dreams in our curated list of jobs from verified companies, or search for a specific job title or company.
             </Typography>
 
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
@@ -301,9 +305,7 @@ const Job = () => {
           </Container>
         </Box>
 
-        {/* Job Sorting and Post Button flex */}
         <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 8, mt: 8 }}>
-          {/* Sort By Dropdown */}
           <FormControl variant="outlined" sx={{ minWidth: 180 }}>
             <InputLabel>Sort By</InputLabel>
             <Select
@@ -317,25 +319,30 @@ const Job = () => {
             </Select>
           </FormControl>
 
-          {/* Post a Job Button */}
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: "#6c63ff",
-              borderRadius: "16px",
-              color: "#ffffff",
-              textTransform: "none",
-              padding: "10px 20px",
-              "&:hover": { bgcolor: "#5A52D5" },
-            }}
-            onClick={() => setIsFormOpen(true)}
-          >
-            Post a Job
-          </Button>
+          {canPostAJob ? (
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "#6c63ff",
+                borderRadius: "16px",
+                color: "#ffffff",
+                textTransform: "none",
+                padding: "15px 30px",
+                "&:hover": { bgcolor: "#5A52D5" },
+              }}
+              onClick={() => setIsFormOpen(true)}
+            >
+              Post a Job
+            </Button>
+          ) : (
+            <Typography variant="subtitle1" color="blue">
+              You need to login to post a job.
+            </Typography>
+          )}
         </Box>
 
-        {/* Job Cards */}
-        <Grid container spacing={3}>
+       {/* Job Cards */}
+       <Grid container spacing={3}>
           {sortedJobs.slice(0, displayedJobs).map((job) => (
             <Grid item xs={12} sm={6} md={4} key={job.id}>
               <JobCardDetails
