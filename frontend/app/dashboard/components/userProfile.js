@@ -20,6 +20,7 @@ import axios from 'axios';
 
 const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [openAccountSettings, setOpenAccountSettings] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -35,7 +36,12 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
     taxId: '',
   });
   
-  const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || null);
+  useEffect(() => {
+    
+    if (typeof window !== 'undefined') {
+      setSelectedImage(localStorage.getItem('profileImage') || null);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {

@@ -126,7 +126,7 @@ export default function Businesses() {
                       <TableCell>
                       <Button
                         startIcon={<Delete />}
-                        onClick={() => removeEvent(event._id)} 
+                        onClick={() => removeBusiness(business._id)} 
                         color="error"
                         variant="contained"
                       >

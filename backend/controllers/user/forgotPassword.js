@@ -25,6 +25,7 @@ exports.forgotPassword = async (req, res) => {
     // Create reset URL
     const resetUrl = `${req.protocol}://${req.get("host").replace(":5000", ":3000")}/account/resetPassword?token=${resetToken}`;
 
+
     // HTML message for email
     const message = `
       <h1>You have requested a password reset</h1>
