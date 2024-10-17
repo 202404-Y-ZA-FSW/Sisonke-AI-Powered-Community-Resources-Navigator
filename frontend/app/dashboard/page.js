@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import { 
@@ -13,12 +13,16 @@ import Forums from './components/forums';
 import Jobs from './components/jobs';
 import DashboardOverview from './components/DashboardOverview';
 import UserDashboard from './components/users';
+import { withAuthentication } from '../components/authentication/authenticationLayout';
+import { useAuthentication } from '../hooks/useAuthentication';
 
-export default function Dashboard() {
+function Dashboard() {
   const [selectedComponent, setSelectedComponent] = useState('Overview');
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { user } = useAuthentication();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -44,6 +48,10 @@ export default function Dashboard() {
         return <Typography>Select a component</Typography>;
     }
   };
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -77,7 +85,6 @@ export default function Dashboard() {
         />
       </Drawer>
 
-
       <Box
         component="main"
         sx={{
@@ -94,3 +101,5 @@ export default function Dashboard() {
     </Box>
   );
 }
+
+export default withAuthentication(Dashboard);
