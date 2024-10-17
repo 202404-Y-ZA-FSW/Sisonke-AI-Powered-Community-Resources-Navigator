@@ -83,7 +83,7 @@ export default function Navbar() {
                 <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-                <MenuItem onClick={() => router.push("/businesses")}>Education</MenuItem>
+                <MenuItem onClick={() => router.push("/Business")}>Businesses</MenuItem>
               </Menu>
 
               <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
@@ -111,7 +111,7 @@ export default function Navbar() {
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/businesses")}>Businesses</MenuItem>
+              <MenuItem onClick={() => router.push("/Business")}>Businesses</MenuItem>
             </Menu>
             <Button onClick={() => router.push("/account/login")} sx={navLinksStyles}>Login</Button>
             <Button
