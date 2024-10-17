@@ -125,7 +125,7 @@ exports.login = async (req, res) => {
       existingUser.password
     );
     if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid username or password" });
+      return console.error("Incorrect password");
     }
 
     // IF PASSWORD IS CORRECT

@@ -38,6 +38,7 @@ const lightModeColors = {
 
 const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [openAccountSettings, setOpenAccountSettings] = useState(false);
   const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || null);
   const [initialValues, setInitialValues] = useState({
@@ -48,12 +49,21 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
     location: '',
     bio: '',
   });
+
   const [darkMode, setDarkMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const colors = darkMode ? darkModeColors : lightModeColors;
+  
+  useEffect(() => {
+    
+    if (typeof window !== 'undefined') {
+      setSelectedImage(localStorage.getItem('profileImage') || null);
+    }
+  }, []);
+
 
   useEffect(() => {
     const fetchUserData = async () => {

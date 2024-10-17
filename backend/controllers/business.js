@@ -92,9 +92,7 @@ exports.updateBusiness = async (req, res) => {
 // DELETE BUSINESS CONTROLLER
 exports.deleteBusiness = async (req, res) => {
   try {
-    const { name } = req.body;
-    console.log(name);
-    const deletedBusiness = await businessModel.findOneAndDelete(name);
+    const deletedBusiness = await businessModel.findOneAndDelete(req.params.id);
     if (!deletedBusiness) {
       return res.status(404).json({ message:"",error});
     }

@@ -22,7 +22,7 @@ router.post("/register", registerValidation, authenticationController.register);
 router.post("/login", loginValidation, authenticationController.login);
 router.post("/update/password", isAuthenticated, passwordUpdateValidation, authenticationController.updatePassword);
 
-router.get("/logout", isAuthenticated, authenticationController.logout);
+router.post("/logout", isAuthenticated, authenticationController.logout);
 router.get( "/users", authenticationController.fetchUsers)
 router.delete("/remove", authenticationController.remove);
 router.put("/update", authenticationController.updateUser);
