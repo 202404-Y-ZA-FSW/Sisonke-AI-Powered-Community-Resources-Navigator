@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme, Box, Avatar } from "@mui/material";
 import { useRouter } from "next/navigation";  
 import MenuIcon from '@mui/icons-material/Menu';
@@ -13,6 +14,7 @@ export default function Navbar() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const [pageAnchorEl, setPageAnchorEl] = useState(null);
+  const [errors,setErrors] = useState(null);
 
   const router = useRouter();  
 
@@ -37,7 +39,6 @@ export default function Navbar() {
     textTransform: "none",
   };
 
-  // Example user data to pass to the SettingsMenu component
   const user = {
     name: "John Doe",
     username: "johndoe",
@@ -49,13 +50,23 @@ export default function Navbar() {
     socialLinks: { twitter: "", linkedIn: "" },
   };
 
-  const handleLogout = () => {
-    // Your logout logic here
-    console.log("User logged out");
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/account/logout");
+      console.log(response.data);
+      if (response.status === 200) {
+        router.push("/account/login");
+      } else {
+        setErrors(response.data.message); 
+      }
+    } catch (error) {
+      setErrors(error.message);  
+    }
   };
+  
 
   const toggleIncognito = () => {
-    // Handle incognito mode toggle here
+
   };
 
   const isIncognito = false;
@@ -64,7 +75,7 @@ export default function Navbar() {
     <AppBar
       sx={{ 
         background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)", 
-        position: 'fixed', // Fixed position to ensure it stays on top
+        position: 'fixed', 
         top: 0,
         left: 0,
         right: 0,
