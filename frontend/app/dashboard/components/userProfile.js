@@ -37,8 +37,7 @@ const lightModeColors = {
 };
 
 const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);  
   const [openAccountSettings, setOpenAccountSettings] = useState(false);
   const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || null);
   const [initialValues, setInitialValues] = useState({
