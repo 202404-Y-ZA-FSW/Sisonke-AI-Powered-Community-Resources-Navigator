@@ -14,27 +14,47 @@ import {
   Switch,
   TextField,
   Typography,
+  Snackbar,
+  Alert,
 } from '@mui/material';
-import { AccountCircle, ExitToApp, Edit, VisibilityOff, Delete } from '@mui/icons-material';
+import { AccountCircle, ExitToApp, VisibilityOff, Brightness4, Brightness7 } from '@mui/icons-material';
 import axios from 'axios';
 
+const darkModeColors = {
+  background: '#282828',
+  paper: '#2c2c2c',
+  textPrimary: '#e0e0e0',
+  textSecondary: '#b0b0b0',
+  primary: '#1976d2',
+};
+
+const lightModeColors = {
+  background: '#ffffff',
+  paper: '#f5f5f5',
+  textPrimary: '#000000',
+  textSecondary: '#5f5f5f',
+  primary: '#1976d2',
+};
+
 const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);  
   const [openAccountSettings, setOpenAccountSettings] = useState(false);
-  const [formData, setFormData] = useState({
+  const [selectedImage, setSelectedImage] = useState(localStorage.getItem('profileImage') || null);
+  const [initialValues, setInitialValues] = useState({
     name: '',
     username: '',
     email: '',
     phone: '',
     location: '',
     bio: '',
-    socialLinks: { twitter: '', linkedIn: '' },
-    country: '',
-    city: '',
-    postalCode: '',
-    taxId: '',
   });
+
+  const [darkMode, setDarkMode] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const colors = darkMode ? darkModeColors : lightModeColors;
   
   useEffect(() => {
     
@@ -43,27 +63,26 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
     }
   }, []);
 
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/account/users`);
+        const response = await axios.get(`http://localhost:5000/profile`);
         const userData = response.data;
-        setFormData({
+
+        setInitialValues({
           name: userData.name,
           username: userData.username || '',
           email: userData.email,
           phone: userData.phone || '',
           location: userData.location || '',
           bio: userData.bio || '',
-          socialLinks: userData.socialLinks || { twitter: '', linkedIn: '' },
-          country: '',
-          city: '',
-          postalCode: '',
-          taxId: '',
         });
         setSelectedImage(userData.profileImage || null);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        setErrorMessage('Failed to fetch user data. Please try again.');
+        setSnackbarOpen(true);
       }
     };
 
@@ -87,14 +106,6 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
     setOpenAccountSettings(false);
   };
 
-  const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -113,15 +124,37 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
     localStorage.removeItem('profileImage');
   };
 
-  const handleFormSubmit = () => {
-    console.log('Updated user details:', formData);
-    handleAccountSettingsClose();
+  const handleFormSubmit = async (values) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/profile`, {
+        userId: userId,
+        ...values,
+      });
+
+      setSuccessMessage('User details updated successfully!');
+      setSnackbarOpen(true);
+      handleAccountSettingsClose();
+    } catch (error) {
+      console.error('Error updating user details:', error);
+      setErrorMessage('Failed to update user details. Please try again.');
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+    setErrorMessage('');
+    setSuccessMessage('');
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   return (
     <Box>
       <IconButton onClick={handleMenuOpen}>
-        <Avatar alt={formData.name} src={selectedImage} />
+        <Avatar alt={initialValues.name} src={selectedImage} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -132,166 +165,171 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
           sx: {
             width: '260px',
             borderRadius: 2,
-            bgcolor: 'background.paper',
+            bgcolor: colors.background,
           },
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
-          <Avatar alt={formData.name} src={selectedImage} sx={{ mr: 2 }} />
+          <Avatar alt={initialValues.name} src={selectedImage} sx={{ mr: 2 }} />
           <Box>
-            <Typography variant="subtitle1" fontWeight="bold">{formData.name}</Typography>
-            <Typography variant="body2" color="text.secondary">{formData.username}</Typography>
+            <Typography variant="subtitle1" fontWeight="bold" color={colors.textPrimary}>
+              {initialValues.name}
+            </Typography>
+            <Typography variant="body2" color={colors.textSecondary}>
+              {initialValues.username}
+            </Typography>
           </Box>
         </Box>
 
         <Divider />
 
-        <MenuItem onClick={handleAccountSettingsOpen}>
+        <MenuItem onClick={handleAccountSettingsOpen} sx={{ color: colors.textPrimary }}>
           <AccountCircle sx={{ mr: 1 }} />
           Account settings
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem sx={{ color: colors.textPrimary }}>
           <VisibilityOff sx={{ mr: 1 }} />
           Go incognito
           <Switch edge="end" checked={isIncognito} onChange={toggleIncognito} sx={{ ml: 'auto' }} />
         </MenuItem>
 
+        <MenuItem sx={{ color: colors.textPrimary }}>
+          {darkMode ? <Brightness7 sx={{ mr: 1 }} /> : <Brightness4 sx={{ mr: 1 }} />}
+          Dark Mode
+          <Switch edge="end" checked={darkMode} onChange={toggleDarkMode} sx={{ ml: 'auto' }} />
+        </MenuItem>
+
         <Divider />
 
-        <MenuItem onClick={onLogout}>
+        <MenuItem onClick={() => {
+          handleMenuClose();  // Close the menu
+          onLogout();         // Trigger the logout function
+        }} sx={{ color: colors.textPrimary }}>
           <ExitToApp sx={{ mr: 1 }} />
           Log out
         </MenuItem>
       </Menu>
 
       <Dialog open={openAccountSettings} onClose={handleAccountSettingsClose} maxWidth="md" fullWidth>
-        <DialogTitle sx={{ textAlign: 'center' }}>Account Settings</DialogTitle>
-        <DialogContent>
-          <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <Avatar alt="Profile Image Preview" src={selectedImage} sx={{ width: 64, height: 64, mr: 2 }} />
-                  <Box>
-                    <Typography variant="h6">{formData.name}</Typography>
-                    <Typography variant="body2" color="textSecondary">{formData.username}</Typography>
-                  </Box>
-                  <IconButton sx={{ ml: 'auto' }} onClick={() => document.getElementById('profile-image-upload').click()}>
-                    <Edit />
-                  </IconButton>
-                  <IconButton sx={{ ml: 1 }} onClick={handleRemoveImage}>
-                    <Delete />
-                  </IconButton>
-                  <input
-                    accept="image/*"
-                    style={{ display: 'none' }}
-                    id="profile-image-upload"
-                    type="file"
-                    onChange={handleImageChange}
-                  />
-                </Box>
-
-                <Divider />
-
-                <Typography variant="h6" sx={{ mt: 3 }}>
-                  Personal Information
-                </Typography>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      label="First Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      label="Last Name"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Bio"
-                      name="bio"
-                      value={formData.bio}
-                      onChange={handleFormChange}
-                      fullWidth
-                      multiline
-                      rows={2}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Typography variant="h6" sx={{ mt: 3 }}>
-                  Address
-                </Typography>
-
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      label="Country"
-                      name="country"
-                      value={formData.country}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      label="City"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <TextField
-                      label="Postal Code"
-                      name="postalCode"
-                      value={formData.postalCode}
-                      onChange={handleFormChange}
-                      fullWidth
-                    />
-                  </Grid>
-                </Grid>
-
-                <Button variant="contained" onClick={handleFormSubmit} fullWidth sx={{ mt: 3 }}>
-                  Save Changes
-                </Button>
-              </Grid>
+        <DialogTitle sx={{ textAlign: 'center', bgcolor: colors.background, color: colors.textPrimary }}>
+          Account Settings
+        </DialogTitle>
+        <DialogContent sx={{ bgcolor: colors.background }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+            <Avatar src={selectedImage} alt="Profile" sx={{ width: 80, height: 80, mb: 1 }} />
+            <input type="file" accept="image/*" onChange={handleImageChange} style={{ marginBottom: '16px' }} />
+            {selectedImage && (
+              <Button onClick={handleRemoveImage} color="error" sx={{ mt: 1 }}>
+                Remove Image
+              </Button>
+            )}
+          </Box>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Full Name"
+                value={initialValues.name}
+                onChange={(e) => setInitialValues({ ...initialValues, name: e.target.value })}
+                InputProps={{
+                  style: { backgroundColor: colors.paper, color: colors.textPrimary },
+                }}
+                InputLabelProps={{
+                  style: { color: colors.textSecondary },
+                }}
+              />
             </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Username"
+                value={initialValues.username}
+                onChange={(e) => setInitialValues({ ...initialValues, username: e.target.value })}
+                InputProps={{
+                  style: { backgroundColor: colors.paper, color: colors.textPrimary },
+                }}
+                InputLabelProps={{
+                  style: { color: colors.textSecondary },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Email"
+                value={initialValues.email}
+                onChange={(e) => setInitialValues({ ...initialValues, email: e.target.value })}
+                InputProps={{
+                  style: { backgroundColor: colors.paper, color: colors.textPrimary },
+                }}
+                InputLabelProps={{
+                  style: { color: colors.textSecondary },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                label="Phone"
+                value={initialValues.phone}
+                onChange={(e) => setInitialValues({ ...initialValues, phone: e.target.value })}
+                InputProps={{
+                  style: { backgroundColor: colors.paper, color: colors.textPrimary },
+                }}
+                InputLabelProps={{
+                  style: { color: colors.textSecondary },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Location"
+                value={initialValues.location}
+                onChange={(e) => setInitialValues({ ...initialValues, location: e.target.value })}
+                InputProps={{
+                  style: { backgroundColor: colors.paper, color: colors.textPrimary },
+                }}
+                InputLabelProps={{
+                  style: { color: colors.textSecondary },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Bio"
+                value={initialValues.bio}
+                multiline
+                rows={4}
+                onChange={(e) => setInitialValues({ ...initialValues, bio: e.target.value })}
+                InputProps={{
+                  style: { backgroundColor: colors.paper, color: colors.textPrimary },
+                }}
+                InputLabelProps={{
+                  style: { color: colors.textSecondary },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Box sx={{ mt: 2 }}>
+            <Button
+              variant="contained"
+              onClick={() => handleFormSubmit(initialValues)}
+              sx={{ bgcolor: colors.primary, color: colors.textPrimary }}
+            >
+              Save Changes
+            </Button>
           </Box>
         </DialogContent>
       </Dialog>
+
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert onClose={handleSnackbarClose} severity={errorMessage ? 'error' : 'success'} sx={{ width: '100%' }}>
+          {errorMessage || successMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
