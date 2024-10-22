@@ -1,7 +1,7 @@
 const { verify } = require("jsonwebtoken");
 
 // MIDDLEWARE FUNCTION TO CHECK IF USER IS AUTHENTICATED
-const secret = "This is the secret of the 21st century";
+const secret = process.env.JWT_SECRET;
 const isAuthenticated = (req, res, next) => {
 
   // EXTRACT TOKEN FROM AUTHORIZATION HEADER
