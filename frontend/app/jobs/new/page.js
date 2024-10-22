@@ -41,10 +41,18 @@ const JobForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setJobData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if(name==='qualifications' || name==='skills'){
+      setJobData((prevData)=>({
+        ...prevData,
+        [name]:value.split(',').map(item=>item.trim()),
+      }))
+    }else{
+      setJobData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+    
   };
 
   const validateForm = () => {
@@ -78,9 +86,9 @@ const JobForm = () => {
     
       if (response.status === 201) {
         alert('Job created successfully');
-        router.push('/jobs/new');
+        router.push('/jobs');
       } else {
-        alert('Failed to create job');
+        alert('Job not created. Please try again.');
       }
     } catch (error) {
       if (error.response) {
@@ -202,7 +210,7 @@ const JobForm = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Qualifications"
+                label="Qualifications: e.g: grade12, degree, etc"
                 name="qualifications"
                 value={jobData.qualifications}
                 onChange={handleChange}
@@ -228,7 +236,7 @@ const JobForm = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Skills"
+                label="Skills: e.g: React, Node.js, etc"
                 name="skills"
                 value={jobData.skills}
                 onChange={handleChange}
@@ -238,7 +246,7 @@ const JobForm = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                label="Application Link"
+                label="Application Link: e.g: https://example.com/apply"
                 name="link"
                 value={jobData.link}
                 onChange={handleChange}

@@ -1,10 +1,7 @@
-// REQUIRED PACKAGE
 const { validationResult } = require("express-validator");
 
-// JOB MODEL
 const jobModel = require("../models/job");
 
-// NEW JOB CONTROLLER
 exports.newJob = async (req, res) => {
   // INPUT VALIDATION
   const errors = validationResult(req);
@@ -13,7 +10,8 @@ exports.newJob = async (req, res) => {
   }
 
   try {
-    const userID = req.userID; // Ensure userID is correctly set
+    const userID = req.userID; 
+    console.log("User ID:", userID);
     if (!userID) {
       return res.status(401).json({ error: "User not authenticated" });
     }
