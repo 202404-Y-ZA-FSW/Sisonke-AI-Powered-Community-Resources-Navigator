@@ -17,7 +17,8 @@ const BlogForm = () => {
   const [formData, setFormData] = useState({
     imageURI: '',
     title: '',
-    author: userID,
+    author: '',
+    postedBy:userID,
     content: '',
     readTime: ''
   });
@@ -43,6 +44,7 @@ const BlogForm = () => {
     if (!formData.title) errors.title = 'Title is required';
     if (!formData.content) errors.content = 'Content is required';
     if (!formData.readTime) errors.readTime = 'Read time is required';
+    if(!formData.author) errors.author = 'Author is required';
     return errors;
   };
 
@@ -102,6 +104,20 @@ const BlogForm = () => {
         Create a New Blog Post
       </Typography>
 
+      <TextField
+      name="author"
+      placeholder="Author"
+      variant="outlined"
+      fullWidth
+      value={formData.author}
+      onChange={handleChange}
+      error={!!errors.author}
+      helperText={errors.author}
+      sx={{ mb: 2 }}
+
+      />
+        
+     
       <TextField
         name="imageURI"
         placeholder="Image URI"
