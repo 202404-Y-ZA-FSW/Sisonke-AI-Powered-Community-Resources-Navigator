@@ -16,9 +16,13 @@ const blogSchema = new Schema({
     minlength: [10, "Blog content must be at least 10 characters long"],
   },
   author: {
+    type: String,
+    required: true,
+  },
+  postedBy: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    required: false,
   },
   imageURI: {
     type: String,

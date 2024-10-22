@@ -13,10 +13,11 @@ const textToSpeechController = require('../../controllers/blog/blog-text-to-spee
 // router.delete('/delete/:id', blogController.deleteBlog);
 
 router.get('/all', blogController.getAllBlogs);
+router.get('/latest-blogs', blogController.getThreeBlogs);
 router.get('/blog/:id', blogController.getBlogById);
 router.post('/blog/new', blogController.newBlog);
 router.put('/update/:id', blogController.updateBlog);
-router.delete('/delete/:id', blogController.deleteBlog);
+router.delete('/delete', blogController.deleteBlog);
 
 router.post('/blog/convert-to-speech', textToSpeechController.convertToSpeech);
 

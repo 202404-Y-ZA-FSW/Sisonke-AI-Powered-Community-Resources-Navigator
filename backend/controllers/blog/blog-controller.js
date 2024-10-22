@@ -55,6 +55,24 @@ exports.newBlog = async (req, res) => {
   }
 };
 
+//GET 3 BLOGS FROM DATABASE
+exports.getThreeBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find()
+      .sort({ createdAt: -1 })
+      .limit(3)
+      .populate("author", "username")
+      .populate("comments")
+      .populate("likes");
+    res.status(200).json(blogs);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "An error while trying to get 3 blogs", error });
+  }
+};
+
 // GET ALL BLOGS
 exports.getAllBlogs = async (req, res) => {
   try {
@@ -126,8 +144,10 @@ exports.updateBlog = async (req, res) => {
 
 // DELETE A BLOG POST
 exports.deleteBlog = async (req, res) => {
+
   try {
-    const { blogId } = req.params;
+    const { blogId } = req.body;
+    console.log(blogId);
     const deletedBlog = await Blog.findByIdAndDelete(blogId);
     if (!deletedBlog) {
       return res.status(404).json({ message: "Blog not found" });

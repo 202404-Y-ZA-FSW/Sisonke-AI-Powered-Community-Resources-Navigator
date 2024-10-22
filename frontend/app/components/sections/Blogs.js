@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Container,
   Typography,
@@ -12,38 +13,33 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 
-const LeaderImage = require("./Images/lead.jpg");
-const InterviewImage = require("./Images/interview.jpg");
-const FriendsImage = require("./Images/friends.jpg");
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "5 Leadership Skills You Need to Succeed",
-    description:
-      "A great leader is someone that embodies several strengths and skills all at once. All great lead...",
-    image: LeaderImage,
-    readTime: "8 min Read",
-  },
-  {
-    id: 2,
-    title: "How to Make Friends While Working Remotely",
-    description:
-      "Since remote work became more common, employees have shared that bonding with their teams has bec...",
-    image: FriendsImage,
-    readTime: "11 min Read",
-  },
-  {
-    id: 3,
-    title: "What Not to Say During a Job Interview",
-    description:
-      "When you finally get that interview its easy to become extremely excited (and nervous). Whether...",
-    image: InterviewImage,
-    readTime: "9 min Read",
-  },
-];
-
 export default function Blogs() {
+  const [blogs, setBlogs] = useState([]);
+  const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:5000/blogs/latest-blogs")
+      .then((response) => {
+        setBlogs(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching blogs:", error);
+      });
+  }, []);
+
+  const handleBrowseAll = () => {
+    // Fetch all blogs
+    axios
+      .get("http://localhost:5000/blogs/all")
+      .then((response) => {
+        setBlogs(response.data);
+        setShowAll(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching all blogs:", error);
+      });
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
       <Typography variant="h4" align="center" gutterBottom>
@@ -55,12 +51,11 @@ export default function Blogs() {
         color="text.secondary"
         paragraph
       >
-        Add insight to boost career growth and check out tips on company job
-        vacancies
+        Add insight to boost career growth and check out tips on company job vacancies
       </Typography>
       <Grid container spacing={4} sx={{ mt: 4 }}>
-        {blogPosts.map((post) => (
-          <Grid item key={post.id} xs={12} sm={6} md={4}>
+        {blogs.map((post) => (
+          <Grid item key={post._id} xs={12} sm={6} md={4}>
             <Card
               sx={{
                 height: "100%",
@@ -78,24 +73,25 @@ export default function Blogs() {
               <Image
                 height="200"
                 width="361"
-                src={post.image}
+                src={post.imageURI || "/placeholder.jpg"}
                 alt={post.title}
                 style={{ borderRadius: "16px", objectFit: "cover" }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="caption" color="text.secondary">
-                  {post.readTime}
+                  {post.readTime} min Read
                 </Typography>
                 <Typography variant="h5" component="h2" gutterBottom>
                   {post.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {post.description}
+                  {post.content.substring(0, 100)}...
                 </Typography>
               </CardContent>
               <CardActions sx={{ marginLeft: 1 }}>
                 <Button
                   size="small"
+                  href={`/blog/${post._id}`}
                   sx={{
                     borderRadius: "16px",
                     backgroundColor: "#ffffff",
@@ -112,20 +108,23 @@ export default function Blogs() {
           </Grid>
         ))}
       </Grid>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
-        <Button
-          sx={{
-            borderRadius: "15px",
-            backgroundColor: "#6c63ff",
-            color: "#ffffff",
-            textTransform: "none",
-            padding: "8px 30px",
-          }}
-          size="large"
-        >
-          Browse All
-        </Button>
-      </Box>
+      {!showAll && (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
+          <Button
+            sx={{
+              borderRadius: "15px",
+              backgroundColor: "#6c63ff",
+              color: "#ffffff",
+              textTransform: "none",
+              padding: "8px 30px",
+            }}
+            size="large"
+            onClick={handleBrowseAll}
+          >
+            Browse All
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 }
