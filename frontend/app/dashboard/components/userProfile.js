@@ -67,7 +67,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/profile`);
+        const response = await axios.get(`http://localhost:5000/profile/profile`);
         const userData = response.data;
 
         setInitialValues({

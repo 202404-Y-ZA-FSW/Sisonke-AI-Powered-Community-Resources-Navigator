@@ -146,7 +146,7 @@ exports.updateBlog = async (req, res) => {
 exports.deleteBlog = async (req, res) => {
 
   try {
-    const { blogId } = req.body;
+    const blogId  = req.body.blogId;
     console.log(blogId);
     const deletedBlog = await Blog.findByIdAndDelete(blogId);
     if (!deletedBlog) {
