@@ -51,7 +51,7 @@ export default function Blogs() {
 
   const removeBlog = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/blogs/delete`, { data: { id } });
+      const response = await axios.delete(`http://localhost:5000/blogs/delete`, { data: { blogId:id } });
       if (response.status === 200) {
         setBlogs((prevBlogs) => prevBlogs.filter(blog => blog._id !== id));
         setSnackbarMessage('Blog deleted successfully');
