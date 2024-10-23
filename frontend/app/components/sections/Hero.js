@@ -1,68 +1,66 @@
 "use client";
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Button, Container, Grid } from '@mui/material';
 import { styled } from '@mui/system';
 import Image from 'next/image';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import SchoolIcon from '@mui/icons-material/School';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import SchoolIcon from '@mui/icons-material/School';
 import GroupIcon from '@mui/icons-material/Group';
 import HeroImage from "./Images/hero-image.jpg";
-
 import CityOfJHB from "./Images/logos/jhb.png";
 import CityOfEkurhuleni from "./Images/logos/ekurhuleni.png";
 import CityOfTshwane from "./Images/logos/tshwane.png";
 import NYDA from "./Images/logos/nyda.png";
 import SA from "./Images/logos/sayouth.png";
 import Projecty from "./Images/logos/projecty.svg";
-import NotionLogo from "./Images/logos/notion.png"; 
-import GoogleLogo from "./Images/logos/google.png"; 
-import SlackLogo from "./Images/logos/slack.png"; 
+import NotionLogo from "./Images/logos/notion.png";
+import GoogleLogo from "./Images/logos/google.png";
+import SlackLogo from "./Images/logos/slack.png";
 
-const GradientBackground = styled(Box)( {
+const GradientBackground = styled(Box)({
   background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
   minHeight: '100vh',
   padding: '2rem',
 });
 
-const RoundedImage = styled(Image)( {
+const RoundedImage = styled(Image)({
   borderRadius: '20px',
 });
 
-const ExploreButton = styled(Button)( {
+const ExploreButton = styled(Button)({
   borderRadius: '10px',
   textTransform: 'none',
   padding: '0.5rem 2rem',
   backgroundColor: '#6c63ff',
   color: 'white',
   '&:hover': {
-    backgroundColor: '#4e42c2', // Changed hover color slightly
+    backgroundColor: '#4e42c2',
   },
 });
 
-const StatsContainer = styled(Grid)( ( { theme } ) => ( {
+const StatsContainer = styled(Grid)(({ theme }) => ({
   textAlign: 'center',
   marginTop: '2rem',
   marginLeft: '-8%',
-  [ theme.breakpoints.down('md') ]: {
-    marginLeft: '0',  
+  [theme.breakpoints.down('md')]: {
+    marginLeft: '0',
   },
 }));
 
-const StatBox = styled(Box)( {
+const StatBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   padding: '0.3rem',
-  transition: 'transform 0.3s',  
+  transition: 'transform 0.3s',
   '&:hover': {
     transform: 'scale(1.05)',
   },
 });
 
-const StatIcon = styled(Box)( {
+const StatIcon = styled(Box)({
   backgroundColor: "#6c63ff",
   color: "#ffffff",
   padding: "12px",
@@ -74,7 +72,7 @@ const StatIcon = styled(Box)( {
   },
 });
 
-const AnimatedNumber = styled(Typography)( {
+const AnimatedNumber = styled(Typography)({
   fontWeight: 'bold',
   color: '#333',
   fontSize: '1.2rem',
@@ -86,20 +84,43 @@ const AnimatedNumber = styled(Typography)( {
 });
 
 export default function HeroSection() {
+  const [jobCount, setJobCount] = useState(0);
+  const [businessCount, setBusinessCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/stats/counts');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched data:", data); // Debug log to verify the data structure
+        setJobCount(data.jobCount);
+        setBusinessCount(data.businessCount);
+        setUserCount(data.userCount);
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
   return (
     <GradientBackground>
       <Container maxWidth="lg">
         <Grid container spacing={4} alignItems="center">
-          
           <Grid item xs={12} md={6}>
-            <Typography 
-              variant="h3" 
-              component="h1" 
-              gutterBottom 
-              sx={{ 
-                fontWeight: 'bold', 
-                color: '#333', 
-                marginTop: '3rem' 
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              sx={{
+                fontWeight: 'bold',
+                color: '#333',
+                marginTop: '3rem'
               }}
             >
               Discover essential local support and opportunities
@@ -107,7 +128,6 @@ export default function HeroSection() {
             <Typography variant="subtitle1" gutterBottom sx={{ color: '#666', mb: 4 }}>
               Explore a curated collection of local resources tailored to meet your community's unique needs.
             </Typography>
-
             <StatsContainer container spacing={2} justifyContent="center">
               <Grid item xs={6} md={3}>
                 <StatBox>
@@ -115,58 +135,41 @@ export default function HeroSection() {
                     <GroupIcon style={{ fontSize: 28 }} />
                   </StatIcon>
                   <AnimatedNumber variant="h6">
-                    2.1 Million
+                    {userCount}
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    People Engaged
+                    Users
                   </Typography>
                 </StatBox>
               </Grid>
-
               <Grid item xs={6} md={3}>
                 <StatBox>
                   <StatIcon>
                     <SchoolIcon style={{ fontSize: 28 }} />
                   </StatIcon>
                   <AnimatedNumber variant="h6">
-                    Over 70
-                  </AnimatedNumber>
-                  <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    Learning Centers
-                  </Typography>
-                </StatBox>
-              </Grid>
-
-              <Grid item xs={6} md={3}>
-                <StatBox>
-                  <StatIcon>
-                    <BusinessCenterIcon style={{ fontSize: 28 }} />
-                  </StatIcon>
-                  <AnimatedNumber variant="h6">
-                    150,000
+                    {jobCount}
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
                     Jobs Created
                   </Typography>
                 </StatBox>
               </Grid>
-
               <Grid item xs={6} md={3}>
                 <StatBox>
                   <StatIcon>
-                    <WorkOutlineIcon style={{ fontSize: 28 }} />
+                    <BusinessCenterIcon style={{ fontSize: 28 }} />
                   </StatIcon>
                   <AnimatedNumber variant="h6">
-                    500+ Businesses
+                    {businessCount}
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    Partners Supported
+                    Businesses
                   </Typography>
                 </StatBox>
               </Grid>
             </StatsContainer>
           </Grid>
-
           <Grid item xs={12} md={6}>
             <Box sx={{ position: 'relative', height: '400px', width: '100%' }}>
               <RoundedImage
@@ -214,7 +217,6 @@ export default function HeroSection() {
             </Box>
           </Grid>
         </Grid>
-
         <Box sx={{ mt: 8, textAlign: 'center' }}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
             We are supported
