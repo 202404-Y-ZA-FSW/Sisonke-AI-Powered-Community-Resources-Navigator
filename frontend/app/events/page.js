@@ -187,7 +187,7 @@ export default function Events() {
                     <Box sx={{ display: "flex", gap: 1 }}>
                       <CalendarMonth />
                       <Typography sx={{ marginTop: "3px" }} variant="body2">
-                        {event.date}
+                        {event.date.split("T")[0]}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -231,7 +231,7 @@ export default function Events() {
                 {selectedEvent?.description}
               </Typography>
               <Typography variant="body2" sx={{ mt: 2 }}>
-                Date: {selectedEvent?.date}
+                Date: {selectedEvent?.date.split("T")[0]}
               </Typography>
               <Typography variant="body2" sx={{ mt: 2 }}>
                 Location: {selectedEvent?.location}
