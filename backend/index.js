@@ -4,7 +4,7 @@ const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 require('dotenv').config();
 
-require("./models/blog/blog");
+require("./models/blog/blog-model");
 require("./models/forum/forum");
 require("./models/job");
 
@@ -42,7 +42,7 @@ app.use(express.json());
 // CORS FOR FRONTEND ACCESS TO THIS SERVER
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5001",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

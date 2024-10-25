@@ -1,15 +1,15 @@
-// REQUIRED PACKAGE
+// REQUIRED PACKAGES & MODULES
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const mongoose = require("mongoose");
 
-// GEMINI API KEY (Use environment variable)
+// GEMINI API KEY
 const genAI = new GoogleGenerativeAI("AIzaSyC9v1_1GY_ldbxS_ic1Ymnp5FHSFPJ8VnA");
 
 // GET GENERATIVE MODEL
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // IMPORTING DATA MODELS
-const Blog = mongoose.model("Blog");
+const BlogModel = mongoose.model("BlogModel");
 const Forum = mongoose.model("Forum");
 const Event = mongoose.model("Event");
 const JobListings = mongoose.model("JobListings");
@@ -25,7 +25,7 @@ const Functions = [
       properties: {
         limit: {
           type: "number",
-          description: "Number of blog posts to retrieve",
+          description: "Number of blog posts to retrieve (default: 5, max: 20)",
         },
       },
     },
@@ -38,7 +38,7 @@ const Functions = [
       properties: {
         keyword: {
           type: "string",
-          description: "Titles of forums to retrieve",
+          description: "Optional keyword to filter forum topics",
         },
       },
     },
@@ -51,7 +51,7 @@ const Functions = [
       properties: {
         date: {
           type: "string",
-          description: "Date to retrieve events for (YYYY-MM-DD)",
+          description: "Optional date to retrieve events for (YYYY-MM-DD)",
         },
       },
     },
@@ -64,7 +64,7 @@ const Functions = [
       properties: {
         keyword: {
           type: "string",
-          description: "Keyword to search for in job listings",
+          description: "Optional keyword to search for in job listings",
         },
       },
     },
@@ -77,7 +77,7 @@ const Functions = [
       properties: {
         category: {
           type: "string",
-          description: "Category of businesses to retrieve",
+          description: "Optional category of businesses to retrieve",
         },
       },
     },
@@ -87,7 +87,8 @@ const Functions = [
 // IMPLEMENTING THE FUNCTIONS
 async function get_blogs({ limit = 5 }) {
   try {
-    return await Blog.find()
+    return await BlogModel.find()
+      .sort({ createdAt: -1 })
       .limit(Math.max(1, Math.min(20, limit)))
       .lean();
   } catch (error) {
@@ -96,51 +97,54 @@ async function get_blogs({ limit = 5 }) {
   }
 }
 
-async function get_forum_topics({ keyword }) {
+async function get_forum_topics({ keyword = "" }) {
   try {
-    if (!keyword) throw new Error("Keyword is required");
-    return await Forum.find({
-      title: { $regex: keyword, $options: "i" },
-    }).lean();
+    const query = keyword ? { title: { $regex: keyword, $options: "i" } } : {};
+    return await Forum.find(query).sort({ createdAt: -1 }).limit(5).lean();
   } catch (error) {
     console.error("Error in get_forum_topics:", error);
     throw new Error("Failed to retrieve forum topics");
   }
 }
 
-async function get_events({ date }) {
+async function get_events({ date = "" }) {
   try {
-    if (!date) throw new Error("Date is required");
-    return await Event.find({ date: new Date(date) }).lean();
+    const query = date
+      ? { date: new Date(date) }
+      : { date: { $gte: new Date() } };
+    return await Event.find(query).sort({ date: 1 }).limit(5).lean();
   } catch (error) {
     console.error("Error in get_events:", error);
     throw new Error("Failed to retrieve events");
   }
 }
 
-async function get_jobs({ keyword }) {
+async function get_jobs({ keyword = "" }) {
   try {
-    if (!keyword) throw new Error("Keyword is required");
-    return await JobListings.find({
-      title: { $regex: keyword, $options: "i" },
-    }).lean();
+    const query = keyword ? { title: { $regex: keyword, $options: "i" } } : {};
+    return await JobListings.find(query)
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
   } catch (error) {
     console.error("Error in get_jobs:", error);
     throw new Error("Failed to retrieve jobs");
   }
 }
 
-async function get_business_listings({ category }) {
+async function get_business_listings({ category = "" }) {
   try {
-    if (!category) throw new Error("Category is required");
-    return await BusinessListing.find({ category }).lean();
+    const query = category ? { category } : {};
+    return await BusinessListing.find(query)
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
   } catch (error) {
     console.error("Error in get_business_listings:", error);
     throw new Error("Failed to retrieve business listings");
   }
 }
 
-// CONTROLLER FOR GEMINI TO CALL
 exports.sisonkeAI = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -166,7 +170,7 @@ exports.sisonkeAI = async (req, res) => {
         (part) => part.functionCall
       ) || [];
 
-    // Process function calls
+    // PROCESSING FUNCTION CALLS
     for (const part of functionCalls) {
       const { name, args } = part.functionCall;
       let functionResult;
@@ -192,12 +196,21 @@ exports.sisonkeAI = async (req, res) => {
             throw new Error(`Unknown function: ${name}`);
         }
 
-        // Send function responses back to Gemini
+        // SENDING FUNCTION RESPONSES TO GEMINI
         const functionResponse = await model.generateContent({
           contents: [
             { role: "user", parts: [{ text: message }] },
             { role: "model", parts: [{ text: response }] },
-            { role: "model", parts: [{ text: `Function ${name} returned: ${JSON.stringify(functionResult)}` }] },
+            {
+              role: "model",
+              parts: [
+                {
+                  text: `Function ${name} returned: ${JSON.stringify(
+                    functionResult
+                  )}`,
+                },
+              ],
+            },
           ],
           tools: [{ functionDeclarations: Functions }],
         });
@@ -209,10 +222,9 @@ exports.sisonkeAI = async (req, res) => {
     }
 
     res.status(200).json({ response });
+    console.log(response);
   } catch (error) {
     console.error("Error:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while processing your request." });
+    throw new Error("An error occurred while processing your request.");
   }
-};
+}
