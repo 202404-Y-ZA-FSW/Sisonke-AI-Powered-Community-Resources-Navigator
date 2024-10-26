@@ -1,25 +1,85 @@
-import { useState, useEffect } from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Grid,
-  InputBase,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
+import { 
+  Box, 
+  Typography, 
+  TextField, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
   TableRow,
-  Typography,
+  Button,
+  Grid,
+  Paper,
   CircularProgress,
   Snackbar,
-  Button,
+  IconButton,
+  Tooltip,
+  useTheme,
+  Card,
+  CardContent,
+  Fade,
+  Zoom,
+  Pagination,
+  Stack,
+  TableSortLabel,
+  InputAdornment,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import WorkIcon from '@mui/icons-material/Work';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { styled, keyframes } from '@mui/material/styles';
+
+const pulseAnimation = keyframes`
+  0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+`;
+
+const floatAnimation = keyframes`
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+`;
+
+const ColoredPaper = styled(Paper)(({ theme }) => ({
+  background: `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
+  color: theme.palette.primary.contrastText,
+  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  borderRadius: '20px',
+  '&:hover': {
+    transform: 'translateY(-5px) scale(1.01)',
+    boxShadow: `0 15px 25px rgba(0, 0, 0, 0.3)`,
+    animation: `${pulseAnimation} 3s infinite`,
+  },
+}));
+
+const GlassCard = styled(Card)(({ theme }) => ({
+  background: 'rgba(255, 255, 255, 0.1)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: '15px',
+  border: '1px solid rgba(255, 255, 255, 0.2)',
+  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-5px)',
+    boxShadow: '0 12px 40px 0 rgba(31, 38, 135, 0.5)',
+  },
+}));
+
+const AnimatedIcon = styled('div')({
+  animation: `${floatAnimation} 3s ease-in-out infinite`,
+});
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -28,7 +88,13 @@ export default function Jobs() {
   const [error, setError] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [sortConfig, setSortConfig] = useState({ key: 'posted', direction: 'desc' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMode, setDialogMode] = useState('');
+  const jobsPerPage = 10;
+  const theme = useTheme();
 
   useEffect(() => {
     fetchJobs();
@@ -36,136 +102,328 @@ export default function Jobs() {
 
   const fetchJobs = async () => {
     try {
+      setLoading(true);
       const response = await axios.get("http://localhost:5000/jobs/all");
       if (Array.isArray(response.data.jobs)) {
         setJobs(response.data.jobs);
       } else {
-        setError("Unexpected data format. Expected an array.");
+        showSnackbar("Unexpected data format. Expected an array.");
       }
     } catch (err) {
-      setError("Error fetching jobs. Please try again later.");
+      showSnackbar("Error fetching jobs. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
   const removeJob = async (id) => {
-    setIsDeleting(true); 
     try {
       const response = await axios.delete(`http://localhost:5000/jobs/${id}`);
       if (response.status === 200) {
         setJobs(prevJobs => prevJobs.filter(job => job._id !== id));
-        setSnackbarMessage('Job deleted successfully');
-        setSnackbarOpen(true);
+        showSnackbar("Job deleted successfully.");
       } else {
-        setError('Failed to delete job');
+        showSnackbar('Failed to delete job');
       }
     } catch (error) {
-      setError('Error deleting job. Please try again.');
-    } finally {
-      setIsDeleting(false); 
+      showSnackbar('Error deleting job. Please try again.');
     }
   };
 
-  const filteredJobs = (jobs || []).filter(
-    (job) =>
-      (job.title && job.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const showSnackbar = (message) => {
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedJobs = React.useMemo(() => {
+    let sortableJobs = [...jobs];
+    if (sortConfig !== null) {
+      sortableJobs.sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableJobs;
+  }, [jobs, sortConfig]);
+
+  const filteredAndSortedJobs = React.useMemo(() => {
+    return sortedJobs.filter(
+      (job) =>
+        (job.title && job.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (job.company && job.company.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  }, [sortedJobs, searchQuery]);
+
+  const paginatedJobs = React.useMemo(() => {
+    const start = (currentPage - 1) * jobsPerPage;
+    return filteredAndSortedJobs.slice(start, start + jobsPerPage);
+  }, [filteredAndSortedJobs, currentPage]);
+
+  const totalPages = Math.ceil(filteredAndSortedJobs.length / jobsPerPage);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  const totalJobs = jobs.length;
+
+  const handleViewJob = (job) => {
+    setSelectedJob(job);
+    setDialogMode('view');
+    setDialogOpen(true);
+  };
+
+  const handleEditJob = (job) => {
+    setSelectedJob(job);
+    setDialogMode('edit');
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+    setSelectedJob(null);
+  };
+
+  const handleSaveEdit = async () => {
+    // Implement the logic to save the edited job
+    // This is just a placeholder
+    showSnackbar("Job updated successfully.");
+    handleCloseDialog();
+  };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Card elevation={3} sx={{ mb: 2, p: 2 }}>
-        <CardHeader title="Jobs Statistics" />
-        <CardContent>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
-              <Typography variant="body1">Total Jobs: {jobs.length}</Typography>
+    <Box sx={{ 
+      minHeight: '100vh',
+      display: 'flex', 
+      flexDirection: 'column', 
+      gap: 4,
+      background: `linear-gradient(135deg, #f6f7ff 0%, #e9eeff 100%)`,
+      p: 4
+    }}>
+      <Fade in={true} timeout={800}>
+        <ColoredPaper elevation={3} sx={{ p: 3, mb: 2 }}>
+          <Grid container spacing={3} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'white' }}>
+                Job Dashboard
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <AnimatedIcon>
+                <WorkIcon sx={{ fontSize: 40, color: 'white' }} />
+              </AnimatedIcon>
             </Grid>
           </Grid>
-        </CardContent>
-      </Card>
+        </ColoredPaper>
+      </Fade>
 
-      <Card elevation={3} sx={{ mb: 2, p: 2 }}>
-        <CardHeader title="Search Jobs" />
-        <CardContent>
-          <InputBase
+      <Zoom in={true} timeout={800}>
+        <GlassCard>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>Job Statistics</Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={4}>
+                <Typography variant="body1">Total Jobs: {totalJobs}</Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </GlassCard>
+      </Zoom>
+
+      <Fade in={true} timeout={1000}>
+        <Paper elevation={3} sx={{ p: 3, mb: 2 }}>
+          <Typography variant="h6" gutterBottom>Search Jobs</Typography>
+          <TextField
+            fullWidth
+            variant="outlined"
             placeholder="Search by title or company"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            fullWidth
-            sx={{
-              mb: 2,
-              padding: '8px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
+            sx={{ mb: 2 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={fetchJobs}>
+                    <RefreshIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
-        </CardContent>
-      </Card>
+        </Paper>
+      </Fade>
 
-      <Card elevation={3} sx={{ mb: 2, p: 2 }}>
-        <CardHeader title="Jobs Management" />
-        <CardContent>
+      <Fade in={true} timeout={1200}>
+        <Paper elevation={3} sx={{ p: 3, flexGrow: 1 }}>
+          <Typography variant="h6" gutterBottom>Job Management</Typography>
           {loading ? (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100px">
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <CircularProgress />
             </Box>
           ) : (
-            <TableContainer>
-              <Table stickyHeader>
-                <TableHead>
-                  <TableRow>
-                    <TableCell><strong>Title</strong></TableCell>
-                    <TableCell><strong>Location</strong></TableCell>
-                    <TableCell><strong>Date Published</strong></TableCell>
-                    <TableCell><strong>Actions</strong></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredJobs.length > 0 ? (
-                    filteredJobs.map((job) => (
-                      <TableRow key={job._id}>
-                        <TableCell>{job.title}</TableCell>
-                        <TableCell>{job.location || job.user?.username}</TableCell> 
-                        <TableCell>{new Date(job.posted).toLocaleDateString()}</TableCell> 
-                        <TableCell>
-                          <Button
-                            startIcon={<DeleteIcon />}
-                            onClick={() => removeJob(job._id)}
-                            color="error"
-                            variant="contained"
-                            disabled={isDeleting} 
-                          >
-                            {isDeleting ? <CircularProgress size={20} /> : 'Delete'}
-                          </Button>
+            <>
+              <TableContainer>
+                <Table stickyHeader aria-label="job management table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <TableSortLabel
+                          active={sortConfig.key === 'title'}
+                          direction={sortConfig.direction}
+                          onClick={() => handleSort('title')}
+                        >
+                          Title
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell>
+                        <TableSortLabel
+                          active={sortConfig.key === 'company'}
+                          direction={sortConfig.direction}
+                          onClick={() => handleSort('company')}
+                        >
+                          Company
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell>
+                        <TableSortLabel
+                          active={sortConfig.key === 'posted'}
+                          direction={sortConfig.direction}
+                          onClick={() => handleSort('posted')}
+                        >
+                          Date Posted
+                        </TableSortLabel>
+                      </TableCell>
+                      <TableCell>Actions</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {paginatedJobs.length > 0 ? (
+                      paginatedJobs.map((job) => (
+                        <TableRow key={job._id}>
+                          <TableCell>{job.title}</TableCell>
+                          <TableCell>{job.company}</TableCell>
+                          <TableCell>{new Date(job.posted).toLocaleDateString()}</TableCell>
+                          <TableCell>
+                            <Tooltip title="View Job">
+                              <IconButton onClick={() => handleViewJob(job)} color="primary">
+                                <VisibilityIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Edit Job">
+                              <IconButton onClick={() => handleEditJob(job)} color="secondary">
+                                <EditIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Delete Job">
+                              <IconButton onClick={() => removeJob(job._id)} color="error">
+                                <DeleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={4} align="center">
+                          No jobs found
                         </TableCell>
                       </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={4} align="center">No jobs found</TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <Stack spacing={2} sx={{ mt: 2, alignItems: 'center' }}>
+                <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+              </Stack>
+            </>
           )}
-        </CardContent>
-      </Card>
+        </Paper>
+      </Fade>
 
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
-        onClose={() => setSnackbarOpen(false)}
+        onClose={handleCloseSnackbar}
         message={snackbarMessage}
       />
-      <Snackbar
-        open={!!error}
-        autoHideDuration={6000}
-        onClose={() => setError('')}
-        message={error}
-      />
-    </Container>
+
+      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle>{dialogMode === 'view' ? 'View Job' : 'Edit Job'}</DialogTitle>
+        <DialogContent>
+          {selectedJob && (
+            <>
+              <TextField
+                fullWidth
+                label="Title"
+                value={selectedJob.title}
+                disabled={dialogMode === 'view'}
+                sx={{ mb: 2, mt: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Company"
+                value={selectedJob.company}
+                disabled={dialogMode === 'view'}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Date Posted"
+                value={new Date(selectedJob.posted).toLocaleDateString()}
+                disabled={dialogMode === 'view'}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Description"
+                value={selectedJob.description || "No description available"}
+                disabled={dialogMode === 'view'}
+                multiline
+                rows={4}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Location"
+                value={selectedJob.location || "No location specified"}
+                disabled={dialogMode === 'view'}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                fullWidth
+                label="Salary"
+                value={selectedJob.salary || "Not specified"}
+                disabled={dialogMode === 'view'}
+                sx={{ mb: 2 }}
+              />
+            </>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Close</Button>
+          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>Save</Button>}
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
