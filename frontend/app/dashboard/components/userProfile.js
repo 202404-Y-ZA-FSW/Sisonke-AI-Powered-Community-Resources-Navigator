@@ -16,25 +16,39 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Paper,
+  Tooltip,
 } from '@mui/material';
-import { AccountCircle, ExitToApp, VisibilityOff, Brightness4, Brightness7 } from '@mui/icons-material';
+import { AccountCircle, ExitToApp, VisibilityOff, Brightness4, Brightness7, Edit } from '@mui/icons-material';
 import axios from 'axios';
+import { styled } from '@mui/material/styles';
 
 const darkModeColors = {
-  background: '#282828',
+  background: '#1e1e1e',
   paper: '#2c2c2c',
-  textPrimary: '#e0e0e0',
+  textPrimary: '#ffffff',
   textSecondary: '#b0b0b0',
-  primary: '#1976d2',
+  primary: '#90caf9',
 };
 
 const lightModeColors = {
-  background: '#ffffff',
-  paper: '#f5f5f5',
-  textPrimary: '#000000',
-  textSecondary: '#5f5f5f',
+  background: '#f5f5f5',
+  paper: '#ffffff',
+  textPrimary: '#333333',
+  textSecondary: '#666666',
   primary: '#1976d2',
 };
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  padding: theme.spacing(1.5, 2),
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+}));
 
 const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
   const [anchorEl, setAnchorEl] = useState(null);  
@@ -57,12 +71,10 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
   const colors = darkMode ? darkModeColors : lightModeColors;
   
   useEffect(() => {
-    
     if (typeof window !== 'undefined') {
       setSelectedImage(localStorage.getItem('profileImage') || null);
     }
   }, []);
-
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -161,16 +173,17 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
         PaperProps={{
-          elevation: 4,
+          elevation: 8,
           sx: {
-            width: '260px',
+            width: '280px',
             borderRadius: 2,
-            bgcolor: colors.background,
+            bgcolor: colors.paper,
+            boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.2)',
           },
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', p: 2 }}>
-          <Avatar alt={initialValues.name} src={selectedImage} sx={{ mr: 2 }} />
+          <Avatar alt={initialValues.name} src={selectedImage} sx={{ width: 60, height: 60, mr: 2 }} />
           <Box>
             <Typography variant="subtitle1" fontWeight="bold" color={colors.textPrimary}>
               {initialValues.name}
@@ -181,53 +194,66 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
           </Box>
         </Box>
 
-        <Divider />
+        <Divider sx={{ my: 1 }} />
 
-        <MenuItem onClick={handleAccountSettingsOpen} sx={{ color: colors.textPrimary }}>
-          <AccountCircle sx={{ mr: 1 }} />
+        <StyledMenuItem onClick={handleAccountSettingsOpen} sx={{ color: colors.textPrimary }}>
+          <AccountCircle sx={{ mr: 2 }} />
           Account settings
-        </MenuItem>
+        </StyledMenuItem>
 
-        <MenuItem sx={{ color: colors.textPrimary }}>
-          <VisibilityOff sx={{ mr: 1 }} />
+        <StyledMenuItem sx={{ color: colors.textPrimary }}>
+          <VisibilityOff sx={{ mr: 2 }} />
           Go incognito
           <Switch edge="end" checked={isIncognito} onChange={toggleIncognito} sx={{ ml: 'auto' }} />
-        </MenuItem>
+        </StyledMenuItem>
 
-        <MenuItem sx={{ color: colors.textPrimary }}>
-          {darkMode ? <Brightness7 sx={{ mr: 1 }} /> : <Brightness4 sx={{ mr: 1 }} />}
+        <StyledMenuItem sx={{ color: colors.textPrimary }}>
+          {darkMode ? <Brightness7 sx={{ mr: 2 }} /> : <Brightness4 sx={{ mr: 2 }} />}
           Dark Mode
           <Switch edge="end" checked={darkMode} onChange={toggleDarkMode} sx={{ ml: 'auto' }} />
-        </MenuItem>
+        </StyledMenuItem>
 
-        <Divider />
+        <Divider sx={{ my: 1 }} />
 
-        <MenuItem onClick={() => {
-          handleMenuClose();  // Close the menu
-          onLogout();         // Trigger the logout function
+        <StyledMenuItem onClick={() => {
+          handleMenuClose();
+          onLogout();
         }} sx={{ color: colors.textPrimary }}>
-          <ExitToApp sx={{ mr: 1 }} />
+          <ExitToApp sx={{ mr: 2 }} />
           Log out
-        </MenuItem>
+        </StyledMenuItem>
       </Menu>
 
       <Dialog open={openAccountSettings} onClose={handleAccountSettingsClose} maxWidth="md" fullWidth>
         <DialogTitle sx={{ textAlign: 'center', bgcolor: colors.background, color: colors.textPrimary }}>
           Account Settings
         </DialogTitle>
-        <DialogContent sx={{ bgcolor: colors.background }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
-            <Avatar src={selectedImage} alt="Profile" sx={{ width: 80, height: 80, mb: 1 }} />
-            <input type="file" accept="image/*" onChange={handleImageChange} style={{ marginBottom: '16px' }} />
-            {selectedImage && (
-              <Button onClick={handleRemoveImage} color="error" sx={{ mt: 1 }}>
-                Remove Image
-              </Button>
-            )}
-          </Box>
-          <Grid container spacing={2}>
+        <DialogContent sx={{ bgcolor: colors.background, p: 3 }}>
+          <Paper elevation={3} sx={{ p: 3, mb: 3, bgcolor: colors.paper }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
+              <Avatar src={selectedImage} alt="Profile" sx={{ width: 100, height: 100, mb: 2 }} />
+              <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="raised-button-file"
+                type="file"
+                onChange={handleImageChange}
+              />
+              <label htmlFor="raised-button-file">
+                <Button variant="contained" component="span" startIcon={<Edit />}>
+                  Change Photo
+                </Button>
+              </label>
+              {selectedImage && (
+                <Button onClick={handleRemoveImage} color="error" sx={{ mt: 1 }}>
+                  Remove Image
+                </Button>
+              )}
+            </Box>
+          </Paper>
+          <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <TextField
+              <StyledTextField
                 fullWidth
                 label="Full Name"
                 value={initialValues.name}
@@ -241,7 +267,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
+              <StyledTextField
                 fullWidth
                 label="Username"
                 value={initialValues.username}
@@ -255,7 +281,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
+              <StyledTextField
                 fullWidth
                 label="Email"
                 value={initialValues.email}
@@ -269,7 +295,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField
+              <StyledTextField
                 fullWidth
                 label="Phone"
                 value={initialValues.phone}
@@ -283,7 +309,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <StyledTextField
                 fullWidth
                 label="Location"
                 value={initialValues.location}
@@ -297,7 +323,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <StyledTextField
                 fullWidth
                 label="Bio"
                 value={initialValues.bio}
@@ -313,7 +339,7 @@ const SettingsMenu = ({ userId, onLogout, toggleIncognito, isIncognito }) => {
               />
             </Grid>
           </Grid>
-          <Box sx={{ mt: 2 }}>
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
             <Button
               variant="contained"
               onClick={() => handleFormSubmit(initialValues)}
