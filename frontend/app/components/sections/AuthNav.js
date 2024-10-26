@@ -111,6 +111,7 @@ export default function AuthNav() {
 
   const removeImage = () => {
     setNewProfileImage(null);
+    setProfileImage(null);
   };
 
   const navLinkStyles = {
@@ -245,7 +246,7 @@ export default function AuthNav() {
               </label>
               <ImageButtonStyled
                 variant="contained"
-                color="error"
+                color="secondary"
                 onClick={removeImage}
                 startIcon={<RemoveCircleOutlineIcon />}
               >
