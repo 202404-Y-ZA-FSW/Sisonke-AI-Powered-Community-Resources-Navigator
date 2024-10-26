@@ -225,14 +225,8 @@ export default function AuthNav() {
               open={Boolean(profileAnchorEl)} 
               onClose={closeProfileMenu} 
             > 
-              <MenuItem onClick={openDialog}> 
-                <AccountCircleIcon sx={{ mr: 1 }} /> 
-                Account Settings 
-              </MenuItem> 
-              <MenuItem onClick={logout}> 
-                <LogoutIcon sx={{ mr: 1 }} /> 
-                Logout 
-              </MenuItem> 
+              <MenuItem onClick={openDialog} startIcon={<AccountCircleIcon />}>Profile</MenuItem> 
+              <MenuItem onClick={logout} startIcon={<LogoutIcon />}>Logout</MenuItem> 
             </Menu> 
           </> 
         )} 
@@ -244,71 +238,57 @@ export default function AuthNav() {
         onClose={closeSnackbar} 
         message={snackbarMessage} 
       /> 
-      
       <Dialog open={dialogOpen} onClose={closeDialog}> 
-        <DialogTitle>Profile Settings</DialogTitle> 
+        <DialogTitle>Edit Profile</DialogTitle> 
         <DialogContent> 
-          <input 
-            accept="image/*" 
-            style={{ display: "none" }} 
-            id="upload-photo" 
-            type="file" 
-            onChange={changeImage} 
-          /> 
-          <label htmlFor="upload-photo"> 
-            <ImageButtonStyled variant="contained" component="span" startIcon={<AddAPhotoIcon />}> 
-              Upload Profile Image 
-            </ImageButtonStyled> 
-          </label> 
-          {newProfileImage && ( 
-            <div> 
-              <img 
-                src={newProfileImage} 
-                alt="New Profile" 
-                style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} 
-              /> 
-              <IconButton 
-                onClick={() => setNewProfileImage(null)} 
-                aria-label="remove" 
-                color="error" 
-              > 
-                <RemoveCircleOutlineIcon /> 
-              </IconButton> 
-            </div> 
-          )} 
-
           <TextField 
             label="Name" 
-            value={userInfo.name} 
-            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} 
             fullWidth 
             margin="normal" 
+            value={userInfo.name} 
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} 
           /> 
           <TextField 
             label="Email" 
-            value={userInfo.email} 
-            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} 
             fullWidth 
             margin="normal" 
+            value={userInfo.email} 
+            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} 
           /> 
           <TextField 
             label="Job" 
-            value={userInfo.job} 
-            onChange={(e) => setUserInfo({ ...userInfo, job: e.target.value })} 
             fullWidth 
             margin="normal" 
+            value={userInfo.job} 
+            onChange={(e) => setUserInfo({ ...userInfo, job: e.target.value })} 
           /> 
           <TextField 
             label="Address" 
-            value={userInfo.address} 
-            onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })} 
             fullWidth 
             margin="normal" 
+            value={userInfo.address} 
+            onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })} 
           /> 
+          <input 
+            accept="image/*" 
+            id="profile-image-upload" 
+            type="file" 
+            style={{ display: 'none' }} 
+            onChange={changeImage} 
+          /> 
+          <label htmlFor="profile-image-upload"> 
+            <ImageButtonStyled 
+              variant="contained" 
+              component="span" 
+              startIcon={newProfileImage ? <RemoveCircleOutlineIcon /> : <AddAPhotoIcon />} 
+            > 
+              {newProfileImage ? 'Remove Image' : 'Upload Image'} 
+            </ImageButtonStyled> 
+          </label> 
         </DialogContent> 
         <DialogActions> 
           <Button onClick={closeDialog}>Cancel</Button> 
-          <Button onClick={updateProfile}>Update</Button> 
+          <Button onClick={updateProfile}>Save</Button> 
         </DialogActions> 
       </Dialog> 
     </AppBar> 
