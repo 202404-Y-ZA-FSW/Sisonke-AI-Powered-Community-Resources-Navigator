@@ -1,10 +1,7 @@
 // REQUIRED PACKAGE
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
-//const { redirect } = require("next/navigation");
-const userProfileModel = require("../../models/user/userProfile");
-
 
 // REQUIRED MODELS
 const userModel = require("../../models/user/user");
