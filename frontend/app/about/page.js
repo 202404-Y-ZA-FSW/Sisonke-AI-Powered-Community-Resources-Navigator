@@ -90,37 +90,45 @@ export default function AboutUs() {
               </StyledCard>
             </Grid>
           ))}
-          <Grid item xs={12} md={6}>
+           <Grid item xs={12} md={6}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Image
-                  src="/placeholder.svg"
-                  alt="Community gathering"
-                  height={150}
-                  width={400}
-                  layout="responsive"
-                  objectFit="contain"
-                />
+                <figure> {/* Add a <figure> element to wrap the image and caption */}
+                  <Image
+                    src="https://images.pexels.com/photos/9756241/pexels-photo-9756241.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    height={150}
+                    width={400}
+                    layout="responsive"
+                    objectFit="contain"
+                  />
+                  <figcaption>Bringing members of the community to discuss challenges that affect them and how to solve them.</figcaption> {/* Add the caption */}
+                </figure>
               </Grid>
               <Grid item xs={6}>
-                <Image
-                  src="/placeholder.svg"
-                  alt="Local business owner"
-                  height={150}
-                  width={200}
-                  layout="responsive"
-                  objectFit="contain"
-                />
+                <figure>
+                  <Image
+                    src="https://images.pexels.com/photos/8475204/pexels-photo-8475204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Local business owner"
+                    height={150}
+                    width={200}
+                    layout="responsive"
+                    objectFit="contain"
+                  />
+                  <figcaption>Providing a platform for local business owners to promote their services and products.</figcaption>
+                </figure>
               </Grid>
               <Grid item xs={6}>
-                <Image
-                  src="/placeholder.svg"
-                  alt="Community event"
-                  height={150}
-                  width={200}
-                  layout="responsive"
-                  objectFit="contain"
-                />
+                <figure>
+                  <Image
+                    src="https://images.pexels.com/photos/6646855/pexels-photo-6646855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Community event"
+                    height={150}
+                    width={200}
+                    layout="responsive"
+                    objectFit="contain"
+                  />
+                  <figcaption>Giving back to those who are in need.</figcaption>
+                </figure>
               </Grid>
             </Grid>
           </Grid>

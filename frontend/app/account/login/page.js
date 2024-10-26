@@ -72,14 +72,20 @@ export default function LoginPage() {
       const { token, ...user } = response.data;
 
       await login(token, user);
-      
-      if (user.user.role === "administrator") {
-        router.push("/dashboard");
-      } else if (user.user.role === "ngo") {
-        router.push("/ngo/dashboard");
-      } else {
-        router.push("/");
+
+      if(user.user.status==='restricted'){
+        router.push("/account/login");
+        setError("You have been blocked from accessing the website");
+      }else{
+        if (user.user.role === "administrator") {
+          router.push("/dashboard");
+        } else if (user.user.role === "ngo") {
+          router.push("/ngo/dashboard");
+        } else {
+          router.push("/");
+        }
       }
+      
     } catch (error) {
       if (error.response) {
         setError(
