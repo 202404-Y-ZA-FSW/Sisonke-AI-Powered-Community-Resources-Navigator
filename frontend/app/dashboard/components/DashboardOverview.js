@@ -170,14 +170,6 @@ export default function DashboardOverview() {
               </CardContent>
             </AnimatedCard>
           </Grid>
-          <Grid item xs={12}>
-            <AnimatedCard>
-              <CardContent>
-                <Typography variant="h6">Business Management</Typography>
-                <Businesses />
-              </CardContent>
-            </AnimatedCard>
-          </Grid>
         </Grid>
       )}
     </Box>
