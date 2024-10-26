@@ -21,7 +21,12 @@ export default function Events() {
     const fetchEvents = async () => {
       try {
         const response = await axios.get("http://localhost:5000/events/latest");
-        setEvents(response.data);
+        const formattedEvents = response.data.map(event => ({
+          ...event,
+          date: new Date(event.date).toLocaleDateString(),
+          time: new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }));
+        setEvents(formattedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -82,7 +87,7 @@ export default function Events() {
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <CalendarMonth />
                     <Typography sx={{ marginTop: "3px" }} variant="body2">
-                      {event.date}
+                      {event.date} at {event.time}
                     </Typography>
                   </Box>
                 </CardContent>
