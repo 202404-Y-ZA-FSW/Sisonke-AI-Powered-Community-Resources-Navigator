@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "NODE_ENV=development next dev",
+    "build": "NODE_ENV=production next build",
+    "start": "NODE_ENV=production next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -13,7 +13,9 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.2",
+    "animations": "^0.0.0",
     "axios": "^1.7.7",
+    "framer-motion": "^11.11.10",
     "frontend": "file:",
     "next": "^14.2.14",
     "react": "^18.3.1",

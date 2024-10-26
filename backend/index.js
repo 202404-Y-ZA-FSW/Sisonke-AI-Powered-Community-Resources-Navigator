@@ -4,7 +4,7 @@ const cors = require("cors");
 const { connectToMongoDB } = require("./database/connection");
 require('dotenv').config();
 
-require("./models/blog/blog");
+require("./models/blog/blog-model");
 require("./models/forum/forum");
 require("./models/job");
 
@@ -14,6 +14,7 @@ const subscriberRoutes = require("./routes/subscriber");
 const businessRoutes = require("./routes/business");
 const jobRoutes = require("./routes/job");
 const eventRoutes = require("./routes/event");
+const statsRoutes = require("./routes/stats/statsRoutes");
 
 const forgotPassword = require("./routes/user/forgotPassword");
 
@@ -54,6 +55,7 @@ app.use("/newsletter", subscriberRoutes);
 app.use("/business", businessRoutes);
 app.use("/jobs", jobRoutes);
 app.use("/events", eventRoutes);
+app.use("/stats", statsRoutes);
 
 app.use("/gemini", geminiRoutes);
 

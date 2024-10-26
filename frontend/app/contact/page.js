@@ -8,7 +8,9 @@ import Navbar from '../components/sections/NavBar';
 import Subscription from '../components/sections/Subscribe'; 
 import Hero from './hero';
 import { styled } from '@mui/material/styles';
+
 import { useTranslation } from 'react-i18next';
+
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -141,10 +143,12 @@ export default function ContactPage() {
             <Grid item xs={12} md={5}>
               <ContactInfoBox>
                 <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
+
                   {t('ContactPage.ContactInformation')}
                 </Typography>
                 <Typography sx={{ mb: 3 }}>
                   {t('ContactPage.FormInstruction')}
+
                 </Typography>
 
                 <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
@@ -184,7 +188,9 @@ export default function ContactPage() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <StyledTextField
+
                       label={t('ContactPage.Name')}
+
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
@@ -195,7 +201,9 @@ export default function ContactPage() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <StyledTextField
+
                       label={t('ContactPage.Email')}
+
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -208,7 +216,9 @@ export default function ContactPage() {
                   </Grid>
                   <Grid item xs={12}>
                     <StyledTextField
+
                       label={t('ContactPage.Subject')}
+
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
@@ -219,6 +229,7 @@ export default function ContactPage() {
                   <Grid item xs={12}>
                     <StyledTextField
                       label={t('ContactPage.Message')}
+
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
@@ -234,7 +245,9 @@ export default function ContactPage() {
                 </Grid>
                 <Box display="flex" justifyContent="flex-end" mt={4}>
                   <StyledButton type="submit">
+
                     {t('ContactPage.SendMessage')}
+
                   </StyledButton>
                 </Box>
               </form>

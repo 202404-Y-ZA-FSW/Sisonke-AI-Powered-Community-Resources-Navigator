@@ -129,6 +129,7 @@ export default function Navbar() {
           <MenuItemComponent route={ROUTES.FORUM}>{t('Navbar.Forum')}</MenuItemComponent>
           <MenuItemComponent route={ROUTES.EVENTS}>{t('Navbar.Events')}</MenuItemComponent>
           <MenuItemComponent route={ROUTES.BUSINESS}>{t('Navbar.Business')}</MenuItemComponent>
+
         </Menu>
         <MenuItemComponent route={ROUTES.LOGIN}>{t('Navbar.Login')}</MenuItemComponent>
         <MenuItemComponent route={ROUTES.REGISTER}>{t('Navbar.Register')}</MenuItemComponent>

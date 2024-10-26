@@ -163,7 +163,7 @@ const Footer = () => {
             </Link>
             <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
               {t('Footer.FAQs')}
-            </MuiLink>
+             </MuiLink>
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
@@ -187,6 +187,13 @@ const Footer = () => {
               variant="body2" 
               display="block">
               {t('Footer.TermsOfService')}
+            </MuiLink>
+            <MuiLink 
+              sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
+              onClick={handleOpenTerms}
+              variant="body2" 
+              display="block">
+              Terms of Service
             </MuiLink>
           </Grid>
         </Grid>

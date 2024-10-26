@@ -15,7 +15,7 @@ import Hero from "./hero";
 import Footer from "../components/sections/Footer";
 import Subscribe from "../components/sections/Subscribe";
 import Navigation from "../components/sections/Navigation";
-import { useTranslation } from 'react-i18next'; // Import useTranslation
+import { useTranslation } from 'react-i18next';
 
 const StyledCard = styled(Card)(({ theme }) => {
   const defaultTheme = useTheme();
@@ -43,28 +43,28 @@ const NumberTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export default function AboutUs() {
-  const { t } = useTranslation(); // Initialize useTranslation
+  const { t } = useTranslation(); 
 
   const sections = [
     {
       number: "1.",
-      title: t('AboutUs.WhoWeAre'), // Use translation key for title
-      description: t('AboutUs.WhoWeAreDescription'), // Use translation key for description
+      title: t('AboutUs.WhoWeAre'), 
+      description: t('AboutUs.WhoWeAreDescription'), 
     },
     {
       number: "2.",
-      title: t('AboutUs.WhatWeDo'), // Use translation key for title
-      description: t('AboutUs.WhatWeDoDescription'), // Use translation key for description
+      title: t('AboutUs.WhatWeDo'), 
+      description: t('AboutUs.WhatWeDoDescription'), 
     },
     {
       number: "3.",
-      title: t('AboutUs.HowWeHelp'), // Use translation key for title
-      description: t('AboutUs.HowWeHelpDescription'), // Use translation key for description
+      title: t('AboutUs.HowWeHelp'), 
+      description: t('AboutUs.HowWeHelpDescription'), 
     },
     {
       number: "4.",
-      title: t('AboutUs.CreateSuccessStories'), // Use translation key for title
-      description: t('AboutUs.CreateSuccessStoriesDescription'), // Use translation key for description
+      title: t('AboutUs.CreateSuccessStories'), 
+      description: t('AboutUs.CreateSuccessStoriesDescription'), 
     },
   ];
 

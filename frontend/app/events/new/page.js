@@ -33,13 +33,14 @@ export default function EventForm() {
   });
 
   const { user } = useAuthentication();
+  const userID = user ? user.user.id : null;
 
   const [formData, setFormData] = useState({
     title: "",
     location: "",
     date: "",
     category: "",
-    organizer: user.user.id,
+    organizer: userID,
     description: "",
     isFree: true,
     eventUrl: "",
