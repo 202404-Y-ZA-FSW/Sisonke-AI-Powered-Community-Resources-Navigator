@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Box, Container, Grid, Typography, IconButton, Link as MuiLink } from '@mui/material';
 import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
 import Link from 'next/link';
@@ -7,6 +8,7 @@ import TermsOfServiceModal from './TermsOfServiceModal';
 import PrivacyPolicyModal from './PrivacyPolicyModal'; 
 
 const Footer = () => {
+  const { t } = useTranslation();
   const [openTermsModal, setOpenTermsModal] = useState(false); 
   const [openPrivacyModal, setOpenPrivacyModal] = useState(false); 
 
@@ -37,7 +39,7 @@ const Footer = () => {
               </Typography>
             </Box>
             <Typography sx={{ marginBottom: "15px" }} variant="body2" color="text.secondary">
-              143 West Street, Sandown, Sandton, Gauteng, South Africa
+              {t('Footer.Address')}
             </Typography>
             <Typography sx={{ marginBottom: "15px" }} variant="body2" color="text.secondary">
               info@sisonke.co.za
@@ -117,59 +119,59 @@ const Footer = () => {
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              Community
+              {t('Footer.Community')}
             </Typography>
             <Link href="/blog" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Blog
+                {t('Footer.Blog')}
               </MuiLink>
             </Link>
             <Link href="/forum" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Forum
+                {t('Footer.Forum')}
               </MuiLink>
             </Link>
             <Link href="/events" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Events
+                {t('Footer.Events')}
               </MuiLink>
             </Link>
             <Link href="/Business" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Businesses
+                {t('Footer.Businesses')}
               </MuiLink>
             </Link>
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              Company
+              {t('Footer.Company')}
             </Typography>
             <Link href="/" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Home
+                {t('Footer.Home')}
               </MuiLink>
             </Link>
             <Link href="/about" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                About Us
+                {t('Footer.AboutUs')}
               </MuiLink>
             </Link>
             <Link href="/jobs" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Jobs
+                {t('Footer.Jobs')}
               </MuiLink>
             </Link>
             <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-              FAQs
-            </MuiLink>
+              {t('Footer.FAQs')}
+             </MuiLink>
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              Support
+              {t('Footer.Support')}
             </Typography>
             <Link href="/contact" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
-                Contact Us
+                {t('Footer.ContactUs')}
               </MuiLink>
             </Link>
             <MuiLink 
@@ -177,14 +179,14 @@ const Footer = () => {
               onClick={handleOpenPrivacy}
               variant="body2" 
               display="block">
-              Privacy Policy
+              {t('Footer.PrivacyPolicy')}
             </MuiLink>
             <MuiLink 
               sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
               onClick={handleOpenTerms}
               variant="body2" 
               display="block">
-              Terms of Service
+              {t('Footer.TermsOfService')}
             </MuiLink>
           </Grid>
         </Grid>

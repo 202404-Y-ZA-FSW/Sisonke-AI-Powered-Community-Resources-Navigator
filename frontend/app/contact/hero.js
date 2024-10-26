@@ -1,7 +1,9 @@
-
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -16,10 +18,10 @@ const Hero = () => {
       }}
     >
       <Typography variant="h3" sx={{ fontWeight: 'bold', color: '#0a0a23' }}>
-        Get in touch with us for more information
+        {t('Hero.GetInTouch')}
       </Typography>
       <Typography variant="body1" sx={{ marginTop: '1rem', color: '#0a0a23' }}>
-        If you need help or have a question, we’re here for you
+        {t('Hero.HelpMessage')}
       </Typography>
     </Box>
   );

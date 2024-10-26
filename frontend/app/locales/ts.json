@@ -1,157 +1,164 @@
 {
-    "navbar": {
-      "home": "Yindlu",
-      "about": "Hi Ta",
-      "jobs": "Mitirho",
-      "contact": "Ku Koxa",
-      "community": "Vandlha",
-      "blog": "Blog",
-      "forum": "Foramu",
-      "events": "Mintirho",
-      "education": "Dyondzo",
-      "login": "Nghena",
-      "register": "Tsarisa",
-      "createBlogPost": "Endla Blog"
+  "Navbar": {
+    "Home": "Yindlu",
+    "About": "Hi Ta Hina",
+    "Jobs": "Misebenzi",
+    "Contact": "Vulavula",
+    "Community": "Nhlangano",
+    "Blog": "Blog",
+    "Forum": "Xivandla",
+    "Events": "Tirholo",
+    "Business": "Bindzu",
+    "Login": "Nghena",
+    "Register": "Tsarisa"
+  },
+  "HeroSection": {
+    "Title": "Kuma mpfuno wa nkoka ni mikateko ya nhlangano",
+    "Subtitle": "Kambela swikombelo swa ndhawu swa nkoka eka nhlangano wa wena",
+    "Users": "Vaseketeri",
+    "JobsCreated": "Misebenzi leyi endliweke",
+    "Businesses": "Tindhawu ta bindzu",
+    "SupportedBy": "Hi seketeriwa",
+    "SupportSubtitle": "Hi vafambisi va tikomiti ta xifundzha, minhlangano ya vafana, na swiyimo swa vandla."
+  },
+  "Blogs": {
+    "LatestNews": "Mahungu ya sweswinyana mayelana ni switsundzuxo swa ntirho",
+    "Insight": "Kambela ku antswisa vutivi ni mikateko ya ntirho",
+    "MinRead": "min Ku Hlayela",
+    "ReadMore": "Hlaya Swo Tala",
+    "BrowseAll": "Kambela Hinkwaswo"
+  },
+  "Footer": {
+      "Address": "143 West Street, Sandown, Sandton, Gauteng, Afrika Dzonga",
+      "Community": "Nhlangano",
+      "Blog": "Blog",
+      "Forum": "Foramo",
+      "Events": "Swiyavelo",
+      "Businesses": "Bindzu",
+      "Company": "Khampani",
+      "Home": "Ekaya",
+      "AboutUs": "Hi Hina",
+      "Jobs": "Mitirho",
+      "FAQs": "Swivutiso",
+      "Support": "Nkathalo",
+      "ContactUs": "Kopani na Hina",
+      "PrivacyPolicy": "Ntirho wa Nghozi",
+      "TermsOfService": "Malandzu ya Tirhisano"
+  },
+  "Jobs": {
+    "Title": "Kambela Mikateko Ya Switirhisiwa Swa Ntirho",
+    "Subtitle": "Kuma ntirho lowu faneleke na wena hi ntokoto, mali, xifundzha, na rimba",
+    "SearchPlaceholder": "Lavisisa Ntirho kumbe Khampani",
+    "SortBy": "Lulamisa Hi",
+    "RecentlyAdded": "Ku Engeteriwa Kwalaho",
+    "HighestSalary": "Mali Yo Tala",
+    "LowestSalary": "Mali Yo N’wi Tsongahata",
+    "Loading": "Ku hlayela ntirho...",
+    "BrowseAll": "Kambela Hinkwaswo"
+  },
+  "JobCard": {
+    "JobTitle": "Ntirho",
+    "Company": "Khampani",
+    "Location": "Ndhawu",
+    "Experience": "Ntumbuluko",
+    "JobType": "Ximfumo xa Ntirho",
+    "Salary": "Mali",
+    "NoSalary": "R0"
+  },
+"FAQs": {
+    "Title": "Mibvumo Leyi Hlaleriweke",
+    "Subtitle": "Loko swivutiso swa wena swi nga hlamuseriwi laha, nga xihi u tihlanganisa na vatirhisi va hina va ku pfuna.",
+    "LoadError": "Ku tsandzeka ku hlayisa Mibvumo. Hi kombela u ringeta nakambe endzhakunyana."
+  },
+  "Events": {
+    "ExploreEvents": "Kambela swihlamariso leswi endliwaka ka ndhawu ya wena",
+    "EventsInfo": "Tirholo ti endleriwe hi minhlangano, miganga, na tindhawu ta bindzu.",
+    "Date": "Siku",
+    "Location": "Ndhawu",
+    "Time": "Nkarhi",
+    "Close": "Pfala"
+  },
+  "PrivacyPolicy": {
+    "Title": "Nawu wa Vutivi",
+    "Intro": "Hi teka nhlamulo wa vutivi bya wena. Hi yona ndlela leyi hi tirhisa yona vutivi bya wena:",
+    "DataCollection": "1. Ku Kumeka Ka Vutivi: Hi hlengeleta vutivi lebyi u byi nyikaka na bya ntolovelo.",
+    "Usage": "2. Vutivi: Hi tirhisa vutivi bya wena ku antswisa switirhisiwa na vutivi.",
+    "Security": "3. Vutivi: Hi endla mitirho ya ku hlayisela vutivi bya wena.",
+    "ThirdParties": "4. Vatswari: Hi nga ku byela handle na ku pfumala ka wena.",
+    "Updates": "5. Nhlamuselo: Ku ka hi nga hundzuluxa nhlawulo hi nkarhi. Ku tirhisa swa vona swi vula ku amukela.",
+    "Contact": "Tiyisisa na hina eka info@sisonke.co.za mayelana ni swivutiso."
+  },
+  "Subscribe": {
+    "Title": "Tsarisa leswaku u kuma mahungu ya hina",
+    "Description": "Tiyisisa hi mikateko leyi engeteriweke mayelana ni misebenzi, tirholo, na switirhisiwa.",
+    "ButtonText": "Tsarisa",
+    "ModalTitle": "Ku Tsarisa ka Sisonke",
+    "NamePlaceholder": "Vito",
+    "EmailPlaceholder": "Email",
+    "LocationPlaceholder": "Ndhawu",
+    "SubmitButtonText": "Rumela",
+    "Errors": {
+      "NameRequired": "Vito ri laveka",
+      "EmailRequired": "Email yi laveka",
+      "InvalidEmail": "Email a yi ri swinene",
+      "LocationRequired": "Ndhawu yi laveka"
     },
-    "jobCard": {
-      "salary": "R",
-      "location": "Ndhawu",
-      "experience": "Vutivi",
-      "type": "Muhlovo",
-      "description": "Nhlamuselo"
-    },
-    "events": {
-      "exploreEvents": "Hlalekisa mintirho yo tsakisa",
-      "eventDescription": "Mintirho yi averiwa hi mabindzu ya le kusuhi, swikimi na swigwamatilo swa vandlha."
-    },
-    "modal": {
-      "date": "Siku",
-      "location": "Ndhawu",
-      "time": "Nkarhi",
-      "close": "Pfala"
-    },
-    "hero": {
-      "title": "Kuma nseketelo wa le kusuhi lowu nga fanela na mintirho",
-      "subtitle": "Hlalekisa hlengeletano ya switirhisiwa swa le kusuhi leswi endleriweke ku enerisa swilaveko swa vandlha ra wena.",
-      "searchBar": {
-        "jobTypePlaceholder": "Muhlovo wa ntirho",
-        "locationPlaceholder": "Ndhawu",
-        "searchButton": "Kuma"
-      },
-      "popularCategories": "Mintlawa Leyi Rhandziwaka:",
-      "categories": [
-        "Muhundzuluxi wa UX",
-        "Mudyondzisi Wa Le Mahlweni",
-        "Mudyondzisi Wa Le Ndzhaku"
-      ],
-      "supportTitle": "Hi Seketeriwa",
-      "supportSubtitle": "Hi tihulumende ta le kusuhi, swikimi swa vatinyiketeri na mabindzu ya le xihundleni."
-    },
-    "footer": {
-      "company": "SIS<span style=\"color: '#6c63ff';\">O</span>NKE",
-      "address": "143 West Street, Sandown, Sandton, Gauteng, Afrika Dzonga",
-      "email": "info@sisonke.co.za",
-      "phone": "+27 12 345 6789",
-      "community": "Vandlha",
-      "companyLinks": [
-        "Yindlu",
-        "Hi Ta Hina",
-        "Matirhelo",
-        "Swivutiso"
-      ],
-      "supportLinks": [
-        "Ku Koxa Hina",
-        "Nawu wa Vumfihlo",
-        "Swiboho swa Tirhiso"
-      ]
-    },
-    "services": {
-      "title": "Swilo leswi u nga swi endla naswona u swi kuma eka puratifomo ya hina",
-      "subtitle": "Hambi ku ri ku lava nseketelo, mintirho, kumbe ku hlanganisiwa.",
-      "steps": [
-        {
-          "icon": "Vanhu",
-          "title": "Vandlha",
-          "description": "Hlanganisa ni vanhu lava anakanyaka ku fana na wena, avelana switirhisiwa u tshama u hlanganile."
-        },
-        {
-          "icon": "Mintirho",
-          "title": "Mintirho Ya Vandlha",
-          "description": "U nga ri humeli mintirho ya nkoka ya vandlha na swiyenge swa netiweke."
-        },
-        {
-          "icon": "Mitirho",
-          "title": "Mitirho & Ku Dyondza",
-          "description": "Tihlanganisi ta NGO ta hina ti ku pfuna ku endla swikombelo swa mitirho, ku dyondza hi tiprofesheni, na ku kurisa vuswikoti bya wena."
-        },
-        {
-          "icon": "Foramu",
-          "title": "Ku Hlanganisiwa",
-          "description": "Tiblogu ta vandlha na foramu ya hina leswaku u avelana mianakanyo, u vutisa swivutiso, u tlhela u hlangana ni van'wana."
-        }
-      ],
-      "getStarted": "Sungula Sweswi"
-    },
-    "subscribe": {
-      "title": "Tsarisa eka phepha ra mahungu",
-      "description": "Tshama u ri karhi u kuma vutivi bya mitirho leyintshwa, mintirho na switirhisiwa leswintshwa leswi vekiwaka siku ni siku eka tiblogu na foramu ta vandlha ra wena.",
-      "button": "Tsarisa Sweswi",
-      "modalTitle": "Ku Tsarisa Ka Sisonke",
-      "form": {
-        "namePlaceholder": "Vito",
-        "emailPlaceholder": "Imeyili",
-        "locationPlaceholder": "Ndhawu",
-        "submitButton": "Tisa"
-      }
-    },
-    "faq": {
-      "title": "Swivutiso leswi Hanyaka Swo Tala",
-      "subtitle": "Loko swivutiso swa hina swi nga hlamuriwi laha, titwa u ntshunxekile ku tihlanganisa ni nseketelo wa hina leswaku u pfuna.",
-      "questions": [
-        {
-          "question": "I yini Sisonke AI-led Navigations ya Switirhisiwa?",
-          "answer": "Xikombelo xa wena xi ya exitarateni ya nhlengeletano leyi u nga ta tirha na yona. U nga kona ku lawula swikombelo swa wena hinkwaswo endhawini yin'we, u endla xikombelo hi swipiki swimbirhi naswona u kuma mpfuxeto eka ntlawa endzhaku ka masiku ma nga ri mangani."
-        },
-        {
-          "question": "Vutivi byihi lebyi nyikiwaka hi puratifomo ya Sisonke?",
-          "answer": "Career yi nyika ntlawa lowu akeke wa mitirho eka swiyenge swo hambanahambana ni mintirho yo hambana. U nga kuma swikhundla eka thekinoloji, ku xavisa, swa timali, swidyondzisi, na matluka man'wana yo tala."
-        },
-        {
-          "question": "Vandlha rihi leri seketeriwaka hi Sisonke? Naswona ndzi nga endla profayili?",
-          "answer": "Ina, Career yi khulula eka lavari lavaka ntirho. U nga endla profayili, u hlalela mitirho naswona u endla swikombelo eka swikhundla ku nga ri na hakelo."
-        },
-        {
-          "question": "Mitirho leyi vekiwaka eka Sisonke yi tiyisisiwile?",
-          "answer": "Ina, Career yi khulula eka lavari lavaka ntirho. U nga endla profayili, u hlalela mitirho naswona u endla swikombelo eka swikhundla ku nga ri na hakelo."
-        },
-        {
-          "question": "Mabindzu lawa ma vekiwaka eka Sisonke ma tshembekile?",
-          "answer": "Ina, Career yi khulula eka lavari lavaka ntirho. U nga endla profayili, u hlalela mitirho naswona u endla swikombelo eka swikhundla ku nga ri na hakelo."
-        }
-      ]
-    },
-    "blogs": {
-      "title": "Mahungu Lawa Nga Xihlovo Xa Nhluvuko Wa Mintirho",
-      "subtitle": "Engetela ku twisisa ka wena leswaku u kurisa ntsako wa ntirho, u kambisisa switsundzuxo hi matirhisele ya mabindzu",
-      "posts": [
-        {
-          "title": "Vukhongeri Bya Ntlawa Bya Ntlhanu Bya Xileriso Xa Ku Humelela",
-          "description": "Mulweri lonkulu i munhu loyi a hlayisaka matimba yo tala na vuswikoti eka nkarhi wun’we. Hinkwavo varhangeri...",
-          "readTime": "8 min Ku Hlaya"
-        },
-        {
-          "title": "Ndlela Yo Endla Vanghana Loko U Tirha Eku Tshamile",
-          "description": "Kusukela ntirho wa le kaya wu sungule ku andza, vatirhi va vule leswaku ku hlanganisa na nhlengeletano ya vona ku nyanyisa...",
-          "readTime": "11 min Ku Hlaya"
-        },
-        {
-          "title": "Swilo Swa Leswa U Nga Swi Vulaka Loko U Rhangerisa Xikombelo Xa Ntirho",
-          "description": "Loko u kuma mhaka ya xikombelo xa ntirho, swi olova ku va u tsaka ngopfu (naswona u karhateka) ku tlula mpimo...",
-          "readTime": "9 min Ku Hlaya"
-        }
-      ],
-      "readMoreButton": "Hlaya Swo Tala",
-      "browseAllButton": "Langutisa Hinkwaswo"
-    }
+    "SuccessMessage": "Ku tsarisa ku antswisiwe! Ndza khensa.",
+    "ErrorMessage": "Ku tsarisa ku tsandzekile. Ringeta nakambe.",
+    "ErrorOccurred": "Ku hume ku hoxile. Ringeta nakambe."
+  },
+  "Services": {
+    "Title": "Leswi u nga swi kuma eka xitichi xa hina",
+    "Subtitle": "Leswi u nga kotaka ku seketela, mikateko, ni vuxaka",
+    "Community": "Nhlangano",
+    "CommunityDescription": "Vulavurisana na vanhu va nhlangano hi ku avelana switirhisiwa.",
+    "Events": "Tirholo Ta Nhlangano",
+    "EventsDescription": "U nga tshama u ri karhi u kambela mitlangu ya nhlangano.",
+    "Jobs": "Misebenzi na Ku Va na Rimba",
+    "JobsDescription": "Minhlangano ya hina yi ku pfuna ku kuma ntirho, dyondzo, na ku hlakulela vutivi.",
+    "Communication": "Ku Vulavurisana",
+    "CommunicationDescription": "Hi tirhisa blog na xivandla ku avelana swiyimo, swivutiso, na vuxaka."
+  },
+  "Hero": {
+    "GetInTouch": "Hlangana na hina hi ntiyiso",
+    "HelpMessage": "Loko u lava ku pfuna kumbe u na na xihlovo, hi kona eka wena"
+  },
+  "ContactPage": {
+    "ContactInformation": "Vutivi Bya Vuxaka",
+    "FormInstruction": "Tsala fomo leyi ku humelerisa swipimelo swo karhi eka xitichi xa hina.",
+    "InvalidEmail": "Ndzi kombela u tirhisa email yo lulama",
+    "ShortMessage": "Mulaedza wu fanele ku va wa nhlamulo ya 10 ku ya ehenhla",
+    "SuccessMessage": "Mulaedza wu humelele",
+    "FailureMessage": "Ku hume ku hoxile",
+    "Name": "Vito",
+    "Email": "Email",
+    "Subject": "Nhlamuselo",
+    "Message": "Mulaedza",
+    "SendMessage": "Rumela Mulaedza"
+  },
+  "hero": {
+    "title": "Hi Rhandzu",
+    "subtitle": "E Sisonke, hi ta khoma hi ku tikhoma hi ku tshembha, ku hlangana, na ku kula eka matsalwa ya Afrika Dzonga."
+  },
+  "AboutUs": {
+    "WhoWeAre": "Hi Ta Hina",
+    "WhoWeAreDescription": "Sisonke i xitichi xa vanhu lexi phameriwaka ku lulamisela swikombelo, mikateko, na vanhu hi ku hlanganisa ndhawu.",
+    "WhatWeDo": "Leswi Hi Swi Endlaka",
+    "WhatWeDoDescription": "Hi nyika xivandla xa dijithale ku endla bindzu, swikombelo, tirholo na nhlangano.",
+    "HowWeHelp": "Leswi Hi Swi Endlaka",
+    "HowWeHelpDescription": "Hi endla vuxaka, ku rhangisa vutivi, na ku nyika mikateko ya ku kula.",
+    "CreateSuccessStories": "Endla Switori Swa Ku Humelela",
+    "CreateSuccessStoriesDescription": "Hi ku hlanganisa nhlangano, bindzu na swikombelo swa vanhu, hi pfuna vanhu ku fika swiendlakalo swa vona."
+  },
+  "job": {
+    "browseJobs": "Kambela Misebenzi",
+    "findJob": "Kuma ntirho lowu faneleke na wena",
+    "searchPlaceholder": "Lavisisa hi vito ra ntirho kumbe khampani",
+    "loadMore": "Tika Wo Tala",
+    "sortBy": "Lulamisa hi",
+    "recentlyAdded": "Swi vekiwe",
+    "highestSalary": "Swikombelo leswi pfumalaka",
+    "lowestSalary": "Mali leyi ehansi",
+    "postJob": "Veka Ntirho"
   }
-  
+}

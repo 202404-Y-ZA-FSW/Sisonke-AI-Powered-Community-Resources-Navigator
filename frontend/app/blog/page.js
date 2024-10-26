@@ -15,11 +15,18 @@ import {
   TextField,
   InputAdornment,
   Container,
+  Modal,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ImageIcon from "@mui/icons-material/Image";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Subscribe from "../components/sections/Subscribe";
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 import { useAuthentication } from "../hooks/useAuthentication";
 
@@ -29,10 +36,29 @@ export default function BlogPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { user } = useAuthentication();
   const canCreatePost =
     user && (user.user.role === "administrator" || user.user.role === "ngo");
+
+  const router = useRouter();
+
+  const [formData, setFormData] = useState({
+    imageURI: '',
+    title: '',
+    author: '',
+    postedBy: user ? user.user.id : null,
+    content: '',
+    readTime: ''
+  });
+
+  const [formErrors, setFormErrors] = useState({});
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success'
+  });
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -103,6 +129,85 @@ export default function BlogPage() {
     }
 
     return result.trim();
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.imageURI) errors.imageURI = 'Image URI is required';
+    if (!formData.title) errors.title = 'Title is required';
+    if (!formData.content) errors.content = 'Content is required';
+    if (!formData.readTime) errors.readTime = 'Read time is required';
+    if(!formData.author) errors.author = 'Author is required';
+    return errors;
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setFormErrors(validationErrors);
+      return;
+    }
+
+    setFormErrors({});
+    try {
+      const response = await axios.post('http://localhost:5000/blogs/blog/new', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 201) {
+        setSnackbar({
+          open: true,
+          message: 'Blog post created successfully!',
+          severity: 'success'
+        });
+        handleCloseModal();
+        // Refresh the blog posts
+        const updatedResponse = await fetch("http://localhost:5000/blogs/latest-blogs");
+        const updatedData = await updatedResponse.json();
+        setBlogPosts(updatedData);
+        setFilteredPosts(updatedData);
+      } else {
+        setSnackbar({
+          open: true,
+          message: 'Failed to create the blog post.',
+          severity: 'error'
+        });
+      }
+    } catch (error) {
+      console.error('Error submitting blog post:', error);
+      setSnackbar({
+        open: true,
+        message: 'An error occurred while submitting the blog post.',
+        severity: 'error'
+      });
+    }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbar({ ...snackbar, open: false });
   };
 
   if (isLoading) {
@@ -200,7 +305,7 @@ export default function BlogPage() {
         {canCreatePost ? (
           <Button
             color="primary"
-            href="/blog/new"
+            onClick={handleOpenModal}
             sx={{
               mb: 2,
               backgroundColor: "#6c63ff",
@@ -286,6 +391,113 @@ export default function BlogPage() {
           </Typography>
         )}
       </Container>
+      <Modal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="create-blog-post-modal"
+        aria-describedby="modal-to-create-new-blog-post"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '90%',
+          maxWidth: 600,
+          bgcolor: 'background.paper',
+          boxShadow: 24,
+          p: 4,
+          borderRadius: 2,
+          maxHeight: '90vh',
+          overflowY: 'auto',
+        }}>
+          <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
+            Create a New Blog Post
+          </Typography>
+          <Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 3 }}>
+            <TextField
+              name="author"
+              placeholder="Author"
+              variant="outlined"
+              fullWidth
+              value={formData.author}
+              onChange={handleFormChange}
+              error={!!formErrors.author}
+              helperText={formErrors.author}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              name="imageURI"
+              placeholder="Image URI"
+              variant="outlined"
+              fullWidth
+              value={formData.imageURI}
+              onChange={handleFormChange}
+              error={!!formErrors.imageURI}
+              helperText={formErrors.imageURI}
+              sx={{ mb: 2 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <ImageIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              name="title"
+              label="Blog Title"
+              variant="outlined"
+              fullWidth
+              value={formData.title}
+              onChange={handleFormChange}
+              error={!!formErrors.title}
+              helperText={formErrors.title}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              name="readTime"
+              label="Read Time"
+              placeholder="e.g., 5 min"
+              variant="outlined"
+              fullWidth
+              value={formData.readTime}
+              onChange={handleFormChange}
+              error={!!formErrors.readTime}
+              helperText={formErrors.readTime}
+              sx={{ mb: 2 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccessTimeIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              name="content"
+              label="Blog Content"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={6}
+              value={formData.content}
+              onChange={handleFormChange}
+              error={!!formErrors.content}
+              helperText={formErrors.content}
+              sx={{ mb: 2 }}
+            />
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Submit Blog Post
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
       <Subscribe />
       <Footer />
     </React.Fragment>

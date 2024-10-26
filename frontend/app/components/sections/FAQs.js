@@ -11,6 +11,9 @@ import {
   Paper,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import { useTranslation } from "react-i18next";
+
 import { styled } from "@mui/material/styles";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -48,6 +51,7 @@ const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
 }));
 
 export default function FAQs() {
+  const { t } = useTranslation();
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -60,13 +64,13 @@ export default function FAQs() {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching FAQs:", error);
-        setError("Failed to load FAQs. Please try again later.");
+        setError(t("FAQs.LoadError")); 
         setLoading(false);
       }
     };
 
     fetchFaqs();
-  }, []);
+  }, [t]);
 
   if (loading) {
     return (
@@ -85,20 +89,26 @@ export default function FAQs() {
   }
 
   return (
-    <Box sx={{ background: "linear-gradient(135deg, #f0f9ff 0%, #fff9f0 100%)", py: 8 }}>
-      <Container maxWidth="md">
-        <StyledPaper elevation={0}>
-          <Typography variant="h3" component="h1" align="center" gutterBottom sx={{ fontWeight: 700, color: "#333" }}>
-            Frequently Asked Questions
-          </Typography>
-          <Typography variant="subtitle1" align="center" sx={{ mb: 6, color: "#666" }}>
-            If your questions aren't answered here, don't hesitate to contact our support for help.
-          </Typography>
-          <Box>
+    <Box
+      sx={{
+        background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+        paddingBottom: 6,
+        paddingTop: 6,
+      }}
+    >
+      <Container maxWidth="md" sx={{ my: 6 }}>
+        <Typography variant="h4" component="h1" align="center" gutterBottom>
+          {t("FAQs.Title")} 
+        </Typography>
+        <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
+          {t("FAQs.Subtitle")} 
+        </Typography>
+        <StyledPaper>
+          <Box sx={{ mt: 4 }}>
             {faqs.map((faq, index) => (
               <StyledAccordion key={index} defaultExpanded={index === 0}>
                 <StyledAccordionSummary
-                  expandIcon={<ExpandMoreIcon sx={{ color: "#6c63ff" }} />}
+                  expandIcon={<ExpandMoreIcon />}
                   aria-controls={`panel${index + 1}-content`}
                   id={`panel${index + 1}-header`}
                 >

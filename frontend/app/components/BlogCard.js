@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { Container, Grid, Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
 import axios from 'axios';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next'; 
 
 // Component to display individual blog details
 const BlogCardDetails = ({ blog }) => {
+  const { t } = useTranslation(); 
+
   return (
     <Card
       sx={{
@@ -23,23 +26,23 @@ const BlogCardDetails = ({ blog }) => {
       <CardContent>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="subtitle2" color="text.secondary">
-            By {blog.author || 'Unknown Author'}
+            {t('Blog.Author')} {blog.author || t('Blog.UnknownAuthor')}
           </Typography>
           <Typography variant="caption" color="text.secondary">
-            {new Date(blog.createdAt).toLocaleDateString() || 'Invalid Date'}
+            {new Date(blog.createdAt).toLocaleDateString() || t('Blog.InvalidDate')}
           </Typography>
         </Box>
         <Typography variant="h6" sx={{ mt: 2, fontWeight: 'bold' }}>
           {blog.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {blog.content ? blog.content.substring(0, 100) : 'No content available'}...
+          {blog.content ? blog.content.substring(0, 100) : t('Blog.NoContent')}...
         </Typography>
       </CardContent>
       <CardActions>
         <Link href={`http://localhost:5000/blogs/${blog._id}`} passHref>
           <Button variant="contained" color="primary" sx={{ width: '100%' }}>
-            Read More
+            {t('Blog.ReadMore')} 
           </Button>
         </Link>
       </CardActions>
@@ -49,6 +52,7 @@ const BlogCardDetails = ({ blog }) => {
 
 // Main component to display blog cards and dynamic fetching
 const BlogCard = () => {
+  const { t } = useTranslation(); 
   const [blogs, setBlogPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -63,7 +67,7 @@ const BlogCard = () => {
         console.log(response);
 
         if (!response.ok) {
-          throw new Error('Failed to fetch blog posts.');
+          throw new Error(t('Blog.Error', { message: 'Failed to fetch blog posts.' }));
         }
         const data = await response.json();
         const formattedData = data.blogs;
@@ -80,16 +84,15 @@ const BlogCard = () => {
   }, []);
 
   if (isLoading) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>{t('Blog.Loading')}</Typography>; 
   }
 
   if (error) {
-    return <Typography>Error: {error}</Typography>;
+    return <Typography>{t('Blog.Error', { message: error })}</Typography>;
   }
 
   return (
     <Container sx={{ mt: 5 }}>
-      
       <Grid container spacing={3} justifyContent="center">
         {blogs.map((blog) => (
           <Grid item xs={12} sm={6} md={4} key={blog._id}>

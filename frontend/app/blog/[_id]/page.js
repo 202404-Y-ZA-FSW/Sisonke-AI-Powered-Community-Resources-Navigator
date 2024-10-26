@@ -30,9 +30,15 @@ export default function SingleBlogPage() {
       }
 
       try {
+        const token = localStorage.getItem("token");
         const id = params._id;
         const response = await axios.get(
-          `http://localhost:5000/blogs/blog/${id}`
+          `http://localhost:5000/blogs/blog/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setBlog(response.data);
       } catch (err) {

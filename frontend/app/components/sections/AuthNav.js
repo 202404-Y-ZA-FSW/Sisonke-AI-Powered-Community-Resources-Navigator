@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import React, { useState } from "react";
 import {
   AppBar,
@@ -62,7 +63,7 @@ const ImageButtonStyled = styled(Button)({
 });
 
 export default function AuthNav() {
-  const { logout } = useAuthentication();
+  const {user, logout } = useAuthentication();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const router = useRouter();
@@ -116,6 +117,8 @@ export default function AuthNav() {
     textTransform: "none",
   };
 
+  const isAdmin = user && user.user.role === "administrator";
+
   return (
     <AppBar
       sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }}
@@ -147,7 +150,13 @@ export default function AuthNav() {
               open={Boolean(anchorEl)}
               onClose={closeMenu}
             >
-              <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              {isAdmin ? (
+                <MenuItem onClick={() => router.push("/dashboard")}>
+                  Dashboard
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              )}
               <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
               <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
               <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
@@ -161,8 +170,12 @@ export default function AuthNav() {
               >
                 <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
-                <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-                <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+                <MenuItem onClick={() => router.push("/events")}>
+                  Events
+                </MenuItem>
+                <MenuItem onClick={() => router.push("/Business")}>
+                  Businesses
+                </MenuItem>
               </Menu>
               <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
               <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
@@ -189,7 +202,9 @@ export default function AuthNav() {
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+              <MenuItem onClick={() => router.push("/education")}>
+                Education
+              </MenuItem>
             </Menu>
             <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}>
               {profileImage ? (

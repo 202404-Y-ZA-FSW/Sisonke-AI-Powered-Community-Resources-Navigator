@@ -16,8 +16,10 @@ import {
 } from "@mui/material";
 import JobCard from "../JobCard";
 import { useRouter } from "next/navigation";
+import { useTranslation } from 'react-i18next'; 
 
 const Jobs = () => {
+  const { t } = useTranslation(); 
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("recently added");
   const [jobs, setJobs] = useState([]);
@@ -69,7 +71,7 @@ const Jobs = () => {
   const displayedJobs = sortedJobs.slice(0, 6);
 
   if (loading) {
-    return <Typography>Loading jobs...</Typography>;
+    return <Typography>{t('Jobs.Loading')}</Typography>; 
   }
 
   return (
@@ -81,16 +83,15 @@ const Jobs = () => {
         sx={{ my: 1 }}
         gutterBottom
       >
-        Explore the latest job opportunities
+        {t('Jobs.Title')} 
       </Typography>
       <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
-        Discover jobs most relevant to you by experience level, salary,
-        location, job type, etc.
+        {t('Jobs.Subtitle')}
       </Typography>
 
       <Box display="flex" justifyContent="space-between" sx={{ mb: 4 }}>
         <TextField
-          placeholder="Search Job Position or Company"
+          placeholder={t('Jobs.SearchPlaceholder')} 
           variant="outlined"
           fullWidth
           value={searchTerm}
@@ -102,16 +103,16 @@ const Jobs = () => {
         />
 
         <FormControl sx={{ minWidth: 180 }}>
-          <InputLabel>Sort By</InputLabel>
+          <InputLabel>{t('Jobs.SortBy')}</InputLabel>
           <Select
             value={sortBy}
             sx={{ borderRadius: "16px" }}
             onChange={(e) => setSortBy(e.target.value)}
-            label="Sort By"
+            label={t('Jobs.SortBy')}
           >
-            <MenuItem value="recently added">Recently Added</MenuItem>
-            <MenuItem value="highest salary">Highest Salary</MenuItem>
-            <MenuItem value="lowest salary">Lowest Salary</MenuItem>
+            <MenuItem value="recently added">{t('Jobs.RecentlyAdded')}</MenuItem> 
+            <MenuItem value="highest salary">{t('Jobs.HighestSalary')}</MenuItem>
+            <MenuItem value="lowest salary">{t('Jobs.LowestSalary')}</MenuItem> 
           </Select>
         </FormControl>
       </Box>
@@ -136,7 +137,7 @@ const Jobs = () => {
           size="large"
           onClick={() => router.push("/jobs")}
         >
-          Browse All
+          {t('Jobs.BrowseAll')}
         </Button>
       </Box>
     </Container>

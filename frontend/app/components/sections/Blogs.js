@@ -12,8 +12,10 @@ import {
   Box,
 } from "@mui/material";
 import Image from "next/image";
+import { useTranslation } from 'react-i18next';
 
 export default function Blogs() {
+  const { t } = useTranslation(); 
   const [blogs, setBlogs] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -43,7 +45,7 @@ export default function Blogs() {
   return (
     <Container maxWidth="lg" sx={{ py: 8 }}>
       <Typography variant="h4" align="center" gutterBottom>
-        Latest news about career advice
+        {t('Blogs.LatestNews')} 
       </Typography>
       <Typography
         variant="subtitle1"
@@ -51,7 +53,7 @@ export default function Blogs() {
         color="text.secondary"
         paragraph
       >
-        Add insight to boost career growth and check out tips on company job vacancies
+        {t('Blogs.Insight')}
       </Typography>
       <Grid container spacing={4} sx={{ mt: 4 }}>
         {blogs.map((post) => (
@@ -79,7 +81,7 @@ export default function Blogs() {
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="caption" color="text.secondary">
-                  {post.readTime} min Read
+                  {post.readTime} {t('Blogs.MinRead')} 
                 </Typography>
                 <Typography variant="h5" component="h2" gutterBottom>
                   {post.title}
@@ -101,7 +103,7 @@ export default function Blogs() {
                     padding: "5px 15px",
                   }}
                 >
-                  Read More
+                  {t('Blogs.ReadMore')} 
                 </Button>
               </CardActions>
             </Card>
@@ -121,7 +123,7 @@ export default function Blogs() {
             size="large"
             onClick={handleBrowseAll}
           >
-            Browse All
+            {t('Blogs.BrowseAll')} 
           </Button>
         </Box>
       )}
