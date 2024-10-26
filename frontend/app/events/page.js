@@ -12,6 +12,15 @@ import {
   Button,
   TextField,
   InputAdornment,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControlLabel,
+  Switch,
+  Paper,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { CalendarMonth, Info } from "@mui/icons-material";
 import Subscribe from "../components/sections/Subscribe";
@@ -19,9 +28,7 @@ import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
 import SearchIcon from "@mui/icons-material/Search";
 
-
 import { useAuthentication } from "../hooks/useAuthentication";
-
 
 export default function Events() {
   const [open, setOpen] = useState(false);
@@ -29,26 +36,47 @@ export default function Events() {
   const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredEvents, setFilteredEvents] = useState([]);
-
+  const [newEventModalOpen, setNewEventModalOpen] = useState(false);
+  const [newEventFormData, setNewEventFormData] = useState({
+    title: "",
+    location: "",
+    date: "",
+    category: "",
+    description: "",
+    isFree: true,
+    eventUrl: "",
+    attendeeLimit: 0,
+    startTime: "",
+    endTime: "",
+    address: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const { user } = useAuthentication();
-
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get("http://localhost:5000/events/");
-        setEvents(response.data);
-        setFilteredEvents(response.data);
+        const formattedEvents = response.data.map(event => ({
+          ...event,
+          date: new Date(event.date).toLocaleDateString(),
+          time: new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }));
+        setEvents(formattedEvents);
+        setFilteredEvents(formattedEvents);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
 
-
     fetchEvents();
   }, []);
-
 
   useEffect(() => {
     const results = events.filter((event) =>
@@ -57,20 +85,114 @@ export default function Events() {
     setFilteredEvents(results);
   }, [searchTerm, events]);
 
-
   const handleOpen = (event) => {
     setSelectedEvent(event);
     setOpen(true);
   };
 
-
   const handleClose = () => setOpen(false);
-
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleNewEventModalOpen = () => {
+    setNewEventModalOpen(true);
+  };
+
+  const handleNewEventModalClose = () => {
+    setNewEventModalOpen(false);
+    setNewEventFormData({
+      title: "",
+      location: "",
+      date: "",
+      category: "",
+      description: "",
+      isFree: true,
+      eventUrl: "",
+      attendeeLimit: 0,
+      startTime: "",
+      endTime: "",
+      address: "",
+    });
+    setErrors({});
+  };
+
+  const handleNewEventFormChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setNewEventFormData({
+      ...newEventFormData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!newEventFormData.title) errors.title = "Title is required";
+    if (!newEventFormData.address) errors.address = "Address is required";
+    if (!newEventFormData.startTime) errors.startTime = "Start time is required";
+    if (!newEventFormData.endTime) errors.endTime = "End time is required";
+    if (!newEventFormData.description) errors.description = "Description is required";
+    if (!newEventFormData.category) errors.category = "Category is required";
+    return errors;
+  };
+
+  const handleNewEventSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/events/",
+        { ...newEventFormData, organizer: user.user.id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        setSnackbar({
+          open: true,
+          message: "Event created successfully!",
+          severity: "success",
+        });
+        handleNewEventModalClose();
+        // Refresh events list
+        const updatedEvents = await axios.get("http://localhost:5000/events/");
+        setEvents(updatedEvents.data);
+      } else {
+        setSnackbar({
+          open: true,
+          message: "Failed to create an event",
+          severity: "error",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      setSnackbar({
+        open: true,
+        message: `An error occurred while creating the event: ${err.message}`,
+        severity: "error",
+      });
+    }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   return (
     <React.Fragment>
@@ -140,7 +262,7 @@ export default function Events() {
           {user ? (
             <Button
               color="primary"
-              href="/events/new"
+              onClick={handleNewEventModalOpen}
               sx={{
                 mb: 2,
                 backgroundColor: "#6c63ff",
@@ -187,7 +309,7 @@ export default function Events() {
                     <Box sx={{ display: "flex", gap: 1 }}>
                       <CalendarMonth />
                       <Typography sx={{ marginTop: "3px" }} variant="body2">
-                        {event.date}
+                        {event.date} at {event.time}
                       </Typography>
                     </Box>
                   </CardContent>
@@ -254,10 +376,212 @@ export default function Events() {
               </Button>
             </Box>
           </Modal>
+          <Modal
+            open={newEventModalOpen}
+            onClose={handleNewEventModalClose}
+            aria-labelledby="new-event-modal-title"
+            aria-describedby="new-event-modal-description"
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 400,
+                bgcolor: 'background.paper',
+                boxShadow: 24,
+                p: 4,
+                maxHeight: '90vh',
+                overflowY: 'auto',
+              }}
+            >
+              <Typography id="new-event-modal-title" variant="h6" component="h2" gutterBottom>
+                Create New Event
+              </Typography>
+              <form onSubmit={handleNewEventSubmit}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Title"
+                      name="title"
+                      value={newEventFormData.title}
+                      onChange={handleNewEventFormChange}
+                      required
+                      error={!!errors.title}
+                      helperText={errors.title}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Location"
+                      name="location"
+                      value={newEventFormData.location}
+                      onChange={handleNewEventFormChange}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Date"
+                      type="date"
+                      name="date"
+                      value={newEventFormData.date}
+                      onChange={handleNewEventFormChange}
+                      required
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth error={!!errors.category}>
+                      <InputLabel id="category-label">Category</InputLabel>
+                      <Select
+                        labelId="category-label"
+                        name="category"
+                        value={newEventFormData.category}
+                        onChange={handleNewEventFormChange}
+                        label="Category"
+                      >
+                        <MenuItem value="Job Fair">Job Fair</MenuItem>
+                        <MenuItem value="Health Drive">Health Drive</MenuItem>
+                        <MenuItem value="Education">Education</MenuItem>
+                        <MenuItem value="Community">Community</MenuItem>
+                      </Select>
+                      {errors.category && (
+                        <Typography color="error">{errors.category}</Typography>
+                      )}
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Description"
+                      name="description"
+                      value={newEventFormData.description}
+                      onChange={handleNewEventFormChange}
+                      multiline
+                      rows={4}
+                      error={!!errors.description}
+                      helperText={errors.description}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Address"
+                      name="address"
+                      value={newEventFormData.address}
+                      onChange={handleNewEventFormChange}
+                      multiline
+                      rows={3}
+                      error={!!errors.address}
+                      helperText={errors.address}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={newEventFormData.isFree}
+                          onChange={handleNewEventFormChange}
+                          name="isFree"
+                        />
+                      }
+                      label="Free Event"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Event URL"
+                      name="eventUrl"
+                      value={newEventFormData.eventUrl}
+                      onChange={handleNewEventFormChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Attendee Limit"
+                      name="attendeeLimit"
+                      type="number"
+                      value={newEventFormData.attendeeLimit}
+                      onChange={handleNewEventFormChange}
+                      inputProps={{ min: 0 }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Start Time"
+                      type="time"
+                      name="startTime"
+                      value={newEventFormData.startTime}
+                      onChange={handleNewEventFormChange}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      inputProps={{
+                        step: 300, // 5 min
+                      }}
+                      error={!!errors.startTime}
+                      helperText={errors.startTime}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="End Time"
+                      type="time"
+                      name="endTime"
+                      value={newEventFormData.endTime}
+                      onChange={handleNewEventFormChange}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      inputProps={{
+                        step: 300, // 5 min
+                      }}
+                      error={!!errors.endTime}
+                      helperText={errors.endTime}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Create Event
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </Box>
+          </Modal>
         </Container>
       </Box>
       <Subscribe />
       <Footer />
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </React.Fragment>
   );
 }
