@@ -1,14 +1,7 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import {
-  Container,
-  Box,
-  Typography,
-  CircularProgress,
-  IconButton,
-} from "@mui/material";
+import { Container, Box, Typography, CircularProgress, IconButton } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import axios from "axios";
 import Navigation from "@/app/components/sections/Navigation";
@@ -28,18 +21,12 @@ export default function SingleBlogPage() {
         console.log("No ID available yet");
         return;
       }
-
       try {
         const token = localStorage.getItem("token");
         const id = params._id;
-        const response = await axios.get(
-          `http://localhost:5000/blogs/blog/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`http://localhost:5000/blogs/blog/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setBlog(response.data);
       } catch (err) {
         console.error("Error fetching blog:", err);
@@ -48,11 +35,9 @@ export default function SingleBlogPage() {
         setLoading(false);
       }
     };
-
     fetchBlog();
   }, [params._id]);
 
-  // HANDLE TEXT TO SPEECH
   const handlePlay = async (text) => {
     try {
       const response = await fetch("http://localhost:5000/blogs/blog/convert-to-speech", {
@@ -61,7 +46,6 @@ export default function SingleBlogPage() {
         body: JSON.stringify({ text }),
       });
       const data = await response.json();
-
       if (data.audioUrl) {
         const audio = new Audio(data.audioUrl);
         audio.play();
@@ -71,15 +55,18 @@ export default function SingleBlogPage() {
     }
   };
 
+  const formatContent = (content) => {
+    return content.split('\n').map((paragraph, index) => (
+      <Typography variant="body1" paragraph key={index}>
+        {paragraph}
+      </Typography>
+    ));
+  };
+
   if (loading) {
     return (
       <Container>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="60vh"
-        >
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
           <CircularProgress />
         </Box>
       </Container>
@@ -102,20 +89,36 @@ export default function SingleBlogPage() {
     <React.Fragment>
       <Navigation />
       {blog ? (
-        <>
+        <Container maxWidth="md" sx={{ mt: 4 }}>
           <Box
             sx={{
               background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-              py: { xs: 4, md: 8 },
+              padding: 3,
+              borderRadius: 2,
+              boxShadow: 2,
+              marginBottom: 4,
             }}
           >
-            <Container maxWidth="md">
+            {blog.imageUrl && (
+              <Box
+                component="img"
+                src={blog.imageUrl}
+                alt={blog.title}
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: 2,
+                  mb: 3,
+                  boxShadow: 2,
+                }}
+              />
+            )}
+            <Box sx={{ mb: 4 }}>
               <Typography
                 variant="h2"
                 component="h1"
                 sx={{
                   fontWeight: "bold",
-                  mb: 2,
                   fontSize: { xs: "2.5rem", md: "3.75rem" },
                 }}
               >
@@ -129,27 +132,28 @@ export default function SingleBlogPage() {
                   fontSize: { xs: "1rem", md: "1.25rem" },
                 }}
               >
-                {blog.readTime} Minutes Read | Author: {blog.author.username} |
-                Date: {blog.createdAt.split("T")[0]}
+                {blog.readTime} Minutes Read | Date: {new Date(blog.createdAt).toLocaleDateString()}
               </Typography>
-            </Container>
+              <IconButton
+                size="large"
+                sx={{
+                  backgroundColor: "#6c63ff",
+                  color: "#ffffff",
+                  marginBottom: 2,
+                }}
+                onClick={() => handlePlay(blog.content)}
+              >
+                <PlayArrowIcon />
+              </IconButton>
+            </Box>
+            <Box>
+              {formatContent(blog.content)}
+            </Box>
+            <Typography variant="body2" sx={{ mt: 4, fontStyle: 'italic', color: "text.secondary" }}>
+              Author: {blog.author.username}
+            </Typography>
           </Box>
-          <Container sx={{ paddingTop: 8 }} maxWidth="md">
-            <IconButton
-              size="large"
-              sx={{
-                backgroundColor: "#6c63ff",
-                color: "#ffffff",
-                marginBottom: 2,
-              }}
-              onClick={() => handlePlay(blog.content)}
-            >
-              <PlayArrowIcon />
-            </IconButton>
-            <BlogTextToSpeech blogContent={blog.content} />
-            <Typography variant="body1">{blog.content}</Typography>
-          </Container>
-        </>
+        </Container>
       ) : (
         <Typography variant="h4">Blog not found</Typography>
       )}
