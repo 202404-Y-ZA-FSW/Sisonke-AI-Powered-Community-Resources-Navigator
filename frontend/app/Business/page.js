@@ -11,13 +11,22 @@ import {
   Typography,
   TextField,
   InputAdornment,
+  Button,
+  Modal,
+  Fade,
+  Backdrop,
+  MenuItem,
+  IconButton,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from '@mui/icons-material/Close';
 import { styled } from "@mui/system";
 import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/NavBar";
 import Subscribe from "../components/sections/Subscribe";
+import { useAuthentication } from "../hooks/useAuthentication";
+import axios from "axios";
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -71,12 +80,76 @@ const Icon = styled("span")({
   color: "#000",
 });
 
+const StyledModal = styled(Modal)({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+const ModalContent = styled(Box)(({ theme }) => ({
+  backgroundColor: '#fff',
+  borderRadius: '8px',
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+  padding: '32px',
+  width: '90%',
+  maxWidth: '800px',
+  maxHeight: '90vh',
+  overflowY: 'auto',
+  position: 'relative',
+  [theme.breakpoints.down('sm')]: {
+    width: '95%',
+    padding: '24px',
+  },
+}));
+
+const FormField = styled(TextField)({
+  marginBottom: 24,
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "8px",
+  },
+});
+
+const SubmitButton = styled(Button)({
+  marginTop: 16,
+  borderRadius: '8px',
+  padding: '12px 24px',
+});
+
+const industries = [
+  "Agriculture",
+  "Construction",
+  "Education",
+  "Finance",
+  "Healthcare",
+  "Hospitality",
+  "IT and Technology",
+  "Manufacturing",
+  "Retail",
+  "Transportation",
+];
+
 // Business Page
 const Business = () => {
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [newBusiness, setNewBusiness] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    category: '',
+    description: '',
+    website: '',
+    image: '',
+    logo: '',
+    owner: '',
+  });
+  const [errors, setErrors] = useState({});
+  const { user } = useAuthentication();
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -104,6 +177,119 @@ const Business = () => {
 
     fetchBusinesses();
   }, []);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setNewBusiness({
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      category: '',
+      description: '',
+      website: '',
+      image: '',
+      logo: '',
+      owner: '',
+    });
+    setErrors({});
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewBusiness(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    let errorObj = {};
+
+    if (!newBusiness.name) {
+      errorObj.name = "Business name is required";
+      valid = false;
+    }
+
+    if (!newBusiness.email) {
+      errorObj.email = "Email is required";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(newBusiness.email)) {
+      errorObj.email = "Invalid email address";
+      valid = false;
+    }
+
+    if (!newBusiness.phone) {
+      errorObj.phone = "Phone is required";
+      valid = false;
+    }
+
+    if (!newBusiness.address) {
+      errorObj.address = "Address is required";
+      valid = false;
+    }
+
+    if (!newBusiness.city) {
+      errorObj.city = "City is required";
+      valid = false;
+    }
+
+    if (!newBusiness.category) {
+      errorObj.category = "Industry is required";
+      valid = false;
+    }
+
+    if (!newBusiness.description) {
+      errorObj.description = "Description is required";
+      valid = false;
+    }
+
+    if (!newBusiness.image) {
+      errorObj.image = "Image URL is required";
+      valid = false;
+    }
+
+    if (!newBusiness.logo) {
+      errorObj.logo = "Logo URL is required";
+      valid = false;
+    }
+
+    if (!newBusiness.owner) {
+      errorObj.owner = "Owner is required";
+      valid = false;
+    }
+
+    setErrors(errorObj);
+    return valid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/business/new", newBusiness);
+      console.log("Response:", response.data);
+
+      setBusinesses([...businesses, response.data]);
+      handleModalClose();
+    } catch (error) {
+      console.error("Error submitting the form", error);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        general: "Failed to submit. Please try again.",
+      }));
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -171,6 +357,19 @@ const Business = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Box>
+            
+            {user && (
+              <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleModalOpen}
+                  sx={{ borderRadius: "20px", padding: "10px 20px" }}
+                >
+                  Post A Business
+                </Button>
+              </Box>
+            )}
           </Container>
         </Box>
 
@@ -224,6 +423,155 @@ const Business = () => {
       </Container>
       <Subscribe />
       <Footer />
+
+      <StyledModal
+        open={modalOpen}
+        onClose={handleModalClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={modalOpen}>
+          <ModalContent>
+            <Typography variant="h4" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
+              Register Your Business
+            </Typography>
+
+            <form onSubmit={handleSubmit}>
+              {errors.general && <Alert severity="error" sx={{ mb: 3 }}>{errors.general}</Alert>}
+
+              <FormField
+                label="Business Name"
+                name="name"
+                value={newBusiness.name}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.name}
+                helperText={errors.name}
+              />
+
+              <FormField
+                label="Email"
+                type="email"
+                name="email"
+                value={newBusiness.email}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+
+              <FormField
+                label="Phone"
+                name="phone"
+                value={newBusiness.phone}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.phone}
+                helperText={errors.phone}
+              />
+
+              <FormField
+                label="Address"
+                name="address"
+                value={newBusiness.address}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.address}
+                helperText={errors.address}
+              />
+
+              <FormField
+                label="City"
+                name="city"
+                value={newBusiness.city}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.city}
+                helperText={errors.city}
+              />
+
+              <FormField
+                select
+                label="Industry"
+                name="category"
+                value={newBusiness.category}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.category}
+                helperText={errors.category}
+              >
+                {industries.map((ind, idx) => (
+                  <MenuItem key={idx} value={ind}>
+                    {ind}
+                  </MenuItem>
+                ))}
+              </FormField>
+
+              <FormField
+                label="Business Description"
+                name="description"
+                value={newBusiness.description}
+                onChange={handleInputChange}
+                fullWidth
+                multiline
+                rows={4}
+                error={!!errors.description}
+                helperText={errors.description}
+              />
+
+              <FormField
+                label="Website"
+                name="website"
+                value={newBusiness.website}
+                onChange={handleInputChange}
+                fullWidth
+              />
+
+              <FormField
+                label="Image URL"
+                name="image"
+                value={newBusiness.image}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.image}
+                helperText={errors.image}
+              />
+
+              <FormField
+                label="Logo URL"
+                name="logo"
+                value={newBusiness.logo}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.logo}
+                helperText={errors.logo}
+              />
+
+              <FormField
+                label="Owner"
+                name="owner"
+                value={newBusiness.owner}
+                onChange={handleInputChange}
+                fullWidth
+                error={!!errors.owner}
+                helperText={errors.owner}
+              />
+
+              <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+                <Button onClick={handleModalClose} sx={{ mr: 2 }}>
+                  Cancel
+                </Button>
+                <SubmitButton type="submit" variant="contained" color="primary">
+                  Submit
+                </SubmitButton>
+              </Box>
+            </form>
+          </ModalContent>
+        </Fade>
+      </StyledModal>
     </div>
   );
 };

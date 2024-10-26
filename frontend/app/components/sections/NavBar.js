@@ -121,7 +121,7 @@ export default function Navbar() {
           <MenuItemComponent route={ROUTES.BLOG}>Blog</MenuItemComponent>
           <MenuItemComponent route={ROUTES.FORUM}>Forum</MenuItemComponent>
           <MenuItemComponent route={ROUTES.EVENTS}>Events</MenuItemComponent>
-          <MenuItemComponent route={ROUTES.BUSINESS}>Businesses</MenuItemComponent>
+          <MenuItemComponent route={ROUTES.BUSINESS}>Business</MenuItemComponent>
         </Menu>
         <MenuItemComponent route={ROUTES.LOGIN}>Login</MenuItemComponent>
         <MenuItemComponent route={ROUTES.REGISTER}>Register</MenuItemComponent>

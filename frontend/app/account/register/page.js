@@ -7,29 +7,41 @@ import {
   TextField,
   Typography,
   Link,
-  Grid,
   Card,
   CardContent,
   ThemeProvider,
   createTheme,
   Alert,
   Snackbar,
+  Container,
+  Divider,
+  useMediaQuery,
 } from "@mui/material";
+import { Facebook, Google } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#f9a825",
+      main: "#6c63ff",
     },
     secondary: {
       main: "#4267B2",
+    },
+    background: {
+      default: "#f4f6f8",
+    },
+  },
+  typography: {
+    fontFamily: "'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+    h3: {
+      fontWeight: 700,
     },
   },
   components: {
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: "16px",
+          marginBottom: "24px",
         },
       },
     },
@@ -37,8 +49,17 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          borderRadius: "25px",
-          padding: "10px 0",
+          borderRadius: "12px",
+          padding: "14px 0",
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: "24px",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
         },
       },
     },
@@ -58,6 +79,8 @@ export default function Register() {
     message: "",
     severity: "success",
   });
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -118,130 +141,115 @@ export default function Register() {
           alignItems: "center",
           minHeight: "100vh",
           background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+          padding: isMobile ? theme.spacing(2) : theme.spacing(4),
         }}
       >
-        <Card sx={{ width: 450, borderRadius: "16px", boxShadow: 3 }}>
-          <CardContent sx={{ padding: "24px" }}>
-            <Typography
-              variant="h5"
-              component="h1"
-              sx={{ mb: 3, fontWeight: "bold" }}
-            >
-              Create A Sisonke Account
-            </Typography>
-            <Typography component="p" sx={{ color: "gray", mt: 1, textAlign: "center" }}>
-              Join Sisonke and discover amazing opportunities, community support, and more.
-            </Typography>
-            <form onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                placeholder="Username"
-                variant="outlined"
-                label="Username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                error={!!errors.username}
-                helperText={errors.username}
-                InputProps={{
-                  sx: { borderRadius: "16px" },
-                }}
-              />
-              <TextField
-                fullWidth
-                placeholder="Email"
-                variant="outlined"
-                label="Email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                error={!!errors.email}
-                helperText={errors.email}
-                InputProps={{
-                  sx: { borderRadius: "16px" },
-                }}
-              />
-              <TextField
-                fullWidth
-                type="password"
-                placeholder="Password"
-                variant="outlined"
-                label="Password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                error={!!errors.password}
-                helperText={errors.password}
-                InputProps={{
-                  sx: { borderRadius: "16px" },
-                }}
-              />
-              <TextField
-                fullWidth
-                type="password"
-                placeholder="Confirm Password"
-                variant="outlined"
-                label="Confirm Password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword}
-                InputProps={{
-                  sx: { borderRadius: "16px" },
-                }}
-              />
-              <Link
-                href="/account/login"
-                sx={{ display: "block", color: "#6c63ff", mt: "16px", textDecoration: "none" }}
+        <Container maxWidth="sm" disableGutters={isMobile}>
+          <Card sx={{ width: '100%' }}>
+            <CardContent sx={{ padding: isMobile ? "24px" : "48px" }}>
+              <Typography
+                variant={isMobile ? "h4" : "h3"}
+                component="h1"
+                sx={{ mb: 3, textAlign: "center" }}
               >
-                Already have an account? Login
-              </Link>
+                Join Sisonke
+              </Typography>
+              <Typography variant="body1" sx={{ color: "text.secondary", mb: 4, textAlign: "center" }}>
+                Discover opportunities, connect with the community, and grow together.
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  fullWidth
+                  placeholder="Username"
+                  variant="outlined"
+                  label="Username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  error={!!errors.username}
+                  helperText={errors.username}
+                />
+                <TextField
+                  fullWidth
+                  placeholder="Email"
+                  variant="outlined"
+                  label="Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
+                  helperText={errors.email}
+                />
+                <TextField
+                  fullWidth
+                  type="password"
+                  placeholder="Password"
+                  variant="outlined"
+                  label="Password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  error={!!errors.password}
+                  helperText={errors.password}
+                />
+                <TextField
+                  fullWidth
+                  type="password"
+                  placeholder="Confirm Password"
+                  variant="outlined"
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  error={!!errors.confirmPassword}
+                  helperText={errors.confirmPassword}
+                />
+                <Button
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  sx={{ mt: 2, mb: 3 }}
+                >
+                  Create Account
+                </Button>
+              </form>
+              <Divider sx={{ my: 3 }}>OR</Divider>
               <Button
                 fullWidth
-                type="submit"
+                variant="outlined"
+                color="secondary"
+                startIcon={<Facebook />}
+                size="large"
+                sx={{ mb: 2 }}
+              >
+                Continue with Facebook
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<Google />}
+                size="large"
                 sx={{
-                  mt: 3,
-                  mb: 2,
-                  textTransform: "none",
-                  color: "#ffffff",
-                  backgroundColor: "#6c63ff",
-                  borderRadius: "16px",
-                  "&:hover": { backgroundColor: "#5A52D5" },
+                  borderColor: "#DB4437",
+                  color: "#DB4437",
+                  "&:hover": { backgroundColor: "rgba(219, 68, 55, 0.04)" },
                 }}
               >
-                Register
+                Continue with Google
               </Button>
-            </form>
-            <Typography align="center" sx={{ mb: 2 }}>
-              OR
-            </Typography>
-            <Button
-              fullWidth
-              color="secondary"
-              sx={{
-                mb: 2,
-                backgroundColor: "#1877F2",
-                color: "white",
-                borderRadius: "16px",
-                "&:hover": { backgroundColor: "#5A52D5" },
-              }}
-            >
-              Continue with Facebook
-            </Button>
-            <Button
-              fullWidth
-              sx={{
-                borderRadius: "16px",
-                backgroundColor: "#DB4437",
-                color: "white",
-                "&:hover": { backgroundColor: "#C53929" },
-              }}
-            >
-              Continue with Google
-            </Button>
-          </CardContent>
-        </Card>
+              <Box sx={{ mt: 3, textAlign: "center" }}>
+                <Link
+                  href="/account/login"
+                  sx={{ color: "primary.main", textDecoration: "none" }}
+                >
+                  Already have an account? Log in
+                </Link>
+              </Box>
+            </CardContent>
+          </Card>
+        </Container>
         <Snackbar
           open={snackbar.open}
           autoHideDuration={6000}
@@ -251,7 +259,7 @@ export default function Register() {
           <Alert
             onClose={handleSnackbarClose}
             severity={snackbar.severity}
-            sx={{ width: "100%", borderRadius: "16px" }}
+            sx={{ width: "100%" }}
           >
             {snackbar.message}
           </Alert>
