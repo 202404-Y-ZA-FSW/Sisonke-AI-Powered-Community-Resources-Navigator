@@ -7,6 +7,7 @@ import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import SchoolIcon from '@mui/icons-material/School';
 import GroupIcon from '@mui/icons-material/Group';
+import ForumIcon from '@mui/icons-material/Forum';
 import HeroImage from "./Images/hero-image.jpg";
 import CityOfJHB from "./Images/logos/jhb.png";
 import CityOfEkurhuleni from "./Images/logos/ekurhuleni.png";
@@ -89,6 +90,7 @@ export default function HeroSection() {
   const [jobCount, setJobCount] = useState(0);
   const [businessCount, setBusinessCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
+  const [forumCount, setForumCount] = useState(0);
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -98,10 +100,11 @@ export default function HeroSection() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched data:", data); // Debug log to verify the data structure
+        console.log("Fetched data:", data);
         setJobCount(data.jobCount);
         setBusinessCount(data.businessCount);
         setUserCount(data.userCount);
+        setForumCount(data.forumCount);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
@@ -167,6 +170,19 @@ export default function HeroSection() {
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
                     {t('HeroSection.Businesses')}
+                  </Typography>
+                </StatBox>
+              </Grid>
+              <Grid item xs={6} md={3}>
+                <StatBox>
+                  <StatIcon>
+                    <ForumIcon style={{ fontSize: 28 }} />
+                  </StatIcon>
+                  <AnimatedNumber variant="h6">
+                    {forumCount}
+                  </AnimatedNumber>
+                  <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
+                    {t('HeroSection.Forums')}
                   </Typography>
                 </StatBox>
               </Grid>
@@ -237,13 +253,13 @@ export default function HeroSection() {
               <Image src={CityOfTshwane} alt="City Of Tshwane" width="100%" height={50} />
             </Grid>
             <Grid item>
-              <Image src={NYDA} alt="National Youth Development" width="100%" height={50} />
+              <Image src={NYDA} alt="NYDA" width="100%" height={50} />
             </Grid>
             <Grid item>
               <Image src={SA} alt="SA Youth" width="100%" height={50} />
             </Grid>
             <Grid item>
-              <Image src={Projecty} alt="Project Y World" width="100%" height={50} />
+              <Image src={Projecty} alt="Projecty" width="100%" height={50} />
             </Grid>
           </Grid>
         </Box>
