@@ -1,157 +1,163 @@
 {
-    "navbar": {
-      "home": "Hayani",
-      "about": "Nga Ha",
-      "jobs": "Mishumo",
-      "contact": "Vhudavhidzani",
-      "community": "Tshiimiswa",
-      "blog": "Blog",
-      "forum": "Forum",
-      "events": "Mikhuvha",
-      "education": "Dzidzo",
-      "login": "Dzhena",
-      "register": "Rekhitha",
-      "createBlogPost": "Vhura Blog U Tsha"
-    },
-    "jobCard": {
-      "salary": "R",
-      "location": "Nndwa",
-      "experience": "Mvelele",
-      "type": "Mubulo",
-      "description": "Tshifanyiso"
-    },
-    "events": {
-      "exploreEvents": "Sedzani Mikhuvha Ya Lushaka",
-      "eventDescription": "Mikhuvha iyi i a pfiwa nga dzinwe khamphani, tshitshavha, na dzinwe khumbelo dza lushaka."
-    },
-    "modal": {
-      "date": "Duvha",
-      "location": "Nndwa",
-      "time": "Nako",
-      "close": "Valela"
-    },
-    "hero": {
-      "title": "Sedzani Vhulasi Ha Vhathu Na Mikhuvha Ya Vhusiku",
-      "subtitle": "Sedzani masheleni ane a fhaṱiwa u itela khonani dza vho khou imela vhathu.",
-      "searchBar": {
-        "jobTypePlaceholder": "Mubulo Wa Mushumo",
-        "locationPlaceholder": "Nndwa",
-        "searchButton": "Ralo"
-      },
-      "popularCategories": "Tshikala Tsha Khwaṱha:",
-      "categories": [
-        "U Fara Vhathu",
-        "Mulaya U Itela Khou Tshimbila",
-        "Khou Laedza"
-      ],
-      "supportTitle": "Ri Farwa",
-      "supportSubtitle": "Nga vhurereli ha mupo na vhaḽi vha lushaka na mivhuso."
-    },
-    "footer": {
-      "company": "SIS<span style=\"color: '#6c63ff';\">O</span>NKE",
-      "address": "143 Ndilani Ya Vhubvaḓuvha, Sandown, Sandton, Gauteng, Afrika Tshipembe",
-      "email": "info@sisonke.co.za",
-      "phone": "+27 12 345 6789",
-      "community": "Tshiimiswa",
-      "companyLinks": [
-        "Hayani",
-        "Nga Ha Rine",
-        "Mushumo",
-        "Mibvunziso"
-      ],
-      "supportLinks": [
-        "Vhudavhidzani",
-        "Mulayo Wa Tsireledzo",
-        "Milayo Ya Tshumelo"
-      ]
-    },
-    "services": {
-      "title": "Zwi Ni Nga Ita Na Zwi Ni Nga Fhata Kha Tshitshavha",
-      "subtitle": "U itela mushumo, mivhuso, na vhushaka.",
-      "steps": [
-        {
-          "icon": "Vhathu",
-          "title": "Tshiimiswa",
-          "description": "Phakha na vhathu vha lushaka lwannda, fhatani tshumelo dzavho, na vhaite tshiṱaluswa."
-        },
-        {
-          "icon": "Mikhuvha",
-          "title": "Mikhuvha Ya Tshitshavha",
-          "description": "Ni songo kala mikhuvha ya tshitshavha."
-        },
-        {
-          "icon": "Mishumo",
-          "title": "Mishumo Na Tshikovha",
-          "description": "NGOs dzashu dzi thusa nga vhutsila u bvela phanḓa, na mushumo wa dziandzhe."
-        },
-        {
-          "icon": "Forum",
-          "title": "Tshimedza",
-          "description": "Vhathu vha u vhala forums na blogs vha tshi amba nḓila dza vhutshilo."
-        }
-      ],
-      "getStarted": "Thoma Zwino"
-    },
-    "subscribe": {
-      "title": "Inwalani Mulayo Wasu Wa Nnḓu",
-      "description": "Fhatalani nga zwipfiwa, mishumo, na zwa dzinwe dzianda ṱhanuwa uri dzi fhiwa kha vhana na forums.",
-      "button": "Inwala Zwino",
-      "modalTitle": "Sisonke Inwala",
-      "form": {
-        "namePlaceholder": "Dzina",
-        "emailPlaceholder": "E-mayili",
-        "locationPlaceholder": "Nndwa",
-        "submitButton": "Tumelo"
-      }
-    },
-    "faq": {
-      "title": "Mibvunziso Ya Khanḓani",
-      "subtitle": "Arali ni si kona u wana phetho, fhatuwani kha vhurereli ha lushaka.",
-      "questions": [
-        {
-          "question": "Sisonke AI Tshiimiswa Tshifhinga Tshakhamusi?",
-          "answer": "Tshelede yanḓa iya nga tshikovha u itela lushaka lwa u takalela mushumo na phakha."
-        },
-        {
-          "question": "Sisonke I Nyadza Mini Tshenetsho Tshiimiswa?",
-          "answer": "Tshiimiswa tshoṱhe tshikovha tshi fhedza lutshelo lwa tshanda zwino vhuḓimaho."
-        },
-        {
-          "question": "Ni Khou Gana Na Tshitshavha I Tshini I Re Vhuḓi?",
-          "answer": "Ee, khamphani dzaḽiḽaho dzinwe dzakhumudzedzwa na tshikovha tshavho tshoṱhe tshitshi."
-        },
-        {
-          "question": "Ni Mishumo I Phadzanaho Na Tshitshavha?",
-          "answer": "Ee, mishumo yeneyo yo fanelwa vha ṱhama."
-        },
-        {
-          "question": "Ni Tshiimiswa Tshimange Vhuḓivhalea?",
-          "answer": "Ee, tshimange tshone tshitshimbila, tshoṱhe tshitshimbila tshi nga vha ṱhama."
-        }
-      ]
-    },
-    "blogs": {
-      "title": "Mikhuvha Ya U Fhumula Mushumo",
-      "subtitle": "Dovhani u wana pfunzo dza zwa mivhuso na mushumo.",
-      "posts": [
-        {
-          "title": "Vhuleme Vhuḓi Ha Mushumo Na Ndivho",
-          "description": "U vha mulayayo vhane vha vha na vhana vhe vha khou lugiselela u bvela phanḓa. Tshikovha tshiḽa tshiḓḓela...",
-          "readTime": "8 min U Vhala"
-        },
-        {
-          "title": "Mikhuvha Ya U Takalela Vhana",
-          "description": "Vhana vha tshi vha na mvelele kha mushumo vha bvela phanḓa u itela mushumo. U bvela phanḓa ha vha hu tshi vha...",
-          "readTime": "11 min U Vhala"
-        },
-        {
-          "title": "Zwi Sa Fanela U Amba Nga Ha Mushumo",
-          "description": "A tshiḽa tshifhinga tsha mushumo tshoṱhe tshiṱuma tshifhinga tshivhuya tshi tsinyiswa...",
-          "readTime": "9 min U Vhala"
-        }
-      ],
-      "readMoreButton": "Vhalani Zwinzhi",
-      "browseAllButton": "Lodani Zwinzhi"
-    }
+  "Navbar": {
+    "Home": "Hayani",
+    "About": "Mabebo",
+    "Jobs": "Mishumo",
+    "Contact": "Vhudavhidzo",
+    "Community": "Vhuthondedzi",
+    "Blog": "Blog",
+    "Forum": "Forum",
+    "Events": "Zwine wa Shuma",
+    "Business": "Mabindu",
+    "Login": "Kona",
+    "Register": "Kumedza"
+  },
+  "HeroSection": {
+    "Title": "Vhulangi na Thikhedzo ya Muvhundu",
+    "Subtitle": "Rumiwa zwithu zwa tshititshi kha vhathu vha shango lavho.",
+    "Users": "Vhathusi",
+    "JobsCreated": "Mishumo Yo Vhulwaho",
+    "Businesses": "Mabindu",
+    "SupportedBy": "Ri zwimaganye nga",
+    "SupportSubtitle": "Mabindu a zwa shango, na maphodisa na mabindu nga nzhele."
+  },
+  "Blogs": {
+    "LatestNews": "Mafhungo a Khombo",
+    "Insight": "Maano a u phanda mishumo",
+    "MinRead": "Minedza",
+    "ReadMore": "Vhala Zwiṅwe",
+    "BrowseAll": "Vhula Zwothe"
+  },
+  "Footer": {
+    "Address": "143 West Street, Sandown, Sandton, Gauteng, Afurika Tshipembe",
+    "Community": "Vhadzulapo",
+    "Blog": "Bologo",
+    "Forum": "Foramu",
+    "Events": "Mikosi",
+    "Businesses": "Mabindu",
+    "Company": "Khamphani",
+    "Home": "Hayani",
+    "AboutUs": "Nga Ha Riṋe",
+    "Jobs": "Mishumo",
+    "FAQs": "Mbudziso",
+    "Support": "Thikhedzo",
+    "ContactUs": "Vhudzulapo Nga Riṋe",
+    "PrivacyPolicy": "Ndayotewa Ya U Tavhanya",
+    "TermsOfService": "Mbuedzo Ya Tshumelo"
+  },
+  "Jobs": {
+    "Title": "Tshiphura tsha Mishumo",
+    "Subtitle": "Mishumo nga tshithikhedzo",
+    "SearchPlaceholder": "Tsha Dzhia Mushumo kana Khampani",
+    "SortBy": "Mishumo",
+    "RecentlyAdded": "Yo lwaho",
+    "HighestSalary": "Minfhala",
+    "LowestSalary": "Minfhala dzo sedzaho",
+    "Loading": "Tshihumbudzo...",
+    "BrowseAll": "Vhula Maduvha a Malibe"
+  },
+  "JobCard": {
+    "JobTitle": "Mushumo",
+    "Company": "Khamphani",
+    "Location": "Nḓilani",
+    "Experience": "Maano",
+    "JobType": "Mafhungo",
+    "Salary": "Mushumo",
+    "NoSalary": "R0"
+  },
+  "FAQs": {
+    "Title": "Mbudziso Dzo Mavhuthoni",
+    "Subtitle": "Arali mbudziso dzaṋu a dzi vhuyi dza fhindulwa fhano, zwino vha nga tshimbidza vhulondi hashu uri vha ṋe fhungo.",
+    "LoadError": "Vha kundelwa u ṱanza Mbudziso. Vha nga lavhelela lwa vhuyelela vhukuma."
   }
-  
+ ,"Events": {
+    "ExploreEvents": "Zwino i shumele",
+    "EventsInfo": "Nzhele ni ya nga musanda",
+    "Date": "Nḓivho",
+    "Location": "Mulai",
+    "Time": "Nguva",
+    "Close": "Valwa"
+  },
+  "PrivacyPolicy": {
+    "Title": "Mihumbuluso ya Muthu",
+    "Intro": "Zwine tshi divhea tshone",
+    "DataCollection": "Vhubva zwine vha tou vhala",
+    "Usage": "U shumele mulandu",
+    "Security": "Thithikhedzo",
+    "ThirdParties": "Nga tshiphiri",
+    "Updates": "Nga nga tshilalelo",
+    "Contact": "Vhuvhaho nga Ri zwo anda"
+  },
+  "Subscribe": {
+    "Title": "U dzula o divhea zwine",
+    "Description": "Nga mulandu wa musanda",
+    "ButtonText": "Rumwa",
+    "ModalTitle": "Tshi songo divhea",
+    "NamePlaceholder": "Dzina",
+    "EmailPlaceholder": "I-Mail",
+    "LocationPlaceholder": "Nḓilani",
+    "SubmitButtonText": "Thoma",
+    "Errors": {
+      "NameRequired": "Dzina ḽi tou vha hone",
+      "EmailRequired": "I-Mail i tou vha hone",
+      "InvalidEmail": "Nga tshivhumbeo",
+      "LocationRequired": "Mulai ndi tou vha hone"
+    },
+    "SuccessMessage": "Vhathu nga thikhedzo",
+    "ErrorMessage": "Thikhedzo i si tshithikhedzo",
+    "ErrorOccurred": "Makhodi zwine zwone na thoma."
+  },
+  "Services": {
+    "Title": "Zwine zwone zwone na thoma",
+    "Subtitle": "Nga tshone tshikona tsho ḓalaho",
+    "Community": "Vhuthu",
+    "CommunityDescription": "Na vhathu vhane vha tou tsikeledza",
+    "Events": "Zwine ni shumele",
+    "EventsDescription": "Ni wana zwinzhi zwine ni tou vhushumele",
+    "Jobs": "Mishumo",
+    "JobsDescription": "Maano na khuwele zwine",
+    "Communication": "Tshikona",
+    "CommunicationDescription": "Tshiphuphu nga tshikona"
+  },
+  "Hero": {
+    "GetInTouch": "Vhuḓa kha ifa nga hoṱhe",
+    "HelpMessage": "Arali ni tshiṅwe na ṅwe, ri a hulela."
+  },
+  "ContactPage": {
+    "ContactInformation": "Zwine zwa tou bvelela",
+    "FormInstruction": "Khone nga misi",
+    "InvalidEmail": "Nga tshivhumbeo",
+    "ShortMessage": "Nga makhoda",
+    "SuccessMessage": "Nga thikhedzo",
+    "FailureMessage": "Nga tshithikhedzo",
+    "Name": "Dzina",
+    "Email": "I-Mail",
+    "Subject": "Zwine zwa divhea",
+    "Message": "Maano",
+    "SendMessage": "Ruma Zwine zwone"
+  },
+  "hero": {
+    "title": "Nga Nnyi",
+    "subtitle": "Hu Sisonke, ri na nḓila ya u shuma na u bveledza khumbudzo, u sengoho, na u itela u swika phanḓa kha matshimbidzi a Afurika Tshipembe."
+  },
+  "AboutUs": {
+    "WhoWeAre": "Ndi Ifhio Zwithu",
+    "WhoWeAreDescription": "Tshiimiswa tshine tsha tou bvela shango",
+    "WhatWeDo": "Nga tshine tshone tshikona tshine",
+    "WhatWeDoDescription": "Nga mishumo tshine tshikona tshine",
+    "HowWeHelp": "Nga mishumo",
+    "HowWeHelpDescription": "Nga tshone",
+    "CreateSuccessStories": "Zwithu"
+  },
+  "job": {
+    "browseJobs": "Nga vha zwo ḓalaho",
+    "findJob": "Nga mishumo zwine zwone",
+    "searchPlaceholder": "Zwino zwine zwone zwine",
+    "loadMore": "Nga vhane zwone",
+    "sortBy": "Mishumo zwine zwone",
+    "recentlyAdded": "Nga tshiṱete",
+    "highestSalary": "Nga zwine zwone",
+    "lowestSalary": "Nga zwaṱho",
+    "postJob": "Nga zwaṱho"
+  }
+}

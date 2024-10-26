@@ -1,8 +1,7 @@
-// components/PrivacyPolicyModal.js
-
 import React from 'react';
 import { Modal, Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from 'react-i18next';
 
 const style = {
   position: 'absolute',
@@ -17,6 +16,7 @@ const style = {
 };
 
 const PrivacyPolicyModal = ({ open, handleClose }) => {
+  const { t } = useTranslation();
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
@@ -24,28 +24,28 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
           <CloseIcon />
         </IconButton>
         <Typography variant="h6" component="h2" gutterBottom>
-          Privacy Policy
+          {t('PrivacyPolicy.Title')}
         </Typography>
         <Typography variant="body2" paragraph>
-          We value your privacy. Here's how we handle your data:
+          {t('PrivacyPolicy.Intro')}
         </Typography>
         <Typography variant="body2" paragraph>
-          1. **Data Collection**: We collect info you provide and usage data.
+          {t('PrivacyPolicy.DataCollection')}
         </Typography>
         <Typography variant="body2" paragraph>
-          2. **Usage**: We use your info to improve the platform and services.
+          {t('PrivacyPolicy.Usage')}
         </Typography>
         <Typography variant="body2" paragraph>
-          3. **Security**: We take steps to protect your data.
+          {t('PrivacyPolicy.Security')}
         </Typography>
         <Typography variant="body2" paragraph>
-          4. **Third-Parties**: We don’t share your data without consent.
+          {t('PrivacyPolicy.ThirdParties')}
         </Typography>
         <Typography variant="body2" paragraph>
-          5. **Updates**: We may change this policy. Continued use means acceptance.
+          {t('PrivacyPolicy.Updates')}
         </Typography>
         <Typography variant="body2" paragraph>
-          Contact us at info@sisonke.co.za for any questions.
+          {t('PrivacyPolicy.Contact')}
         </Typography>
       </Box>
     </Modal>

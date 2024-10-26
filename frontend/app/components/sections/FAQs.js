@@ -10,8 +10,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useTranslation } from "react-i18next";
 
 export default function FAQs() {
+  const { t } = useTranslation();
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,13 +26,13 @@ export default function FAQs() {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching FAQs:", error);
-        setError("Failed to load FAQs. Please try again later.");
+        setError(t("FAQs.LoadError")); 
         setLoading(false);
       }
     };
 
     fetchFaqs();
-  }, []);
+  }, [t]);
 
   if (loading) {
     return (
@@ -72,11 +74,10 @@ export default function FAQs() {
     >
       <Container maxWidth="md" sx={{ my: 6 }}>
         <Typography variant="h4" component="h1" align="center" gutterBottom>
-          Frequently asked questions
+          {t("FAQs.Title")} 
         </Typography>
         <Typography variant="subtitle1" align="center" sx={{ mb: 4 }}>
-          If your questions aren't answered here, don't hesitate to contact our
-          support for help.
+          {t("FAQs.Subtitle")} 
         </Typography>
         <Box sx={{ mt: 4 }}>
           {faqs.map((faq, index) => (

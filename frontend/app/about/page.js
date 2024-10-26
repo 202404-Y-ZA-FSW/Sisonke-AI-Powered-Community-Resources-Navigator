@@ -7,16 +7,18 @@ import {
   Grid,
   Card,
   CardContent,
+  Box,
 } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles"; // Updated import
+import { styled, useTheme } from "@mui/material/styles";
 import Image from "next/image";
 import Hero from "./hero";
 import Footer from "../components/sections/Footer";
 import Subscribe from "../components/sections/Subscribe";
 import Navigation from "../components/sections/Navigation";
+import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 const StyledCard = styled(Card)(({ theme }) => {
-  const defaultTheme = useTheme(); // Use the default theme
+  const defaultTheme = useTheme();
   return {
     height: "100%",
     display: "flex",
@@ -28,7 +30,7 @@ const StyledCard = styled(Card)(({ theme }) => {
     "&:hover": {
       boxShadow: defaultTheme.shadows
         ? defaultTheme.shadows[4]
-        : "0px 4px 6px rgba(0, 0, 0, 0.1)", // Safe fallback
+        : "0px 4px 6px rgba(0, 0, 0, 0.1)",
     },
   };
 });
@@ -41,30 +43,28 @@ const NumberTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export default function AboutUs() {
+  const { t } = useTranslation(); // Initialize useTranslation
+
   const sections = [
     {
       number: "1.",
-      title: "Who We Are",
-      description:
-        "Sisonke is a community-driven platform connecting local resources, opportunities, and people in South African townships.",
+      title: t('AboutUs.WhoWeAre'), // Use translation key for title
+      description: t('AboutUs.WhoWeAreDescription'), // Use translation key for description
     },
     {
       number: "2.",
-      title: "What We Do",
-      description:
-        "We provide a digital hub for job listings, events, forums, and local business promotion to empower our community.",
+      title: t('AboutUs.WhatWeDo'), // Use translation key for title
+      description: t('AboutUs.WhatWeDoDescription'), // Use translation key for description
     },
     {
       number: "3.",
-      title: "How We Help",
-      description:
-        "Through our platform, we facilitate connections, share knowledge, and create opportunities for growth and development.",
+      title: t('AboutUs.HowWeHelp'), // Use translation key for title
+      description: t('AboutUs.HowWeHelpDescription'), // Use translation key for description
     },
     {
       number: "4.",
-      title: "Create Success Stories",
-      description:
-        "By bringing together community members, businesses, and resources, we help individuals achieve their goals and thrive.",
+      title: t('AboutUs.CreateSuccessStories'), // Use translation key for title
+      description: t('AboutUs.CreateSuccessStoriesDescription'), // Use translation key for description
     },
   ];
 
@@ -76,7 +76,7 @@ export default function AboutUs() {
         maxWidth="lg"
         sx={{ mt: 15, mb: 15 }}
       >
-        <Grid container spacing={4}>
+                <Grid container spacing={4}>
           {sections.map((section) => (
             <Grid item xs={12} md={6} key={section.title}>
               <StyledCard>

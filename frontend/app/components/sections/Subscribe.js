@@ -8,8 +8,10 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation } from "react-i18next"; 
 
 export default function Subscribe() {
+  const { t } = useTranslation(); 
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', location: '' });
   const [errors, setErrors] = useState({});
@@ -26,10 +28,10 @@ export default function Subscribe() {
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.name) errors.name = 'Name is required';
-    if (!formData.email) errors.email = 'Email is required';
-    if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = 'Email is invalid';
-    if (!formData.location) errors.location = 'Location is required';
+    if (!formData.name) errors.name = t('Subscribe.Errors.NameRequired'); 
+    if (!formData.email) errors.email = t('Subscribe.Errors.EmailRequired'); 
+    if (!/\S+@\S+\.\S+/.test(formData.email)) errors.email = t('Subscribe.Errors.InvalidEmail'); 
+    if (!formData.location) errors.location = t('Subscribe.Errors.LocationRequired'); 
     return errors;
   };
 
@@ -57,15 +59,15 @@ export default function Subscribe() {
       });
 
       if (response.ok) {
-        setSuccessMessage("Subscription successful! Thank you for subscribing.");
+        setSuccessMessage(t('Subscribe.SuccessMessage')); 
         setFormData({ name: '', email: '', location: '' });
       } else {
         const data = await response.json();
-        setErrorMessage(data.error || "Subscription failed. Please try again.");
+        setErrorMessage(data.error || t('Subscribe.ErrorMessage')); 
       }
     } catch (error) {
       console.error("Error submitting form", error);
-      setErrorMessage("An error occurred. Please try again.");
+      setErrorMessage(t('Subscribe.ErrorOccurred')); 
     }
   };
 
@@ -93,11 +95,10 @@ export default function Subscribe() {
           }}
         >
           <Typography variant="h4" component="h2" gutterBottom>
-            Subscribe to our newsletter
+            {t('Subscribe.Title')} 
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Get informed about new jobs, events, and new resources that are <br />
-            posted daily in your community forums and blogs.
+            {t('Subscribe.Description')} 
           </Typography>
           <Button
             size="large"
@@ -113,7 +114,7 @@ export default function Subscribe() {
               },
             }}
           >
-            Subscribe Now
+            {t('Subscribe.ButtonText')} 
           </Button>
         </Box>
       </Container>
@@ -151,8 +152,7 @@ export default function Subscribe() {
           </IconButton>
           
           <Typography sx={{ mb: 2 }} id="modal-title" variant="h6" component="h2" gutterBottom>
-
-            Sisonke Subscription
+            {t('Subscribe.ModalTitle')} 
           </Typography>
           <form onSubmit={handleSubmit}>
             <input
@@ -165,7 +165,7 @@ export default function Subscribe() {
               }}
               type="text"
               name="name"
-              placeholder="Name"
+              placeholder={t('Subscribe.NamePlaceholder')}
               value={formData.name}
               onChange={handleChange}
               required
@@ -181,7 +181,7 @@ export default function Subscribe() {
               }}
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder={t('Subscribe.EmailPlaceholder')} 
               value={formData.email}
               onChange={handleChange}
               required
@@ -197,7 +197,7 @@ export default function Subscribe() {
               }}
               type="text"
               name="location"
-              placeholder="Location"
+              placeholder={t('Subscribe.LocationPlaceholder')} 
               value={formData.location}
               onChange={handleChange}
               required
@@ -219,7 +219,7 @@ export default function Subscribe() {
                 },
               }}
             >
-              Submit
+              {t('Subscribe.SubmitButtonText')} 
             </Button>
             {successMessage && (
               <Typography color="primary" sx={{ mt: 2 }}>

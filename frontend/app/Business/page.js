@@ -1,31 +1,44 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
+import Link from "next/link";
+import Image from "next/image";
+import { 
   Grid,
+  Button,
+  CircularProgress,
   Card,
   CardContent,
+  CardActions,
   CardMedia,
   Container,
   Box,
   Typography,
   TextField,
   InputAdornment,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton, 
 } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled } from "@mui/system";
-import Footer from "../components/sections/Footer";
-import Navigation from "../components/sections/NavBar";
+import LocationOnIcon from "@mui/icons-material/LocationOn"; 
+import CloseIcon from "@mui/icons-material/Close"; 
 import Subscribe from "../components/sections/Subscribe";
+import Footer from "../components/sections/Footer";
+import Navigation from "../components/sections/Navigation";
+import { useAuthentication } from "../hooks/useAuthentication";
+import { styled } from "@mui/system"; 
+import BusinessForm from "./new/businessForm"; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-  maxWidth: 300, 
+  maxWidth: 300,
   margin: "auto",
   borderRadius: 16,
   boxShadow: "none",
-  height: 250, 
+  height: 250,
   transition: "transform 0.3s ease",
   cursor: "pointer",
   position: "relative",
@@ -36,7 +49,7 @@ const StyledCard = styled(Card)({
 
 const StyledCardMedia = styled(CardMedia)({
   width: "100%",
-  height: "100px", 
+  height: "100px",
   objectFit: "contain",
   transition: "0.3s",
 });
@@ -77,6 +90,11 @@ const Business = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { user } = useAuthentication();
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+
+  const canPostABusiness =
+    user && (user.user.role === "administrator" || user.user.role === "ngo");
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -86,24 +104,23 @@ const Business = () => {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched businesses:", data);
-
-        if (Array.isArray(data.businesses)) {
-          setBusinesses(data.businesses);
-        } else {
-          console.error("Fetched data is not an array:", data);
-          setBusinesses([]);
-        }
+        setBusinesses(Array.isArray(data.businesses) ? data.businesses : []);
       } catch (error) {
-        console.error("Fetch error:", error);
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchBusinesses();
   }, []);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -116,7 +133,7 @@ const Business = () => {
     <div>
       <Navigation />
       <Container>
-        {/* Business Search Header */}
+        
         <Box
           sx={{
             py: 10,
@@ -136,7 +153,7 @@ const Business = () => {
               sx={{
                 fontWeight: "bold",
                 mb: 2,
-                fontSize: { xs: "2.5rem", md: "3.75rem" }, 
+                fontSize: { xs: "2.5rem", md: "3.75rem" },
                 textAlign: "center",
               }}
             >
@@ -147,18 +164,18 @@ const Business = () => {
               sx={{
                 mb: 4,
                 color: "text.secondary",
-                fontSize: { xs: "1rem", md: "1.25rem" }, 
+                fontSize: { xs: "1rem", md: "1.25rem" },
                 textAlign: "center",
               }}
             >
               Find the best services and products in your community, <br />
               or search for a specific business by name.
             </Typography>
-
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+
               <TextField
                 variant="outlined"
-                placeholder="Search"
+                placeholder="Search" 
                 InputProps={{
                   sx: { borderRadius: "16px", width: "100%" },
                   startAdornment: (
@@ -173,10 +190,58 @@ const Business = () => {
             </Box>
           </Container>
         </Box>
+        <Container maxWidth="lg" sx={{ mt: 5, px: 2 }}>
+          {canPostABusiness ? (
+            <Button
+              onClick={handleOpenModal} // Opens modal
+              color="primary"
+              sx={{
+                mb: 2,
+                backgroundColor: "#6c63ff",
+                color: "#ffffff",
+                borderRadius: "16px",
+                padding: "15px 24px",
+                textTransform: "none",
+                "&:hover": { backgroundColor: "#5A52D5" },
+              }}
+            >
+              Post a Business
+            </Button>
+          ) : (
+            <Typography
+              variant="body2"
+              sx={{ marginBottom: 2, color: "#6c63ff" }}
+            >
+              {user
+                ? "You don't have permission to create a new business."
+                : "You need to login to create a new business."}
+            </Typography>
+          )}
 
-        <Container sx={{ pt: 2 }}>
-          {/* Business Cards */}
-          <Grid container spacing={2} sx={{ mt: 2 }}>
+          {/* Modal for Business Form */}
+          <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
+           
+              <IconButton
+                aria-label="close"
+                onClick={handleCloseModal}
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            
+            <DialogContent>
+              <BusinessForm /> {/* Display the BusinessForm component */}
+            </DialogContent>
+            {/* Removed the DialogActions section */}
+          </Dialog>
+
+          {/* Business List */}
+          <Grid container spacing={2}>
             {filteredBusinesses.map((business) => (
               <Grid item xs={12} sm={6} md={4} key={business._id}>
                 <a
@@ -198,7 +263,6 @@ const Business = () => {
                       <Typography variant="body2" color="text.secondary">
                         {business.description}
                       </Typography>
-                      {/* Location */}
                       <IconBox>
                         <Icon>
                           <LocationOnIcon />
@@ -208,9 +272,8 @@ const Business = () => {
                         </Typography>
                       </IconBox>
                     </CardContent>
-
-                    {/* Discount Overlay */}
-                    {business.discount && (
+                      {/* Discount Overlay */}
+                      {business.discount && (
                       <DiscountOverlay>
                         <Typography variant="h6">{business.discount}</Typography>
                       </DiscountOverlay>

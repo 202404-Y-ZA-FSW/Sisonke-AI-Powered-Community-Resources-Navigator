@@ -1,0 +1,186 @@
+{
+    "Navbar": {
+      "Home": "Home",
+      "About": "About",
+      "Jobs": "Jobs",
+      "Contact": "Contact",
+      "Community": "Community",
+      "Blog": "Blog",
+      "Forum": "Forum",
+      "Events": "Events",
+      "Business": "Business",
+      "Login": "Login",
+      "Register": "Register"
+    },
+  
+    "HeroSection": {
+      "Title": "Discover essential local support and opportunities",
+      "Subtitle": "Explore a curated collection of local resources tailored to meet your community's unique needs.",
+      "Users": "Users",
+      "JobsCreated": "Jobs Created",
+      "Businesses": "Businesses",
+      "SupportedBy": "We are supported",
+      "SupportSubtitle": "By local governments, national youth agencies, and the private sector."
+    },
+  
+    "Blogs": {
+      "LatestNews": "Latest news about career advice",
+      "Insight": "Add insight to boost career growth and check out tips on company job vacancies",
+      "MinRead": "min Read",
+      "ReadMore": "Read More",
+      "BrowseAll": "Browse All"
+    },
+  
+    "Footer": {
+        "Address": "143 West Street, Sandown, Sandton, Gauteng, South Africa",
+        "Community": "Community",
+        "Blog": "Blog",
+        "Forum": "Forum",
+        "Events": "Events",
+        "Businesses": "Businesses",
+        "Company": "Company",
+        "Home": "Home",
+        "AboutUs": "About Us",
+        "Jobs": "Jobs",
+        "FAQs": "FAQs",
+        "Support": "Support",
+        "ContactUs": "Contact Us",
+        "PrivacyPolicy": "Privacy Policy",
+        "TermsOfService": "Terms of Service"
+      },
+  
+    "Jobs": {
+      "Title": "Explore the latest job opportunities",
+      "Subtitle": "Discover jobs most relevant to you by experience level, salary, location, job type, etc.",
+      "SearchPlaceholder": "Search Job Position or Company",
+      "SortBy": "Sort By",
+      "RecentlyAdded": "Recently Added",
+      "HighestSalary": "Highest Salary",
+      "LowestSalary": "Lowest Salary",
+      "Loading": "Loading jobs...",
+      "BrowseAll": "Browse All"
+    },
+  
+    "JobCard": {
+      "JobTitle": "Job Title",
+      "Company": "Company",
+      "Location": "Location",
+      "Experience": "Experience",
+      "JobType": "Job Type",
+      "Salary": "Salary",
+      "NoSalary": "R0"
+    },
+  
+    "Events": {
+      "ExploreEvents": "Explore the awesome events happening in your area",
+      "EventsInfo": "Events are shared by local businesses, organizations, and community groups.",
+      "Date": "Date",
+      "Location": "Location",
+      "Time": "Time",
+      "Close": "Close"
+    },
+  
+    "Common": {
+      "FailedToLoadEvents": "Failed to load events. Please try again later."
+    },
+  
+    "FAQs": {
+      "Title": "Frequently Asked Questions",
+      "Subtitle": "If your questions aren't answered here, don't hesitate to contact our support for help.",
+      "LoadError": "Failed to load FAQs. Please try again later."
+    },
+  
+    "PrivacyPolicy": {
+      "Title": "Privacy Policy",
+      "Intro": "We value your privacy. Here's how we handle your data:",
+      "DataCollection": "1. Data Collection: We collect info you provide and usage data.",
+      "Usage": "2. Usage: We use your info to improve the platform and services.",
+      "Security": "3. Security: We take steps to protect your data.",
+      "ThirdParties": "4. Third-Parties: We don’t share your data without consent.",
+      "Updates": "5. Updates: We may change this policy. Continued use means acceptance.",
+      "Contact": "Contact us at info@sisonke.co.za for any questions."
+    },
+  
+    "Subscribe": {
+      "Title": "Subscribe to our newsletter",
+      "Description": "Get informed about new jobs, events, and new resources that are posted daily in your community forums and blogs.",
+      "ButtonText": "Subscribe Now",
+      "ModalTitle": "Sisonke Subscription",
+      "NamePlaceholder": "Name",
+      "EmailPlaceholder": "Email",
+      "LocationPlaceholder": "Location",
+      "SubmitButtonText": "Submit",
+      "Errors": {
+        "NameRequired": "Name is required",
+        "EmailRequired": "Email is required",
+        "InvalidEmail": "Email is invalid",
+        "LocationRequired": "Location is required"
+      },
+      "SuccessMessage": "Subscription successful! Thank you for subscribing.",
+      "ErrorMessage": "Subscription failed. Please try again.",
+      "ErrorOccurred": "An error occurred. Please try again."
+    },
+  
+    "Services": {
+      "Title": "What you can do and get on our platform",
+      "Subtitle": "Whether you're seeking support, opportunities, and connections",
+      "Community": "Community",
+      "CommunityDescription": "Connect with like-minded individuals in your community, share resources, and stay connected.",
+      "Events": "Community Events",
+      "EventsDescription": "Never miss out on important community events and networking opportunities.",
+      "Jobs": "Jobs & Learnerships",
+      "JobsDescription": "Our NGOs help you apply for jobs, learn about careers, and develop your skills.",
+      "Communication": "Communication",
+      "CommunicationDescription": "We use community blogs and forums to share ideas, ask questions, and connect with others.",
+      "GetStarted": "Get Started"
+    },
+  
+    "Hero": {
+    "GetInTouch": "Get in touch with us for more information",
+    "HelpMessage": "If you need help or have a question, we’re here for you"
+  },
+  
+    "ContactPage": {
+      "ContactInformation": "Contact Information",
+      "FormInstruction": "Fill out the form and our team will get back to you within 24 hours.",
+      "InvalidEmail": "Please enter a valid email address",
+      "ShortMessage": "Message must be at least 10 characters long",
+      "SuccessMessage": "Message sent successfully",
+      "FailureMessage": "Failed to send message",
+      "Name": "Name",
+      "Email": "Email",
+      "Subject": "Subject",
+      "Message": "Message",
+      "SendMessage": "Send Message"
+    },
+    
+    "hero": {
+    "title": "About Us",
+    "subtitle": "At Sisonke, we take pride in our commitment to community empowerment, connection, and growth in South African townships."
+  },
+  
+    "AboutUs": {
+      "WhoWeAre": "Who We Are",
+      "WhoWeAreDescription": "Sisonke is a community-driven platform connecting local resources, opportunities, and people in South African townships.",
+      "WhatWeDo": "What We Do",
+      "WhatWeDoDescription": "We provide a digital hub for job listings, events, forums, and local business promotion to empower our community.",
+      "HowWeHelp": "How We Help",
+      "HowWeHelpDescription": "Through our platform, we facilitate connections, share knowledge, and create opportunities for growth and development.",
+      "CreateSuccessStories": "Create Success Stories",
+      "CreateSuccessStoriesDescription": "By bringing together community members, businesses, and resources, we help individuals achieve their goals and thrive."
+    },
+  
+    "job": {
+      "browseJobs": "Browse Jobs In Your Community",
+      "findJob": "Find the job of your dreams in our curated list of jobs from verified companies.",
+      "searchPlaceholder": "Search for jobs...",
+      "loadMore": "Load More",
+      "sortBy": "Sort By",
+      "recentlyAdded": "Recently Added",
+      "highestSalary": "Highest Salary",
+      "lowestSalary": "Lowest Salary",
+      "postJob": "Post a Job",
+      "loginToPost": "Log in to post a job."
+    }
+  }
+  

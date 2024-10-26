@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Typography,
@@ -6,6 +7,8 @@ import {
 } from "@mui/material";
 
 export default function Hero() {
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -24,7 +27,7 @@ export default function Hero() {
             fontSize: { xs: "2.5rem", md: "3.75rem" },
           }}
         >
-          About Us
+          {t("hero.title")} 
         </Typography>
         <Typography
           variant="subtitle1"
@@ -34,8 +37,7 @@ export default function Hero() {
             fontSize: { xs: "1rem", md: "1.25rem" },
           }}
         >
-          At Sisonke, we take pride in our commitment to community empowerment,
-          connection, and growth in South African townships.
+          {t("hero.subtitle")} 
         </Typography>
       </Container>
     </Box>

@@ -5,6 +5,8 @@ import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMed
 import { useRouter, usePathname } from "next/navigation";
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../../next.config/i18n.changeLanguage'; 
 
 const ROUTES = {
   HOME: "/",
@@ -20,6 +22,7 @@ const ROUTES = {
 };
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
@@ -48,7 +51,7 @@ export default function Navbar() {
       router.push(route);
     } catch (error) {
       console.error('Navigation failed:', error);
-      // Implement user-friendly error handling here
+       // Implement user-friendly error handling here
     }
     handleMenuClose();
     handlePageClose();
@@ -105,12 +108,16 @@ export default function Navbar() {
           'aria-labelledby': 'mobile-menu-button',
         }}
       >
-        <MenuItemComponent route={ROUTES.HOME}>Home</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.ABOUT}>About</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.JOBS}>Jobs</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.CONTACT}>Contact</MenuItemComponent>
+        
+        <MenuItem>
+          <LanguageSwitcher />
+        </MenuItem>
+        <MenuItemComponent route={ROUTES.HOME}>{t('Navbar.Home')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.ABOUT}>{t('Navbar.About')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.JOBS}>{t('Navbar.Jobs')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.CONTACT}>{t('Navbar.Contact')}</MenuItemComponent>
         <MenuItem onClick={handlePageOpen}>
-          Community <KeyboardArrowDownIcon />
+          {t('Navbar.Community')} <KeyboardArrowDownIcon />
         </MenuItem>
         <Menu
           anchorEl={pageAnchorEl}
@@ -118,23 +125,25 @@ export default function Navbar() {
           onClose={handlePageClose}
           TransitionComponent={Fade}
         >
-          <MenuItemComponent route={ROUTES.BLOG}>Blog</MenuItemComponent>
-          <MenuItemComponent route={ROUTES.FORUM}>Forum</MenuItemComponent>
-          <MenuItemComponent route={ROUTES.EVENTS}>Events</MenuItemComponent>
-          <MenuItemComponent route={ROUTES.BUSINESS}>Businesses</MenuItemComponent>
+          <MenuItemComponent route={ROUTES.BLOG}>{t('Navbar.Blog')}</MenuItemComponent>
+          <MenuItemComponent route={ROUTES.FORUM}>{t('Navbar.Forum')}</MenuItemComponent>
+          <MenuItemComponent route={ROUTES.EVENTS}>{t('Navbar.Events')}</MenuItemComponent>
+          <MenuItemComponent route={ROUTES.BUSINESS}>{t('Navbar.Business')}</MenuItemComponent>
         </Menu>
-        <MenuItemComponent route={ROUTES.LOGIN}>Login</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.REGISTER}>Register</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.LOGIN}>{t('Navbar.Login')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.REGISTER}>{t('Navbar.Register')}</MenuItemComponent>
       </Menu>
     </>
-  ), [anchorEl, pageAnchorEl, handleMenuOpen, handleMenuClose, handlePageOpen, handlePageClose, MenuItemComponent]);
+  ), [anchorEl, pageAnchorEl, handleMenuOpen, handleMenuClose, handlePageOpen, handlePageClose, MenuItemComponent, t]);
 
   const DesktopMenu = useMemo(() => (
     <>
-      <Button onClick={navigateTo(ROUTES.HOME)} sx={navLinksStyles(isActive(ROUTES.HOME))}>Home</Button>
-      <Button onClick={navigateTo(ROUTES.ABOUT)} sx={navLinksStyles(isActive(ROUTES.ABOUT))}>About</Button>
-      <Button onClick={navigateTo(ROUTES.JOBS)} sx={navLinksStyles(isActive(ROUTES.JOBS))}>Jobs</Button>
-      <Button onClick={navigateTo(ROUTES.CONTACT)} sx={navLinksStyles(isActive(ROUTES.CONTACT))}>Contact</Button>
+      
+      <LanguageSwitcher />
+      <Button onClick={navigateTo(ROUTES.HOME)} sx={navLinksStyles(isActive(ROUTES.HOME))}>{t('Navbar.Home')}</Button>
+      <Button onClick={navigateTo(ROUTES.ABOUT)} sx={navLinksStyles(isActive(ROUTES.ABOUT))}>{t('Navbar.About')}</Button>
+      <Button onClick={navigateTo(ROUTES.JOBS)} sx={navLinksStyles(isActive(ROUTES.JOBS))}>{t('Navbar.Jobs')}</Button>
+      <Button onClick={navigateTo(ROUTES.CONTACT)} sx={navLinksStyles(isActive(ROUTES.CONTACT))}>{t('Navbar.Contact')}</Button>
       <Button
         sx={navLinksStyles(isActive(ROUTES.BLOG) || isActive(ROUTES.FORUM) || isActive(ROUTES.EVENTS) || isActive(ROUTES.BUSINESS))}
         endIcon={<KeyboardArrowDownIcon />}
@@ -142,7 +151,7 @@ export default function Navbar() {
         aria-controls="community-menu"
         aria-haspopup="true"
       >
-        Community
+        {t('Navbar.Community')}
       </Button>
       <Menu
         id="community-menu"
@@ -151,20 +160,20 @@ export default function Navbar() {
         onClose={handlePageClose}
         TransitionComponent={Fade}
       >
-        <MenuItemComponent route={ROUTES.BLOG}>Blog</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.FORUM}>Forum</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.EVENTS}>Events</MenuItemComponent>
-        <MenuItemComponent route={ROUTES.BUSINESS}>Businesses</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.BLOG}>{t('Navbar.Blog')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.FORUM}>{t('Navbar.Forum')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.EVENTS}>{t('Navbar.Events')}</MenuItemComponent>
+        <MenuItemComponent route={ROUTES.BUSINESS}>{t('Navbar.Business')}</MenuItemComponent>
       </Menu>
-      <Button onClick={navigateTo(ROUTES.LOGIN)} sx={navLinksStyles(isActive(ROUTES.LOGIN))}>Login</Button>
+      <Button onClick={navigateTo(ROUTES.LOGIN)} sx={navLinksStyles(isActive(ROUTES.LOGIN))}>{t('Navbar.Login')}</Button>
       <Button
         onClick={navigateTo(ROUTES.REGISTER)}
         sx={registerButtonStyles}
       >
-        Register
+        {t('Navbar.Register')}
       </Button>
     </>
-  ), [pageAnchorEl, handlePageOpen, handlePageClose, navigateTo, navLinksStyles, isActive, MenuItemComponent]);
+  ), [pageAnchorEl, handlePageOpen, handlePageClose, navigateTo, navLinksStyles, isActive, MenuItemComponent, t]);
 
   return (
     <AppBar

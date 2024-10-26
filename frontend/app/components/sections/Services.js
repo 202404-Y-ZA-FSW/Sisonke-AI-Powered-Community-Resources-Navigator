@@ -6,44 +6,44 @@ import {
   WorkOutline,
   Forum,
 } from "@mui/icons-material";
+import { useTranslation } from 'react-i18next';
 
 const steps = [
   {
     icon: <People fontSize="large" />,
-    title: "Community",
-    description:
-      "Connect with like-minded individuals in your community, share resources, and stay connected.",
+    titleKey: "Services.Community",
+    descriptionKey: "Services.CommunityDescription",
   },
   {
     icon: <EventAvailable fontSize="large" />,
-    title: "Community Events",
-    description:
-      "Never miss out on important community events and networking opportunities.",
+    titleKey: "Services.Events",
+    descriptionKey: "Services.EventsDescription",
   },
   {
     icon: <WorkOutline fontSize="large" />,
-    title: "Jobs & Learnerships",
-    description:
-      "Our NGOs help you apply for jobs, learn about careers, and develop your skills.",
+    titleKey: "Services.Jobs",
+    descriptionKey: "Services.JobsDescription",
   },
   {
     icon: <Forum fontSize="large" />,
-    title: "Communication",
-    description:
-      "We community blogs and forums to share ideas, ask questions, and connect with others.",
+    titleKey: "Services.Communication",
+    descriptionKey: "Services.CommunicationDescription",
   },
 ];
 
 export default function Services() {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ py: 8, px: 2, textAlign: "center" }}>
       <Container maxWidth="lg">
         <Typography variant="h4" component="h2" gutterBottom>
-          What you can do and get on our platform
+          {t('Services.Title')}
         </Typography>
         <Typography variant="subtitle1" sx={{ mb: 6 }}>
-          Whether you're seeking support, opportunities, and connections
+          {t('Services.Subtitle')}
           <br />
+ 
         </Typography>
 
         <Grid container spacing={4} justifyContent="center">
@@ -78,10 +78,10 @@ export default function Services() {
                   {step.icon}
                 </Box>
                 <Typography variant="h6" component="h3" gutterBottom>
-                  {step.title}
+                  {t(step.titleKey)}  
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {step.description}
+                  {t(step.descriptionKey)} 
                 </Typography>
               </Paper>
             </Grid>
@@ -99,7 +99,7 @@ export default function Services() {
           }}
           size="large"
         >
-          Get Started
+          {t('Services.GetStarted')}
         </Button>
       </Container>
     </Box>
