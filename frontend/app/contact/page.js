@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { TextField, Button, Grid, Typography, Box, Paper, IconButton, Container } from '@mui/material';
 import { Facebook, Instagram, LinkedIn, Twitter, Phone, Email, LocationOn } from '@mui/icons-material';
 import Footer from '../components/sections/Footer';
-import Navbar from '../components/sections/NavBar'; 
 import Subscription from '../components/sections/Subscribe'; 
 import Hero from './hero';
 import { styled } from '@mui/material/styles';
+import Navigation from '../components/sections/Navigation';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -130,7 +130,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Navbar /> 
+      <Navigation/>
       <Hero/>
       
       <Container maxWidth="lg" sx={{ my: 8 }}>
