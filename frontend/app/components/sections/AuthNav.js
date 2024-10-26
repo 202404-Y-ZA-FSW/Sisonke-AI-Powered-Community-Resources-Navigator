@@ -66,7 +66,6 @@ export default function AuthNav() {
   const theme = useTheme(); 
   const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
   const router = useRouter(); 
-
   const [anchorEl, setAnchorEl] = useState(null); 
   const [pageAnchorEl, setPageAnchorEl] = useState(null); 
   const [profileAnchorEl, setProfileAnchorEl] = useState(null); 
@@ -117,6 +116,8 @@ export default function AuthNav() {
     textTransform: "none", 
   }; 
 
+  const isAdmin = user && user.user.role === "administrator";
+
   return ( 
     <AppBar 
       sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }} 
@@ -132,6 +133,7 @@ export default function AuthNav() {
         > 
           SIS<span style={{ color: "#6c63ff" }}>O</span>NKE 
         </Typography> 
+
         {isMobile ? ( 
           <> 
             <IconButton 
@@ -148,7 +150,13 @@ export default function AuthNav() {
               open={Boolean(anchorEl)} 
               onClose={closeMenu} 
             > 
-              <MenuItem onClick={() => router.push("/")}>Home</MenuItem> 
+              {isAdmin ? (
+                <MenuItem onClick={() => router.push("/dashboard")}>
+                  Dashboard
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              )}
               <MenuItem onClick={() => router.push("/about")}>About</MenuItem> 
               <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem> 
               <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem> 
@@ -165,13 +173,25 @@ export default function AuthNav() {
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem> 
                 <MenuItem onClick={() => router.push("/education")}>Education</MenuItem> 
               </Menu> 
-              <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem> 
-              <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem> 
+              {user ? (
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              ) : (
+                <>
+                  <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem> 
+                  <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem> 
+                </>
+              )}
             </Menu> 
           </> 
         ) : ( 
           <> 
-            <Button onClick={() => router.push("/")} sx={navLinkStyles}>Home</Button> 
+            {isAdmin ? (
+              <Button onClick={() => router.push("/dashboard")} sx={navLinkStyles}>
+                Dashboard
+              </Button>
+            ) : (
+              <Button onClick={() => router.push("/")} sx={navLinkStyles}>Home</Button>
+            )}
             <Button onClick={() => router.push("/about")} sx={navLinkStyles}>About</Button> 
             <Button onClick={() => router.push("/jobs")} sx={navLinkStyles}>Jobs</Button> 
             <Button onClick={() => router.push("/contact")} sx={navLinkStyles}>Contact</Button> 
@@ -192,6 +212,7 @@ export default function AuthNav() {
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem> 
               <MenuItem onClick={() => router.push("/education")}>Education</MenuItem> 
             </Menu> 
+
             <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}> 
               {profileImage ? ( 
                 <Avatar src={profileImage} sx={{ width: 40, height: 40 }} /> 
@@ -219,72 +240,69 @@ export default function AuthNav() {
 
       <Snackbar 
         open={snackbarOpen} 
+        autoHideDuration={6000} 
         onClose={closeSnackbar} 
         message={snackbarMessage} 
-        autoHideDuration={3000} 
       /> 
-
+      
       <Dialog open={dialogOpen} onClose={closeDialog}> 
-        <DialogTitle>Account Settings</DialogTitle> 
+        <DialogTitle>Profile Settings</DialogTitle> 
         <DialogContent> 
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}> 
-            <Avatar src={newProfileImage} sx={{ width: 100, height: 100, mr: 2 }} /> 
-            <label htmlFor="image-upload"> 
-              <ImageButtonStyled 
-                variant="contained" 
-                component="span" 
-                startIcon={<AddAPhotoIcon />} 
-              > 
-                Change Image 
-              </ImageButtonStyled> 
-            </label> 
-            <input 
-              id="image-upload" 
-              type="file" 
-              accept="image/*" 
-              style={{ display: 'none' }} 
-              onChange={changeImage} 
-            /> 
-            {newProfileImage && ( 
+          <input 
+            accept="image/*" 
+            style={{ display: "none" }} 
+            id="upload-photo" 
+            type="file" 
+            onChange={changeImage} 
+          /> 
+          <label htmlFor="upload-photo"> 
+            <ImageButtonStyled variant="contained" component="span" startIcon={<AddAPhotoIcon />}> 
+              Upload Profile Image 
+            </ImageButtonStyled> 
+          </label> 
+          {newProfileImage && ( 
+            <div> 
+              <img 
+                src={newProfileImage} 
+                alt="New Profile" 
+                style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "50%" }} 
+              /> 
               <IconButton 
                 onClick={() => setNewProfileImage(null)} 
-                size="small" 
-                color="secondary" 
+                aria-label="remove" 
+                color="error" 
               > 
                 <RemoveCircleOutlineIcon /> 
               </IconButton> 
-            )} 
-          </div> 
+            </div> 
+          )} 
+
           <TextField 
             label="Name" 
-            fullWidth 
-            variant="outlined" 
             value={userInfo.name} 
             onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} 
+            fullWidth 
             margin="normal" 
           /> 
           <TextField 
             label="Email" 
-            fullWidth 
-            variant="outlined" 
             value={userInfo.email} 
             onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} 
+            fullWidth 
             margin="normal" 
           /> 
           <TextField 
             label="Job" 
-            fullWidth 
-            variant="outlined" 
             value={userInfo.job} 
             onChange={(e) => setUserInfo({ ...userInfo, job: e.target.value })} 
+            fullWidth 
             margin="normal" 
           /> 
           <TextField 
             label="Address" 
-            fullWidth 
-            variant="outlined" 
             value={userInfo.address} 
             onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })} 
+            fullWidth 
             margin="normal" 
           /> 
         </DialogContent> 
