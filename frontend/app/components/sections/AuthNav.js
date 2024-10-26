@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import React, { useState } from "react";
 import {
   AppBar,
@@ -30,7 +29,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useRouter } from "next/navigation";
 import { useAuthentication } from "@/app/hooks/useAuthentication";
 
-const IconButtonStyled = styled(IconButton)({
+const IconButtonStyled = styled(IconButton)( {
   width: 40,
   height: 40,
   backgroundColor: "#D3D3D3",
@@ -50,7 +49,7 @@ const IconButtonStyled = styled(IconButton)({
   }
 });
 
-const ImageButtonStyled = styled(Button)({
+const ImageButtonStyled = styled(Button)( {
   borderRadius: "15px",
   backgroundColor: "#6c63ff",
   color: "#ffffff",
@@ -63,7 +62,7 @@ const ImageButtonStyled = styled(Button)({
 });
 
 export default function AuthNav() {
-  const {user, logout } = useAuthentication();
+  const { user, logout } = useAuthentication();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const router = useRouter();
@@ -202,8 +201,8 @@ export default function AuthNav() {
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/education")}>
-                Education
+              <MenuItem onClick={() => router.push("/Business")}>
+                Businesses
               </MenuItem>
             </Menu>
             <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}>
