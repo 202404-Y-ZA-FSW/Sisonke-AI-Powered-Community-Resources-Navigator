@@ -42,7 +42,7 @@ app.use(express.json());
 // CORS FOR FRONTEND ACCESS TO THIS SERVER
 app.use(
   cors({
-    origin: "http://localhost:5001",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
