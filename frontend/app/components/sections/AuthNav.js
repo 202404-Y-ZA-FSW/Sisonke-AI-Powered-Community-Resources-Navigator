@@ -1,21 +1,30 @@
-"use client";  
+"use client";
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
-import { useRouter } from "next/navigation";  
-import MenuIcon from '@mui/icons-material/Menu';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useRouter } from "next/navigation";
+import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { useAuthentication } from "@/app/hooks/useAuthentication";
 
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
 export default function AuthNav() {
-  const {  logout } = useAuthentication();
+  const { user, logout } = useAuthentication();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const [pageAnchorEl, setPageAnchorEl] = useState(null);
 
-  const router = useRouter();  
+  const router = useRouter();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +46,8 @@ export default function AuthNav() {
     color: "#000000",
     textTransform: "none",
   };
+
+  const isAdmin = user && user.user.role === "administrator";
 
   return (
     <AppBar
@@ -70,10 +81,18 @@ export default function AuthNav() {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              {isAdmin ? (
+                <MenuItem onClick={() => router.push("/dashboard")}>
+                  Dashboard
+                </MenuItem>
+              ) : (
+                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              )}
               <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
               <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
-              <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
+              <MenuItem onClick={() => router.push("/contact")}>
+                Contact
+              </MenuItem>
               <MenuItem onClick={handlePageOpen}>
                 Community <KeyboardArrowDownIcon />
               </MenuItem>
@@ -84,20 +103,51 @@ export default function AuthNav() {
               >
                 <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
-                <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-                <MenuItem onClick={() => router.push("/Business")}>Businesses</MenuItem>
+                <MenuItem onClick={() => router.push("/events")}>
+                  Events
+                </MenuItem>
+                <MenuItem onClick={() => router.push("/Business")}>
+                  Businesses
+                </MenuItem>
               </Menu>
 
-              <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
-              <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
+              {user ? (
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              ) : (
+                <>
+                  <MenuItem onClick={() => router.push("/account/login")}>
+                    Login
+                  </MenuItem>
+                  <MenuItem onClick={() => router.push("/account/register")}>
+                    Register
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </>
         ) : (
           <>
-            <Button onClick={() => router.push("/")} sx={navLinksStyles}>Home</Button>
-            <Button onClick={() => router.push("/about")} sx={navLinksStyles}>About</Button>
-            <Button onClick={() => router.push("/jobs")} sx={navLinksStyles}>Jobs</Button>
-            <Button onClick={() => router.push("/contact")} sx={navLinksStyles}>Contact</Button>
+            {isAdmin ? (
+              <Button
+                onClick={() => router.push("/dashboard")}
+                sx={navLinksStyles}
+              >
+                Dashboard
+              </Button>
+            ) : (
+              <Button onClick={() => router.push("/")} sx={navLinksStyles}>
+                Home
+              </Button>
+            )}
+            <Button onClick={() => router.push("/about")} sx={navLinksStyles}>
+              About
+            </Button>
+            <Button onClick={() => router.push("/jobs")} sx={navLinksStyles}>
+              Jobs
+            </Button>
+            <Button onClick={() => router.push("/contact")} sx={navLinksStyles}>
+              Contact
+            </Button>
             <Button
               sx={navLinksStyles}
               endIcon={<KeyboardArrowDownIcon />}
@@ -113,24 +163,43 @@ export default function AuthNav() {
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/Business")}>Businesses</MenuItem>
+              <MenuItem onClick={() => router.push("/Business")}>
+                Businesses
+              </MenuItem>
             </Menu>
-            <Button
-              onClick={logout} 
-              sx={{
-                backgroundColor: "#6c63ff",
-                color: "#ffffff",
-                padding: "8px 30px",
-                border: "1px solid #6c63ff",
-                textTransform: "none",
-                borderRadius: "16px",
-                "&:hover": {
-                  backgroundColor: "#5A52D5"
-                },
-              }}
-            >
-              Logout
-            </Button>
+            {user ? (
+              <Button
+                onClick={logout}
+                sx={{
+                  backgroundColor: "#6c63ff",
+                  color: "#ffffff",
+                  padding: "8px 30px",
+                  border: "1px solid #6c63ff",
+                  textTransform: "none",
+                  borderRadius: "16px",
+                  "&:hover": {
+                    backgroundColor: "#5A52D5",
+                  },
+                }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <>
+                <Button
+                  onClick={() => router.push("/account/login")}
+                  sx={navLinksStyles}
+                >
+                  Login
+                </Button>
+                <Button
+                  onClick={() => router.push("/account/register")}
+                  sx={navLinksStyles}
+                >
+                  Register
+                </Button>
+              </>
+            )}
           </>
         )}
       </Toolbar>

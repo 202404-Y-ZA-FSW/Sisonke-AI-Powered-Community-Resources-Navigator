@@ -15,6 +15,8 @@ import DashboardOverview from './components/DashboardOverview';
 import UserDashboard from './components/users';
 import { withAuthentication } from '../components/authentication/authenticationLayout';
 import { useAuthentication } from '../hooks/useAuthentication';
+import AuthNav from '../components/sections/AuthNav';
+import App from 'next/app';
 
 function Dashboard() {
   const [selectedComponent, setSelectedComponent] = useState('Overview');
@@ -56,8 +58,11 @@ function Dashboard() {
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       {/* Navbar on the top */}
-      <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
+      {/* <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
         <Navbar handleDrawerToggle={handleDrawerToggle} />
+      </AppBar> */}
+      <AppBar position='fixed' sx={{ zIndex: theme.zIndex.drawer + 1 }}>
+        <AuthNav/>
       </AppBar>
       
       {/* Sidebar */}
