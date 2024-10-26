@@ -29,7 +29,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useRouter } from "next/navigation";
 import { useAuthentication } from "@/app/hooks/useAuthentication";
 
-const StyledIconButton = styled(IconButton)({
+const IconButtonStyled = styled(IconButton)({
   width: 40,
   height: 40,
   backgroundColor: "#D3D3D3",
@@ -49,16 +49,15 @@ const StyledIconButton = styled(IconButton)({
   }
 });
 
-// Define the button styles to be used for the image buttons
-const ImageButton = styled(Button)({
+const ImageButtonStyled = styled(Button)({
   borderRadius: "15px",
   backgroundColor: "#6c63ff",
   color: "#ffffff",
   textTransform: "none",
   padding: "8px 30px",
-  marginRight: "8px", // Add some margin for spacing
+  marginRight: "8px",
   '&:hover': {
-    backgroundColor: "#5a53d1", // Darken color on hover
+    backgroundColor: "#5a53d1",
   },
 });
 
@@ -75,47 +74,46 @@ export default function AuthNav() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [userInfo, setUserInfo] = useState({ name: '', email: '', job: '', address: '' });
-  const [newProfileImage, setNewProfileImage] = useState(null); // Store new image
-  const [profileImage, setProfileImage] = useState(null); // Actual displayed image
+  const [newProfileImage, setNewProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
 
-  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
-  const handleMenuClose = () => setAnchorEl(null);
-  const handlePageOpen = (event) => setPageAnchorEl(event.currentTarget);
-  const handlePageClose = () => setPageAnchorEl(null);
-  const handleProfileOpen = (event) => setProfileAnchorEl(event.currentTarget);
-  const handleProfileClose = () => setProfileAnchorEl(null);
-  const handleSnackbarClose = () => setSnackbarOpen(false);
-  const handleDialogOpen = () => {
+  const openMenu = (event) => setAnchorEl(event.currentTarget);
+  const closeMenu = () => setAnchorEl(null);
+  const openPageMenu = (event) => setPageAnchorEl(event.currentTarget);
+  const closePageMenu = () => setPageAnchorEl(null);
+  const openProfileMenu = (event) => setProfileAnchorEl(event.currentTarget);
+  const closeProfileMenu = () => setProfileAnchorEl(null);
+  const closeSnackbar = () => setSnackbarOpen(false);
+  const openDialog = () => {
     setDialogOpen(true);
-    handleProfileClose();
+    closeProfileMenu();
   };
-  const handleDialogClose = () => setDialogOpen(false);
-  const handleUpdateProfile = () => {
-    // Update the displayed profile image only when the update button is pressed
+  const closeDialog = () => setDialogOpen(false);
+  const updateProfile = () => {
     if (newProfileImage) {
       setProfileImage(newProfileImage);
     }
     setSnackbarMessage('Profile updated successfully!');
     setSnackbarOpen(true);
-    handleDialogClose();
+    closeDialog();
   };
 
-  const handleImageChange = (event) => {
+  const changeImage = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setNewProfileImage(reader.result); // Update new image state
+        setNewProfileImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleRemoveImage = () => {
-    setNewProfileImage(null); // Clear new image state
+  const removeImage = () => {
+    setNewProfileImage(null);
   };
 
-  const navLinksStyles = {
+  const navLinkStyles = {
     color: "#000000",
     textTransform: "none",
   };
@@ -142,26 +140,26 @@ export default function AuthNav() {
               edge="start"
               color="inherit"
               aria-label="menu"
-              onClick={handleMenuOpen}
+              onClick={openMenu}
             >
               <MenuIcon />
             </IconButton>
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
+              onClose={closeMenu}
             >
               <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
               <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
               <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
               <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
-              <MenuItem onClick={handlePageOpen}>
+              <MenuItem onClick={openPageMenu}>
                 Community <KeyboardArrowDownIcon />
               </MenuItem>
               <Menu
                 anchorEl={pageAnchorEl}
                 open={Boolean(pageAnchorEl)}
-                onClose={handlePageClose}
+                onClose={closePageMenu}
               >
                 <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
@@ -174,40 +172,40 @@ export default function AuthNav() {
           </>
         ) : (
           <>
-            <Button onClick={() => router.push("/")} sx={navLinksStyles}>Home</Button>
-            <Button onClick={() => router.push("/about")} sx={navLinksStyles}>About</Button>
-            <Button onClick={() => router.push("/jobs")} sx={navLinksStyles}>Jobs</Button>
-            <Button onClick={() => router.push("/contact")} sx={navLinksStyles}>Contact</Button>
+            <Button onClick={() => router.push("/")} sx={navLinkStyles}>Home</Button>
+            <Button onClick={() => router.push("/about")} sx={navLinkStyles}>About</Button>
+            <Button onClick={() => router.push("/jobs")} sx={navLinkStyles}>Jobs</Button>
+            <Button onClick={() => router.push("/contact")} sx={navLinkStyles}>Contact</Button>
             <Button
-              sx={navLinksStyles}
+              sx={navLinkStyles}
               endIcon={<KeyboardArrowDownIcon />}
-              onClick={handlePageOpen}
+              onClick={openPageMenu}
             >
               Community
             </Button>
             <Menu
               anchorEl={pageAnchorEl}
               open={Boolean(pageAnchorEl)}
-              onClose={handlePageClose}
+              onClose={closePageMenu}
             >
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
               <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
             </Menu>
-            <StyledIconButton onClick={handleProfileOpen} sx={{ ml: 1 }}>
+            <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}>
               {profileImage ? (
                 <Avatar src={profileImage} sx={{ width: 40, height: 40 }} />
               ) : (
                 <PersonIcon />
               )}
-            </StyledIconButton>
+            </IconButtonStyled>
             <Menu
               anchorEl={profileAnchorEl}
               open={Boolean(profileAnchorEl)}
-              onClose={handleProfileClose}
+              onClose={closeProfileMenu}
             >
-              <MenuItem onClick={handleDialogOpen}>
+              <MenuItem onClick={openDialog}>
                 <AccountCircleIcon sx={{ mr: 1 }} />
                 Account Settings
               </MenuItem>
@@ -222,12 +220,12 @@ export default function AuthNav() {
 
       <Snackbar
         open={snackbarOpen}
-        onClose={handleSnackbarClose}
+        onClose={closeSnackbar}
         message={snackbarMessage}
         autoHideDuration={3000}
       />
 
-      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+      <Dialog open={dialogOpen} onClose={closeDialog}>
         <DialogTitle>Account Settings</DialogTitle>
         <DialogContent>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
@@ -238,27 +236,26 @@ export default function AuthNav() {
                 id="upload-image"
                 type="file"
                 style={{ display: 'none' }}
-                onChange={handleImageChange}
+                onChange={changeImage}
               />
               <label htmlFor="upload-image">
-                <ImageButton component="span" startIcon={<AddAPhotoIcon />}>
+                <ImageButtonStyled component="span" startIcon={<AddAPhotoIcon />}>
                   Change Image
-                </ImageButton>
+                </ImageButtonStyled>
               </label>
-              <ImageButton
+              <ImageButtonStyled
                 variant="contained"
                 color="error"
-                onClick={handleRemoveImage}
+                onClick={removeImage}
                 startIcon={<RemoveCircleOutlineIcon />}
               >
                 Remove Image
-              </ImageButton>
+              </ImageButtonStyled>
             </div>
           </div>
           <TextField
             margin="dense"
             label="Name"
-            type="text"
             fullWidth
             variant="outlined"
             value={userInfo.name}
@@ -267,7 +264,6 @@ export default function AuthNav() {
           <TextField
             margin="dense"
             label="Email"
-            type="email"
             fullWidth
             variant="outlined"
             value={userInfo.email}
@@ -276,7 +272,6 @@ export default function AuthNav() {
           <TextField
             margin="dense"
             label="Job"
-            type="text"
             fullWidth
             variant="outlined"
             value={userInfo.job}
@@ -285,7 +280,6 @@ export default function AuthNav() {
           <TextField
             margin="dense"
             label="Address"
-            type="text"
             fullWidth
             variant="outlined"
             value={userInfo.address}
@@ -293,12 +287,8 @@ export default function AuthNav() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleUpdateProfile} color="primary">
-            Update
-          </Button>
+          <Button onClick={closeDialog} color="primary">Cancel</Button>
+          <Button onClick={updateProfile} color="primary">Update</Button>
         </DialogActions>
       </Dialog>
     </AppBar>
