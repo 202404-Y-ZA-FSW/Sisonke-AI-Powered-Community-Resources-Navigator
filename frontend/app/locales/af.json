@@ -1,156 +1,197 @@
 {
-  "navbar": {
-    "home": "Tuis",
-    "about": "Oor",
-    "jobs": "Werksgeleenthede",
-    "contact": "Kontak",
-    "community": "Gemeenskap",
-    "blog": "Blog",
-    "forum": "Forum",
-    "events": "Geledere",
-    "education": "Onderwys",
-    "login": "Teken In",
-    "register": "Registreer",
-    "createBlogPost": "Skep Blog Plasing"
+  "Navbar": {
+    "Home": "Tuis",
+    "About": "Oor",
+    "Jobs": "Werksgeleenthede",
+    "Contact": "Kontak",
+    "Community": "Gemeenskap",
+    "Blog": "Blog",
+    "Forum": "Forum",
+    "Events": "Geledere",
+    "Business": "Besighede",
+    "Login": "Teken In",
+    "Register": "Registreer"
   },
-  "jobCard": {
-    "salary": "R",
-    "location": "Ligging",
-    "experience": "Ervaring",
-    "type": "Tipe",
-    "description": "Beskrywing"
+  
+  "HeroSection": {
+    "Title": "Ontdek essensiële plaaslike ondersteuning en geleenthede",
+    "Subtitle": "Verken 'n saamgestelde versameling plaaslike hulpbronne wat aangepas is om aan jou gemeenskap se unieke behoeftes te voldoen.",
+    "Users": "Gebruikers",
+    "JobsCreated": "Geleenthede geskep",
+    "Businesses": "Besighede",
+    "SupportedBy": "Ons word ondersteun",
+    "SupportSubtitle": "Deur plaaslike regerings, nasionale jeugagentskappe, en die private sektor."
   },
-  "events": {
-    "exploreEvents": "Verken die wonderlike geledere",
-    "eventDescription": "Geledere word deur plaaslike besighede, organisasies en gemeenskapsgroepe gedeel."
+
+  "Blogs": {
+    "LatestNews": "Nuus oor loopbaanadvies",
+    "Insight": "Voeg insig by om loopbaanontwikkeling te bevorder en kyk na wenke oor maatskappy werksgeleenthede",
+    "MinRead": "min Lees",
+    "ReadMore": "Lees Meer",
+    "BrowseAll": "Blaai Deur Alle",
+    "BlogTitle": "Blog Titel: {{title}}",
+    "BlogContent": "Blog Inhoud: {{content}}"
   },
-  "modal": {
-    "date": "Datum",
-    "location": "Ligging",
-    "time": "Tyd",
-    "close": "Sluit"
+
+  "Blog": {
+    "Author": "Auteur",
+    "Date": "Datum",
+    "ReadMore": "Lees Meer",
+    "NoContent": "Geen inhoud beskikbaar",
+    "Loading": "Laad...",
+    "Error": "Fout: {{message}}"
   },
-  "hero": {
-    "title": "Ontdek noodsaaklike plaaslike ondersteuning en geleenthede",
-    "subtitle": "Verken 'n gekureerde versameling plaaslike hulpbronne wat ontwerp is om aan jou gemeenskap se unieke behoeftes te voldoen.",
-    "searchBar": {
-      "jobTypePlaceholder": "Werksoort",
-      "locationPlaceholder": "Ligging",
-      "searchButton": "Soek"
+
+  "Footer": {
+    "Address": "143 Wesstraat, Sandown, Sandton, Gauteng, Suid-Afrika",
+    "Community": "Gemeenskap",
+    "Blog": "Blog",
+    "Forum": "Forum",
+    "Events": "Gebeure",
+    "Businesses": "Besighede",
+    "Company": "Maatskappy",
+    "Home": "Tuis",
+    "AboutUs": "Oor Ons",
+    "Jobs": "Werk",
+    "FAQs": "Vrae",
+    "Support": "Ondersteuning",
+    "ContactUs": "Kontak Ons",
+    "PrivacyPolicy": "Privaatheidsbeleid",
+    "TermsOfService": "Diensbepalings"
+  },
+
+  "Jobs": {
+    "Title": "Verken die nuutste werksgeleenthede",
+    "Subtitle": "Ontdek werk wat die relevantste vir jou is volgens ervaringsvlak, salaris, ligging, werksoort, ens.",
+    "SearchPlaceholder": "Soek Werk Pos of Maatskappy",
+    "SortBy": "Sorteer Op",
+    "RecentlyAdded": "Onlangs Bygevoeg",
+    "HighestSalary": "Hoogste Salaris",
+    "LowestSalary": "Laagste Salaris",
+    "Loading": "Laaigoed van werksgeleenthede...",
+    "BrowseAll": "Kyk Alle"
+  },
+
+  "JobCard": {
+    "JobTitle": "Werk Titel",
+    "Company": "Maatskappy",
+    "Location": "Ligging",
+    "Experience": "Ervaring",
+    "JobType": "Werk Soort",
+    "Salary": "Salaris",
+    "NoSalary": "R0"
+  },
+
+  "Events": {
+    "ExploreEvents": "Verken die wonderlike gebeurtenisse wat in jou omgewing gebeur",
+    "EventsInfo": "Gebeurtenisse word gedeel deur plaaslike besighede, organisasies en gemeenskapsgroepe.",
+    "Date": "Datum",
+    "Location": "Ligging",
+    "Time": "Tyd",
+    "Close": "Maak toe"
+  },
+
+  "Common": {
+    "FailedToLoadEvents": "Dit het misluk om gebeurtenisse te laai. Probeer asseblief weer later."
+  },
+
+  "FAQs": {
+    "Title": "Gereelde vrae",
+    "Subtitle": "As u vrae nie hier beantwoord word nie, kontak gerus ons ondersteuning vir hulp.",
+    "LoadError": "Kon nie die vrae laai nie. Probeer asseblief weer later."
+  },
+
+  "PrivacyPolicy": {
+    "Title": "Privaatheidsbeleid",
+    "Intro": "Ons waardeer jou privaatheid. Hier is hoe ons jou data hanteer:",
+    "DataCollection": "1. Data-insameling: Ons verskaf inligting wat jy gee en gebruiksdata.",
+    "Usage": "2. Gebruik: Ons gebruik jou inligting om die platform en dienste te verbeter.",
+    "Security": "3. Sekuriteit: Ons neem stappe om jou data te beskerm.",
+    "ThirdParties": "4. Derde partye: Ons deel nie jou data sonder toestemming nie.",
+    "Updates": "5. Opdaterings: Ons kan hierdie beleid verander. Voortgesette gebruik beteken aanvaarding.",
+    "Contact": "Kontak ons by info@sisonke.co.za vir enige vrae."
+  },
+
+  "Subscribe": {
+    "Title": "Teken in op ons nuusbrief",
+    "Description": "Word ingelig oor nuwe werksgeleenthede, geleenthede en nuwe hulpbronne wat daagliks in jou gemeenskapforums en blogs geplaas word.",
+    "ButtonText": "Teken Nou In",
+    "ModalTitle": "Sisonke Teken In",
+    "NamePlaceholder": "Naam",
+    "EmailPlaceholder": "E-pos",
+    "LocationPlaceholder": "Ligging",
+    "SubmitButtonText": "Dien In",
+    "Errors": {
+      "NameRequired": "Naam is vereis",
+      "EmailRequired": "E-pos is vereis",
+      "InvalidEmail": "E-pos is ongeldig",
+      "LocationRequired": "Ligging is vereis"
     },
-    "popularCategories": "Populêre Kategoriene:",
-    "categories": [
-      "UX Ontwerper",
-      "Voorste Ontwikkelaar",
-      "Agterkant Ontwikkelaar"
-    ],
-    "supportTitle": "Ons word ondersteun",
-    "supportSubtitle": "Deur plaaslike regerings, nasionale jeugagentskappe en die private sektor."
+    "SuccessMessage": "Teken in was suksesvol! Dankie dat jy ingeteken het.",
+    "ErrorMessage": "Teken in het misluk. Probeer asseblief weer.",
+    "ErrorOccurred": "Daar het 'n fout opgetree. Probeer asseblief weer."
   },
-  "footer": {
-    "company": "SIS<span style=\"color: '#6c63ff';\">O</span>NKE",
-    "address": "143 Wesstraat, Sandown, Sandton, Gauteng, Suid-Afrika",
-    "email": "info@sisonke.co.za",
-    "phone": "+27 12 345 6789",
-    "community": "Gemeenskap",
-    "companyLinks": [
-      "Tuis",
-      "Oor Ons",
-      "Carrière",
-      "Vrae"
-    ],
-    "supportLinks": [
-      "Kontak Ons",
-      "Privaatheidsbeleid",
-      "Voorwaardes van Diens"
-    ]
+
+  "Services": {
+    "Title": "Wat jy kan doen en kry op ons platform",
+    "Subtitle": "Of jy nou op soek is na ondersteuning, geleenthede, en verbintenisse",
+    "Community": "Gemeenskap",
+    "CommunityDescription": "Verbind met soortgelyke individue in jou gemeenskap, deel hulpbronne, en bly verbind.",
+    "Events": "Gemeenskapsgeleenthede",
+    "EventsDescription": "Mis nooit belangrike gemeenskapsgeleenthede en netwerkgeleenthede nie.",
+    "Jobs": "Werk en Leerplek",
+    "JobsDescription": "Ons NGO's help jou om aansoek te doen vir werk, meer oor loopbane te leer, en jou vaardighede te ontwikkel.",
+    "Communication": "Kommunikasie",
+    "CommunicationDescription": "Ons gebruik gemeenskapsblogs en -forums om idees te deel, vrae te vra, en met ander te verbind.",
+    "GetStarted": "Begin"
   },
-  "services": {
-    "title": "Wat jy kan doen en kry op ons platform",
-    "subtitle": "Of jy nou ondersteuning, geleenthede, en verbindings soek.",
-    "steps": [
-      {
-        "icon": "Mense",
-        "title": "Gemeenskap",
-        "description": "Verbind met soortgelyk-gemoed mense in jou gemeenskap, deel hulpbronne en bly verbind."
-      },
-      {
-        "icon": "Geleenthede",
-        "title": "Gemeenskapsgeleenthede",
-        "description": "Mis nooit belangrike gemeenskapsgeleenthede en netwerkgeleenthede nie."
-      },
-      {
-        "icon": "Werksgeleenthede",
-        "title": "Werke & Leerwerk",
-        "description": "Ons NGO's help jou om vir werke aansoek te doen, meer oor beroepe te leer en jou vaardighede te ontwikkel."
-      },
-      {
-        "icon": "Forum",
-        "title": "Kommunikasie",
-        "description": "Ons gemeenskapsblogs en forums om idees te deel, vrae te vra, en met ander te verbind."
-      }
-    ],
-    "getStarted": "Begin Nou"
+
+  "Hero": {
+    "GetInTouch": "Kontak ons vir meer inligting",
+    "HelpMessage": "As jy hulp nodig het of 'n vraag het, is ons hier vir jou"
   },
-  "subscribe": {
-    "title": "Teken in op ons nuusbrief",
-    "description": "Bly ingelig oor nuwe werksgeleenthede, geleenthede en nuwe hulpbronne wat daagliks in jou gemeenskaplike forums en blogs geplaas word.",
-    "button": "Teken Nou In",
-    "modalTitle": "Sisonke Inskrywing",
-    "form": {
-      "namePlaceholder": "Naam",
-      "emailPlaceholder": "E-pos",
-      "locationPlaceholder": "Ligging",
-      "submitButton": "Stuur"
-    }
+
+  "ContactPage": {
+    "ContactInformation": "Kontakbesonderhede",
+    "FormInstruction": "Vul die vorm in en ons span sal binne 24 uur by u terugkom.",
+    "InvalidEmail": "Voer asseblief 'n geldige e-posadres in",
+    "ShortMessage": "Boodskap moet minstens 10 karakters lank wees",
+    "SuccessMessage": "Boodskap suksesvol gestuur",
+    "FailureMessage": "Kon nie boodskap stuur nie",
+    "Name": "Naam",
+    "Email": "E-pos",
+    "Subject": "Onderwerp",
+    "Message": "Boodskap",
+    "SendMessage": "Stuur Boodskap"
   },
-  "faq": {
-    "title": "Gereelde vrae",
-    "subtitle": "As ons vrae nie hier beantwoord word nie, kontak gerus ons ondersteuning vir hulp.",
-    "questions": [
-      {
-        "question": "Wat is Sisonke AI-gedrewe Hulpbron Navigasie?",
-        "answer": "Jou aansoek gaan reguit na die spanlede met wie jy sou werk. Jy kan al jou aansoeke op een plek bestuur, binne twee kliks aansoek doen en binne 'n paar dae terugvoer van spanne kry."
-      },
-      {
-        "question": "Watter tipe inligting verskaf die Sisonke platform?",
-        "answer": "Career bied 'n wye reeks werksgeleenthede oor verskeie bedrywe en rolle. Jy kan posisies in tegnologie, bemarking, finansies, ontwerp, en vele ander velde vind."
-      },
-      {
-        "question": "Watter gemeenskappe ondersteun Sisonke? En kan ek 'n profiel skep?",
-        "answer": "Ja, Career is 'n gratis platform vir werksoekers. Jy kan 'n profiel skep, vir werke soek en op posisies aansoek doen sonder enige koste."
-      },
-      {
-        "question": "Is die werke wat op Sisonke geplaas word, geverifieer?",
-        "answer": "Ja, Career is 'n gratis platform vir werksoekers. Jy kan 'n profiel skep, vir werke soek en op posisies aansoek doen sonder enige koste."
-      },
-      {
-        "question": "Is die besighede wat op Sisonke gelys is, betroubaar?",
-        "answer": "Ja, Career is 'n gratis platform vir werksoekers. Jy kan 'n profiel skep, vir werke soek en op posisies aansoek doen sonder enige koste."
-      }
-    ]
+  
+  "hero": {
+    "title": "Oor Ons",
+    "subtitle": "By Sisonke is ons trots op ons toewyding aan gemeenskapsbemagtiging, verbinding, en groei in Suid-Afrikaanse dorpe."
   },
-  "blogs": {
-    "title": "Nuutste nuus oor loopbaanadvies",
-    "subtitle": "Voeg insig by om loopbaangroei te bevorder en kyk na wenke oor maatskappy-werksgeleenthede",
-    "posts": [
-      {
-        "title": "5 Leierskapvaardighede wat jy nodig het om suksesvol te wees",
-        "description": "‘n Groot leier is iemand wat verskeie sterkpunte en vaardighede op een slag beliggaam. Alle groot lei...",
-        "readTime": "8 min Lees"
-      },
-      {
-        "title": "Hoe om vriende te maak terwyl jy op afstand werk",
-        "description": "Sedert afgeleë werk meer algemeen geword het, het werknemers gesê dat die binding met hul span moeil...",
-        "readTime": "11 min Lees"
-      },
-      {
-        "title": "Wat om nie te sê tydens 'n werksonderhoud nie",
-        "description": "Wanneer jy uiteindelik daardie onderhoud kry, is dit maklik om uiters opgewonde (en senuweeagtig) te raak...",
-        "readTime": "9 min Lees"
-      }
-    ],
-    "readMoreButton": "Lees Meer",
-    "browseAllButton": "Blaai Alles"
+
+  "AboutUs": {
+    "WhoWeAre": "Wie Ons Is",
+    "WhoWeAreDescription": "Sisonke is 'n gemeenskapsgedrewe platform wat plaaslike hulpbronne, geleenthede en mense in Suid-Afrikaanse dorpe verbind.",
+    "WhatWeDo": "Wat Ons Doen",
+    "WhatWeDoDescription": "Ons bied 'n digitale sentrum vir werklisings, gebeurtenisse, forums, en plaaslike besigheid bevordering om ons gemeenskap te bemagtig.",
+    "HowWeHelp": "Hoe Ons Help",
+    "HowWeHelpDescription": "Deur ons platform fasiliteer ons verbindings, deel kennis, en skep geleenthede vir groei en ontwikkeling.",
+    "CreateSuccessStories": "Skep Sukkelstories",
+    "CreateSuccessStoriesDescription":"By bringing together community members, businesses, and resources, we help individuals achieve their goals and thrive."
+  },
+
+  "job": {
+    "browseJobs": "Verken Werk In U Gemeenskap",
+    "findJob": "Vind die werk van u drome in ons gekurrikeerde lys van werke van geverifieerde maatskappye.",
+    "searchPlaceholder": "Soek vir werke...",
+    "loadMore": "Laai Meer",
+    "sortBy": "Sorteer Deur",
+    "recentlyAdded": "Onlangs Voeg",
+    "highestSalary": "Hoogste Salaris",
+    "lowestSalary": "Laagste Salaris",
+    "postJob": "Plaas 'n Werk",
+    "loginToPost": "Meld aan om 'n werk te plaas."
   }
+    
 }

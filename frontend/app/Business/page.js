@@ -1,40 +1,44 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
+import Link from "next/link";
+import Image from "next/image";
+import { 
   Grid,
+  Button,
+  CircularProgress,
   Card,
   CardContent,
+  CardActions,
   CardMedia,
   Container,
   Box,
   Typography,
   TextField,
   InputAdornment,
-  Button,
-  Modal,
-  Fade,
-  Backdrop,
-  MenuItem,
-  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton, 
 } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from '@mui/icons-material/Close';
-import { styled } from "@mui/system";
-import Footer from "../components/sections/Footer";
-import Navigation from "../components/sections/NavBar";
+import LocationOnIcon from "@mui/icons-material/LocationOn"; 
+import CloseIcon from "@mui/icons-material/Close"; 
 import Subscribe from "../components/sections/Subscribe";
+import Footer from "../components/sections/Footer";
+import Navigation from "../components/sections/Navigation";
 import { useAuthentication } from "../hooks/useAuthentication";
-import axios from "axios";
+import { styled } from "@mui/system"; 
+import BusinessForm from "./new/businessForm"; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-  maxWidth: 300, 
+  maxWidth: 300,
   margin: "auto",
   borderRadius: 16,
   boxShadow: "none",
-  height: 250, 
+  height: 250,
   transition: "transform 0.3s ease",
   cursor: "pointer",
   position: "relative",
@@ -45,7 +49,7 @@ const StyledCard = styled(Card)({
 
 const StyledCardMedia = styled(CardMedia)({
   width: "100%",
-  height: "100px", 
+  height: "100px",
   objectFit: "contain",
   transition: "0.3s",
 });
@@ -80,76 +84,17 @@ const Icon = styled("span")({
   color: "#000",
 });
 
-const StyledModal = styled(Modal)({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
-
-const ModalContent = styled(Box)(({ theme }) => ({
-  backgroundColor: '#fff',
-  borderRadius: '8px',
-  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-  padding: '32px',
-  width: '90%',
-  maxWidth: '800px',
-  maxHeight: '90vh',
-  overflowY: 'auto',
-  position: 'relative',
-  [theme.breakpoints.down('sm')]: {
-    width: '95%',
-    padding: '24px',
-  },
-}));
-
-const FormField = styled(TextField)({
-  marginBottom: 24,
-  "& .MuiOutlinedInput-root": {
-    borderRadius: "8px",
-  },
-});
-
-const SubmitButton = styled(Button)({
-  marginTop: 16,
-  borderRadius: '8px',
-  padding: '12px 24px',
-});
-
-const industries = [
-  "Agriculture",
-  "Construction",
-  "Education",
-  "Finance",
-  "Healthcare",
-  "Hospitality",
-  "IT and Technology",
-  "Manufacturing",
-  "Retail",
-  "Transportation",
-];
-
 // Business Page
 const Business = () => {
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [newBusiness, setNewBusiness] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    category: '',
-    description: '',
-    website: '',
-    image: '',
-    logo: '',
-    owner: '',
-  });
-  const [errors, setErrors] = useState({});
   const { user } = useAuthentication();
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+
+  const canPostABusiness =
+    user && (user.user.role === "administrator" || user.user.role === "ngo");
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -159,136 +104,22 @@ const Business = () => {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched businesses:", data);
-
-        if (Array.isArray(data.businesses)) {
-          setBusinesses(data.businesses);
-        } else {
-          console.error("Fetched data is not an array:", data);
-          setBusinesses([]);
-        }
+        setBusinesses(Array.isArray(data.businesses) ? data.businesses : []);
       } catch (error) {
-        console.error("Fetch error:", error);
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchBusinesses();
   }, []);
 
-  const handleModalOpen = () => {
-    setModalOpen(true);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setNewBusiness({
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-      city: '',
-      category: '',
-      description: '',
-      website: '',
-      image: '',
-      logo: '',
-      owner: '',
-    });
-    setErrors({});
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewBusiness(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const validateForm = () => {
-    let valid = true;
-    let errorObj = {};
-
-    if (!newBusiness.name) {
-      errorObj.name = "Business name is required";
-      valid = false;
-    }
-
-    if (!newBusiness.email) {
-      errorObj.email = "Email is required";
-      valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(newBusiness.email)) {
-      errorObj.email = "Invalid email address";
-      valid = false;
-    }
-
-    if (!newBusiness.phone) {
-      errorObj.phone = "Phone is required";
-      valid = false;
-    }
-
-    if (!newBusiness.address) {
-      errorObj.address = "Address is required";
-      valid = false;
-    }
-
-    if (!newBusiness.city) {
-      errorObj.city = "City is required";
-      valid = false;
-    }
-
-    if (!newBusiness.category) {
-      errorObj.category = "Industry is required";
-      valid = false;
-    }
-
-    if (!newBusiness.description) {
-      errorObj.description = "Description is required";
-      valid = false;
-    }
-
-    if (!newBusiness.image) {
-      errorObj.image = "Image URL is required";
-      valid = false;
-    }
-
-    if (!newBusiness.logo) {
-      errorObj.logo = "Logo URL is required";
-      valid = false;
-    }
-
-    if (!newBusiness.owner) {
-      errorObj.owner = "Owner is required";
-      valid = false;
-    }
-
-    setErrors(errorObj);
-    return valid;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    try {
-      const response = await axios.post("http://localhost:5000/business/new", newBusiness);
-      console.log("Response:", response.data);
-
-      setBusinesses([...businesses, response.data]);
-      handleModalClose();
-    } catch (error) {
-      console.error("Error submitting the form", error);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        general: "Failed to submit. Please try again.",
-      }));
-    }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   if (loading) return <div>Loading...</div>;
@@ -302,7 +133,7 @@ const Business = () => {
     <div>
       <Navigation />
       <Container>
-        {/* Business Search Header */}
+        
         <Box
           sx={{
             py: 10,
@@ -322,7 +153,7 @@ const Business = () => {
               sx={{
                 fontWeight: "bold",
                 mb: 2,
-                fontSize: { xs: "2.5rem", md: "3.75rem" }, 
+                fontSize: { xs: "2.5rem", md: "3.75rem" },
                 textAlign: "center",
               }}
             >
@@ -333,18 +164,18 @@ const Business = () => {
               sx={{
                 mb: 4,
                 color: "text.secondary",
-                fontSize: { xs: "1rem", md: "1.25rem" }, 
+                fontSize: { xs: "1rem", md: "1.25rem" },
                 textAlign: "center",
               }}
             >
               Find the best services and products in your community, <br />
               or search for a specific business by name.
             </Typography>
-
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+
               <TextField
                 variant="outlined"
-                placeholder="Search"
+                placeholder="Search" 
                 InputProps={{
                   sx: { borderRadius: "16px", width: "100%" },
                   startAdornment: (
@@ -357,25 +188,60 @@ const Business = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Box>
-            
-            {user && (
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleModalOpen}
-                  sx={{ borderRadius: "20px", padding: "10px 20px" }}
-                >
-                  Post A Business
-                </Button>
-              </Box>
-            )}
           </Container>
         </Box>
+        <Container maxWidth="lg" sx={{ mt: 5, px: 2 }}>
+          {canPostABusiness ? (
+            <Button
+              onClick={handleOpenModal} // Opens modal
+              color="primary"
+              sx={{
+                mb: 2,
+                backgroundColor: "#6c63ff",
+                color: "#ffffff",
+                borderRadius: "16px",
+                padding: "15px 24px",
+                textTransform: "none",
+                "&:hover": { backgroundColor: "#5A52D5" },
+              }}
+            >
+              Post a Business
+            </Button>
+          ) : (
+            <Typography
+              variant="body2"
+              sx={{ marginBottom: 2, color: "#6c63ff" }}
+            >
+              {user
+                ? "You don't have permission to create a new business."
+                : "You need to login to create a new business."}
+            </Typography>
+          )}
 
-        <Container sx={{ pt: 2 }}>
-          {/* Business Cards */}
-          <Grid container spacing={2} sx={{ mt: 2 }}>
+          {/* Modal for Business Form */}
+          <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
+           
+              <IconButton
+                aria-label="close"
+                onClick={handleCloseModal}
+                sx={{
+                  position: "absolute",
+                  right: 8,
+                  top: 8,
+                  color: (theme) => theme.palette.grey[500],
+                }}
+              >
+                <CloseIcon />
+              </IconButton>
+            
+            <DialogContent>
+              <BusinessForm /> {/* Display the BusinessForm component */}
+            </DialogContent>
+            {/* Removed the DialogActions section */}
+          </Dialog>
+
+          {/* Business List */}
+          <Grid container spacing={2}>
             {filteredBusinesses.map((business) => (
               <Grid item xs={12} sm={6} md={4} key={business._id}>
                 <a
@@ -397,7 +263,6 @@ const Business = () => {
                       <Typography variant="body2" color="text.secondary">
                         {business.description}
                       </Typography>
-                      {/* Location */}
                       <IconBox>
                         <Icon>
                           <LocationOnIcon />
@@ -407,9 +272,8 @@ const Business = () => {
                         </Typography>
                       </IconBox>
                     </CardContent>
-
-                    {/* Discount Overlay */}
-                    {business.discount && (
+                      {/* Discount Overlay */}
+                      {business.discount && (
                       <DiscountOverlay>
                         <Typography variant="h6">{business.discount}</Typography>
                       </DiscountOverlay>
@@ -423,155 +287,6 @@ const Business = () => {
       </Container>
       <Subscribe />
       <Footer />
-
-      <StyledModal
-        open={modalOpen}
-        onClose={handleModalClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={modalOpen}>
-          <ModalContent>
-            <Typography variant="h4" gutterBottom sx={{ mb: 3, fontWeight: 'bold' }}>
-              Register Your Business
-            </Typography>
-
-            <form onSubmit={handleSubmit}>
-              {errors.general && <Alert severity="error" sx={{ mb: 3 }}>{errors.general}</Alert>}
-
-              <FormField
-                label="Business Name"
-                name="name"
-                value={newBusiness.name}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.name}
-                helperText={errors.name}
-              />
-
-              <FormField
-                label="Email"
-                type="email"
-                name="email"
-                value={newBusiness.email}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.email}
-                helperText={errors.email}
-              />
-
-              <FormField
-                label="Phone"
-                name="phone"
-                value={newBusiness.phone}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.phone}
-                helperText={errors.phone}
-              />
-
-              <FormField
-                label="Address"
-                name="address"
-                value={newBusiness.address}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.address}
-                helperText={errors.address}
-              />
-
-              <FormField
-                label="City"
-                name="city"
-                value={newBusiness.city}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.city}
-                helperText={errors.city}
-              />
-
-              <FormField
-                select
-                label="Industry"
-                name="category"
-                value={newBusiness.category}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.category}
-                helperText={errors.category}
-              >
-                {industries.map((ind, idx) => (
-                  <MenuItem key={idx} value={ind}>
-                    {ind}
-                  </MenuItem>
-                ))}
-              </FormField>
-
-              <FormField
-                label="Business Description"
-                name="description"
-                value={newBusiness.description}
-                onChange={handleInputChange}
-                fullWidth
-                multiline
-                rows={4}
-                error={!!errors.description}
-                helperText={errors.description}
-              />
-
-              <FormField
-                label="Website"
-                name="website"
-                value={newBusiness.website}
-                onChange={handleInputChange}
-                fullWidth
-              />
-
-              <FormField
-                label="Image URL"
-                name="image"
-                value={newBusiness.image}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.image}
-                helperText={errors.image}
-              />
-
-              <FormField
-                label="Logo URL"
-                name="logo"
-                value={newBusiness.logo}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.logo}
-                helperText={errors.logo}
-              />
-
-              <FormField
-                label="Owner"
-                name="owner"
-                value={newBusiness.owner}
-                onChange={handleInputChange}
-                fullWidth
-                error={!!errors.owner}
-                helperText={errors.owner}
-              />
-
-              <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
-                <Button onClick={handleModalClose} sx={{ mr: 2 }}>
-                  Cancel
-                </Button>
-                <SubmitButton type="submit" variant="contained" color="primary">
-                  Submit
-                </SubmitButton>
-              </Box>
-            </form>
-          </ModalContent>
-        </Fade>
-      </StyledModal>
     </div>
   );
 };

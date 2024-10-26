@@ -17,6 +17,7 @@ import Projecty from "./Images/logos/projecty.svg";
 import NotionLogo from "./Images/logos/notion.png";
 import GoogleLogo from "./Images/logos/google.png";
 import SlackLogo from "./Images/logos/slack.png";
+import { useTranslation } from 'react-i18next';
 
 const GradientBackground = styled(Box)({
   background: 'linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)',
@@ -84,6 +85,7 @@ const AnimatedNumber = styled(Typography)({
 });
 
 export default function HeroSection() {
+  const { t } = useTranslation();
   const [jobCount, setJobCount] = useState(0);
   const [businessCount, setBusinessCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
@@ -123,10 +125,10 @@ export default function HeroSection() {
                 marginTop: '3rem'
               }}
             >
-              Discover essential local support and opportunities
+              {t('HeroSection.Title')}
             </Typography>
             <Typography variant="subtitle1" gutterBottom sx={{ color: '#666', mb: 4 }}>
-              Explore a curated collection of local resources tailored to meet your community's unique needs.
+              {t('HeroSection.Subtitle')}
             </Typography>
             <StatsContainer container spacing={2} justifyContent="center">
               <Grid item xs={6} md={3}>
@@ -138,7 +140,7 @@ export default function HeroSection() {
                     {userCount}
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    Users
+                    {t('HeroSection.Users')}
                   </Typography>
                 </StatBox>
               </Grid>
@@ -151,7 +153,7 @@ export default function HeroSection() {
                     {jobCount}
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    Jobs Created
+                    {t('HeroSection.JobsCreated')}
                   </Typography>
                 </StatBox>
               </Grid>
@@ -164,7 +166,7 @@ export default function HeroSection() {
                     {businessCount}
                   </AnimatedNumber>
                   <Typography variant="body2" sx={{ color: '#666', fontSize: '0.85rem' }}>
-                    Businesses
+                    {t('HeroSection.Businesses')}
                   </Typography>
                 </StatBox>
               </Grid>
@@ -219,10 +221,10 @@ export default function HeroSection() {
         </Grid>
         <Box sx={{ mt: 8, textAlign: 'center' }}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
-            We are supported
+            {t('HeroSection.SupportedBy')}
           </Typography>
           <Typography variant="subtitle1" gutterBottom sx={{ color: '#666', mb: 4 }}>
-            By local governments, national youth agencies, and the private sector.
+            {t('HeroSection.SupportSubtitle')}
           </Typography>
           <Grid container spacing={4} justifyContent="center" alignItems="center">
             <Grid item>

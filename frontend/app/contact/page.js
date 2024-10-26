@@ -9,6 +9,9 @@ import Hero from './hero';
 import { styled } from '@mui/material/styles';
 import Navigation from '../components/sections/Navigation';
 
+import { useTranslation } from 'react-i18next';
+
+
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
   borderRadius: '24px',
@@ -53,6 +56,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -89,12 +93,12 @@ export default function ContactPage() {
     const newErrors = { email: '', message: '' };
 
     if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t('ContactPage.InvalidEmail');
       hasError = true;
     }
 
     if (formData.message.length < 10) {
-      newErrors.message = 'Message must be at least 10 characters long';
+      newErrors.message = t('ContactPage.ShortMessage');
       hasError = true;
     }
 
@@ -113,7 +117,7 @@ export default function ContactPage() {
       });
 
       if (res.ok) {
-        alert('Message sent successfully');
+        alert(t('ContactPage.SuccessMessage'));
         setFormData({
           name: '',
           email: '',
@@ -121,7 +125,7 @@ export default function ContactPage() {
           message: '',
         });
       } else {
-        alert('Failed to send message');
+        alert(t('ContactPage.FailureMessage'));
       }
     } catch (err) {
       console.error('Error submitting form', err);
@@ -139,10 +143,12 @@ export default function ContactPage() {
             <Grid item xs={12} md={5}>
               <ContactInfoBox>
                 <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
-                  Contact Information
+
+                  {t('ContactPage.ContactInformation')}
                 </Typography>
                 <Typography sx={{ mb: 3 }}>
-                  Fill out the form and our team will get back to you within 24 hours.
+                  {t('ContactPage.FormInstruction')}
+
                 </Typography>
 
                 <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
@@ -182,7 +188,9 @@ export default function ContactPage() {
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6}>
                     <StyledTextField
-                      label="Name"
+
+                      label={t('ContactPage.Name')}
+
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
@@ -193,7 +201,9 @@ export default function ContactPage() {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <StyledTextField
-                      label="Email"
+
+                      label={t('ContactPage.Email')}
+
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -206,7 +216,9 @@ export default function ContactPage() {
                   </Grid>
                   <Grid item xs={12}>
                     <StyledTextField
-                      label="Subject"
+
+                      label={t('ContactPage.Subject')}
+
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
@@ -216,7 +228,8 @@ export default function ContactPage() {
                   </Grid>
                   <Grid item xs={12}>
                     <StyledTextField
-                      label="Message"
+                      label={t('ContactPage.Message')}
+
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
@@ -232,7 +245,9 @@ export default function ContactPage() {
                 </Grid>
                 <Box display="flex" justifyContent="flex-end" mt={4}>
                   <StyledButton type="submit">
-                    Send Message
+
+                    {t('ContactPage.SendMessage')}
+
                   </StyledButton>
                 </Box>
               </form>

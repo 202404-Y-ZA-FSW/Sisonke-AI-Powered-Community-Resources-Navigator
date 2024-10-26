@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Box, Typography, IconButton, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+
 import DataUsageIcon from '@mui/icons-material/DataUsage';
 import SecurityIcon from '@mui/icons-material/Security';
 import ShareIcon from '@mui/icons-material/Share';
@@ -22,6 +23,7 @@ const style = {
 };
 
 const PrivacyPolicyModal = ({ open, handleClose }) => {
+  const { t } = useTranslation();
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
@@ -39,6 +41,7 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
         >
           <CloseIcon />
         </IconButton>
+
         <Typography variant="h5" component="h2" gutterBottom sx={{ mb: 3, fontWeight: 'bold', color: 'primary.main' }}>
           Privacy Policy
         </Typography>
@@ -98,6 +101,7 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
             Contact us at info@sisonke.co.za for any questions.
           </Typography>
         </Box>
+
       </Box>
     </Modal>
   );

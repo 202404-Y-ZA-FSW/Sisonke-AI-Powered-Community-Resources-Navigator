@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthenticationProvider } from "./hooks/useAuthentication";
+import { I18nProvider } from "./next.config/i18nProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,10 +12,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <AuthenticationProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </AuthenticationProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <AuthenticationProvider>
+          <I18nProvider>  
+            {children}
+          </I18nProvider>
+        </AuthenticationProvider>
+      </body>
+    </html>
   );
-}
+} 

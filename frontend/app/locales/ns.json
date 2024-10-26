@@ -1,0 +1,165 @@
+{
+  "Navbar": {
+    "Home": "Legae",
+    "About": "Mabapi le Rena",
+    "Jobs": "Mesomo",
+    "Contact": "Ikopanye",
+    "Community": "Setšhaba",
+    "Blog": "Blog",
+    "Forum": "Foramo",
+    "Events": "Dintlha",
+    "Business": "Kgwebo",
+    "Login": "Kena",
+    "Register": "Ngwala"
+  },
+  "HeroSection": {
+    "Title": "Hwetša thušo ya motheo le menyetla ya setšhaba",
+    "Subtitle": "Sebuletša dikhutlo tša setšhaba tša kgetho ya gago.",
+    "Users": "Basebedi",
+    "JobsCreated": "Mesomo e Hlomilwe",
+    "Businesses": "Dikgwebo",
+    "SupportedBy": "Re thekgwa ke",
+    "SupportSubtitle": "Mmuso wa legaeng, mekhatlo ya basha, le dikhamphani."
+  },
+  "Blogs": {
+    "LatestNews": "Ditaba tša moraorao mabapi le tlhahlo ya mesomo",
+    "Insight": "Dumela tlaleletšo go kaonafatša kgolo ya mosomo le dikeletšo",
+    "MinRead": "metsotso ya go Bala",
+    "ReadMore": "Bala Go feta",
+    "BrowseAll": "Bala kaofela"
+  },
+  "Footer": {
+    "Address": "143 West Street, Sandown, Sandton, Gauteng, Afrika Borwa",
+    "Community": "Setjhaba",
+    "Blog": "Blog",
+    "Forum": "Foramo",
+    "Events": "Diketsahalo",
+    "Businesses": "Kgwebo",
+    "Company": "Khamphani",
+    "Home": "Lapeng",
+    "AboutUs": "Ka Rona",
+    "Jobs": "Mesebetsi",
+    "FAQs": "Dipotso",
+    "Support": "Tlhahiso",
+    "ContactUs": "Ikopanye le Rona",
+    "PrivacyPolicy": "Leano la Lekunutu",
+    "TermsOfService": "Dipehelo tsa Tshebeletso"
+  },
+  "Jobs": {
+    "Title": "Hlahloba menyetla ya mesomo ya bjale",
+    "Subtitle": "Fumana mesomo go ya ka boiphihlelo bja gago le dikgetho",
+    "SearchPlaceholder": "Nyaka Setulo sa Mošomo goba Khamphani",
+    "SortBy": "Rulaganya ka",
+    "RecentlyAdded": "Mošomo o Hlomilwe",
+    "HighestSalary": "Pheelo ya Godimo",
+    "LowestSalary": "Pheelo ya Tlase",
+    "Loading": "E hwetša mesomo...",
+    "BrowseAll": "Bona kaofela"
+  },
+  "JobCard": {
+    "JobTitle": "Sehlopheng sa Mošomo",
+    "Company": "Khamphani",
+    "Location": "Sebaka",
+    "Experience": "Boiphihlelo",
+    "JobType": "Mofuta wa Mošomo",
+    "Salary": "Pheelo",
+    "NoSalary": "R0"
+  },
+  "FAQs": {
+    "Title": "Dipotšišo tse di Bodiwaganye",
+    "Subtitle": "Ge eba dipotšišo tsa gago ga di arabja fa, o kgopela go ikopanya le lefapha la tshegetso bakeng sa thúšo.",
+    "LoadError": "Go paletše go laela dipotšišo. Ka kopo leka gape ka moragonyana."
+  },
+  "Events": {
+    "ExploreEvents": "Hlahloba Dintlha tše kgahlišago tikologong",
+    "EventsInfo": "Dintlha tše fano go tswa dikhamphani le mekhatlo ya setšhaba.",
+    "Date": "Letšatši",
+    "Location": "Sebaka",
+    "Time": "Nako",
+    "Close": "Tswala"
+  },
+  "PrivacyPolicy": {
+    "Title": "Leano la Boipshino",
+    "Intro": "Re šireletša boipshino bja gago. Bona kamoo re šomago ka ditaba tša gago:",
+    "DataCollection": "1. Pokello ya Dintlha: Re kgoboketša seo o fanago ka sona le tshebediso ya tšhomi.",
+    "Usage": "2. Tšhomišo: Re šomiša tshedimošo ya gago go kaonafatša ditirelo.",
+    "Security": "3. Polokeho: Re tšea dikgato go šireletša tshedimošo.",
+    "ThirdParties": "4. Batho ba Kantle: Ga re abelane tshedimošo ya gago ntle le tumelelo.",
+    "Updates": "5. Dihlogo: Re ka fetola leano. Tšhomišo e tswelapele e bolela kamohelo.",
+    "Contact": "Ikopanye le rena go info@sisonke.co.za bakeng sa dipotso"
+  },
+  "Subscribe": {
+    "Title": "Ingwadiše go hwetša ditaba tša rena",
+    "Description": "Bolela ka mesomo ye meswa, dintlha, le dikhutlo tša setšhaba go dikanegelo tša setšhaba le dikgopolo.",
+    "ButtonText": "Ingwadiše",
+    "ModalTitle": "Ngwadišo ya Sisonke",
+    "NamePlaceholder": "Leina",
+    "EmailPlaceholder": "Email",
+    "LocationPlaceholder": "Sebaka",
+    "SubmitButtonText": "Romela",
+    "Errors": {
+      "NameRequired": "Leina le a hlokega",
+      "EmailRequired": "Email e a hlokega",
+      "InvalidEmail": "Email ga e nepagala",
+      "LocationRequired": "Sebaka se a hlokega"
+    },
+    "SuccessMessage": "Ngwadišo e atlegile! Kea leboga ka ngwadišo ya gago.",
+    "ErrorMessage": "Ngwadišo e paletšwe. Leka gape.",
+    "ErrorOccurred": "Go bile le phošo. Leka gape."
+  },
+  "Services": {
+    "Title": "Seo o ka se fihlelelago mo setšhabeng sa rena",
+    "Subtitle": "Gabotse ka thušo, menyetla le kgokagano",
+    "Community": "Setšhaba",
+    "CommunityDescription": "Kgokaganya le batho ba go tshwana le wena mo setšhabeng, abelana ditokelo, le go duleng o tseba.",
+    "Events": "Dintlha tša Setšhaba",
+    "EventsDescription": "Le ka se hlokomologe dintlha tša setšhaba le menyetla ya go kgokagana le batho.",
+    "Jobs": "Mesomo le go Ithuteng",
+    "JobsDescription": "Mekgatlo ya rena e go thusa go hwetša mesomo, go ithuta ka dithuto le go hloma bokgoni.",
+    "Communication": "Kgokagano",
+    "CommunicationDescription": "Re abelana dikgopolo ka di-blog le foramo tša setšhaba, go go kgokaganya le batho."
+  },
+  "Hero": {
+    "GetInTouch": "Ikopanye le rena bakeng sa tshedimosetso",
+    "HelpMessage": "Ha o hloka thuso kapa o na le potso, re mona ho wena"
+  },
+  "ContactPage": {
+    "ContactInformation": "Tshedimošo ya Kgokagano",
+    "FormInstruction": "Tlhalosa ka polelo ebile sehlopha sa rona se tla go araba ka hare ga diiri tša 24.",
+    "InvalidEmail": "Hle tšhomiša email e nepagetšego",
+    "ShortMessage": "Molaetsa o swanetše go ba bonyane ka ditlhaka tše 10",
+    "SuccessMessage": "Molaetsa o rometswe ka katlego",
+    "FailureMessage": "Go paletšwe go romela molaetsa",
+    "Name": "Leina",
+    "Email": "Email",
+    "Subject": "Hlogo ya Tsebo",
+    "Message": "Molaetsa",
+    "SendMessage": "Romela Molaetsa"
+  },
+  
+  "hero": {
+    "title": "Ka Rona",
+    "subtitle": "Mo Sisonke, re ikgantšha ka boikgethelo bja rena go matlafatsa setšhaba, kgokagano, le kgolo mo metseng ya Afrika Borwa."
+  },
+  "AboutUs": {
+    "WhoWeAre": "Rena Ke Bomang",
+    "WhoWeAreDescription": "Sisonke ke setšhaba sa batho sa go kgokaganya dithuto, menyetla le batho mo ditoropong tša Afrika Borwa.",
+    "WhatWeDo": "Seo re se Dirago",
+    "WhatWeDoDescription": "Re fana ka tshomelo ya dijithale ya go hwetša mešomo, dintlha, le kgwebo ya setšhaba.",
+    "HowWeHelp": "Kamoo re Thusišago",
+    "HowWeHelpDescription": "Re diragatša kgokagano, re abelana tsebo, le go hloma menyetla ya go kaonafatša batho.",
+    "CreateSuccessStories": "Hlama Dikanegelo tša Katlego",
+    "CreateSuccessStoriesDescription": "Ka kgokagano ya setšhaba, dikgwebo, le dithuto, re thuša batho go fihlelela ditoro tša bona."
+  },
+  "job": {
+    "browseJobs": "Hlahloba Mesomo",
+    "findJob": "Fumana mošomo go ya ka kgetho ya gago",
+    "searchPlaceholder": "Nyaka ka Leina la Mošomo goba Khamphani",
+    "loadMore": "Laola Tse dingwe",
+    "sortBy": "Rulaganya ka",
+    "recentlyAdded": "E hlatsilwe",
+    "highestSalary": "Meputso e Phagamego",
+    "lowestSalary": "Meputso e Bohloko",
+    "postJob": "Bea Mesomo"
+  }
+}

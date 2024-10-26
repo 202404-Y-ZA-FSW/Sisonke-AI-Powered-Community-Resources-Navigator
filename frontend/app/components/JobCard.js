@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useRouter } from 'next/router'; 
+import { useTranslation } from 'react-i18next';
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -61,8 +62,8 @@ const InfoItem = styled(Box)({
   gap: 4,
 });
 
-const formatSalary = (salary) => {
-  return salary ? `R${Number(salary).toLocaleString()}` : "R0";
+const formatSalary = (salary, t) => {
+  return salary ? `R${Number(salary).toLocaleString()}` : t('JobCard.NoSalary');
 };
 
 export default function JobCard({
@@ -75,9 +76,9 @@ export default function JobCard({
   description,
   link, 
 }) {
+  const { t } = useTranslation(); 
 
   const handleCardClick = () => {
-    
     window.location.href = link;
   };
 
@@ -88,10 +89,10 @@ export default function JobCard({
           <Logo>{company[0]}</Logo>
           <Box>
             <Typography variant="h6" component="div">
-              {title}
+              {title} 
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {company}
+              {company} 
             </Typography>
           </Box>
         </HeaderContainer>
@@ -117,13 +118,13 @@ export default function JobCard({
           <InfoItem>
             <AccessTimeIcon fontSize="small" color="action" />
             <Typography variant="body2" color="text.secondary">
-              {type}
+              {type} 
             </Typography>
           </InfoItem>
           <InfoItem>
             <AttachMoneyIcon fontSize="small" color="action" />
             <Typography variant="body2" color="text.secondary">
-              {formatSalary(salary)}
+              {formatSalary(salary, t)} 
             </Typography>
           </InfoItem>
         </FooterContainer>

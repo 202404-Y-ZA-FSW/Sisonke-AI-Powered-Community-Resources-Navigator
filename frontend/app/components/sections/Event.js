@@ -11,8 +11,10 @@ import {
   Button,
 } from "@mui/material";
 import { CalendarMonth, Info } from "@mui/icons-material";
+import { useTranslation } from 'react-i18next'; 
 
 export default function Events() {
+  const { t } = useTranslation(); 
   const [open, setOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [events, setEvents] = useState([]);
@@ -51,7 +53,7 @@ export default function Events() {
     >
       <Container sx={{ paddingBottom: 7, paddingTop: 6 }}>
         <Typography variant="h4" align="center" gutterBottom>
-          Explore the awesome events <br /> happening in your area
+          {t('Events.ExploreEvents')}
         </Typography>
         <Typography
           variant="subtitle1"
@@ -59,8 +61,7 @@ export default function Events() {
           gutterBottom
           sx={{ mb: 4 }}
         >
-          Events are shared by local businesses, organizations, and community
-          groups.
+          {t('Events.EventsInfo')}
         </Typography>
         <Grid container spacing={2}>
           {events.map((event, index) => (
@@ -131,13 +132,13 @@ export default function Events() {
               {selectedEvent?.description}
             </Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
-              Date: {selectedEvent?.date}
+              {t('Events.Date')}: {selectedEvent?.date}
             </Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
-              Location: {selectedEvent?.location}
+              {t('Events.Location')}: {selectedEvent?.location}
             </Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
-              Time: {selectedEvent?.time}
+              {t('Events.Time')}: {selectedEvent?.time}
             </Typography>
             <Button
               onClick={handleClose}
@@ -150,7 +151,7 @@ export default function Events() {
                 borderRadius: "16px",
               }}
             >
-              Close
+              {t('Events.Close')}
             </Button>
           </Box>
         </Modal>
