@@ -17,6 +17,7 @@ import Footer from "../components/sections/Footer";
 import Subscribe from "../components/sections/Subscribe";
 import Navigation from "../components/sections/Navigation";
 
+// Styled components
 const StyledCard = styled(Card)(({ theme }) => {
   const defaultTheme = useTheme();
   return {
@@ -76,6 +77,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
 }));
 
+// Main component
 export default function AboutUs() {
   const sections = [
     {
@@ -106,12 +108,9 @@ export default function AboutUs() {
 
   return (
     <React.Fragment>
-      <Navigation/>
+      <Navigation />
       <Hero />
-      <Container
-        maxWidth="lg"
-        sx={{ mt: 15, mb: 15 }}
-      >
+      <Container maxWidth="lg" sx={{ mt: 15, mb: 15 }}>
         <Grid container spacing={4}>
           {sections.map((section) => (
             <Grid item xs={12} md={6} key={section.title}>
@@ -204,7 +203,7 @@ export default function AboutUs() {
           </Grid>
         </Grid>
       </Container>
-      <Subscribe/>
+      <Subscribe />
       <Footer />
     </React.Fragment>
   );
