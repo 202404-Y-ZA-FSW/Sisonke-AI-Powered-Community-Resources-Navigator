@@ -1,5 +1,5 @@
-"use client"; 
-import React, { useState } from "react"; 
+"use client";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,15 +18,15 @@ import {
   TextField,
   styled,
   Avatar,
-} from "@mui/material"; 
-import MenuIcon from "@mui/icons-material/Menu"; 
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; 
-import PersonIcon from '@mui/icons-material/Person'; 
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'; 
-import LogoutIcon from '@mui/icons-material/Logout'; 
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'; 
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'; 
-import { useRouter } from "next/navigation"; 
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import PersonIcon from '@mui/icons-material/Person';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { useRouter } from "next/navigation";
 import { useAuthentication } from "@/app/hooks/useAuthentication";
 
 const IconButtonStyled = styled(IconButton)({
@@ -62,235 +62,233 @@ const ImageButtonStyled = styled(Button)({
 });
 
 export default function AuthNav() {
-  const { user, logout } = useAuthentication(); 
-  const theme = useTheme(); 
-  const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
-  const router = useRouter(); 
-  const [anchorEl, setAnchorEl] = useState(null); 
-  const [pageAnchorEl, setPageAnchorEl] = useState(null); 
-  const [profileAnchorEl, setProfileAnchorEl] = useState(null); 
-  const [snackbarOpen, setSnackbarOpen] = useState(false); 
-  const [snackbarMessage, setSnackbarMessage] = useState(''); 
-  const [dialogOpen, setDialogOpen] = useState(false); 
-  const [userInfo, setUserInfo] = useState({ name: '', email: '', job: '', address: '' }); 
-  const [newProfileImage, setNewProfileImage] = useState(null); 
-  const [profileImage, setProfileImage] = useState(null); 
+  const { logout } = useAuthentication();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const router = useRouter();
 
-  const openMenu = (event) => setAnchorEl(event.currentTarget); 
-  const closeMenu = () => setAnchorEl(null); 
-  const openPageMenu = (event) => setPageAnchorEl(event.currentTarget); 
-  const closePageMenu = () => setPageAnchorEl(null); 
-  const openProfileMenu = (event) => setProfileAnchorEl(event.currentTarget); 
-  const closeProfileMenu = () => setProfileAnchorEl(null); 
-  const closeSnackbar = () => setSnackbarOpen(false); 
-  const openDialog = () => { 
-    setDialogOpen(true); 
-    closeProfileMenu(); 
-  }; 
-  const closeDialog = () => setDialogOpen(false); 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [pageAnchorEl, setPageAnchorEl] = useState(null);
+  const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState({ name: '', email: '', job: '', address: '' });
+  const [newProfileImage, setNewProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
 
-  const updateProfile = () => { 
-    if (newProfileImage) { 
-      setProfileImage(newProfileImage); 
-    } else { 
-      setProfileImage(null); 
-    } 
-    setSnackbarMessage('Profile updated successfully!'); 
-    setSnackbarOpen(true); 
-    closeDialog(); 
+  const openMenu = (event) => setAnchorEl(event.currentTarget);
+  const closeMenu = () => setAnchorEl(null);
+  const openPageMenu = (event) => setPageAnchorEl(event.currentTarget);
+  const closePageMenu = () => setPageAnchorEl(null);
+  const openProfileMenu = (event) => setProfileAnchorEl(event.currentTarget);
+  const closeProfileMenu = () => setProfileAnchorEl(null);
+  const closeSnackbar = () => setSnackbarOpen(false);
+  const openDialog = () => {
+    setDialogOpen(true);
+    closeProfileMenu();
+  };
+  const closeDialog = () => setDialogOpen(false);
+  const updateProfile = () => {
+    if (newProfileImage) {
+      setProfileImage(newProfileImage);
+    } else {
+      setProfileImage(null);
+    }
+    setSnackbarMessage('Profile updated successfully!');
+    setSnackbarOpen(true);
+    closeDialog();
   };
 
-  const changeImage = (event) => { 
-    const file = event.target.files[0]; 
-    if (file) { 
-      const reader = new FileReader(); 
-      reader.onloadend = () => { 
-        setNewProfileImage(reader.result); 
-      }; 
-      reader.readAsDataURL(file); 
-    } 
+  const changeImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const navLinkStyles = { 
-    color: "#000000", 
-    textTransform: "none", 
-  }; 
+  const navLinkStyles = {
+    color: "#000000",
+    textTransform: "none",
+  };
 
-  const isAdmin = user && user.user.role === "administrator";
-
-  return ( 
-    <AppBar 
-      sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }} 
-      position="static" 
-      color="transparent" 
-      elevation={0} 
-    > 
-      <Toolbar> 
-        <Typography 
-          variant="h6" 
-          component="div" 
-          sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }} 
-        > 
-          SIS<span style={{ color: "#6c63ff" }}>O</span>NKE 
-        </Typography> 
-
-        {isMobile ? ( 
-          <> 
-            <IconButton 
-              size="large" 
-              edge="start" 
-              color="inherit" 
-              aria-label="menu" 
-              onClick={openMenu} 
-            > 
-              <MenuIcon /> 
-            </IconButton> 
-            <Menu 
-              anchorEl={anchorEl} 
-              open={Boolean(anchorEl)} 
-              onClose={closeMenu} 
-            > 
-              {isAdmin ? (
-                <MenuItem onClick={() => router.push("/dashboard")}>
-                  Dashboard
-                </MenuItem>
+  return (
+    <AppBar
+      sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }}
+      position="static"
+      color="transparent"
+      elevation={0}
+    >
+      <Toolbar>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }}
+        >
+          SIS<span style={{ color: "#6c63ff" }}>O</span>NKE
+        </Typography>
+        {isMobile ? (
+          <>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={openMenu}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={closeMenu}
+            >
+              <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+              <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
+              <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
+              <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
+              <MenuItem onClick={openPageMenu}>
+                Community <KeyboardArrowDownIcon />
+              </MenuItem>
+              <Menu
+                anchorEl={pageAnchorEl}
+                open={Boolean(pageAnchorEl)}
+                onClose={closePageMenu}
+              >
+                <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
+                <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
+                <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
+                <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+              </Menu>
+              <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
+              <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <>
+            <Button onClick={() => router.push("/")} sx={navLinkStyles}>Home</Button>
+            <Button onClick={() => router.push("/about")} sx={navLinkStyles}>About</Button>
+            <Button onClick={() => router.push("/jobs")} sx={navLinkStyles}>Jobs</Button>
+            <Button onClick={() => router.push("/contact")} sx={navLinkStyles}>Contact</Button>
+            <Button
+              sx={navLinkStyles}
+              endIcon={<KeyboardArrowDownIcon />}
+              onClick={openPageMenu}
+            >
+              Community
+            </Button>
+            <Menu
+              anchorEl={pageAnchorEl}
+              open={Boolean(pageAnchorEl)}
+              onClose={closePageMenu}
+            >
+              <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
+              <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
+              <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
+              <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+            </Menu>
+            <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}>
+              {profileImage ? (
+                <Avatar src={profileImage} sx={{ width: 40, height: 40 }} />
               ) : (
-                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+                <PersonIcon />
               )}
-              <MenuItem onClick={() => router.push("/about")}>About</MenuItem> 
-              <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem> 
-              <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem> 
-              <MenuItem onClick={openPageMenu}> 
-                Community <KeyboardArrowDownIcon /> 
-              </MenuItem> 
-              <Menu 
-                anchorEl={pageAnchorEl} 
-                open={Boolean(pageAnchorEl)} 
-                onClose={closePageMenu} 
-              > 
-                <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem> 
-                <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem> 
-                <MenuItem onClick={() => router.push("/events")}>Events</MenuItem> 
-                <MenuItem onClick={() => router.push("/education")}>Education</MenuItem> 
-              </Menu> 
-              {user ? (
-                <MenuItem onClick={logout}>Logout</MenuItem>
-              ) : (
-                <>
-                  <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem> 
-                  <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem> 
-                </>
-              )}
-            </Menu> 
-          </> 
-        ) : ( 
-          <> 
-            {isAdmin ? (
-              <Button onClick={() => router.push("/dashboard")} sx={navLinkStyles}>
-                Dashboard
-              </Button>
-            ) : (
-              <Button onClick={() => router.push("/")} sx={navLinkStyles}>Home</Button>
-            )}
-            <Button onClick={() => router.push("/about")} sx={navLinkStyles}>About</Button> 
-            <Button onClick={() => router.push("/jobs")} sx={navLinkStyles}>Jobs</Button> 
-            <Button onClick={() => router.push("/contact")} sx={navLinkStyles}>Contact</Button> 
-            <Button 
-              sx={navLinkStyles} 
-              endIcon={<KeyboardArrowDownIcon />} 
-              onClick={openPageMenu} 
-            > 
-              Community 
-            </Button> 
-            <Menu 
-              anchorEl={pageAnchorEl} 
-              open={Boolean(pageAnchorEl)} 
-              onClose={closePageMenu} 
-            > 
-              <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem> 
-              <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem> 
-              <MenuItem onClick={() => router.push("/events")}>Events</MenuItem> 
-              <MenuItem onClick={() => router.push("/education")}>Education</MenuItem> 
-            </Menu> 
+            </IconButtonStyled>
+            <Menu
+              anchorEl={profileAnchorEl}
+              open={Boolean(profileAnchorEl)}
+              onClose={closeProfileMenu}
+            >
+              <MenuItem onClick={openDialog}>
+                <AccountCircleIcon sx={{ mr: 1 }} />
+                Account Settings
+              </MenuItem>
+              <MenuItem onClick={logout}>
+                <LogoutIcon sx={{ mr: 1 }} />
+                Logout
+              </MenuItem>
+            </Menu>
+          </>
+        )}
+      </Toolbar>
 
-            <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}> 
-              {profileImage ? ( 
-                <Avatar src={profileImage} sx={{ width: 40, height: 40 }} /> 
-              ) : ( 
-                <PersonIcon /> 
-              )} 
-            </IconButtonStyled> 
-            <Menu 
-              anchorEl={profileAnchorEl} 
-              open={Boolean(profileAnchorEl)} 
-              onClose={closeProfileMenu} 
-            > 
-              <MenuItem onClick={openDialog} startIcon={<AccountCircleIcon />}>Profile</MenuItem> 
-              <MenuItem onClick={logout} startIcon={<LogoutIcon />}>Logout</MenuItem> 
-            </Menu> 
-          </> 
-        )} 
-      </Toolbar> 
+      <Snackbar
+        open={snackbarOpen}
+        onClose={closeSnackbar}
+        message={snackbarMessage}
+        autoHideDuration={3000}
+      />
 
-      <Snackbar 
-        open={snackbarOpen} 
-        autoHideDuration={6000} 
-        onClose={closeSnackbar} 
-        message={snackbarMessage} 
-      /> 
-      <Dialog open={dialogOpen} onClose={closeDialog}> 
-        <DialogTitle>Edit Profile</DialogTitle> 
-        <DialogContent> 
-          <TextField 
-            label="Name" 
-            fullWidth 
-            margin="normal" 
-            value={userInfo.name} 
-            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })} 
-          /> 
-          <TextField 
-            label="Email" 
-            fullWidth 
-            margin="normal" 
-            value={userInfo.email} 
-            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })} 
-          /> 
-          <TextField 
-            label="Job" 
-            fullWidth 
-            margin="normal" 
-            value={userInfo.job} 
-            onChange={(e) => setUserInfo({ ...userInfo, job: e.target.value })} 
-          /> 
-          <TextField 
-            label="Address" 
-            fullWidth 
-            margin="normal" 
-            value={userInfo.address} 
-            onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })} 
-          /> 
-          <input 
-            accept="image/*" 
-            id="profile-image-upload" 
-            type="file" 
-            style={{ display: 'none' }} 
-            onChange={changeImage} 
-          /> 
-          <label htmlFor="profile-image-upload"> 
-            <ImageButtonStyled 
-              variant="contained" 
-              component="span" 
-              startIcon={newProfileImage ? <RemoveCircleOutlineIcon /> : <AddAPhotoIcon />} 
-            > 
-              {newProfileImage ? 'Remove Image' : 'Upload Image'} 
-            </ImageButtonStyled> 
-          </label> 
-        </DialogContent> 
-        <DialogActions> 
-          <Button onClick={closeDialog}>Cancel</Button> 
-          <Button onClick={updateProfile}>Save</Button> 
-        </DialogActions> 
-      </Dialog> 
-    </AppBar> 
-  ); 
+      <Dialog open={dialogOpen} onClose={closeDialog}>
+        <DialogTitle>Account Settings</DialogTitle>
+        <DialogContent>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
+            <Avatar src={newProfileImage} sx={{ width: 100, height: 100, marginRight: 2 }} />
+            <div>
+              <input
+                accept="image/*"
+                id="upload-image"
+                type="file"
+                style={{ display: 'none' }}
+                onChange={changeImage}
+              />
+              <label htmlFor="upload-image">
+                <ImageButtonStyled component="span" startIcon={<AddAPhotoIcon />}>
+                  Change Image
+                </ImageButtonStyled>
+              </label>
+              <ImageButtonStyled
+                variant="contained"
+                color="secondary"
+                onClick={() => setNewProfileImage(null)}
+                startIcon={<RemoveCircleOutlineIcon />}
+              >
+                Remove Image
+              </ImageButtonStyled>
+            </div>
+          </div>
+          <TextField
+            margin="dense"
+            label="Name"
+            fullWidth
+            variant="outlined"
+            value={userInfo.name}
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Email"
+            fullWidth
+            variant="outlined"
+            value={userInfo.email}
+            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Job"
+            fullWidth
+            variant="outlined"
+            value={userInfo.job}
+            onChange={(e) => setUserInfo({ ...userInfo, job: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            label="Address"
+            fullWidth
+            variant="outlined"
+            value={userInfo.address}
+            onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} color="primary">Cancel</Button>
+          <Button onClick={updateProfile} color="primary">Update</Button>
+        </DialogActions>
+      </Dialog>
+    </AppBar>
+  );
 }
