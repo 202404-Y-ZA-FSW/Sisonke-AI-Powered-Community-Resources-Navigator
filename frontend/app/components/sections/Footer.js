@@ -46,16 +46,71 @@ const Footer = () => {
               +27 12 345 6789
             </Typography>
             <Box sx={{ mt: 2 }}>
-              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff", marginRight: "10px" }} aria-label="Twitter" href="https://twitter.com">
+              <IconButton 
+                sx={{ 
+                  color: "#6c63ff", 
+                  border: "1px solid #6c63ff", 
+                  marginRight: "10px",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    borderRadius: "50%",
+                    backgroundColor: "#6c63ff",
+                    color: "white"
+                  }
+                }} 
+                aria-label="Twitter" 
+                href="https://twitter.com"
+              >
                 <Twitter />
               </IconButton>
-              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff", marginRight: "10px" }} aria-label="LinkedIn" href="https://linkedin.com">
+              <IconButton 
+                sx={{ 
+                  color: "#6c63ff", 
+                  border: "1px solid #6c63ff", 
+                  marginRight: "10px",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    borderRadius: "50%",
+                    backgroundColor: "#6c63ff",
+                    color: "white"
+                  }
+                }} 
+                aria-label="LinkedIn" 
+                href="https://linkedin.com"
+              >
                 <LinkedIn />
               </IconButton>
-              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff", marginRight: "10px" }} aria-label="Instagram" href="https://instagram.com">
+              <IconButton 
+                sx={{ 
+                  color: "#6c63ff", 
+                  border: "1px solid #6c63ff", 
+                  marginRight: "10px",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    borderRadius: "50%",
+                    backgroundColor: "#6c63ff",
+                    color: "white"
+                  }
+                }} 
+                aria-label="Instagram" 
+                href="https://instagram.com"
+              >
                 <Instagram />
               </IconButton>
-              <IconButton sx={{ color: "#6c63ff", border: "1px solid #6c63ff" }} aria-label="Facebook" href="https://facebook.com">
+              <IconButton 
+                sx={{ 
+                  color: "#6c63ff", 
+                  border: "1px solid #6c63ff",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    borderRadius: "50%",
+                    backgroundColor: "#6c63ff",
+                    color: "white"
+                  }
+                }} 
+                aria-label="Facebook" 
+                href="https://facebook.com"
+              >
                 <Facebook />
               </IconButton>
             </Box>
@@ -79,7 +134,7 @@ const Footer = () => {
                 Events
               </MuiLink>
             </Link>
-            <Link href="/Businesses" passHref>
+            <Link href="/Business" passHref>
               <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
                 Businesses
               </MuiLink>
@@ -104,12 +159,8 @@ const Footer = () => {
                 Jobs
               </MuiLink>
             </Link>
-            <MuiLink 
-              sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
-              onClick={handleOpenTerms}
-              variant="body2" 
-              display="block">
-              Terms of Service
+            <MuiLink sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none' }} variant="body2" display="block">
+              FAQs
             </MuiLink>
           </Grid>
           <Grid item xs={12} sm={4} md={3}>
@@ -127,6 +178,13 @@ const Footer = () => {
               variant="body2" 
               display="block">
               Privacy Policy
+            </MuiLink>
+            <MuiLink 
+              sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
+              onClick={handleOpenTerms}
+              variant="body2" 
+              display="block">
+              Terms of Service
             </MuiLink>
           </Grid>
         </Grid>

@@ -85,7 +85,7 @@ export default function AuthNav() {
                 <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
                 <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
                 <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-                <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+                <MenuItem onClick={() => router.push("/Business")}>Businesses</MenuItem>
               </Menu>
 
               <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
@@ -113,7 +113,7 @@ export default function AuthNav() {
               <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
               <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
               <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/education")}>Education</MenuItem>
+              <MenuItem onClick={() => router.push("/Business")}>Businesses</MenuItem>
             </Menu>
             <Button
               onClick={logout} 

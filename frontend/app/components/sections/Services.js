@@ -87,20 +87,6 @@ export default function Services() {
             </Grid>
           ))}
         </Grid>
-
-        <Button
-          sx={{
-            borderRadius: "15px",
-            backgroundColor: "#6c63ff",
-            color: "#ffffff",
-            textTransform: "none",
-            padding: "8px 30px",
-            mt: 6,
-          }}
-          size="large"
-        >
-          Get Started
-        </Button>
       </Container>
     </Box>
   );

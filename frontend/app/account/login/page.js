@@ -12,7 +12,12 @@ import {
   ThemeProvider,
   createTheme,
   Alert,
+  Container,
+  Divider,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
+import { Facebook, Google, Visibility, VisibilityOff } from "@mui/icons-material";
 import axios from "axios";
 import { useAuthentication } from "../../hooks/useAuthentication";
 
@@ -24,12 +29,21 @@ const theme = createTheme({
     secondary: {
       main: "#4267B2",
     },
+    background: {
+      default: "#f4f6f8",
+    },
+  },
+  typography: {
+    fontFamily: "'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+    h4: {
+      fontWeight: 700,
+    },
   },
   components: {
     MuiTextField: {
       styleOverrides: {
         root: {
-          marginBottom: "16px",
+          marginBottom: "24px",
         },
       },
     },
@@ -37,8 +51,17 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "none",
-          borderRadius: "25px",
-          padding: "10px 0",
+          borderRadius: "8px",
+          padding: "12px 0",
+          fontWeight: 600,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: "16px",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
         },
       },
     },
@@ -52,11 +75,16 @@ export default function LoginPage() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { login } = useAuthentication();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e) => {
@@ -113,111 +141,123 @@ export default function LoginPage() {
           background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
         }}
       >
-        <Card sx={{ width: 450, borderRadius: "16px", boxShadow: 3 }}>
-          <CardContent sx={{ padding: "24px" }}>
-            <Typography
-              variant="h5"
-              component="h1"
-              sx={{ mb: 3, fontWeight: "bold" }}
-            >
-              Login
-            </Typography>
-            {error && (
-              <Alert severity="error" sx={{ mb: 2, borderRadius: "16px" }}>
-                {error}
-              </Alert>
-            )}
-            <form onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                placeholder="Username"
-                variant="outlined"
-                label="Username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                disabled={loading}
-                InputProps={{
-                  sx: { borderRadius: "16px" },
-                }}
-              />
-              <TextField
-                fullWidth
-                type="password"
-                placeholder="Password"
-                variant="outlined"
-                label="Password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                disabled={loading}
-                InputProps={{
-                  sx: { borderRadius: "16px" },
-                }}
-              />
+        <Container maxWidth="sm">
+          <Card sx={{ borderRadius: "16px", boxShadow: 3 }}>
+            <CardContent sx={{ padding: "40px" }}>
+              <Typography
+                variant="h4"
+                component="h1"
+                sx={{ mb: 4, textAlign: "center", color: "#333" }}
+              >
+                Welcome Back
+              </Typography>
+              {error && (
+                <Alert severity="error" sx={{ mb: 3, borderRadius: "8px" }}>
+                  {error}
+                </Alert>
+              )}
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  fullWidth
+                  placeholder="Username"
+                  variant="outlined"
+                  label="Username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  disabled={loading}
+                  InputProps={{
+                    sx: { borderRadius: "8px" },
+                  }}
+                />
+                <TextField
+                  fullWidth
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  variant="outlined"
+                  label="Password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  disabled={loading}
+                  InputProps={{
+                    sx: { borderRadius: "8px" },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <Button
+                  fullWidth
+                  sx={{
+                    mb: 3,
+                    color: "#ffffff",
+                    backgroundColor: "#6c63ff",
+                    "&:hover": { backgroundColor: "#5A52D5" },
+                  }}
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? "Logging in..." : "Login"}
+                </Button>
+              </form>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}
+              >
+                <Link
+                  href="/account/forgotPassword"
+                  underline="none"
+                  sx={{ color: "#f9a825", fontSize: "0.875rem", fontWeight: 500 }}
+                >
+                  Forgot password?
+                </Link>
+                <Link
+                  href="/account/register"
+                  underline="none"
+                  sx={{ color: "#f9a825", fontSize: "0.875rem", fontWeight: 500 }}
+                >
+                  Create an account
+                </Link>
+              </Box>
+              <Divider sx={{ mb: 3 }}>
+                <Typography variant="body2" color="text.secondary">
+                  OR
+                </Typography>
+              </Divider>
               <Button
                 fullWidth
-                sx={{
+                startIcon={<Facebook />}
+                sx={{ 
                   mb: 2,
-                  textTransform: "none",
-                  color: "#ffffff",
-                  backgroundColor: "#6c63ff",
-                  borderRadius: "16px",
-                  "&:hover": { backgroundColor: "#5A52D5" },
+                  backgroundColor: "#1877F2",
+                  color: "white",
+                  "&:hover": { backgroundColor: "#166FE5" },
                 }}
-                type="submit"
-                disabled={loading}
               >
-                {loading ? "Working" : "Login"}
+                Continue with Facebook
               </Button>
-            </form>
-            <Box
-              sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
-            >
-              <Link
-                href="/account/forgotPassword"
-                underline="none"
-                sx={{ color: "#f9a825", fontSize: "0.875rem" }}
+              <Button
+                fullWidth
+                startIcon={<Google />}
+                sx={{
+                  backgroundColor: "#DB4437",
+                  color: "white",
+                  "&:hover": { backgroundColor: "#C53929" },
+                }}
               >
-                Forgot password?
-              </Link>
-              <Link
-                href="/account/register"
-                underline="none"
-                sx={{ color: "#f9a825", fontSize: "0.875rem" }}
-              >
-                Register
-              </Link>
-            </Box>
-            <Typography align="center" sx={{ mb: 2 }}>
-              OR
-            </Typography>
-            <Button
-              fullWidth
-              color="secondary"
-              sx={{ 
-                mb: 2,
-                backgroundColor: "#1877F2",
-                color: "white",
-                borderRadius: "16px",
-                  "&:hover": { backgroundColor: "#5A52D5" },
-              }}
-            >
-              Continue with Facebook
-            </Button>
-            <Button
-              fullWidth
-              sx={{
-                borderRadius: "16px",
-                backgroundColor: "#DB4437",
-                color: "white",
-                "&:hover": { backgroundColor: "#C53929" },
-              }}
-            >
-              Continue with Google
-            </Button>
-          </CardContent>
-        </Card>
+                Continue with Google
+              </Button>
+            </CardContent>
+          </Card>
+        </Container>
       </Box>
     </ThemeProvider>
   );
