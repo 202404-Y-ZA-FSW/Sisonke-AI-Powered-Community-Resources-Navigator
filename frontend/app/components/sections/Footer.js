@@ -188,13 +188,6 @@ const Footer = () => {
               display="block">
               {t('Footer.TermsOfService')}
             </MuiLink>
-            <MuiLink 
-              sx={{ color: 'text.secondary', marginBottom: '10px', textDecoration: 'none', cursor: 'pointer' }} 
-              onClick={handleOpenTerms}
-              variant="body2" 
-              display="block">
-              Terms of Service
-            </MuiLink>
           </Grid>
         </Grid>
       </Container>
