@@ -92,6 +92,8 @@ export default function AuthNav() {
   const updateProfile = () => {
     if (newProfileImage) {
       setProfileImage(newProfileImage);
+    } else {
+      setProfileImage(null);
     }
     setSnackbarMessage('Profile updated successfully!');
     setSnackbarOpen(true);
@@ -107,11 +109,6 @@ export default function AuthNav() {
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const removeImage = () => {
-    setNewProfileImage(null);
-    setProfileImage(null);
   };
 
   const navLinkStyles = {
@@ -247,7 +244,7 @@ export default function AuthNav() {
               <ImageButtonStyled
                 variant="contained"
                 color="secondary"
-                onClick={removeImage}
+                onClick={() => setNewProfileImage(null)}
                 startIcon={<RemoveCircleOutlineIcon />}
               >
                 Remove Image
