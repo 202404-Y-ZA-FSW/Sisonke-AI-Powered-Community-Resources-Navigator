@@ -1,8 +1,0 @@
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_USER = "katmafalela@gmail.com"
-EMAIL_PASSWORD = "xnhsdveqxewriucv"
-EMAIL_PORT = 587
-MONGO_URI=mongodb://localhost:27017/test
-FRONTEND_URL=http://localhost:3000/account/resetPassword
-JWT_SECRET= "This is the secret of the 21st century"
-
