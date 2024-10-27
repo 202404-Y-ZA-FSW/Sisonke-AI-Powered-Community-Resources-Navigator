@@ -108,7 +108,7 @@ export default function LoginPage() {
         if (user.user.role === "administrator") {
           router.push("/dashboard");
         } else if (user.user.role === "ngo") {
-          router.push("/ngo/dashboard");
+          router.push("/");
         } else {
           router.push("/");
         }
