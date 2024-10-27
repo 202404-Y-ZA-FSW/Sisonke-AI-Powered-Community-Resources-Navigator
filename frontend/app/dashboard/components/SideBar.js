@@ -10,19 +10,21 @@ import {
   Work as WorkIcon, 
   Dashboard as DashboardIcon  
 } from "@mui/icons-material";
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = ({ selectedComponent, setSelectedComponent, handleDrawerToggle, mobileOpen }) => {
+  const { t } = useTranslation(); // Initialize the translation function
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const sidebarItems = [
-    { text: "Overview", icon: <DashboardIcon /> },
-    { text: "Users", icon: <PeopleIcon /> },
-    { text: "Blogs", icon: <ArticleIcon /> },
-    { text: "Forums", icon: <ForumIcon /> },
-    { text: "Events", icon: <EventIcon /> },
-    { text: "Businesses", icon: <BusinessIcon /> },
-    { text: "Jobs", icon: <WorkIcon /> },
+    { text: t('sidebar.overview'), icon: <DashboardIcon /> },
+    { text: t('sidebar.users'), icon: <PeopleIcon /> },
+    { text: t('sidebar.blogs'), icon: <ArticleIcon /> },
+    { text: t('sidebar.forums'), icon: <ForumIcon /> },
+    { text: t('sidebar.events'), icon: <EventIcon /> },
+    { text: t('sidebar.businesses'), icon: <BusinessIcon /> },
+    { text: t('sidebar.jobs'), icon: <WorkIcon /> },
   ];
 
   const sidebarContent = (

@@ -4,9 +4,11 @@ import { Box, Typography, Card, CardContent, Grid, CircularProgress, Button } fr
 import {
   BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, CartesianGrid, Legend, ResponsiveContainer,
   LineChart, Line
+
 } from 'recharts';
 import { styled, keyframes } from '@mui/material/styles';
 import Businesses from './businesses';
+import { useTranslation } from 'react-i18next';
 
 const pulseAnimation = keyframes`
   0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
@@ -24,6 +26,7 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 }));
 
 export default function DashboardOverview() {
+  const { t } = useTranslation();
   const [data, setData] = useState({
     blogs: [],
     events: [],
@@ -61,7 +64,7 @@ export default function DashboardOverview() {
       });
     } catch (error) {
       console.error('Error fetching data:', error);
-      setError('Failed to load data');
+      setError(t('error.loadData'));
       if (error.response && error.response.status === 404 && error.response.config.url.includes('/account/users')) {
         console.error('Failed to fetch users. Please check the users endpoint.');
       }
@@ -97,10 +100,10 @@ export default function DashboardOverview() {
   return (
     <Box sx={{ padding: '20px' }}>
       <Typography variant="h4" gutterBottom>
-        Overview Dashboard
+        {t('dashboard.title')}
       </Typography>
       <Button onClick={fetchData} variant="contained" color="primary" sx={{ mb: 2 }}>
-        Refresh Data
+        {t('dashboard.refreshButton')}
       </Button>
 
       {loading ? (
@@ -114,7 +117,7 @@ export default function DashboardOverview() {
           <Grid item xs={12} md={6}>
             <AnimatedCard>
               <CardContent>
-                <Typography variant="h6">Data Overview (Pie Chart)</Typography>
+                <Typography variant="h6">{t('dashboard.dataOverview')}(Pie Chart)</Typography>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
@@ -140,7 +143,7 @@ export default function DashboardOverview() {
           <Grid item xs={12} md={6}>
             <AnimatedCard>
               <CardContent>
-                <Typography variant="h6">Data Overview (Bar Chart)</Typography>
+                <Typography variant="h6">{t('dashboard.dataOverview')} (Bar Chart)</Typography>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={barData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -157,15 +160,15 @@ export default function DashboardOverview() {
           <Grid item xs={12} md={6}>
             <AnimatedCard>
               <CardContent>
-                <Typography variant="h6">User Statistics</Typography>
+                <Typography variant="h6">{t('dashboard.userStatistics')}</Typography>
                 <Typography variant="h4" align="center" sx={{ my: 2 }}>
-                  Total Users: {userCount}
+                  {t('dashboard.totalUsers', { count: userCount })}
                 </Typography>
                 <Typography variant="h6" align="center" sx={{ my: 1 }}>
-                  Active Users: {activeUsers}
+                  {t('dashboard.activeUsers', { count: activeUsers })}
                 </Typography>
                 <Typography variant="h6" align="center" sx={{ my: 1 }}>
-                  Restricted Users: {restrictedUsers}
+                  {t('dashboard.restrictedUsers', { count: restrictedUsers })}
                 </Typography>
               </CardContent>
             </AnimatedCard>

@@ -27,10 +27,12 @@ import Footer from "../components/sections/Footer";
 import Navigation from "../components/sections/Navigation";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-
 import { useAuthentication } from "../hooks/useAuthentication";
+import { useTranslation } from 'react-i18next';
+
 
 export default function BlogPage() {
+  const { t } = useTranslation();
   const [blogPosts, setBlogPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -149,23 +151,23 @@ export default function BlogPage() {
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.imageURI) errors.imageURI = 'Image URI is required';
-    if (!formData.title) errors.title = 'Title is required';
-    if (!formData.content) errors.content = 'Content is required';
-    if (!formData.readTime) errors.readTime = 'Read time is required';
-    if(!formData.author) errors.author = 'Author is required';
+    if (!formData.imageURI) errors.imageURI = t('blog.imageURIRequired');
+    if (!formData.title) errors.title = t('blog.titleRequired');
+    if (!formData.content) errors.content = t('blog.contentRequired');
+    if (!formData.readTime) errors.readTime = t('blog.readTimeRequired');
+    if (!formData.author) errors.author = t('blog.authorRequired');
     return errors;
   };
-
+  
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setFormErrors(validationErrors);
       return;
     }
-
+  
     setFormErrors({});
     try {
       const response = await axios.post('http://localhost:5000/blogs/blog/new', formData, {
@@ -173,12 +175,12 @@ export default function BlogPage() {
           'Content-Type': 'application/json',
         },
       });
-
+  
       if (response.status === 201) {
         setSnackbar({
           open: true,
-          message: 'Blog post created successfully!',
-          severity: 'success'
+          message: t('blog.postCreatedSuccess'),  
+          severity: 'success',
         });
         handleCloseModal();
         // Refresh the blog posts
@@ -189,20 +191,20 @@ export default function BlogPage() {
       } else {
         setSnackbar({
           open: true,
-          message: 'Failed to create the blog post.',
-          severity: 'error'
+          message: t('blog.postCreationFailed'),  
+          severity: 'error',
         });
       }
     } catch (error) {
       console.error('Error submitting blog post:', error);
       setSnackbar({
         open: true,
-        message: 'An error occurred while submitting the blog post.',
-        severity: 'error'
+        message: t('blog.submitError'),  
+        severity: 'error',
       });
     }
   };
-
+  
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -237,64 +239,64 @@ export default function BlogPage() {
 
   return (
     <React.Fragment>
-      <Navigation />
-      <Box
+  <Navigation />
+  <Box
+    sx={{
+      background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+      py: { xs: 4, md: 8 },
+      textAlign: "center",
+    }}
+  >
+    <Container maxWidth="md">
+      <Typography
+        variant="h2"
+        component="h1"
         sx={{
-          background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-          py: { xs: 4, md: 8 },
-          textAlign: "center",
+          fontWeight: "bold",
+          mb: 2,
+          fontSize: { xs: "2.5rem", md: "3.75rem" },
         }}
       >
-        <Container maxWidth="md">
-          <Typography
-            variant="h2"
-            component="h1"
-            sx={{
-              fontWeight: "bold",
-              mb: 2,
-              fontSize: { xs: "2.5rem", md: "3.75rem" },
-            }}
-          >
-            Explore Popular Blogs
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              mb: 4,
-              color: "text.secondary",
-              fontSize: { xs: "1rem", md: "1.25rem" },
-            }}
-          >
-            Add insight to boost career growth and check out tips on company job
-            vacancies
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
-              gap: 2,
-              mb: 4,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <TextField
-              variant="outlined"
-              placeholder="Search by title or author"
-              value={searchTerm}
-              onChange={handleSearch}
-              InputProps={{
-                sx: { borderRadius: "16px", width: "100%" },
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
-        </Container>
+        {t("blog.explorePopularBlogs")} 
+      </Typography>
+      <Typography
+        variant="subtitle1"
+        sx={{
+          mb: 4,
+          color: "text.secondary",
+          fontSize: { xs: "1rem", md: "1.25rem" },
+        }}
+      >
+        {t("blog.addInsightTips")} 
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: 2,
+          mb: 4,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TextField
+          variant="outlined"
+          placeholder={t("blog.searchPlaceholder")} 
+          value={searchTerm}
+          onChange={handleSearch}
+          InputProps={{
+            sx: { borderRadius: "16px", width: "100%" },
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Box>
+    </Container>
+  </Box>
+
       <Container
         maxWidth="lg"
         sx={{
@@ -302,95 +304,96 @@ export default function BlogPage() {
           px: 2,
         }}
       >
-        {canCreatePost ? (
-          <Button
-            color="primary"
-            onClick={handleOpenModal}
-            sx={{
-              mb: 2,
-              backgroundColor: "#6c63ff",
-              color: "#ffffff",
-              borderRadius: "16px",
-              padding: "15px 24px",
-              textTransform: "none",
-              "&:hover": { backgroundColor: "#5A52D5" },
-            }}
-          >
-            Create New Post
-          </Button>
-        ) : (
-          <Typography
-            variant="body2"
-            sx={{ marginBottom: 2, color: "#6c63ff" }}
-          >
-            {user
-              ? "You don't have permission to create a new post."
-              : "You need to login to create a new post."}
-          </Typography>
-        )}
-        {filteredPosts && filteredPosts.length > 0 ? (
-          <Grid container spacing={3} justifyContent="center">
-            {filteredPosts.map((post) => (
-              <Grid item xs={12} sm={6} md={4} key={post._id}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    borderRadius: "16px",
-                    boxShadow: "none",
-                    background:
-                      "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
-                    "&:hover": {
-                      transform: "scale(1.02)",
-                      transition: "all 0.3s",
-                    },
-                  }}
-                >
-                  <Image
-                    height="200"
-                    width="361"
-                    src={post.imageURI}
-                    alt={post.title}
-                    style={{ borderRadius: "16px", objectFit: "cover" }}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="caption" color="text.secondary">
-                      {post.readTime} Minutes Read | {post.author.username}
-                    </Typography>
-                    <Typography variant="h5" component="h2" gutterBottom>
-                      {post.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {limitContent(post.content, 3)}
-                    </Typography>
-                  </CardContent>
-                  <CardActions sx={{ marginLeft: 1 }}>
-                    <Button
-                      size="small"
-                      href={`/blog/${post._id}`}
-                      sx={{
-                        borderRadius: "16px",
-                        backgroundColor: "#ffffff",
-                        color: "#6c63ff",
-                        border: "1px solid #6c63ff",
-                        textTransform: "none",
-                        padding: "5px 15px",
-                      }}
-                    >
-                      Read More
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        ) : (
-          <Typography variant="body1">
-            No blog posts available at the moment.
-          </Typography>
-        )}
-      </Container>
+       {canCreatePost ? (
+  <Button
+    color="primary"
+    onClick={handleOpenModal}
+    sx={{
+      mb: 2,
+      backgroundColor: "#6c63ff",
+      color: "#ffffff",
+      borderRadius: "16px",
+      padding: "15px 24px",
+      textTransform: "none",
+      "&:hover": { backgroundColor: "#5A52D5" },
+    }}
+  >
+    {t("blog.createNewPost")} 
+  </Button>
+) : (
+  <Typography
+    variant="body2"
+    sx={{ marginBottom: 2, color: "#6c63ff" }}
+  >
+    {user
+      ? t("blog.noPermissionToCreate")  
+      : t("blog.loginToCreatePost")}  
+  </Typography>
+)}
+
+{filteredPosts && filteredPosts.length > 0 ? (
+  <Grid container spacing={3} justifyContent="center">
+    {filteredPosts.map((post) => (
+      <Grid item xs={12} sm={6} md={4} key={post._id}>
+        <Card
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            borderRadius: "16px",
+            boxShadow: "none",
+            background:
+              "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+            "&:hover": {
+              transform: "scale(1.02)",
+              transition: "all 0.3s",
+            },
+          }}
+        >
+          <Image
+            height="200"
+            width="361"
+            src={post.imageURI}
+            alt={post.title}
+            style={{ borderRadius: "16px", objectFit: "cover" }}
+          />
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography variant="caption" color="text.secondary">
+              {post.readTime} {t("blog.minutesRead")} | {post.author.username}
+            </Typography>
+            <Typography variant="h5" component="h2" gutterBottom>
+              {post.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {limitContent(post.content, 3)}
+            </Typography>
+          </CardContent>
+          <CardActions sx={{ marginLeft: 1 }}>
+            <Button
+              size="small"
+              href={`/blog/${post._id}`}
+              sx={{
+                borderRadius: "16px",
+                backgroundColor: "#ffffff",
+                color: "#6c63ff",
+                border: "1px solid #6c63ff",
+                textTransform: "none",
+                padding: "5px 15px",
+              }}
+            >
+              {t("blog.readMore")}  
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    ))}
+  </Grid>
+) : (
+  <Typography variant="body1">
+    {t("blog.noPostsAvailable")}  
+  </Typography>
+)}
+</Container>
       <Modal
         open={isModalOpen}
         onClose={handleCloseModal}
@@ -411,95 +414,96 @@ export default function BlogPage() {
           maxHeight: '90vh',
           overflowY: 'auto',
         }}>
-          <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
-            Create a New Blog Post
-          </Typography>
-          <Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 3 }}>
-            <TextField
-              name="author"
-              placeholder="Author"
-              variant="outlined"
-              fullWidth
-              value={formData.author}
-              onChange={handleFormChange}
-              error={!!formErrors.author}
-              helperText={formErrors.author}
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              name="imageURI"
-              placeholder="Image URI"
-              variant="outlined"
-              fullWidth
-              value={formData.imageURI}
-              onChange={handleFormChange}
-              error={!!formErrors.imageURI}
-              helperText={formErrors.imageURI}
-              sx={{ mb: 2 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <ImageIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              name="title"
-              label="Blog Title"
-              variant="outlined"
-              fullWidth
-              value={formData.title}
-              onChange={handleFormChange}
-              error={!!formErrors.title}
-              helperText={formErrors.title}
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              name="readTime"
-              label="Read Time"
-              placeholder="e.g., 5 min"
-              variant="outlined"
-              fullWidth
-              value={formData.readTime}
-              onChange={handleFormChange}
-              error={!!formErrors.readTime}
-              helperText={formErrors.readTime}
-              sx={{ mb: 2 }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccessTimeIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <TextField
-              name="content"
-              label="Blog Content"
-              variant="outlined"
-              fullWidth
-              multiline
-              rows={6}
-              value={formData.content}
-              onChange={handleFormChange}
-              error={!!formErrors.content}
-              helperText={formErrors.content}
-              sx={{ mb: 2 }}
-            />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Submit Blog Post
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-      <Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-      <Subscribe />
-      <Footer />
+         <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
+  {t("blog.createNewBlogPost")}  
+</Typography>
+<Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 3 }}>
+  <TextField
+    name="author"
+    placeholder={t("blog.authorPlaceholder")}  
+    variant="outlined"
+    fullWidth
+    value={formData.author}
+    onChange={handleFormChange}
+    error={!!formErrors.author}
+    helperText={formErrors.author}
+    sx={{ mb: 2 }}
+  />
+  <TextField
+    name="imageURI"
+    placeholder={t("blog.imageURIPlaceholder")}  
+    variant="outlined"
+    fullWidth
+    value={formData.imageURI}
+    onChange={handleFormChange}
+    error={!!formErrors.imageURI}
+    helperText={formErrors.imageURI}
+    sx={{ mb: 2 }}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <ImageIcon />
+        </InputAdornment>
+      ),
+    }}
+  />
+  <TextField
+    name="title"
+    label={t("blog.blogTitle")}  
+    variant="outlined"
+    fullWidth
+    value={formData.title}
+    onChange={handleFormChange}
+    error={!!formErrors.title}
+    helperText={formErrors.title && t(`blog.${formErrors.title}`)}  
+    sx={{ mb: 2 }}
+  />
+  <TextField
+    name="readTime"
+    label={t("blog.readTime")}  
+    placeholder={t("blog.readTimePlaceholder")}  
+    variant="outlined"
+    fullWidth
+    value={formData.readTime}
+    onChange={handleFormChange}
+    error={!!formErrors.readTime}
+    helperText={formErrors.readTime}
+    sx={{ mb: 2 }}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <AccessTimeIcon />
+        </InputAdornment>
+      ),
+    }}
+  />
+  <TextField
+    name="content"
+    label={t("blog.blogContent")}  
+    variant="outlined"
+    fullWidth
+    multiline
+    rows={6}
+    value={formData.content}
+    onChange={handleFormChange}
+    error={!!formErrors.content}
+    helperText={formErrors.content}
+        sx={{ mb: 2 }}
+  />
+  <Button type="submit" variant="contained" color="primary" fullWidth>
+    {t("blog.submitBlogPost")}  {/* Translated button text */}
+  </Button>
+</Box>
+</Box>
+</Modal>
+<Snackbar open={snackbar.open} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+  <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+    {snackbar.message}
+  </Alert>
+</Snackbar>
+<Subscribe />
+<Footer />
+
     </React.Fragment>
   );
 }

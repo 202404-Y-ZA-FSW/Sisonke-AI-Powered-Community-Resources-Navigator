@@ -52,6 +52,8 @@ import ExportIcon from '@mui/icons-material/Download';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { styled, keyframes } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next'; // Import useTranslation
+
 
 const pulseAnimation = keyframes`
   0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
@@ -95,6 +97,7 @@ const AnimatedIcon = styled('div')({
 });
 
 export default function UserDashboard() {
+  const { t } = useTranslation(); // Initialize translation
   const [users, setUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -103,7 +106,7 @@ export default function UserDashboard() {
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const theme = useTheme();
 
-  // New Features States
+  
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [currentEditUser, setCurrentEditUser] = useState(null);
@@ -124,10 +127,10 @@ export default function UserDashboard() {
       if (response.status === 200) {
         setUsers(response.data.users);
       } else {
-        showSnackbar("Failed to fetch users.");
+        showSnackbar(t("userDashboard.fetchError"));
       }
     } catch (err) {
-      showSnackbar("Error fetching users. Please try again later.");
+      showSnackbar(t("userDashboard.fetchError"));
     } finally {
       setLoading(false);
     }
@@ -138,12 +141,12 @@ export default function UserDashboard() {
       const response = await axios.delete(`http://localhost:5000/account/remove`, { data: { userId: id } });
       if (response.status === 200) {
         setUsers(prevUsers => prevUsers.filter(user => user._id !== id));
-        showSnackbar("User deleted successfully");
+        showSnackbar(t("userDashboard.userDeleted"));
       } else {
-        showSnackbar('Failed to delete user');
+        showSnackbar(t("userDashboard.deleteError"));
       }
     } catch (error) {
-      showSnackbar('Error deleting user. Please try again.');
+      showSnackbar(t("userDashboard.deleteError"));
     }
   };
 
@@ -152,12 +155,12 @@ export default function UserDashboard() {
       const response = await axios.put(`http://localhost:5000/account/update`, { userId: id, status, role });
       if (response.status === 200) {
         setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, status, role } : user));
-        showSnackbar("User status updated successfully");
+        showSnackbar(t("userDashboard.userUpdated"));
       } else {
-        showSnackbar("Failed to update user status");
+        showSnackbar(t("userDashboard.updateError"));
       }
     } catch (err) {
-      showSnackbar("Something went wrong. Please try again.");
+      showSnackbar(t("userDashboard.generalError"));
     }
   };
 
@@ -166,12 +169,12 @@ export default function UserDashboard() {
       const response = await axios.put(`http://localhost:5000/account/update`, { userId: id, role: newRole });
       if (response.status === 200) {
         setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, role: newRole } : user));
-        showSnackbar("User role updated successfully");
+        showSnackbar(t("userDashboard.roleUpdated"));
       } else {
-        showSnackbar("Failed to update user role");
+        showSnackbar(t("userDashboard.roleUpdateError"));
       }
     } catch (err) {
-      showSnackbar("Something went wrong. Please try again.");
+      showSnackbar(t("userDashboard.generalError"));
     }
   };
 
@@ -227,14 +230,14 @@ export default function UserDashboard() {
       const response = await axios.put(`http://localhost:5000/account/update`, { userId: _id, username, email, role, status });
       if (response.status === 200) {
         setUsers(prevUsers => prevUsers.map(user => user._id === _id ? { ...user, username, email, role, status } : user));
-        showSnackbar("User updated successfully");
+        showSnackbar(t("userDashboard.userUpdated"));
         setEditDialogOpen(false);
         setCurrentEditUser(null);
       } else {
-        showSnackbar("Failed to update user");
+        showSnackbar(t("userDashboard.updateError"));
       }
     } catch (err) {
-      showSnackbar("Error updating user. Please try again.");
+      showSnackbar(t("userDashboard.generalError"));
     }
   };
 
@@ -283,9 +286,9 @@ export default function UserDashboard() {
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
-      showSnackbar("Users exported successfully");
+      showSnackbar(t("users.exportSuccess"));
     } catch (err) {
-      showSnackbar("Error exporting users.");
+      showSnackbar(t("users.exportError")); 
     } finally {
       setExporting(false);
     }
@@ -327,7 +330,7 @@ export default function UserDashboard() {
   };
 
   const isSelected = (id) => selectedUsers.indexOf(id) !== -1;
-
+  
   return (
     <Box sx={{ 
       minHeight: '100vh',
@@ -352,7 +355,7 @@ export default function UserDashboard() {
             <AnimatedIcon>
               <PersonIcon sx={{ mr: 2, fontSize: { xs: '2.5rem', md: '3.5rem' } }} />
             </AnimatedIcon>
-            User Dashboard
+            {t("userDashboard.title")} 
           </Typography>
           <Grid container spacing={5} justifyContent="center">
             <Grid item xs={12} md={4}>
@@ -360,7 +363,7 @@ export default function UserDashboard() {
                 <GlassCard elevation={5}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h6" color="primary" sx={{ mb: 2, fontWeight: 700, fontSize: '1.25rem' }}>
-                      Active Users
+                      {t("userDashboard.activeUsers")} 
                     </Typography>
                     <Typography variant="h1" color="secondary" sx={{ fontWeight: 800, fontSize: '2.5rem' }}>
                       {users.filter(user => user.status === 'active').length}
@@ -374,7 +377,7 @@ export default function UserDashboard() {
                 <GlassCard elevation={5}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h6" color="primary" sx={{ mb: 2, fontWeight: 700, fontSize: '1.25rem' }}>
-                      Restricted Users
+                      {t("userDashboard.restrictedUsers")} 
                     </Typography>
                     <Typography variant="h1" color="secondary" sx={{ fontWeight: 800, fontSize: '2.5rem' }}>
                       {users.filter(user => user.status === 'restricted').length}
@@ -388,7 +391,7 @@ export default function UserDashboard() {
                 <GlassCard elevation={5}>
                   <CardContent sx={{ textAlign: 'center' }}>
                     <Typography variant="h6" color="primary" sx={{ mb: 2, fontWeight: 700, fontSize: '1.25rem' }}>
-                      Total Users
+                      {t("userDashboard.totalUsers")}
                     </Typography>
                     <Typography variant="h1" color="secondary" sx={{ fontWeight: 800, fontSize: '2.5rem' }}>
                       {users.length}
@@ -403,8 +406,8 @@ export default function UserDashboard() {
 
       <Paper elevation={3} sx={{ p: 4, borderRadius: '20px', background: '#ffffff' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h5" gutterBottom>Search Users</Typography>
-          <Tooltip title="Refresh Users">
+          <Typography variant="h5" gutterBottom>{t("userDashboard.searchUsers")}</Typography> 
+          <Tooltip title={t("userDashboard.refreshUsers")}>
             <IconButton onClick={fetchUsers} color="primary">
               <RefreshIcon />
             </IconButton>
@@ -412,37 +415,37 @@ export default function UserDashboard() {
         </Box>
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel id="filter-role-label">Role</InputLabel>
+            <InputLabel id="filter-role-label">{t("userDashboard.role")}</InputLabel> 
             <Select
               labelId="filter-role-label"
               name="role"
               value={filters.role}
-              label="Role"
+              label={t("userDashboard.role")} 
               onChange={handleFilterChange}
             >
-              <MenuItem value="all">All</MenuItem>
-              <MenuItem value="user">User</MenuItem>
-              <MenuItem value="administrator">Admin</MenuItem>
-              <MenuItem value="ngo">NGO</MenuItem>
+              <MenuItem value="all">{t("userDashboard.all")}</MenuItem> 
+              <MenuItem value="user">{t("userDashboard.user")}</MenuItem>
+              <MenuItem value="administrator">{t("userDashboard.admin")}</MenuItem> 
+              <MenuItem value="ngo">{t("userDashboard.ngo")}</MenuItem> 
             </Select>
           </FormControl>
           <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel id="filter-status-label">Status</InputLabel>
+            <InputLabel id="filter-status-label">{t("userDashboard.status")}</InputLabel> 
             <Select
               labelId="filter-status-label"
               name="status"
               value={filters.status}
-              label="Status"
+              label={t("userDashboard.status")} 
               onChange={handleFilterChange}
             >
-              <MenuItem value="all">All</MenuItem>
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="restricted">Restricted</MenuItem>
+              <MenuItem value="all">{t("userDashboard.all")}</MenuItem> 
+              <MenuItem value="active">{t("userDashboard.active")}</MenuItem>
+              <MenuItem value="restricted">{t("userDashboard.restricted")}</MenuItem>
             </Select>
           </FormControl>
           <TextField
             variant="outlined"
-            placeholder="Search by name or email"
+            placeholder={t("userDashboard.searchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             fullWidth
@@ -454,269 +457,272 @@ export default function UserDashboard() {
             onClick={handleExport}
             disabled={exporting}
           >
-            {exporting ? 'Exporting...' : 'Export CSV'}
+            {exporting ? t("userDashboard.exporting") : t("userDashboard.exportCSV")}
           </Button>
         </Box>
       </Paper>
 
       <Paper elevation={3} sx={{ p: 4, flexGrow: 1, display: 'flex', flexDirection: 'column', borderRadius: '20px', background: '#ffffff' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h5" gutterBottom>User Management</Typography>
-          {selectedUsers.length > 0 && (
-            <Box>
-              <Tooltip title="Delete Selected">
-                <IconButton onClick={() => {
-                  selectedUsers.forEach(id => removeUser(id));
-                  setSelectedUsers([]);
-                }} color="error">
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Lock Selected">
-                <IconButton onClick={() => {
-                  selectedUsers.forEach(id => toggleUser(id, 'restricted', null));
-                  setSelectedUsers([]);
-                }} color="primary">
-                  <LockIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Unlock Selected">
-                <IconButton onClick={() => {
-                  selectedUsers.forEach(id => toggleUser(id, 'active', null));
-                  setSelectedUsers([]);
-                }} color="secondary">
-                  <LockOpenIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-          )}
-        </Box>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <>
-            <TableContainer component={Box} sx={{ flexGrow: 1, overflow: 'auto' }}>
-              <Table stickyHeader aria-label="user management table">
-                <TableHead>
-                  <TableRow>
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+    <Typography variant="h5" gutterBottom>{t('UserManagement.title')}</Typography>
+    {selectedUsers.length > 0 && (
+      <Box>
+        <Tooltip title={t('UserManagement.deleteSelected')}>
+          <IconButton onClick={() => {
+            selectedUsers.forEach(id => removeUser(id));
+            setSelectedUsers([]);
+          }} color="error">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={t('UserManagement.lockSelected')}>
+          <IconButton onClick={() => {
+            selectedUsers.forEach(id => toggleUser(id, 'restricted', null));
+            setSelectedUsers([]);
+          }} color="primary">
+            <LockIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={t('UserManagement.unlockSelected')}>
+          <IconButton onClick={() => {
+            selectedUsers.forEach(id => toggleUser(id, 'active', null));
+            setSelectedUsers([]);
+          }} color="secondary">
+            <LockOpenIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    )}
+  </Box>
+  {loading ? (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+      <CircularProgress />
+    </Box>
+  ) : (
+    <>
+      <TableContainer component={Box} sx={{ flexGrow: 1, overflow: 'auto' }}>
+        <Table stickyHeader aria-label="user management table">
+          <TableHead>
+            <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={selectedUsers.length > 0 && selectedUsers.length < filteredAndSortedUsers.length}
+                  checked={filteredAndSortedUsers.length > 0 && selectedUsers.length === filteredAndSortedUsers.length}
+                  onChange={handleSelectAll}
+                />
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortConfig.key === 'username'}
+                  direction={sortConfig.direction}
+                  onClick={() => handleSort('username')}
+                >
+                  {t('UserManagement.username')}
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortConfig.key === 'email'}
+                  direction={sortConfig.direction}
+                  onClick={() => handleSort('email')}
+                >
+                  {t('UserManagement.email')}
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortConfig.key === 'role'}
+                  direction={sortConfig.direction}
+                  onClick={() => handleSort('role')}
+                >
+                  {t('UserManagement.role')}
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={sortConfig.key === 'status'}
+                  direction={sortConfig.direction}
+                  onClick={() => handleSort('status')}
+                >
+                  {t('UserManagement.status')}
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                {t('UserManagement.actions')}
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedUsers.length > 0 ? (
+              paginatedUsers.map((user) => {
+                const isItemSelected = isSelected(user._id);
+                return (
+                  <TableRow key={user._id} hover role="checkbox" aria-checked={isItemSelected} selected={isItemSelected}>
                     <TableCell padding="checkbox">
                       <Checkbox
-                        indeterminate={selectedUsers.length > 0 && selectedUsers.length < filteredAndSortedUsers.length}
-                        checked={filteredAndSortedUsers.length > 0 && selectedUsers.length === filteredAndSortedUsers.length}
-                        onChange={handleSelectAll}
+                        checked={isItemSelected}
+                        onChange={(event) => handleSelectOne(event, user._id)}
                       />
                     </TableCell>
                     <TableCell>
-                      <TableSortLabel
-                        active={sortConfig.key === 'username'}
-                        direction={sortConfig.direction}
-                        onClick={() => handleSort('username')}
-                      >
-                        User
-                      </TableSortLabel>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Avatar sx={{ mr: 2, bgcolor: '#6366f1' }}>{user.username[0].toUpperCase()}</Avatar>
+                        {user.username}
+                      </Box>
+                    </TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        {getRoleIcon(user.role)}
+                        <Select
+                          value={user.role}
+                          onChange={(e) => changeUserRole(user._id, e.target.value)}
+                          sx={{ ml: 1 }}
+                        >
+                          <MenuItem value="user">{t('UserManagement.user')}</MenuItem>
+                          <MenuItem value="administrator">{t('UserManagement.admin')}</MenuItem>
+                          <MenuItem value="ngo">{t('UserManagement.ngo')}</MenuItem>
+                        </Select>
+                      </Box>
                     </TableCell>
                     <TableCell>
-                      <TableSortLabel
-                        active={sortConfig.key === 'email'}
-                        direction={sortConfig.direction}
-                        onClick={() => handleSort('email')}
-                      >
-                        Email
-                      </TableSortLabel>
+                      <Chip 
+                        label={user.status} 
+                        color={user.status === 'active' ? 'success' : 'error'}
+                        variant="outlined"
+                      />
                     </TableCell>
                     <TableCell>
-                      <TableSortLabel
-                        active={sortConfig.key === 'role'}
-                        direction={sortConfig.direction}
-                        onClick={() => handleSort('role')}
+                      <Tooltip title={t('UserManagement.viewUserDetails')}>
+                        <IconButton onClick={() => handleViewClick(user)} color="info">
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title={t('UserManagement.editUser')}>
+                        <IconButton onClick={() => handleEditClick(user)} color="primary">
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Button
+                        startIcon={user.status === 'active' ? <LockIcon /> : <LockOpenIcon />}
+                        onClick={() => toggleUser(user._id, user.status === 'active' ? 'restricted' : 'active', user.role)}
+                        color={user.status === 'active' ? 'primary' : 'secondary'}
+                        variant="contained"
+                        size="small"
+                        sx={{ mr: 1 }}
                       >
-                        Role
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell>
-                      <TableSortLabel
-                        active={sortConfig.key === 'status'}
-                        direction={sortConfig.direction}
-                        onClick={() => handleSort('status')}
+                        {user.status === 'active' ? t('UserManagement.lock') : t('UserManagement.unlock')}
+                      </Button>
+                      <Button
+                        startIcon={<DeleteIcon />}
+                        onClick={() => removeUser(user._id)}
+                        color="error"
+                        variant="contained"
+                        size="small"
                       >
-                        Status
-                      </TableSortLabel>
-                    </TableCell>
-                    <TableCell>
-                      Actions
+                        {t('UserManagement.delete')}
+                      </Button>
                     </TableCell>
                   </TableRow>
-                </TableHead>
-                <TableBody>
-                  {paginatedUsers.length > 0 ? (
-                    paginatedUsers.map((user) => {
-                      const isItemSelected = isSelected(user._id);
-                      return (
-                        <TableRow key={user._id} hover role="checkbox" aria-checked={isItemSelected} selected={isItemSelected}>
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) => handleSelectOne(event, user._id)}
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Avatar sx={{ mr: 2, bgcolor: '#6366f1' }}>{user.username[0].toUpperCase()}</Avatar>
-                              {user.username}
-                            </Box>
-                          </TableCell>
-                          <TableCell>{user.email}</TableCell>
-                          <TableCell>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                              {getRoleIcon(user.role)}
-                              <Select
-                                value={user.role}
-                                onChange={(e) => changeUserRole(user._id, e.target.value)}
-                                sx={{ ml: 1 }}
-                              >
-                                <MenuItem value="user">User</MenuItem>
-                                <MenuItem value="administrator">Admin</MenuItem>
-                                <MenuItem value="ngo">NGO</MenuItem>
-                              </Select>
-                            </Box>
-                          </TableCell>
-                          <TableCell>
-                            <Chip 
-                              label={user.status} 
-                              color={user.status === 'active' ? 'success' : 'error'}
-                              variant="outlined"
-                            />
-                          </TableCell>
-                          <TableCell>
-                            <Tooltip title="View User Details">
-                              <IconButton onClick={() => handleViewClick(user)} color="info">
-                                <VisibilityIcon />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Edit User">
-                              <IconButton onClick={() => handleEditClick(user)} color="primary">
-                                <EditIcon />
-                              </IconButton>
-                            </Tooltip>
-                            <Button
-                              startIcon={user.status === 'active' ? <LockIcon /> : <LockOpenIcon />}
-                              onClick={() => toggleUser(user._id, user.status === 'active' ? 'restricted' : 'active', user.role)}
-                              color={user.status === 'active' ? 'primary' : 'secondary'}
-                              variant="contained"
-                              size="small"
-                              sx={{ mr: 1 }}
-                            >
-                              {user.status === 'active' ? 'Lock' : 'Unlock'}
-                            </Button>
-                            <Button
-                              startIcon={<DeleteIcon />}
-                              onClick={() => removeUser(user._id)}
-                              color="error"
-                              variant="contained"
-                              size="small"
-                            >
-                              Delete
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      )
-                    })
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={6} align="center">No users found.</TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <Stack spacing={2} sx={{ mt: 2, alignItems: 'center' }}>
-              <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
-            </Stack>
-          </>
-        )}
-      </Paper>
+                )
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} align="center">{t('UserManagement.noUsersFound')}</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Stack spacing={2} sx={{ mt: 2, alignItems: 'center' }}>
+        <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+      </Stack>
+    </>
+  )}
+</Paper>
 
-      {/* Edit User Dialog */}
-      <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
-        <DialogTitle>Edit User</DialogTitle>
-        <DialogContent>
-          {currentEditUser && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
-              <TextField
-                label="Username"
-                value={currentEditUser.username}
-                onChange={(e) => setCurrentEditUser({ ...currentEditUser, username: e.target.value })}
-                fullWidth
-              />
-              <TextField
-                label="Email"
-                value={currentEditUser.email}
-                onChange={(e) => setCurrentEditUser({ ...currentEditUser, email: e.target.value })}
-                fullWidth
-              />
-              <FormControl fullWidth>
-                <InputLabel id="edit-role-label">Role</InputLabel>
-                <Select
-                  labelId="edit-role-label"
-                  value={currentEditUser.role}
-                  label="Role"
-                  onChange={(e) => setCurrentEditUser({ ...currentEditUser, role: e.target.value })}
-                >
-                  <MenuItem value="user">User</MenuItem>
-                  <MenuItem value="administrator">Admin</MenuItem>
-                  <MenuItem value="ngo">NGO</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl fullWidth>
-                <InputLabel id="edit-status-label">Status</InputLabel>
-                <Select
-                  labelId="edit-status-label"
-                  value={currentEditUser.status}
-                  label="Status"
-                  onChange={(e) => setCurrentEditUser({ ...currentEditUser, status: e.target.value })}
-                >
-                  <MenuItem value="active">Active</MenuItem>
-                  <MenuItem value="restricted">Restricted</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setEditDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleEditSave} variant="contained" color="primary">Save</Button>
-        </DialogActions>
-      </Dialog>
+{/* Edit User Dialog */}
+<Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
+  <DialogTitle>{t('UserManagement.editUser')}</DialogTitle>
+  <DialogContent>
+    {currentEditUser && (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
 
-      {/* View User Details Dialog */}
-      <Dialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} fullWidth maxWidth="md">
-        <DialogTitle>User Details</DialogTitle>
-        <DialogContent>
-          {viewUser && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <Typography variant="h6">Username: {viewUser.username}</Typography>
-              <Typography variant="body1">Email: {viewUser.email}</Typography>
-              <Typography variant="body1">Role: {viewUser.role}</Typography>
-              <Typography variant="body1">Status: {viewUser.status}</Typography>
-              <Typography variant="body1">Created At: {new Date(viewUser.createdAt).toLocaleString()}</Typography>
-              <Typography variant="body1">Last Updated: {new Date(viewUser.updatedAt).toLocaleString()}</Typography>
-              {/* Add more user details as needed */}
-            </Box>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setViewDialogOpen(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      
+        <TextField
+          label={t('UserManagement.username')}
+          value={currentEditUser.username}
+          onChange={(e) => setCurrentEditUser({ ...currentEditUser, username: e.target.value })}
+          fullWidth
+        />
+        <TextField
+          label={t('UserManagement.email')}
+          value={currentEditUser.email}
+          onChange={(e) => setCurrentEditUser({ ...currentEditUser, email: e.target.value })}
+          fullWidth
+        />
+        
+        <FormControl fullWidth>
+  <InputLabel id="edit-role-label">{t('UserManagement.role')}</InputLabel>
+  <Select
+    labelId="edit-role-label"
+    value={currentEditUser.role}
+    label={t('UserManagement.role')}
+    onChange={(e) => setCurrentEditUser({ ...currentEditUser, role: e.target.value })}
+  >
+    <MenuItem value="user">{t('UserManagement.user')}</MenuItem>
+    <MenuItem value="administrator">{t('UserManagement.admin')}</MenuItem>
+    <MenuItem value="ngo">{t('UserManagement.ngo')}</MenuItem>
+  </Select>
+</FormControl>
+<FormControl fullWidth>
+  <InputLabel id="edit-status-label">{t('UserManagement.status')}</InputLabel>
+  <Select
+    labelId="edit-status-label"
+    value={currentEditUser.status}
+    label={t('UserManagement.status')}
+    onChange={(e) => setCurrentEditUser({ ...currentEditUser, status: e.target.value })}
+  >
+    <MenuItem value="active">{t('UserManagement.active')}</MenuItem>
+    <MenuItem value="restricted">{t('UserManagement.restricted')}</MenuItem>
+  </Select>
+</FormControl>
+</Box>
+)}
+</DialogContent>
+<DialogActions>
+  <Button onClick={() => setEditDialogOpen(false)}>{t('UserManagement.cancel')}</Button>
+  <Button onClick={handleEditSave} variant="contained" color="primary">{t('UserManagement.save')}</Button>
+</DialogActions>
+</Dialog>
 
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        message={snackbarMessage}
-      />
-    </Box>
+{/* View User Details Dialog */}
+<Dialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} fullWidth maxWidth="md">
+  <DialogTitle>{t('UserManagement.viewUserDetails')}</DialogTitle>
+  <DialogContent>
+    {viewUser && (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Typography variant="h6">{t('UserManagement.username')}: {viewUser.username}</Typography>
+        <Typography variant="body1">{t('UserManagement.email')}: {viewUser.email}</Typography>
+        <Typography variant="body1">{t('UserManagement.role')}: {viewUser.role}</Typography>
+        <Typography variant="body1">{t('UserManagement.status')}: {viewUser.status}</Typography>
+        <Typography variant="body1">{t('UserManagement.createdAt')}: {new Date(viewUser.createdAt).toLocaleString()}</Typography>
+        <Typography variant="body1">{t('UserManagement.lastUpdated')}: {new Date(viewUser.updatedAt).toLocaleString()}</Typography>
+        
+      </Box>
+    )}
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setViewDialogOpen(false)}>{t('UserManagement.close')}</Button>
+  </DialogActions>
+</Dialog>
+
+<Snackbar
+  open={snackbarOpen}
+  autoHideDuration={6000}
+  onClose={handleCloseSnackbar}
+  message={snackbarMessage}
+/>
+</Box>
   );
 }

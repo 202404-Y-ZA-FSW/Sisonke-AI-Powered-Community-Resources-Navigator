@@ -39,8 +39,10 @@ import EventIcon from '@mui/icons-material/Event';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { styled, keyframes } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
-const pulseAnimation = keyframes`
+
+  const pulseAnimation = keyframes`
   0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
   50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.8); }
   100% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
@@ -82,6 +84,7 @@ const AnimatedIcon = styled('div')({
 });
 
 export default function Events() {
+  const { t } = useTranslation();
   const [events, setEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -107,28 +110,29 @@ export default function Events() {
       if (response.status === 200) {
         setEvents(response.data);
       } else {
-        showSnackbar("Failed to fetch events.");
+        showSnackbar(t('event.fetchFailed'));
       }
     } catch (err) {
-      showSnackbar("Error fetching events. Please try again later.");
+      showSnackbar(t('event.fetchError'));
     } finally {
       setLoading(false);
     }
   };
-
+  
   const removeEvent = async (id) => {
     try {
       const response = await axios.delete(`http://localhost:5000/events/${id}`);
       if (response.status === 200) {
         setEvents(prevEvents => prevEvents.filter(event => event._id !== id));
-        showSnackbar("Event deleted successfully.");
+        showSnackbar(t('event.deleteSuccess'));
       } else {
-        showSnackbar('Failed to delete event');
+        showSnackbar(t('event.deleteFailed'));
       }
     } catch (error) {
-      showSnackbar('Error deleting event. Please try again.');
+      showSnackbar(t('event.deleteError'));
     }
   };
+  
 
   const showSnackbar = (message) => {
     setSnackbarMessage(message);
@@ -210,7 +214,7 @@ export default function Events() {
     showSnackbar("Event updated successfully.");
     handleCloseDialog();
   };
-
+  
   return (
     <Box sx={{ 
       minHeight: '100vh',
@@ -225,7 +229,7 @@ export default function Events() {
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'white' }}>
-                Event Dashboard
+                {t('eventDashboard')}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -240,10 +244,10 @@ export default function Events() {
       <Zoom in={true} timeout={800}>
         <GlassCard>
           <CardContent>
-            <Typography variant="h6" gutterBottom>Event Statistics</Typography>
+            <Typography variant="h6" gutterBottom>{t('eventStatistics')}</Typography>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
-                <Typography variant="body1">Total Events: {totalEvents}</Typography>
+                <Typography variant="body1">{t('totalEvents')}: {totalEvents}</Typography>
               </Grid>
             </Grid>
           </CardContent>
@@ -252,11 +256,11 @@ export default function Events() {
 
       <Fade in={true} timeout={1000}>
         <Paper elevation={3} sx={{ p: 3, mb: 2 }}>
-          <Typography variant="h6" gutterBottom>Search Events</Typography>
+          <Typography variant="h6" gutterBottom>{t('searchEvents')}</Typography>
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Search by location or organizer"
+            placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             sx={{ mb: 2 }}
@@ -275,7 +279,7 @@ export default function Events() {
 
       <Fade in={true} timeout={1200}>
         <Paper elevation={3} sx={{ p: 3, flexGrow: 1 }}>
-          <Typography variant="h6" gutterBottom>Event Management</Typography>
+          <Typography variant="h6" gutterBottom>{t('eventManagement')}</Typography>
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <CircularProgress />
@@ -292,7 +296,7 @@ export default function Events() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('location')}
                         >
-                          Location
+                          {t('location')}
                         </TableSortLabel>
                       </TableCell>
                       <TableCell>
@@ -301,7 +305,7 @@ export default function Events() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('organizer')}
                         >
-                          Organizer
+                          {t('organizer')}
                         </TableSortLabel>
                       </TableCell>
                       <TableCell>
@@ -310,10 +314,10 @@ export default function Events() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('date')}
                         >
-                          Date
+                          {t('date')}
                         </TableSortLabel>
                       </TableCell>
-                      <TableCell>Actions</TableCell>
+                      <TableCell>{t('actions')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -321,20 +325,20 @@ export default function Events() {
                       paginatedEvents.map((event) => (
                         <TableRow key={event._id}>
                           <TableCell>{event.location}</TableCell>
-                          <TableCell>{event.organizer?.username || "Unknown"}</TableCell>
+                          <TableCell>{event.organizer?.username || t('unknown')}</TableCell>
                           <TableCell>{new Date(event.date).toLocaleDateString()}</TableCell>
                           <TableCell>
-                            <Tooltip title="View Event">
+                            <Tooltip title={t('viewEvent')}>
                               <IconButton onClick={() => handleViewEvent(event)} color="primary">
                                 <VisibilityIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Edit Event">
+                            <Tooltip title={t('editEvent')}>
                               <IconButton onClick={() => handleEditEvent(event)} color="secondary">
                                 <EditIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Delete Event">
+                            <Tooltip title={t('deleteEvent')}>
                               <IconButton onClick={() => removeEvent(event._id)} color="error">
                                 <DeleteIcon />
                               </IconButton>
@@ -345,7 +349,7 @@ export default function Events() {
                     ) : (
                       <TableRow>
                         <TableCell colSpan={4} align="center">
-                          No events found
+                          {t('noEventsFound')}
                         </TableCell>
                       </TableRow>
                     )}
@@ -368,35 +372,35 @@ export default function Events() {
       />
 
       <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>{dialogMode === 'view' ? 'View Event' : 'Edit Event'}</DialogTitle>
+        <DialogTitle>{dialogMode === 'view' ? t('viewEvent') : t('editEvent')}</DialogTitle>
         <DialogContent>
           {selectedEvent && (
             <>
               <TextField
                 fullWidth
-                label="Location"
+                label={t('location')}
                 value={selectedEvent.location}
                 disabled={dialogMode === 'view'}
                 sx={{ mb: 2, mt: 2 }}
               />
               <TextField
                 fullWidth
-                label="Organizer"
-                value={selectedEvent.organizer?.username || "Unknown"}
+                label={t('organizer')}
+                value={selectedEvent.organizer?.username || t('unknown')}
                 disabled={dialogMode === 'view'}
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Date"
+                label={t('date')}
                 value={new Date(selectedEvent.date).toLocaleDateString()}
                 disabled={dialogMode === 'view'}
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Description"
-                value={selectedEvent.description || "No description available"}
+                label={t('description')}
+                value={selectedEvent.description || t('noDescription')}
                 disabled={dialogMode === 'view'}
                 multiline
                 rows={4}
@@ -404,22 +408,22 @@ export default function Events() {
               />
               <TextField
                 fullWidth
-                label="Attendees"
-                value={selectedEvent.attendees ? selectedEvent.attendees.join(', ') : "No attendees"}
+                label={t('attendees')}
+                value={selectedEvent.attendees ? selectedEvent.attendees.join(', ') : t('noAttendees')}
                 disabled={dialogMode === 'view'}
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Category"
-                value={selectedEvent.category || "Uncategorized"}
+                label={t('category')}
+                value={selectedEvent.category || t('uncategorized')}
                 disabled={dialogMode === 'view'}
                 sx={{ mb: 2 }}
               />
               <TextField
                 fullWidth
-                label="Ticket Price"
-                value={selectedEvent.ticketPrice ? `$${selectedEvent.ticketPrice}` : "Free"}
+                label={t('ticketPrice')}
+                value={selectedEvent.ticketPrice ? `$${selectedEvent.ticketPrice}` : t('free')}
                 disabled={dialogMode === 'view'}
                 sx={{ mb: 2 }}
               />
@@ -427,10 +431,12 @@ export default function Events() {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Close</Button>
-          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>Save</Button>}
+          <Button onClick={handleCloseDialog}>{t('close')}</Button>
+          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>{t('save')}</Button>}
         </DialogActions>
       </Dialog>
     </Box>
   );
-}
+};
+
+

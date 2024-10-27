@@ -39,6 +39,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { styled, keyframes } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next'; 
 
 const pulseAnimation = keyframes`
   0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
@@ -81,7 +82,9 @@ const AnimatedIcon = styled('div')({
   animation: `${floatAnimation} 3s ease-in-out infinite`,
 });
 
+
 export default function Businesses() {
+  const { t } = useTranslation();
   const [businesses, setBusinesses] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -107,10 +110,10 @@ export default function Businesses() {
       if (response.status === 200) {
         setBusinesses(response.data.businesses || response.data || []);
       } else {
-        showSnackbar("Failed to fetch businesses.");
+        showSnackbar(t('businesses.fetchFailed'));
       }
     } catch (err) {
-      showSnackbar("Error fetching businesses. Please try again later.");
+      showSnackbar(t('businesses.fetchError'));
     } finally {
       setLoading(false);
     }
@@ -121,12 +124,12 @@ export default function Businesses() {
       const response = await axios.delete(`http://localhost:5000/business/${id}`);
       if (response.status === 200) {
         setBusinesses(prevBusinesses => prevBusinesses.filter(business => business._id !== id));
-        showSnackbar("Business deleted successfully.");
+        showSnackbar(t('businesses.deleteSuccess'));
       } else {
-        showSnackbar('Failed to delete business');
+        showSnackbar(t('businesses.deleteFailed'));
       }
     } catch (error) {
-      showSnackbar('Error deleting business. Please try again.');
+      showSnackbar(t('businesses.deleteError'));
     }
   };
 
@@ -184,8 +187,8 @@ export default function Businesses() {
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
-
   const totalBusinesses = businesses.length;
+
 
   const handleViewBusiness = (business) => {
     setSelectedBusiness(business);
@@ -213,17 +216,16 @@ export default function Businesses() {
             business._id === selectedBusiness._id ? selectedBusiness : business
           )
         );
-        showSnackbar("Business updated successfully");
+        showSnackbar(t('businesses.updateSuccess'));
         handleCloseDialog();
       } else {
-        showSnackbar('Failed to update business');
+        showSnackbar(t('businesses.updateFailed'));
       }
     } catch (error) {
-      showSnackbar('Error updating business. Please try again.');
+      showSnackbar(t('businesses.updateError'));
     }
   };
-
-  return (
+    return (
     <Box sx={{ 
       minHeight: '100vh',
       display: 'flex', 
@@ -237,7 +239,7 @@ export default function Businesses() {
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'white' }}>
-                Business Dashboard
+                {t('businesses.dashboardTitle')}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -252,10 +254,10 @@ export default function Businesses() {
       <Zoom in={true} timeout={800}>
         <GlassCard>
           <CardContent>
-            <Typography variant="h6" gutterBottom>Business Statistics</Typography>
+            <Typography variant="h6" gutterBottom>{t('businesses.statistics')}</Typography>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
-                <Typography variant="body1">Total Businesses: {totalBusinesses}</Typography>
+                <Typography variant="body1">{t('businesses.totalBusinesses', {count:totalBusinesses})}</Typography>
               </Grid>
             </Grid>
           </CardContent>
@@ -264,11 +266,11 @@ export default function Businesses() {
 
       <Fade in={true} timeout={1000}>
         <Paper elevation={3} sx={{ p: 3, mb: 2 }}>
-          <Typography variant="h6" gutterBottom>Search Businesses</Typography>
+          <Typography variant="h6" gutterBottom>{t('businesses.searchBusinesses')}</Typography>
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Search by name or owner"
+            placeholder={t('businesses.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             sx={{ mb: 2 }}
@@ -287,7 +289,7 @@ export default function Businesses() {
 
       <Fade in={true} timeout={1200}>
         <Paper elevation={3} sx={{ p: 3, flexGrow: 1 }}>
-          <Typography variant="h6" gutterBottom>Business Management</Typography>
+          <Typography variant="h6" gutterBottom>{t('businesses.businessManagement')}</Typography>
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <CircularProgress />
@@ -336,18 +338,18 @@ export default function Businesses() {
                           <TableCell>{business.owner?.username || "Unknown"}</TableCell>
                           <TableCell>{new Date(business.createdAt).toLocaleDateString()}</TableCell>
                           <TableCell>
-                            <Tooltip title="View Business">
+                            <Tooltip title={t('businesses.viewBusiness')}>
                               <IconButton onClick={() => handleViewBusiness(business)} color="primary">
                                 <VisibilityIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Edit Business">
-                              <IconButton onClick={() => handleEditBusiness(business)} color="secondary">
+                            <Tooltip title={t('businesses.editBusiness')}>
+                              <IconButton onClick={() => handleEditBusiness(business)} color="primary">
                                 <EditIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Delete Business">
-                              <IconButton onClick={() => removeBusiness(business._id)} color="error">
+                            <Tooltip title={t('businesses.deleteBusiness')}>
+                              <IconButton onClick={() => handleDeleteBusiness(business._id)} color="secondary">
                                 <DeleteIcon />
                               </IconButton>
                             </Tooltip>
@@ -357,7 +359,7 @@ export default function Businesses() {
                     ) : (
                       <TableRow>
                         <TableCell colSpan={4} align="center">
-                          No businesses found
+                          {t('businesses.noBusinessesFound')}
                         </TableCell>
                       </TableRow>
                     )}
@@ -378,85 +380,88 @@ export default function Businesses() {
         onClose={handleCloseSnackbar}
         message={snackbarMessage}
       />
+      
+  
+    <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+      <DialogTitle>{dialogMode === 'view' ? t('businesses.viewBusiness') : t('businesses.editBusiness')}</DialogTitle>
+      <DialogContent>
+        {selectedBusiness && (
+          <>
+            <TextField
+              fullWidth
+              label={t('businesses.name')}
+              value={selectedBusiness.name}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, name: e.target.value})}
+              disabled={dialogMode === 'view'}
+              sx={{ mb: 2, mt: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.owner')}
+              value={selectedBusiness.owner?.username || "Unknown"}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, owner: {...selectedBusiness.owner, username: e.target.value}})}
+              disabled={dialogMode === 'view'}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.dateCreated')}
+              value={new Date(selectedBusiness.createdAt).toLocaleDateString()}
+              disabled
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.description')}
+              value={selectedBusiness.description || ""}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, description: e.target.value})}
+              disabled={dialogMode === 'view'}
+              multiline
+              rows={4}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.address')}
+              value={selectedBusiness.address || ""}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, address: e.target.value})}
+              disabled={dialogMode === 'view'}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.phone')}
+              value={selectedBusiness.phone || ""}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, phone: e.target.value})}
+              disabled={dialogMode === 'view'}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.email')}
+              value={selectedBusiness.email || ""}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, email: e.target.value})}
+              disabled={dialogMode === 'view'}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label={t('businesses.website')}
+              value={selectedBusiness.website || ""}
+              onChange={(e) => setSelectedBusiness({...selectedBusiness, website: e.target.value})}
+              disabled={dialogMode === 'view'}
+              sx={{ mb: 2 }}
+            />
+          </>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseDialog}>{t('businesses.close')}</Button>
+        {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>{t('businesses.save')}</Button>}
+      </DialogActions>
+    </Dialog>
+  
 
-      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>{dialogMode === 'view' ? 'View Business' : 'Edit Business'}</DialogTitle>
-        <DialogContent>
-          {selectedBusiness && (
-            <>
-              <TextField
-                fullWidth
-                label="Name"
-                value={selectedBusiness.name}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, name: e.target.value})}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2, mt: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Owner"
-                value={selectedBusiness.owner?.username || "Unknown"}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, owner: {...selectedBusiness.owner, username: e.target.value}})}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Date Created"
-                value={new Date(selectedBusiness.createdAt).toLocaleDateString()}
-                disabled
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Description"
-                value={selectedBusiness.description || ""}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, description: e.target.value})}
-                disabled={dialogMode === 'view'}
-                multiline
-                rows={4}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Address"
-                value={selectedBusiness.address || ""}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, address: e.target.value})}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Phone"
-                value={selectedBusiness.phone || ""}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, phone: e.target.value})}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                value={selectedBusiness.email || ""}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, email: e.target.value})}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Website"
-                value={selectedBusiness.website || ""}
-                onChange={(e) => setSelectedBusiness({...selectedBusiness, website: e.target.value})}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-            </>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Close</Button>
-          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>Save</Button>}
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 }

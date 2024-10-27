@@ -37,6 +37,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import BookIcon from '@mui/icons-material/Book';
 import { styled, keyframes } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
+
 
 const pulseAnimation = keyframes`
   0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
@@ -80,6 +82,7 @@ const AnimatedIcon = styled('div')({
 });
 
 export default function Blogs() {
+  const { t } = useTranslation();
   const [blogs, setBlogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -98,6 +101,7 @@ export default function Blogs() {
     fetchBlogs();
   }, []);
 
+
   const fetchBlogs = async () => {
     try {
       setLoading(true);
@@ -105,10 +109,10 @@ export default function Blogs() {
       if (response.status === 200) {
         setBlogs(response.data);
       } else {
-        showSnackbar("Failed to fetch blogs.");
+        showSnackbar(t("ErrorFetchingBlogs")); 
       }
     } catch (err) {
-      showSnackbar("Error fetching blogs. Please try again later.");
+      showSnackbar(t("ErrorFetchingBlogs")); 
     } finally {
       setLoading(false);
     }
@@ -116,15 +120,15 @@ export default function Blogs() {
 
   const removeBlog = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/blogs/delete`, { data: { blogId:id } });
+      const response = await axios.delete(`http://localhost:5000/blogs/delete`, { data: { blogId: id } });
       if (response.status === 200) {
         setBlogs(prevBlogs => prevBlogs.filter(blog => blog._id !== id));
-        showSnackbar("Blog deleted successfully.");
+        showSnackbar(t("BlogDeleted")); 
       } else {
-        showSnackbar('Failed to delete blog');
+        showSnackbar(t("Failed to delete blog"));
       }
     } catch (error) {
-      showSnackbar('Error deleting blog. Please try again.');
+      showSnackbar(t("Error deleting blog. Please try again."));
     }
   };
 
@@ -207,13 +211,13 @@ export default function Blogs() {
       const response = await axios.put(`http://localhost:5000/blogs/update`, selectedBlog);
       if (response.status === 200) {
         setBlogs((prevBlogs) => prevBlogs.map(blog => blog._id === selectedBlog._id ? selectedBlog : blog));
-        showSnackbar('Blog updated successfully');
+        showSnackbar(t("BlogUpdated")); 
         handleCloseDialog();
       } else {
-        showSnackbar('Failed to update blog');
+        showSnackbar(t("Failed to update blog")); 
       }
     } catch (error) {
-      showSnackbar('Error updating blog. Please try again.');
+      showSnackbar(t("Error updating blog. Please try again."));
     }
   };
 
@@ -231,7 +235,7 @@ export default function Blogs() {
           <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
               <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'white' }}>
-                Blog Dashboard
+                {t("BlogDashboard")}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -246,10 +250,10 @@ export default function Blogs() {
       <Zoom in={true} timeout={800}>
         <GlassCard>
           <CardContent>
-            <Typography variant="h6" gutterBottom>Blog Statistics</Typography>
+            <Typography variant="h6" gutterBottom>{t("TotalBlogs", { count: totalBlogs })}</Typography> 
             <Grid container spacing={3}>
               <Grid item xs={12} sm={4}>
-                <Typography variant="body1">Total Blogs: {totalBlogs}</Typography>
+                <Typography variant="body1">{t("TotalBlogs", { count: totalBlogs })}</Typography>
               </Grid>
             </Grid>
           </CardContent>
@@ -258,11 +262,11 @@ export default function Blogs() {
 
       <Fade in={true} timeout={1000}>
         <Paper elevation={3} sx={{ p: 3, mb: 2 }}>
-          <Typography variant="h6" gutterBottom>Search Blogs</Typography>
+          <Typography variant="h6" gutterBottom>{t("SearchBlogs")}</Typography> 
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Search by title or author"
+            placeholder={t("SearchPlaceholder")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             sx={{ mb: 2 }}
@@ -281,7 +285,7 @@ export default function Blogs() {
 
       <Fade in={true} timeout={1200}>
         <Paper elevation={3} sx={{ p: 3, flexGrow: 1 }}>
-          <Typography variant="h6" gutterBottom>Blog Management</Typography>
+          <Typography variant="h6" gutterBottom>{t("BlogManagement")}</Typography> 
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <CircularProgress />
@@ -298,7 +302,7 @@ export default function Blogs() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('title')}
                         >
-                          Title
+                          {t("Title")} 
                         </TableSortLabel>
                       </TableCell>
                       <TableCell>
@@ -307,7 +311,7 @@ export default function Blogs() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('author')}
                         >
-                          Author
+                          {t("Author")} 
                         </TableSortLabel>
                       </TableCell>
                       <TableCell>
@@ -316,10 +320,10 @@ export default function Blogs() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('createdAt')}
                         >
-                          Date Published
+                          {t("DatePublished")}
                         </TableSortLabel>
                       </TableCell>
-                      <TableCell>Actions</TableCell>
+                      <TableCell>{t("Actions")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -330,15 +334,17 @@ export default function Blogs() {
                           <TableCell>{blog.author?.username || blog.author}</TableCell>
                           <TableCell>{new Date(blog.createdAt).toLocaleDateString()}</TableCell>
                           <TableCell>
-                            <Tooltip title="View Blog">
+                          <Tooltip title="View Blog">
                               <IconButton onClick={() => handleViewBlog(blog)} color="primary">
                                 <VisibilityIcon />
                               </IconButton>
                             </Tooltip>
                             <Tooltip title="Edit Blog">
-                              <IconButton onClick={() => handleEditBlog(blog)} color="secondary">
-                                <EditIcon />
-                              </IconButton>
+                            
+                            
+                            <IconButton onClick={() => handleEditBlog(blog)} color="secondary">
+                            <EditIcon />
+                            </IconButton>
                             </Tooltip>
                             <Tooltip title="Delete Blog">
                               <IconButton onClick={() => removeBlog(blog._id)} color="error">
@@ -350,8 +356,8 @@ export default function Blogs() {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={4} align="center">
-                          No blogs found
+                        <TableCell colSpan={4} style={{ textAlign: 'center' }}>
+                          {t("NoBlogsFound")} {/* Use translation key */}
                         </TableCell>
                       </TableRow>
                     )}
@@ -360,64 +366,58 @@ export default function Blogs() {
               </TableContainer>
               <Stack spacing={2} sx={{ mt: 2, alignItems: 'center' }}>
                 <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
-              </Stack>
-            </>
+              </Stack>     
+               </>
           )}
         </Paper>
       </Fade>
 
-      <Snackbar
+       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
         message={snackbarMessage}
       />
 
+     
       <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>{dialogMode === 'view' ? 'View Blog' : 'Edit Blog'}</DialogTitle>
+        <DialogTitle>{dialogMode === 'edit' ? t("EditBlog") : t("CreateBlog")}</DialogTitle>
         <DialogContent>
-          {selectedBlog && (
-            <>
-              <TextField
-                fullWidth
-                label="Title"
-                value={selectedBlog.title}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2, mt: 2 }}
-                onChange={(e) => setSelectedBlog({ ...selectedBlog, title: e.target.value })}
-              />
-              <TextField
-                fullWidth
-                label="Author"
-                value={selectedBlog.author?.username || selectedBlog.author}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Date Published"
-                value={new Date(selectedBlog.createdAt).toLocaleDateString()}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Content"
-                value={selectedBlog.content}
-                disabled={dialogMode === 'view'}
-                multiline
-                rows={4}
-                sx={{ mb: 2 }}
-                onChange={(e) => setSelectedBlog({ ...selectedBlog, content: e.target.value })}
-              />
-            </>
-          )}
+          <TextField
+            label={t("Title")} 
+            value={selectedBlog?.title || ''}
+            onChange={(e) => setSelectedBlog({ ...selectedBlog, title: e.target.value })}
+            fullWidth
+            margin="normal"
+
+          />
+          <TextField
+            label={t("Content")} 
+            value={selectedBlog?.content || ''}
+            onChange={(e) => setSelectedBlog({ ...selectedBlog, content: e.target.value })}
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label={t("Author")} 
+            value={selectedBlog?.author || ''}
+            onChange={(e) => setSelectedBlog({ ...selectedBlog, author: e.target.value })}
+            fullWidth
+            margin="normal"
+            sx={{ mb: 2 }}
+
+          />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Close</Button>
-          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>Save</Button>}
+          <Button onClick={handleCloseDialog}>{t("Close")}</Button> 
+          <Button onClick={handleSaveEdit}>{t("Save")}</Button> 
         </DialogActions>
       </Dialog>
+
+      
     </Box>
   );
-}
+} 

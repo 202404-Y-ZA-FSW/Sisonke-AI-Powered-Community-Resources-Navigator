@@ -15,7 +15,7 @@ import CityOfTshwane from "./Images/logos/tshwane.png";
 import NYDA from "./Images/logos/nyda.png";
 import SA from "./Images/logos/sayouth.png";
 import Projecty from "./Images/logos/projecty.svg";
-import NotionLogo from "./Images/logos/notion.png";
+import NotionLogo from "./Images/logos/Notion.png";
 import GoogleLogo from "./Images/logos/google.png";
 import SlackLogo from "./Images/logos/slack.png";
 import { useTranslation } from 'react-i18next';

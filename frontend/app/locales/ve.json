@@ -78,16 +78,33 @@
     "Time": "Nguva",
     "Close": "Valwa"
   },
+ 
   "PrivacyPolicy": {
-    "Title": "Mihumbuluso ya Muthu",
-    "Intro": "Zwine tshi divhea tshone",
-    "DataCollection": "Vhubva zwine vha tou vhala",
-    "Usage": "U shumele mulandu",
-    "Security": "Thithikhedzo",
-    "ThirdParties": "Nga tshiphiri",
-    "Updates": "Nga nga tshilalelo",
-    "Contact": "Vhuvhaho nga Ri zwo anda"
+    "Title": "Mulayo wa Vhuimo",
+    "Introduction": "Mulayo uyu wa vhuimo u scribeda ndangari u tshi dzhena, u shumisa na u dzulela khwine.",
+    "DataCollection": {
+      "Title": "U Vhusa Vhuimo",
+      "Description": "Ri vhusa vhuimo vhu sa tsebisi na u dzhena."
+    },
+    "Usage": {
+      "Title": "U Shumisa",
+      "Description": "Ri shumisa vhuimo hau na u takalela u a vhona."
+    },
+    "Security": {
+      "Title": "U Tsireledza",
+      "Description": "Ri shumisa maphuluso u tshi tsireledza vhuimo hau."
+    },
+    "ThirdParties": {
+      "Title": "Makhwama a Vhathu",
+      "Description": "Ri nga kona u amba vhuimo hau na makhwama a vhathu."
+    },
+    "Updates": {
+      "Title": "U Vhusa",
+      "Description": "Ri do vhusa mulayo uyu nga nḓila ya mikhwa."
+    },
+    "Contact": "Nga a vhona, ndakani u amba na privacy@example.com."
   },
+
   "Subscribe": {
     "Title": "U dzula o divhea zwine",
     "Description": "Nga mulandu wa musanda",
@@ -159,5 +176,209 @@
     "highestSalary": "Nga zwine zwone",
     "lowestSalary": "Nga zwaṱho",
     "postJob": "Nga zwaṱho"
-  }
+  },
+
+  
+    "businesses": {
+      "dashboardTitle": "Tshimmelo ya Maraka",
+      "statistics": "Zwithu Zwa Vhuwi",
+      "totalBusinesses": "{{count}} Ndzhavi",
+      "searchBusinesses": "Fhasi U Khangela Maraka",
+      "searchPlaceholder": "Tshina kana mudzimu wa muvhili",
+      "businessManagement": "U Tswala Maraka",
+      "fetchFailed": "U Fhasi U Fhasi Na Nguvho",
+      "fetchError": "U Fhasi U Nne U Muvhili",
+      "deleteSuccess": "U Fhasi U Shuma",
+      "deleteFailed": "U Fhasi U Tsha Khetha",
+      "deleteError": "U Fhasi U Khethu",
+      "updateSuccess": "U Vhuyedza U Fhasi",
+      "updateFailed": "U Vhuyedza U Tsha Khetha",
+      "updateError": "U Vhuyedza U Khethu",
+      "viewBusiness": "Khangela Ndzhavi",
+      "editBusiness": "Sikela Ndzhavi",
+      "noBusinessesFound": "A Si Ndzhavi Dzi Sikwa"
+    },
+    "dashboard": {
+      "title": "Dashboard ya Sekhukhune",
+      "refreshButton": "Dzhia Data",
+      "dataOverview": "Nḓowelo ya Data (Graph ya Circle)",
+      "userStatistics": "Zwiṱhoḓa zwa Vhahaleli",
+      "totalUsers": "Vhahaleli vhoṱhe: {{count}}",
+      "activeUsers": "Vhahaleli vha Bveledzani: {{count}}",
+      "restrictedUsers": "Vhahaleli vha Vhupfumi: {{count}}"
+    },
+    "error": {
+      "loadData": "Kha hoṱhe vha ṱhogomela data"
+    },
+    "BlogDashboard": "Blog Dashboard",
+    "TotalBlogs": "Mablog oṱhe: {{count}}",
+    "SearchBlogs": "Fhunga Mablog",
+    "SearchPlaceholder": "Fhunga nga ndawo kana mṱanḓa",
+    "NoBlogsFound": "Kha hoṱhe mablog",
+    "ViewBlog": "Vhonisa Blog",
+    "EditBlog": "Khadza Blog",
+    "DeleteBlog": "Senywa Blog",
+    "Close": "U Fhula",
+    "Save": "Bvela",
+    "ErrorFetchingBlogs": "Kha hoṱhe vha ṱhogomela mablog. Vhona uri u nga ṱhogomela",
+    "BlogDeleted": "Blog i vhulaiwa.",
+    "BlogUpdated": "Blog i vhulaiwa.",
+    "CreateBlog": "Bopa Blog",
+    "Title": "Mugwapo",
+    "Content": "Mavonelo",
+    "Author": "Mbhiyelwe",
+    "eventDashboard": "Xevent Dashboard",
+    "eventStatistics": "Zwiṱhoḓa zwa Xevent",
+    "totalEvents": "Xevent oṱhe",
+    "searchEvents": "Fhunga Xevent",
+    "searchPlaceholder": "Fhunga nga ...",
+    "eventManagement": "Tlhopho ya Xevent",
+    "noEventsFound": "Kha hoṱhe xevent.",
+    "event": {
+      "fetchFailed": "Kha hoṱhe vha ṱhogomela xevent.",
+      "fetchError": "Phoso nga u ṱhogomela xevent. Vhona uri u nga ṱhogomela.",
+      "deleteSuccess": "Xevent i vhulaiwa.",
+      "deleteFailed": "Kha hoṱhe vha senywa xevent.",
+      "deleteError": "Phoso nga u senywa xevent. Vhona uri u nga ṱhogomela."
+    },
+    "location": "Nḓowelo",
+    "organizer": "Nhlangano",
+    "date": "Nhlangano",
+    "actions": "Tiyisela",
+    "description": "Nḓowelo",
+    "attendees": "Vhahaleli",
+    "category": "Nhlangano",
+    "ticketPrice": "Nhlangano wa Mavonelo",
+    "free": "Mahala",
+    "uncategorized": "E nga ri na xiphemu",
+    "close": "U Fhula",
+    "save": "Bvela",
+    "unknown": "E nga ri na ndzimana",
+    "noDescription": "Kha hoṱhe na nḓowelo.",
+    "noAttendees": "Kha hoṱhe vhahaleli.",
+    "businesses": {
+      "dashboardTitle": "Business Dashboard",
+      "statistics": "Zwiṱhoḓa",
+      "totalBusinesses": "Bizinesi oṱhe: {{count}}",
+      "searchBusinesses": "Fhunga Bizinesi",
+      "searchPlaceholder": "Fhunga nga vhoṱhe kana mṱanḓa",
+      "businessManagement": "Tlhopho ya Bizinesi",
+      "noBusinessesFound": "Kha hoṱhe bizinesi.",
+      "viewBusiness": "Vhonisa Bizinesi",
+      "editBusiness": "Khadza Bizinesi",
+      "deleteBusiness": "Senywa Bizinesi",
+      "deleteSuccess": "Bizinesi i vhulaiwa.",
+      "deleteFailed": "Kha hoṱhe vha senywa bizinesi.",
+      "deleteError": "Phoso nga u senywa bizinesi.",
+      "updateSuccess": "Bizinesi i vhulaiwa.",
+      "updateFailed": "Kha hoṱhe vha kumiwa bizinesi.",
+      "updateError": "Phoso nga u kumiwa bizinesi.",
+      "fetchFailed": "Kha hoṱhe vha ṱhogomela bizinesi.",
+      "fetchError": "Phoso nga u ṱhogomela bizinesi.",
+      "createBusiness": "Bopa Bizinesi Bya Nhlangano",
+      "address": "Nḓowelo",
+      "phone": "Nomboro ya Mowedi",
+      "email": "Imela",
+      "website": "Websaete",
+      "description": "Nḓowelo",
+      "dateCreated": "Nhlangano wa u bopa"
+    },
+    "job": {
+      "browseJobs": "Fhunga Msebenzi",
+      "findJob": "Funa u ṱanganela vha nḓowelo.",
+      "loadMore": "Dzhia Mo",
+      "searchPlaceholder": "Fhunga nga ...",
+      "sortBy": "Kgetha nga",
+      "sortOptions": {
+        "recentlyAdded": "Mabuhosi a Bveledzani",
+        "highestSalary": "Mavonelo a le henhla",
+        "lowestSalary": "Mavonelo a le hansi"
+      },
+      "jobType": "Mugwapo wa Msebenzi",
+      "experienceLevel": "Nhlangano wa Vuhosi",
+      "location": "Nḓowelo",
+      "description": "Nḓowelo",
+      "company": "Khamphani",
+      "postedOn": "U beile eka"
+    },
+    "JobForm": {
+      "Title": "Bopa Msebenzi",
+      "Close": "U Fhula",
+      "Fields": {
+        "Title": "Mugwapo wa Msebenzi",
+        "Company": "Vito ra Khamphani",
+        "Location": "Nḓowelo",
+        "JobType": "Mugwapo wa Msebenzi",
+        "Salary": "Mavonelo",
+        "ExperienceLevel": "Nhlangano wa Vuhosi",
+        "Description": "Nḓowelo ya Msebenzi",
+        "Qualifications": "Mavonelo",
+        "Skills": "Makhono",
+        "ApplicationLink": "Xigibidi xa Khombisa"
+      },
+      "Errors": {
+        "TitleRequired": "Mugwapo wa Msebenzi i ya xitlhavela.",
+        "CompanyRequired": "Khamphani i ya xitlhavela.",
+        "LocationRequired": "Nḓowelo i ya xitlhavela.",
+        "TypeRequired": "Mugwapo wa Msebenzi i ya xitlhavela.",
+        "DescriptionRequired": "Nḓowelo i ya xitlhavela.",
+        "InvalidURL": "Havula URL ya xigibidi."
+      },
+      "Buttons": {
+        "Cancel": "Sukisa",
+        "Create": "Bopa Msebenzi"
+      },
+      "SuccessMessage": "Msebenzi u vhulaiwa.",
+      "ErrorMessage": "Kha hoṱhe phoso nga u beile msebenzi.",
+      "FailureMessage": "Phoso i vhulaiwa: {{message}}",
+      "UnknownError": "Phoso ya xitlhavela i vhulaiwa"
+    },
+    "blog": {
+      "imageURIRequired": "Xifaniso xihlanganyela",
+      "titleRequired": "Mugwapo wa Blog i ya xitlhavela",
+      "contentRequired": "Mavonelo i ya xitlhavela",
+      "readTimeRequired": "Nhlangano ya ku bala i ya xitlhavela",
+      "authorRequired": "Mbhiyelwe i ya xitlhavela",
+      "postCreatedSuccess": "Blog i vhulaiwa!",
+      "postCreationFailed": "Kha hoṱhe vha bopa blog.",
+      "submitError": "Phoso i vhulaiwa nga u beile blog.",
+      "explorePopularBlogs": "Hanya Mablog a Vhuhulu",
+      "addInsightTips": "U lavhelela u fa tshedimosetso nga u fa mbilu.",
+      "searchPlaceholder": "Fhunga nga mugwapo kana mṱanḓa",
+      "createNewPost": "Bopa Xikombiso Xitsongo",
+      "noPermissionToCreate": "U na na uri u nga bopi xitshongonyoni.",
+      "loginToCreatePost": "U fanele u fikele uri u bopa xitshongonyoni.",
+      "minutesRead": "Minthwana",
+      "readMore": "Bala ngwembe",
+      "noPostsAvailable": "Kha hoṱhe xitshongonyoni.",
+      "createNewBlogPost": "Bopa Xikombiso Xitsongo xa Blog",
+      "authorPlaceholder": "Mbhiyelwe",
+      "imageURIPlaceholder": "Xifaniso xihlanganyela",
+      "contentPlaceholder": "Mavonelo",
+      "tagsPlaceholder": "Nḓowelo dza nṱhani",
+      "submitButton": "Dzhia",
+      "cancelButton": "U Fhula"
+    },
+    "profileUpdated": "Profayela yo vha na mushumo u tshi khou tshimbidzwa!",
+  "dashboard": "Dakboard",
+  "home": "Hayani",
+  "about": "Nga ha",
+  "jobs": "Mishumo",
+  "contact": "Vhudavhidzani",
+  "community": "Vhathu",
+  "blog": "Blogo",
+  "forum": "Foramu",
+  "events": "Mikhou",
+  "businesses": "Mabindu",
+  "accountSettings": "Zwilinganyo zwa Akhaonto",
+  "logout": "Buda",
+  "updateProfile": "Vhudzulusa Profayela",
+  "name": "Dzina",
+  "email": "E-mail",
+  "job": "Mushumo",
+  "address": "Kheli",
+  "cancel": "Khansele",
+  "save": "Vhulunga"
+  
+  
 }

@@ -34,6 +34,8 @@ import Subscribe from "../components/sections/Subscribe";
 import { useAuthentication } from "../hooks/useAuthentication"; 
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -182,6 +184,7 @@ const JobCardDetails = ({
 };
 
 const JobForm = ({ open, handleClose }) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const initialJobData = {
@@ -214,16 +217,15 @@ const JobForm = ({ open, handleClose }) => {
       }));
     }
   };
-
   const validateForm = () => {
     const errors = {};
-    if (!jobData.title) errors.title = 'Title is required.';
-    if (!jobData.company) errors.company = 'Company is required.';
-    if (!jobData.location) errors.location = 'Location is required.';
-    if (!jobData.type) errors.type = 'Job Type is required.';
-    if (!jobData.description) errors.description = 'Description is required.';
+    if (!jobData.title) errors.title = t('JobForm.Errors.TitleRequired');
+    if (!jobData.company) errors.company = t('JobForm.Errors.CompanyRequired');
+    if (!jobData.location) errors.location = t('JobForm.Errors.LocationRequired');
+    if (!jobData.type) errors.type = t('JobForm.Errors.TypeRequired');
+    if (!jobData.description) errors.description = t('JobForm.Errors.DescriptionRequired');
     if (jobData.link && !/^(ftp|http|https):\/\/[^ "]+$/.test(jobData.link)) {
-      errors.link = 'Invalid URL.';
+      errors.link = t('JobForm.Errors.InvalidURL');
     }
     return errors;
   };
@@ -239,26 +241,19 @@ const JobForm = ({ open, handleClose }) => {
 
     try {
       const response = await axios.post(`http://localhost:5000/jobs/new`, jobData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
     
       if (response.status === 201) {
-        alert('Job created successfully');
+        alert(t('JobForm.SuccessMessage'));
         router.push('/jobs');
         handleClose();
       } else {
-        alert('Job not created. Please try again.');
+        alert(t('JobForm.ErrorMessage'));
       }
     } catch (error) {
-      if (error.response) {
-        console.error('Error creating job:', error.response.data); 
-        alert(`Failed to create job: ${error.response.data.message || 'Unknown error'}`);
-      } else {
-        console.error('Error creating job:', error);
-        alert('Failed to create job');
-      }
+      console.error('Error creating job:', error);
+      alert(t('JobForm.FailureMessage', { message: error.response?.data?.message || t('JobForm.UnknownError') }));
     }
   };
 
@@ -270,9 +265,9 @@ const JobForm = ({ open, handleClose }) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>
-        Post a Job
+        {t('JobForm.Title')}
         <IconButton
-          aria-label="close"
+          aria-label={t('JobForm.Close')}
           onClick={handleClose}
           sx={{
             position: 'absolute',
@@ -289,7 +284,7 @@ const JobForm = ({ open, handleClose }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Title"
+                label={t('JobForm.Fields.Title')}
                 name="title"
                 value={jobData.title}
                 onChange={handleChange}
@@ -301,7 +296,7 @@ const JobForm = ({ open, handleClose }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label="Company"
+                label={t('JobForm.Fields.Company')}
                 name="company"
                 value={jobData.company}
                 onChange={handleChange}
@@ -312,111 +307,112 @@ const JobForm = ({ open, handleClose }) => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                label="Location"
-                name="location"
-                value={jobData.location}
-                onChange={handleChange}
-                fullWidth
-                required
-                error={!!errors.location}
-                helperText={errors.location}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Job Type"
-                name="type"
-                select
-                value={jobData.type}
-                onChange={handleChange}
-                fullWidth
-                required
-                error={!!errors.type}
-                helperText={errors.type}
-              >
-                {jobTypes.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Salary"
-                name="salary"
-                value={jobData.salary}
-                onChange={handleChange}
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Experience Level"
-                name="experience"
-                select
-                value={jobData.experience}
-                onChange={handleChange}
-                fullWidth
-              >
-                {experienceLevels.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Description"
-                name="description"
-                value={jobData.description}
-                onChange={handleChange}
-                fullWidth
-                required
-                multiline
-                rows={4}
-                error={!!errors.description}
-                helperText={errors.description}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Qualifications (comma-separated)"
-                name="qualifications"
-                value={jobData.qualifications}
-                onChange={handleChange}
-                fullWidth
-                multiline
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Skills (comma-separated)"
-                name="skills"
-                value={jobData.skills}
-                onChange={handleChange}
-                fullWidth
-                multiline
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Application Link"
-                name="link"
-                value={jobData.link}
-                onChange={handleChange}
-                fullWidth
-                error={!!errors.link}
-                helperText={errors.link}
-              />
-            </Grid>
+      <TextField
+        label={t("jobForm.location")}
+        name="location"
+        value={jobData.location}
+        onChange={handleChange}
+        fullWidth
+        required
+        error={!!errors.location}
+        helperText={errors.location}
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <TextField
+        label={t("jobForm.jobType")}
+        name="type"
+        select
+        value={jobData.type}
+        onChange={handleChange}
+        fullWidth
+        required
+        error={!!errors.type}
+        helperText={errors.type}
+      >
+        {jobTypes.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {t(`jobForm.jobTypes.${option.value}`)}
+          </MenuItem>
+        ))}
+      </TextField>
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <TextField
+        label={t("jobForm.salary")}
+        name="salary"
+        value={jobData.salary}
+        onChange={handleChange}
+        fullWidth
+      />
+    </Grid>
+    <Grid item xs={12} sm={6}>
+      <TextField
+        label={t("jobForm.experienceLevel")}
+        name="experience"
+        select
+        value={jobData.experience}
+        onChange={handleChange}
+        fullWidth
+      >
+        {experienceLevels.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {t(`jobForm.experienceLevels.${option.value}`)}
+          </MenuItem>
+        ))}
+      </TextField>
+    </Grid>
+    <Grid item xs={12}>
+      <TextField
+        label={t("jobForm.description")}
+        name="description"
+        value={jobData.description}
+        onChange={handleChange}
+        fullWidth
+        required
+        multiline
+        rows={4}
+        error={!!errors.description}
+        helperText={errors.description}
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <TextField
+        label={t("jobForm.qualifications")}
+        name="qualifications"
+        value={jobData.qualifications}
+        onChange={handleChange}
+        fullWidth
+        multiline
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <TextField
+        label={t("jobForm.skills")}
+        name="skills"
+        value={jobData.skills}
+        onChange={handleChange}
+        fullWidth
+        multiline
+      />
+    </Grid>
+    <Grid item xs={12}>
+      <TextField
+        label={t("jobForm.applicationLink")}
+        name="link"
+        value={jobData.link}
+        onChange={handleChange}
+        fullWidth
+        error={!!errors.link}
+        helperText={errors.link}
+      />
+    </Grid>
+  
           </Grid>
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>{t('JobForm.Buttons.Cancel')}</Button>
         <Button
           onClick={handleSubmit}
           variant="contained"
@@ -426,7 +422,7 @@ const JobForm = ({ open, handleClose }) => {
             "&:hover": { bgcolor: "#5A52D5" },
           }}
         >
-          Create Job
+          {t('JobForm.Buttons.Create')}
         </Button>
       </DialogActions>
     </Dialog>
@@ -434,6 +430,7 @@ const JobForm = ({ open, handleClose }) => {
 };
 
 const Job = () => {
+  const { t } = useTranslation();
   const [jobs, setJobs] = useState([]);
   const [displayedJobs, setDisplayedJobs] = useState(9);
   const [searchTerm, setSearchTerm] = useState("");
@@ -443,18 +440,17 @@ const Job = () => {
   const { user } = useAuthentication();
   const canPostAJob =
     user && (user.user.role === "administrator" || user.user.role === "ngo");
-    
+
   const fetchJobs = async () => {
     try {
       const response = await fetch("http://localhost:5000/jobs/all");
       if (!response.ok) throw new Error("Failed to fetch jobs");
       const data = await response.json();
-      console.log("Fetched jobs:", data);
-
       if (Array.isArray(data.jobs)) {
         setJobs(data.jobs);
       } else {
         console.error("Expected an array under 'jobs' but got:", data.jobs);
+      
       }
     } catch (error) {
       console.error("Error fetching jobs:", error);
@@ -478,7 +474,7 @@ const Job = () => {
   );
 
   const sortedJobs = uniqueJobs.sort((a, b) => {
-    if (sortBy === "highest salary") {
+        if (sortBy === "highest salary") {
       return (b.salary || 0) - (a.salary || 0);
     } else if (sortBy === "lowest salary") {
       return (a.salary || 0) - (b.salary || 0);
@@ -486,10 +482,10 @@ const Job = () => {
       return new Date(b.posted) - new Date(a.posted);
     }
   });
-
   const loadMoreJobs = () => {
     setDisplayedJobs((prev) => prev + 5);
   };
+
 
   return (
     <>
@@ -518,7 +514,7 @@ const Job = () => {
                 textAlign: "center",
               }}
             >
-              Browse Jobs In Your Community
+              {t("job.browseJobs")}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -529,13 +525,13 @@ const Job = () => {
                 textAlign: "center",
               }}
             >
-              Find the job of your dreams in our curated list of jobs from verified companies, or search for a specific job title or company.
+              {t("job.findJob")}
             </Typography>
 
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
               <TextField
                 variant="outlined"
-                placeholder="Search"
+                placeholder={t("job.searchPlaceholder")}
                 InputProps={{
                   sx: { borderRadius: "16px", width: "100%" },
                   startAdornment: (
@@ -561,7 +557,7 @@ const Job = () => {
                 }}
                 onClick={fetchJobs}
               >
-                Explore Now
+                {t("job.exploreNow")}
               </Button>
             </Box>
           </Container>
@@ -569,15 +565,15 @@ const Job = () => {
 
         <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 8, mt: 8 }}>
           <FormControl variant="outlined" sx={{ minWidth: 180 }}>
-            <InputLabel>Sort By</InputLabel>
+            <InputLabel>{t("job.sortBy")}</InputLabel>
             <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              label="Sort By"
+              label={t("job.sortBy")}
             >
-              <MenuItem value="recently added">Recently Added</MenuItem>
-              <MenuItem value="highest salary">Highest Salary</MenuItem>
-              <MenuItem value="lowest salary">Lowest Salary</MenuItem>
+              <MenuItem value="recently added">{t("job.recentlyAdded")}</MenuItem>
+              <MenuItem value="highest salary">{t("job.highestSalary")}</MenuItem>
+              <MenuItem value="lowest salary">{t("job.lowestSalary")}</MenuItem>
             </Select>
           </FormControl>
 
@@ -594,17 +590,16 @@ const Job = () => {
               }}
               onClick={() => setIsFormOpen(true)}
             >
-              Post a Job
+              {t("job.postJob")}
             </Button>
           ) : (
             <Typography variant="subtitle1" color="blue">
-              You need to login to post a job.
+              {t("job.loginToPost")}
             </Typography>
           )}
         </Box>
 
-       {/* Job Cards */}
-       <Grid container spacing={3}>
+        <Grid container spacing={3}>
           {sortedJobs.slice(0, displayedJobs).map((job) => (
             <Grid item xs={12} sm={6} md={4} key={job.id}>
               <JobCardDetails
@@ -622,26 +617,26 @@ const Job = () => {
         </Grid>
         {displayedJobs < sortedJobs.length && (
           <Box display="flex" justifyContent="center" my={4}>
-           <Button
-          sx={{
-            borderRadius: "15px",
-            backgroundColor: "#6c63ff",
-            color: "#ffffff",
-            textTransform: "none",
-            padding: "8px 30px",
-          }}
-          size="large"
-          onClick={loadMoreJobs}>
-              Load More
+            <Button
+              sx={{
+                borderRadius: "15px",
+                backgroundColor: "#6c63ff",
+                color: "#ffffff",
+                textTransform: "none",
+                padding: "8px 30px",
+              }}
+              size="large"
+              onClick={() => setDisplayedJobs((prev) => prev + 5)}
+            >
+              {t("job.loadMore")}
             </Button>
           </Box>
         )}
 
-        {/* Job Posting Form Modal */}
         <JobForm open={isFormOpen} handleClose={() => setIsFormOpen(false)} />
       </Container>
       <br />
-      <Subscribe/>
+      <Subscribe />
       <Footer />
     </>
   );
