@@ -79,7 +79,7 @@ const Sidebar = ({ selectedComponent, setSelectedComponent, handleDrawerToggle, 
           keepMounted: true, 
         }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
+          display: { xs: 'block', sm: 'block' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%' },
         }}
       >
@@ -92,7 +92,7 @@ const Sidebar = ({ selectedComponent, setSelectedComponent, handleDrawerToggle, 
         sx={{
           width: { sm: 240 },
           flexShrink: { sm: 0 },
-          display: { xs: 'none', sm: 'block' },
+          display: { xs: 'block', sm: 'block' },
         }}
       >
         <Drawer
