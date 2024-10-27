@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.2",
+    "@react-three/drei": "^9.115.0",
+    "@react-three/fiber": "^8.17.10",
     "animations": "^0.0.0",
     "axios": "^1.7.7",
     "framer-motion": "^11.11.10",
@@ -20,12 +22,14 @@
     "next": "^14.2.14",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.1.0",
     "recharts": "^2.12.7",
     "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.12"
   }

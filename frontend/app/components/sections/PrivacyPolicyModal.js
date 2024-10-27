@@ -44,10 +44,10 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
         </IconButton>
 
         <Typography variant="h5" component="h2" gutterBottom sx={{ mb: 3, fontWeight: 'bold', color: 'primary.main' }}>
-          {t('PrivacyPolicy.Title')}
+          Privacy Policy
         </Typography>
         <Typography variant="body1" paragraph sx={{ mb: 3 }}>
-          {t('PrivacyPolicy.Introduction')}
+          By using Sisonke, you agree to the following privacy terms:
         </Typography>
         <List>
           <ListItem>
@@ -55,8 +55,8 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
               <DataUsageIcon color="primary" />
             </ListItemIcon>
             <ListItemText 
-              primary={t('PrivacyPolicy.DataCollection.Title')}
-              secondary={t('PrivacyPolicy.DataCollection.Description')}
+              primary="Data Collection" 
+              secondary="We collect necessary information to provide and improve our services."
             />
           </ListItem>
           <ListItem>
@@ -64,8 +64,8 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
               <DataUsageIcon color="primary" />
             </ListItemIcon>
             <ListItemText 
-              primary={t('PrivacyPolicy.Usage.Title')}
-              secondary={t('PrivacyPolicy.Usage.Description')}
+              primary="Data Usage" 
+              secondary="Your data is used to enhance your experience and our services."
             />
           </ListItem>
           <ListItem>
@@ -73,8 +73,8 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
               <SecurityIcon color="primary" />
             </ListItemIcon>
             <ListItemText 
-              primary={t('PrivacyPolicy.Security.Title')}
-              secondary={t('PrivacyPolicy.Security.Description')}
+              primary="Data Security" 
+              secondary="We implement robust measures to protect your personal information."
             />
           </ListItem>
           <ListItem>
@@ -82,8 +82,8 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
               <ShareIcon color="primary" />
             </ListItemIcon>
             <ListItemText 
-              primary={t('PrivacyPolicy.ThirdParties.Title')}
-              secondary={t('PrivacyPolicy.ThirdParties.Description')}
+              primary="Third-Party Sharing" 
+              secondary="We may share data with trusted partners to improve our services."
             />
           </ListItem>
           <ListItem>
@@ -91,15 +91,15 @@ const PrivacyPolicyModal = ({ open, handleClose }) => {
               <UpdateIcon color="primary" />
             </ListItemIcon>
             <ListItemText 
-              primary={t('PrivacyPolicy.Updates.Title')}
-              secondary={t('PrivacyPolicy.Updates.Description')}
+              primary="Policy Updates" 
+              secondary="We may update this policy. Continued use means acceptance of changes."
             />
           </ListItem>
         </List>
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 3 }}>
           <EmailIcon color="primary" sx={{ mr: 1 }} />
           <Typography variant="body2">
-            {t('PrivacyPolicy.Contact')}
+            For privacy inquiries, contact us at privacy@sisonke.co.za
           </Typography>
         </Box>
 
