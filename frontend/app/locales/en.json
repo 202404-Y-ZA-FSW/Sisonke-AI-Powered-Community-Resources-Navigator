@@ -19,6 +19,7 @@
       "Users": "Users",
       "JobsCreated": "Jobs Created",
       "Businesses": "Businesses",
+      "Forums":"Forums",
       "SupportedBy": "We are supported",
       "SupportSubtitle": "By local governments, national youth agencies, and the private sector."
     },
@@ -92,14 +93,31 @@
   
     "PrivacyPolicy": {
       "Title": "Privacy Policy",
-      "Intro": "We value your privacy. Here's how we handle your data:",
-      "DataCollection": "1. Data Collection: We collect info you provide and usage data.",
-      "Usage": "2. Usage: We use your info to improve the platform and services.",
-      "Security": "3. Security: We take steps to protect your data.",
-      "ThirdParties": "4. Third-Parties: We don’t share your data without consent.",
-      "Updates": "5. Updates: We may change this policy. Continued use means acceptance.",
-      "Contact": "Contact us at info@sisonke.co.za for any questions."
+      "Introduction": "This Privacy Policy outlines how we collect, use, and protect your information.",
+      "DataCollection": {
+        "Title": "Data Collection",
+        "Description": "We collect personal data to provide better services."
+      },
+      "Usage": {
+        "Title": "Usage",
+        "Description": "We use your data to improve user experience."
+      },
+      "Security": {
+        "Title": "Security",
+        "Description": "We implement security measures to protect your data."
+      },
+      "ThirdParties": {
+        "Title": "Third Parties",
+        "Description": "We may share your information with third-party partners."
+      },
+      "Updates": {
+        "Title": "Updates",
+        "Description": "We will update this policy from time to time."
+      },
+      "Contact": "For inquiries, please contact us at privacy@example.com."
     },
+   
+
   
     "Subscribe": {
       "Title": "Subscribe to our newsletter",
@@ -169,18 +187,359 @@
       "CreateSuccessStories": "Create Success Stories",
       "CreateSuccessStoriesDescription": "By bringing together community members, businesses, and resources, we help individuals achieve their goals and thrive."
     },
+
+    
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "about": "About",
+      "jobs": "Jobs",
+      "contact": "Contact",
+      "community": "Community",
+      "blog": "Blog",
+      "forum": "Forum",
+      "events": "Events",
+      "businesses": "Businesses",
+      "account": "Account",
+      "accountSettings": "Account Settings",
+      "logout": "Logout",
+      "editProfile": "Edit Profile",
+      "profileUpdated": "Profile updated successfully!",
+      "name": "Name",
+      "email": "Email",
+      "job": "Job",
+      "address": "Address",
+      "update": "Update",
+      "cancel": "Cancel",
+       
+        "termsOfService": "Terms of Service",
+        "termsIntro": "By using Sisonke, you agree to the following:",
+        "userConduct": "User Conduct",
+        "userConductDesc": "Follow all laws and respect others in the community.",
+        "accountSecurity": "Account Security",
+        "accountSecurityDesc": "Keep your account info secure and notify us of any breaches.",
+        "contentResponsibility": "Content Responsibility",
+        "contentResponsibilityDesc": "You own your content. We are not liable for it.",
+        "serviceLimitations": "Service Limitations",
+        "serviceLimitationsDesc": "We are not responsible for service interruptions or errors.",
+        "privacy": "Privacy",
+        "privacyDesc": "Your data is protected. See our Privacy Policy for details.",
+        "modifications": "Modifications",
+        "modificationsDesc": "We may update these terms. Continued use means acceptance.",
+        "inquiries": "For inquiries, contact us at info@sisonke.co.za",
+
+        "dashboard": {
+    "title": "Overview Dashboard",
+    "refreshButton": "Refresh Data",
+    "dataOverview": "Data Overview (Pie Chart)",
+    "userStatistics": "User Statistics",
+    "totalUsers": "Total Users: {{count}}",
+    "activeUsers": "Active Users: {{count}}",
+    "restrictedUsers": "Restricted Users: {{count}}"
+  },
+  "error": {
+    "loadData": "Failed to load data"
+  },
   
-    "job": {
-      "browseJobs": "Browse Jobs In Your Community",
-      "findJob": "Find the job of your dreams in our curated list of jobs from verified companies.",
-      "searchPlaceholder": "Search for jobs...",
-      "loadMore": "Load More",
-      "sortBy": "Sort By",
-      "recentlyAdded": "Recently Added",
-      "highestSalary": "Highest Salary",
-      "lowestSalary": "Lowest Salary",
-      "postJob": "Post a Job",
-      "loginToPost": "Log in to post a job."
+    "BlogDashboard": "Blog Dashboard",
+    "TotalBlogs": "Total Blogs: {{count}}",
+    "SearchBlogs": "Search Blogs",
+    "SearchPlaceholder": "Search by title or author",
+    "NoBlogsFound": "No blogs found",
+    "ViewBlog": "View Blog",
+    "EditBlog": "Edit Blog",
+    "DeleteBlog": "Delete Blog",
+    "Close": "Close",
+    "Save": "Save",
+    "ErrorFetchingBlogs": "Error fetching blogs. Please try again later.",
+    "BlogDeleted": "Blog deleted successfully.",
+    "BlogUpdated": "Blog updated successfully.",
+    "CreateBlog": "Create Blog",
+    "Title": "Title",
+    "Content": "Content",
+    "Author": "Author",
+
+
+    
+      "eventDashboard": "Event Dashboard",
+      "eventStatistics": "Event Statistics",
+      "totalEvents": "Total Events",
+      "searchEvents": "Search Events",
+      "searchPlaceholder": "Search for events...",
+      "eventManagement": "Event Management",
+      "viewEvent": "View Event",
+      "editEvent": "Edit Event",
+      "deleteEvent": "Delete Event",
+      "noEventsFound": "No events found.",
+      "event": {
+        "fetchFailed": "Failed to fetch events.",
+        "fetchError": "Error fetching events. Please try again later.",
+        "deleteSuccess": "Event deleted successfully.",
+        "deleteFailed": "Failed to delete event.",
+        "deleteError": "Error deleting event. Please try again."
+      },
+      "location": "Location",
+      "organizer": "Organizer",
+      "date": "Date",
+      "actions": "Actions",
+      "description": "Description",
+      "attendees": "Attendees",
+      "category": "Category",
+      "ticketPrice": "Ticket Price",
+      "free": "Free",
+      "uncategorized": "Uncategorized",
+      "close": "Close",
+      "save": "Save",
+      "unknown": "Unknown",
+      "noDescription": "No description available.",
+      "noAttendees": "No attendees.",
+
+
+      
+        "businesses": {
+          "dashboardTitle": "Business Dashboard",
+          "statistics": "Statistics",
+          "totalBusinesses": "Total Businesses: {{count}}",
+          "searchBusinesses": "Search Businesses",
+          "searchPlaceholder": "Search by name or owner",
+          "businessManagement": "Business Management",
+          "noBusinessesFound": "No businesses found.",
+          "viewBusiness": "View Business",
+          "editBusiness": "Edit Business",
+          "deleteBusiness": "Delete Business",
+          "deleteSuccess": "Business deleted successfully.",
+          "deleteFailed": "Failed to delete business.",
+          "deleteError": "An error occurred while deleting the business.",
+          "updateSuccess": "Business updated successfully.",
+          "updateFailed": "Failed to update business.",
+          "updateError": "An error occurred while updating the business.",
+          "fetchFailed": "Failed to fetch businesses.",
+          "fetchError": "An error occurred while fetching businesses.",
+          "createBusiness": "Create New Business",
+          "address": "Address",
+          "phone": "Phone",
+          "email": "Email",
+          "website": "Website",
+          "description": "Description",
+          "dateCreated": "Date Created"
+        },
+
+        "job": {
+          "browseJobs": "Browse Jobs In Your Community",
+          "findJob": "Find the job of your dreams in our curated list of jobs from verified companies.",
+          "loadMore": "Load More",
+          "searchPlaceholder": "Search for jobs...",
+          "sortBy": "Sort by",
+          "sortOptions": {
+            "recentlyAdded": "Recently Added",
+            "highestSalary": "Highest Salary",
+            "lowestSalary": "Lowest Salary"
+          },
+          "jobType": "Job Type",
+          "experienceLevel": "Experience Level",
+          "location": "Location",
+          "description": "Description",
+          "company": "Company",
+          "postedOn": "Posted on"
+        },
+        "jobForm": {
+          "title": "Create Job",
+          "close": "Close",
+          "fields": {
+            "title": "Job Title",
+            "company": "Company Name",
+            "location": "Location",
+            "jobType": "Job Type",
+            "salary": "Salary",
+            "experienceLevel": "Experience Level",
+            "description": "Job Description",
+            "qualifications": "Qualifications",
+            "skills": "Skills",
+            "applicationLink": "Application Link"
+          },
+          "errors": {
+            "titleRequired": "Title is required.",
+            "companyRequired": "Company is required.",
+            "locationRequired": "Location is required.",
+            "typeRequired": "Job type is required.",
+            "descriptionRequired": "Description is required.",
+            "invalidURL": "Please enter a valid URL."
+          },
+          "buttons": {
+            "cancel": "Cancel",
+            "create": "Create Job"
+          },
+          "successMessage": "Job posted successfully.",
+          "errorMessage": "There was an error posting the job.",
+          "failureMessage": "An error occurred: {{message}}",
+          "unknownError": "Unknown error occurred"
+        },                    
+        "job": {
+    "sortBy": "Sort By",
+    "recentlyAdded": "Recently Added",
+    "highestSalary": "Highest Salary",
+    "lowestSalary": "Lowest Salary",
+    "postJob": "Post a Job",
+    "loginToPost": "Please log in to post a job",
+    "browseJobs": "Browse Jobs In Your Community",
+    "findJob": "Find the job of your dreams in our curated list of jobs from verified companies, or search for a specific job title or company.",
+    "searchPlaceholder": "Search for",
+    "exploreNow": "Explore Now",
+    "loadMore":"Load More"
+  },
+
+  "blog": {
+    "imageURIRequired": "Image URI is required",
+    "titleRequired": "Title is required",
+    "contentRequired": "Content is required",
+    "readTimeRequired": "Read time is required",
+    "authorRequired": "Author is required",
+    "postCreatedSuccess": "Blog post created successfully!",
+    "postCreationFailed": "Failed to create the blog post.",
+    "submitError": "An error occurred while submitting the blog post.",
+    "explorePopularBlogs": "Explore Popular Blogs",
+    "addInsightTips": "Add insight to boost career growth and check out tips on company job vacancies",
+    "searchPlaceholder": "Search by title or author",
+    "createNewPost": "Create New Post",
+    "noPermissionToCreate": "You don't have permission to create a new post.",
+    "loginToCreatePost": "You need to login to create a new post.",
+    "minutesRead": "Minutes Read",
+    "readMore": "Read More",
+    "noPostsAvailable": "No blog posts available at the moment.",
+    "createNewBlogPost": "Create a New Blog Post",
+    "authorPlaceholder": "Author",
+    "imageURIPlaceholder": "Image URI",
+    "blogTitle": "Blog Title",
+    "readTime": "Read Time",
+    "readTimePlaceholder": "e.g., 5 min",
+    "blogContent": "Blog Content",
+    "submitBlogPost": "Submit Blog Post"
+    
+  },
+
+  "businessForm": {
+    "title": "Register Your Business",
+    "submit": "Submit",
+    "labels": {
+      "businessName": "Business Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "industry": "Industry",
+      "description": "Description",
+      "website": "Website",
+      "image": "Image URL",
+      "logo": "Logo URL",
+      "owner": "Owner Name"
+    },
+    "errors": {
+      "name": "Business Name is required",
+      "email": "Email is required",
+      "invalidEmail": "Please enter a valid email",
+      "phone": "Phone number is required",
+      "address": "Address is required",
+      "city": "City is required",
+      "industry": "Industry is required",
+      "description": "Description is required",
+      "image": "Image URL is required",
+      "logo": "Logo URL is required",
+      "owner": "Owner Name is required",
+      "general": "There was an error submitting the form. Please try again."
     }
+  },
+
+  "business": {
+    "title": "Discover Local Businesses",
+    "subtitle": "Find the best services and products in your community, or search for a specific business by name.",
+    "searchPlaceholder": "Search",
+    "postBusinessButton": "Post a Business",
+    "permissionError": {
+      "noPermission": "You don't have permission to create a new business.",
+      "loginRequired": "You need to login to create a new business."
+    },
+    "loading": "Loading...",
+    "error": "Error: {{error}}"
+  },
+
+  "userDashboard": {
+    "title": "User Dashboard",
+    "fetchError": "Failed to fetch users.",
+    "userDeleted": "User deleted successfully.",
+    "deleteError": "Failed to delete user.",
+    "userUpdated": "User updated successfully.",
+    "updateError": "Failed to update user.",
+    "roleUpdated": "User role updated successfully.",
+    "roleUpdateError": "Failed to update user role.",
+    "generalError": "Something went wrong. Please try again.",
+    "activeUsers": "Active Users",
+    "restrictedUsers": "Restricted Users",
+    "totalUsers": "Total Users",
+    "searchUsers": "Search Users",
+    "refreshUsers": "Refresh Users",
+    "role": "Role",
+    "status": "Status",
+    "all": "All",
+    "user": "User",
+    "admin": "Admin",
+    "ngo": "NGO",
+    "active": "Active",
+    "restricted": "Restricted",
+    "searchPlaceholder": "Search by name or email",
+    "exporting": "Exporting...",
+    "exportCSV": "Export CSV",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "viewUserDetails": "User Details" 
+
+  },
+  "users": {
+    "exportSuccess": "Users exported successfully",
+    "exportError": "Error exporting users."
+  },
+
+  "sidebar": {
+    "overview": "Overview",
+    "users": "Users",
+    "blogs": "Blogs",
+    "forums": "Forums",
+    "events": "Events",
+    "businesses": "Businesses",
+    "jobs": "Jobs"
+  },
+
+  "Job Dashboard": "Job Dashboard",
+  "Job Statistics": "Job Statistics",
+  "Total Jobs": "Total Jobs",
+  "Search Jobs": "Search Jobs",
+  "Search by title or company": "Search by title or company",
+  "Job Management": "Job Management",
+  "Title": "Title",
+  "Company": "Company",
+  "Date Posted": "Date Posted",
+  "Actions": "Actions",
+  "View Job": "View Job",
+  "Edit Job": "Edit Job",
+  "Delete Job": "Delete Job",
+  "No jobs found.": "No jobs found.",
+  "Close": "Close",
+  "Save": "Save",
+  "No description available": "No description available",
+  "No location specified": "No location specified",
+  "Not specified": "Not specified"
+        
+      
+      
+    
+    
+  
+  
+      
+      
+      
+      
+
+    
+
   }
   

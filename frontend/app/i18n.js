@@ -22,6 +22,7 @@ i18n
     },
     lng: 'en',
     fallbackLng: 'en',
+    supportedLngs: ['en', 'af', 'ns', 'ts', 've', 'zn'], 
     debug: true, 
     interpolation: {
       escapeValue: false,

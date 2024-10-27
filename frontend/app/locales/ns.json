@@ -79,15 +79,31 @@
     "Close": "Tswala"
   },
   "PrivacyPolicy": {
-    "Title": "Leano la Boipshino",
-    "Intro": "Re šireletša boipshino bja gago. Bona kamoo re šomago ka ditaba tša gago:",
-    "DataCollection": "1. Pokello ya Dintlha: Re kgoboketša seo o fanago ka sona le tshebediso ya tšhomi.",
-    "Usage": "2. Tšhomišo: Re šomiša tshedimošo ya gago go kaonafatša ditirelo.",
-    "Security": "3. Polokeho: Re tšea dikgato go šireletša tshedimošo.",
-    "ThirdParties": "4. Batho ba Kantle: Ga re abelane tshedimošo ya gago ntle le tumelelo.",
-    "Updates": "5. Dihlogo: Re ka fetola leano. Tšhomišo e tswelapele e bolela kamohelo.",
-    "Contact": "Ikopanye le rena go info@sisonke.co.za bakeng sa dipotso"
+    "Title": "Molao wa Borai",
+    "Introduction": "Molao uyu wa borai o hlalosa kamoo re bokelago tshedimosetso ya gago, re e šomiša le go e šireletsa.",
+    "DataCollection": {
+      "Title": "Kgetho ya Tshedimosetso",
+      "Description": "Re bokela tshedimosetso e amanang le gago go fa ditlhopho tse di betere."
+    },
+    "Usage": {
+      "Title": "Tšhomišo",
+      "Description": "Re šomiša tshedimosetso ya gago go tokafatsa boithomelo jwa basebedisi."
+    },
+    "Security": {
+      "Title": "Tshireletso",
+      "Description": "Re tsenya mekgwa ya tshelete go sireletsa tshedimosetso ya gago."
+    },
+    "ThirdParties": {
+      "Title": "Bafani ba Borai",
+      "Description": "Re ka abelana tshedimosetso ya gago le bafani ba borai."
+    },
+    "Updates": {
+      "Title": "Dikgatiso",
+      "Description": "Re tla ntšha molao ono ka dinako dingwe."
+    },
+    "Contact": "Bolela le rona ka privacy@example.com."
   },
+
   "Subscribe": {
     "Title": "Ingwadiše go hwetša ditaba tša rena",
     "Description": "Bolela ka mesomo ye meswa, dintlha, le dikhutlo tša setšhaba go dikanegelo tša setšhaba le dikgopolo.",
@@ -161,5 +177,210 @@
     "highestSalary": "Meputso e Phagamego",
     "lowestSalary": "Meputso e Bohloko",
     "postJob": "Bea Mesomo"
-  }
+  },
+
+  "dashboard": {
+    "title": "Sekhukhune Panel",
+    "refreshButton": "Nkgokgo Data",
+    "dataOverview": "Tlhahlobo ya Data (Graph ya Circle)",
+    "userStatistics": "Statistika ya Basebedisi",
+    "totalUsers": "Basebedisi Bohle: {{count}}",
+    "activeUsers": "Basebedisi ba Mošomo: {{count}}",
+    "restrictedUsers": "Basebedisi ba Tswana: {{count}}"
+  },
+  "error": {
+    "loadData": "Go sitwa go kgona go laela data"
+  },
+  "BlogDashboard": "Blog Panel",
+  "TotalBlogs": "Bologs bohle: {{count}}",
+  "SearchBlogs": "Batla Bologs",
+  "SearchPlaceholder": "Batla ka sehlabelo kapa mongwadi",
+  "NoBlogsFound": "Go sitwa go bona bologs",
+  "ViewBlog": "Bona Blog",
+  "EditBlog": "Lokisa Blog",
+  "DeleteBlog": "Senywa Blog",
+  "Close": "Tshela",
+  "Save": "Boloka",
+  "ErrorFetchingBlogs": "Phoso ka go fa bologs. Hlokomela boele go leka",
+  "BlogDeleted": "Blog e sitwa go senywa.",
+  "BlogUpdated": "Blog e sitwa go ntlafatshwa.",
+  "CreateBlog": "Bopa Blog",
+  "Title": "Sehlabelo",
+  "Content": "Ditlhopho",
+  "Author": "Mongwadi",
+  "eventDashboard": "Ketsahalo Panel",
+  "eventStatistics": "Statistika ya Ketsahalo",
+  "totalEvents": "Ketsahalo Tše Di Etswa",
+  "searchEvents": "Batla Ketsahalo",
+  "searchPlaceholder": "Batla ka ...",
+  "eventManagement": "Tlhopho ya Ketsahalo",
+  "viewEvent": "Bona Ketsahalo",
+  "editEvent": "Lokisa Ketsahalo",
+  "deleteEvent": "Senywa Ketsahalo",
+  "noEventsFound": "Go sitwa go bona ketsahalo.",
+  "event": {
+    "fetchFailed": "Go sitwa go fa ketsahalo.",
+    "fetchError": "Phoso ka go fa ketsahalo. Hlokomela boele go leka.",
+    "deleteSuccess": "Ketsahalo e sitwa go senywa.",
+    "deleteFailed": "Go sitwa go senywa ketsahalo.",
+    "deleteError": "Phoso ka go senywa ketsahalo. Hlokomela boele go leka."
+  },
+  "location": "Sebaka",
+  "organizer": "Mokgwa",
+  "date": "Letsatsi",
+  "actions": "Ditsela",
+  "description": "Tlhaloso",
+  "attendees": "Baeti",
+  "category": "Kgetha",
+  "ticketPrice": "Theko ya Tshelete",
+  "free": "Mahala",
+  "uncategorized": "Se se sa kgethegeng",
+  "close": "Tshela",
+  "save": "Boloka",
+  "unknown": "E sa tsebale",
+  "noDescription": "A na le tlhaloso.",
+  "noAttendees": "A na le baeti.",
+  "businesses": {
+    "dashboardTitle": "Borai Panel",
+    "statistics": "Statistika",
+    "totalBusinesses": "Borai bohle: {{count}}",
+    "searchBusinesses": "Batla Borai",
+    "searchPlaceholder": "Batla ka leina kapa moikgokgo",
+    "businessManagement": "Tlhopho ya Borai",
+    "noBusinessesFound": "Go sitwa go bona borai.",
+    "viewBusiness": "Bona Borai",
+    "editBusiness": "Lokisa Borai",
+    "deleteBusiness": "Senywa Borai",
+    "deleteSuccess": "Borai e sitwa go senywa.",
+    "deleteFailed": "Go sitwa go senywa borai.",
+    "deleteError": "Phoso ka go senywa borai.",
+    "updateSuccess": "Borai e sitwa go ntlafatshwa.",
+    "updateFailed": "Go sitwa go ntlafatshwa borai.",
+    "updateError": "Phoso ka go ntlafatshwa borai.",
+    "fetchFailed": "Go sitwa go fa borai.",
+    "fetchError": "Phoso ka go fa borai.",
+    "createBusiness": "Bopa Borai Bja Nngwe",
+    "address": "Aterese",
+    "phone": "Nomoro ya Mehala",
+    "email": "Imela",
+    "website": "Websaete",
+    "description": "Tlhaloso",
+    "dateCreated": "Letsatsi la go bopa"
+  },
+  "job": {
+    "browseJobs": "Kwala Borai Mo Kompaning",
+    "findJob": "Fumana mosebetsi wa gago ka lenane la ditlhopho go tswa mo mekgweng ya mekgwa.",
+    "loadMore": "Matla Mo",
+    "searchPlaceholder": "Batla ka ...",
+    "sortBy": "Kgetha ka",
+    "sortOptions": {
+      "recentlyAdded": "Morago go addwa",
+      "highestSalary": "Salaris ya go holang",
+      "lowestSalary": "Salaris ya go thubaganya"
+    },
+    "jobType": "Mokgwa wa Mosebetsi",
+    "experienceLevel": "Sebaka sa Maikutlo",
+    "location": "Sebaka",
+    "description": "Tlhaloso",
+    "company": "Khamphani",
+    "postedOn": "E beile go"
+  },
+  "JobForm": {
+    "Title": "Bopa Mošomo",
+    "Close": "Tlwa",
+    "Fields": {
+      "Title": "Sehlabelo",
+      "Company": "Khampani",
+      "Location": "Sebaka",
+      "JobType": "Mofuta wa Mošomo",
+      "Salary": "Mokgwa",
+      "ExperienceLevel": "Mokgwa wa Phihlelo",
+      "Description": "Tlhaloso",
+      "Qualifications": "Dikgetho",
+      "Skills": "Bokgoni",
+      "ApplicationLink": "Kgokgolo ya Kopo"
+    },
+    "Buttons": {
+      "Cancel": "Kgaola",
+      "Create": "Bopa"
+    },
+    "Errors": {
+      "TitleRequired": "Sehlabelo se tshwanetse go tsenngwa.",
+      "CompanyRequired": "Khampani e tshwanetse go tsenngwa.",
+      "LocationRequired": "Sebaka se tshwanetse go tsenngwa.",
+      "TypeRequired": "Mofuta wa mošomo o tshwanetse go tsenngwa.",
+      "DescriptionRequired": "Tlhaloso e tshwanetse go tsenngwa.",
+      "InvalidURL": "URL e sa siamang.",
+      "UnknownError": "Phoso e sa tsebeng."
+    },
+    "SuccessMessage": "Mošomo o bopilwe ka katlego!",
+    "ErrorMessage": "Go na le phoso mo go bopeng mošomo.",
+    "FailureMessage": "Bopelo ba mošomo bo failed: {{message}}."
+  },
+  "job": {
+    "browseJobs": "Bona Mešomo",
+    "findJob": "Fetola Mošomo",
+    "searchPlaceholder": "Batla mešomo...",
+    "exploreNow": "Hlola Jaanong",
+    "sortBy": "Ala ka",
+    "recentlyAdded": "Se e Kgotsofatšwego",
+    "highestSalary": "Mokgwa o Phahameng",
+    "lowestSalary": "Mokgwa o tlase",
+    "postJob": "Tlhopho ya Mošomo",
+    "loginToPost": "Tlhopho go kenya mošomo.",
+    "loadMore": "Rula Go Tswelela",
+
+  "blog": {
+    "imageURIRequired": "Sefoto se amanang se hlokega",
+    "titleRequired": "Sehlabelo se hlokega",
+    "contentRequired": "Ditlhopho se hlokega",
+    "readTimeRequired": "Nako ya go bala se hlokega",
+    "authorRequired": "Mongwadi se hlokega",
+    "postCreatedSuccess": "Poso ya Blog e sitwa go bopa!",
+    "postCreationFailed": "Go sitwa go bopa poso ya blog.",
+    "submitError": "Phoso e ilego e diragala ka go beile poso ya blog.",
+    "explorePopularBlogs": "Dumela Bologs ba Popolar",
+    "addInsightTips": "A o nyaka go fa tshedimosetso ka diphetho mo dirang le go fa bokgoni ka ga mekgwa ya mekgwa.",
+    "searchPlaceholder": "Batla ka sehlabelo kapa mongwadi",
+    "createNewPost": "Bopa Posso e Nngwe",
+    "noPermissionToCreate": "O na le go sitwa go bopa poso e nngwe.",
+    "loginToCreatePost": "O lokela go ngwaga go bopa poso e nngwe.",
+    "minutesRead": "Dikgwedi Tšhadi",
+    "readMore": "Bala ka mekgwa",
+    "noPostsAvailable": "A go na le poso ya blog ka nako.",
+    "createNewBlogPost": "Bopa Posso e Nngwe ya Blog",
+    "authorPlaceholder": "Mongwadi",
+    "imageURIPlaceholder": "Sefoto se amanang",
+    "blogTitle": "Sehlabelo sa Blog",
+    "readTime": "Nako ya go bala",
+    "readTimePlaceholder": "mola, 5 min",
+    "blogContent": "Ditlhopho",
+    "submit": "Beile",
+    "reset": "Sakanya",
+    "noBlogSelected": "A go na le poso ya blog e amanang."
+  } 
+},
+
+  "profileUpdated": "Profela e tsentšwe ka katlego!",
+  "dashboard": "Papanate",
+  "home": "Gae",
+  "about": "Ka ga",
+  "jobs": "Mešomo",
+  "contact": "Ikopanye",
+  "community": "Setšhaba",
+  "blog": "Blog",
+  "forum": "Foramo",
+  "events": "Ditiragalo",
+  "businesses": "Kgwebo",
+  "accountSettings": "Dipeakanyo tša Akhaonto",
+  "logout": "Tswa",
+  "updateProfile": "Ntlafatša Profela",
+  "name": "Leina",
+  "email": "E-meile",
+  "job": "Mosebetsi",
+  "address": "Aterese",
+  "cancel": "Hlakola",
+  "save": "Boloka"
+
+
 }

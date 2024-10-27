@@ -79,14 +79,29 @@
     "Close": "Pfala"
   },
   "PrivacyPolicy": {
-    "Title": "Nawu wa Vutivi",
-    "Intro": "Hi teka nhlamulo wa vutivi bya wena. Hi yona ndlela leyi hi tirhisa yona vutivi bya wena:",
-    "DataCollection": "1. Ku Kumeka Ka Vutivi: Hi hlengeleta vutivi lebyi u byi nyikaka na bya ntolovelo.",
-    "Usage": "2. Vutivi: Hi tirhisa vutivi bya wena ku antswisa switirhisiwa na vutivi.",
-    "Security": "3. Vutivi: Hi endla mitirho ya ku hlayisela vutivi bya wena.",
-    "ThirdParties": "4. Vatswari: Hi nga ku byela handle na ku pfumala ka wena.",
-    "Updates": "5. Nhlamuselo: Ku ka hi nga hundzuluxa nhlawulo hi nkarhi. Ku tirhisa swa vona swi vula ku amukela.",
-    "Contact": "Tiyisisa na hina eka info@sisonke.co.za mayelana ni swivutiso."
+    "Title": "Ndhavuko wa Vukorhokeri",
+    "Introduction": "Ndhavuko lowu wa vukorhokeri wu hlamusela ndlela leyi hi vulavulaka, hi tirhisa na hi kombisa vukorhokeri byo tanihi.",
+    "DataCollection": {
+      "Title": "Ku Hlawula Vukorhokeri",
+      "Description": "Hi hlawula vukorhokeri lebyi endlaka leswaku hi ta endla ntirho wo xixima."
+    },
+    "Usage": {
+      "Title": "Ku tirhisa",
+      "Description": "Hi tirhisa vukorhokeri bya wena ku antswisa ntlawa wa vukorhokeri."
+    },
+    "Security": {
+      "Title": "Xiyimo",
+      "Description": "Hi seketela masungulo ya tiyimo ku sireletsa vukorhokeri bya wena."
+    },
+    "ThirdParties": {
+      "Title": "Tindhawu Tother",
+      "Description": "Hi nga tirhisa vukorhokeri bya wena na tindhawu tother."
+    },
+    "Updates": {
+      "Title": "Tikhata",
+      "Description": "Hi ta xava ndhavuko lowu hi nkarhi wo tala."
+    },
+    "Contact": "U nga rhanga hi swona ku privacy@example.com."
   },
   "Subscribe": {
     "Title": "Tsarisa leswaku u kuma mahungu ya hina",
@@ -160,5 +175,210 @@
     "highestSalary": "Swikombelo leswi pfumalaka",
     "lowestSalary": "Mali leyi ehansi",
     "postJob": "Veka Ntirho"
+  },
+  "dashboard": {
+    "title": "Dashboard ya Sekhukhune",
+    "refreshButton": "Vusele Data",
+    "dataOverview": "Ndzawulo ya Data (Graph ya Circle)",
+    "userStatistics": "Swifaniso swa Vahlayi",
+    "totalUsers": "Vahlayi hinkwavo: {{count}}",
+    "activeUsers": "Vahlayi va Msebenzi: {{count}}",
+    "restrictedUsers": "Vahlayi va Nhlangano: {{count}}"
+  },
+  "error": {
+    "loadData": "Ku hava ku xava data"
+  },
+  "BlogDashboard": "Blog Dashboard",
+  "TotalBlogs": "Mablog hinkwawo: {{count}}",
+  "SearchBlogs": "Pfuna Mablog",
+  "SearchPlaceholder": "Pfuna hi ndhawu kumbe mhlawumbe",
+  "NoBlogsFound": "Ku hava mablog",
+  "ViewBlog": "Tiyisela Blog",
+  "EditBlog": "Lungisa Blog",
+  "DeleteBlog": "Senywa Blog",
+  "Close": "Cina",
+  "Save": "Sindzisa",
+  "ErrorFetchingBlogs": "Ku hava ku xava mablog. Xiya leswaku u tinga xava",
+  "BlogDeleted": "Blog yi kumiwile.",
+  "BlogUpdated": "Blog yi kumiwile.",
+  "CreateBlog": "Bopa Blog",
+  "Title": "Mugwapo",
+  "Content": "Mavonelo",
+  "Author": "Mhlawumbi",
+  "eventDashboard": "Xevent Dashboard",
+  "eventStatistics": "Swifaniso swa Xevent",
+  "totalEvents": "Xevent hinkwayo",
+  "searchEvents": "Pfuna Xevent",
+  "searchPlaceholder": "Pfuna hi ...",
+  "eventManagement": "Tlhopho ya Xevent",
+  "viewEvent": "Tiyisela Xevent",
+  "editEvent": "Lungisa Xevent",
+  "deleteEvent": "Senywa Xevent",
+  "noEventsFound": "Ku hava xevent.",
+  "event": {
+    "fetchFailed": "Ku hava ku xava xevent.",
+    "fetchError": "Phoso hi ku xava xevent. Xiya leswaku u tinga xava.",
+    "deleteSuccess": "Xevent yi kumiwile.",
+    "deleteFailed": "Ku hava ku senywa xevent.",
+    "deleteError": "Phoso hi ku senywa xevent. Xiya leswaku u tinga xava."
+  },
+  "location": "Ndzawulo",
+  "organizer": "Nhlangano",
+  "date": "Nhlangano",
+  "actions": "Tiyisela",
+  "description": "Ndzawulo",
+  "attendees": "Vahlayi",
+  "category": "Nhlangano",
+  "ticketPrice": "Nhlangano wa Mavonelo",
+  "free": "Mahala",
+  "uncategorized": "E nga ri na xiphemu",
+  "close": "Cina",
+  "save": "Sindzisa",
+  "unknown": "E nga ri na ndzimana",
+  "noDescription": "Ku hava ndzawulo.",
+  "noAttendees": "Ku hava vahlayi.",
+  "businesses": {
+    "dashboardTitle": "Business Dashboard",
+    "statistics": "Swifaniso",
+    "totalBusinesses": "Bizinesi hinkwavo: {{count}}",
+    "searchBusinesses": "Pfuna Bizinesi",
+    "searchPlaceholder": "Pfuna hi vito kumbe mhlawumbi",
+    "businessManagement": "Tlhopho ya Bizinesi",
+    "noBusinessesFound": "Ku hava bizinesi.",
+    "viewBusiness": "Tiyisela Bizinesi",
+    "editBusiness": "Lungisa Bizinesi",
+    "deleteBusiness": "Senywa Bizinesi",
+    "deleteSuccess": "Bizinesi yi kumiwile.",
+    "deleteFailed": "Ku hava ku senywa bizinesi.",
+    "deleteError": "Phoso hi ku senywa bizinesi.",
+    "updateSuccess": "Bizinesi yi kumiwile.",
+    "updateFailed": "Ku hava ku kumiwa bizinesi.",
+    "updateError": "Phoso hi ku kumiwa bizinesi.",
+    "fetchFailed": "Ku hava ku xava bizinesi.",
+    "fetchError": "Phoso hi ku xava bizinesi.",
+    "createBusiness": "Bopa Bizinesi Bya Nhlangano",
+    "address": "Ndzawulo",
+    "phone": "Nomboro ya Mowedi",
+    "email": "Imela",
+    "website": "Websaete",
+    "description": "Ndzawulo",
+    "dateCreated": "Nhlangano wa ku bopa"
+  },
+  "job": {
+    "browseJobs": "Pfuna Msebenzi",
+    "findJob": "Fumana ntirho wa wena hi mabuhosi.",
+    "loadMore": "Tlhama Mo",
+    "searchPlaceholder": "Pfuna hi ...",
+    "sortBy": "Kgetha hi",
+    "sortOptions": {
+      "recentlyAdded": "Mabuhosi ya Xiviri",
+      "highestSalary": "Mavonelo ya le henhla",
+      "lowestSalary": "Mavonelo ya le hansi"
+    },
+    "jobType": "Mugwapo wa Msebenzi",
+    "experienceLevel": "Nhlangano wa Vuhosi",
+    "location": "Ndzawulo",
+    "description": "Ndzawulo",
+    "company": "Khamphani",
+    "postedOn": "U beile eka"
+  },
+  "JobForm": {
+    "Title": "Vula Ntirho",
+    "Close": "Nhwela",
+    "Fields": {
+      "Title": "Nhlamulo",
+      "Company": "Kampani",
+      "Location": "Khuvhu",
+      "JobType": "Mhlobo wa Ntirho",
+      "Salary": "Vutihlamuleri",
+      "ExperienceLevel": "Vutihlamuleri bya Xikhongelo",
+      "Description": "Tshimi",
+      "Qualifications": "Tinxaka",
+      "Skills": "Mahlovo",
+      "ApplicationLink": "Nhlangano wa Ku Kopa"
+    },
+    "Buttons": {
+      "Cancel": "Hlamusela",
+      "Create": "Vula"
+    },
+    "Errors": {
+      "TitleRequired": "Nhlamulo yi fanele ku khomiwa.",
+      "CompanyRequired": "Kampani yi fanele ku khomiwa.",
+      "LocationRequired": "Khuvhu yi fanele ku khomiwa.",
+      "TypeRequired": "Mhlobo wa ntirho u fanele ku khomiwa.",
+      "DescriptionRequired": "Tshimi yi fanele ku khomiwa.",
+      "InvalidURL": "URL yi nga right.",
+      "UnknownError": "Phoso leyi nga known."
+    },
+    "SuccessMessage": "Ntirho wu vulwa hi ku kumiwa!",
+    "ErrorMessage": "Ku na na phoso loko ku vula ntirho.",
+    "FailureMessage": "Ku vula ntirho ku humelela: {{message}}."
+  },
+  "job": {
+    "browseJobs": "Vona Ntirho",
+    "findJob": "Fumana Ntirho",
+    "searchPlaceholder": "Funa ntirho...",
+    "exploreNow": "Tivule Ni",
+    "sortBy": "Khumula Hi",
+    "recentlyAdded": "Loko ku tsariwe",
+    "highestSalary": "Vutihlamuleri Bukulu",
+    "lowestSalary": "Vutihlamuleri Buncu",
+    "postJob": "Teka Ntirho",
+    "loginToPost": "Tivule leswaku u teka ntirho.",
+    "loadMore": "Tivula Kakhulu",
+
+
+  "blog": {
+    "imageURIRequired": "Xifaniso xihlanganyela",
+    "titleRequired": "Mugwapo wa Blog i ya xitlhavela",
+    "contentRequired": "Mavonelo i ya xitlhavela",
+    "readTimeRequired": "Nhlangano ya ku bala i ya xitlhavela",
+    "authorRequired": "Mhlawumbi i ya xitlhavela",
+    "postCreatedSuccess": "Blog i kumiwile!",
+    "postCreationFailed": "Ku hava ku bopa blog.",
+    "submitError": "Phoso yi kumiwile hi ku beile blog.",
+    "explorePopularBlogs": "Hanya Mablog ya Xifani",
+    "addInsightTips": "U lava ku fa tshedimosetso hi ku byela ka makhombo no fa vukhono hi nkambiso.",
+    "searchPlaceholder": "Pfuna hi mugwapo kumbe mhlawumbi",
+    "createNewPost": "Bopa Xikombiso Xitsongo",
+    "noPermissionToCreate": "U na na leswaku u nga bopi xikombiso xitsongo.",
+    "loginToCreatePost": "U fanele ku fikele ku bopa xikombiso xitsongo.",
+    "minutesRead": "Mintlhontlho",
+    "readMore": "Bala ngopfu",
+    "noPostsAvailable": "Ku hava xikombiso xa blog hi nkarhi.",
+    "createNewBlogPost": "Bopa Xikombiso Xitsongo xa Blog",
+    "authorPlaceholder": "Mhlawumbi",
+    "imageURIPlaceholder": "Xifaniso xihlanganyela",
+    "blogTitle": "Mugwapo wa Blog",
+    "readTime": "Nhlangano ya ku bala",
+    "readTimePlaceholder": "mola, 5 mintlhontlho",
+    "blogContent": "Mavonelo",
+    "submit": "Beile",
+    "reset": "Nghenisa",
+    "noBlogSelected": "Ku hava blog ya xihlanganyela."
   }
+},
+
+  "profileUpdated": "Xivumbeko xa wena xi hlaveleke!",
+  "dashboard": "Xiphephana",
+  "home": "Ekaya",
+  "about": "Hi mayelana na",
+  "jobs": "Mitirho",
+  "contact": "Tivisa",
+  "community": "Nhlangano",
+  "blog": "Blog",
+  "forum": "Foramu",
+  "events": "Miholo",
+  "businesses": "Mabindzu",
+  "accountSettings": "Swiletelo Swa Akhawunti",
+  "logout": "Huma",
+  "updateProfile": "Pfuxeta Profayela",
+  "name": "Vito",
+  "email": "E-mail",
+  "job": "Misebenzi",
+  "address": "Adirese",
+  "cancel": "Hoxisa",
+  "save": "Hlayisa"
+
+
 }

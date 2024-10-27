@@ -31,6 +31,7 @@ import Navigation from "../components/sections/Navigation";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { styled } from "@mui/system"; 
 import BusinessForm from "./new/businessForm"; 
+import { useTranslation } from "react-i18next"; 
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -86,6 +87,7 @@ const Icon = styled("span")({
 
 // Business Page
 const Business = () => {
+  const { t } = useTranslation(); 
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -122,8 +124,8 @@ const Business = () => {
     setIsModalOpen(false);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div>{t("business.loading")}</div>;
+  if (error) return <div>{t("business.error", { error })}</div>;
 
   const filteredBusinesses = businesses.filter((business) =>
     business.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -133,7 +135,6 @@ const Business = () => {
     <div>
       <Navigation />
       <Container>
-        
         <Box
           sx={{
             py: 10,
@@ -157,7 +158,7 @@ const Business = () => {
                 textAlign: "center",
               }}
             >
-              Discover Local Businesses
+              {t("business.title")} 
             </Typography>
             <Typography
               variant="subtitle1"
@@ -168,14 +169,12 @@ const Business = () => {
                 textAlign: "center",
               }}
             >
-              Find the best services and products in your community, <br />
-              or search for a specific business by name.
+              {t("business.subtitle")} 
             </Typography>
             <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-
               <TextField
                 variant="outlined"
-                placeholder="Search" 
+                placeholder={t("business.searchPlaceholder")} 
                 InputProps={{
                   sx: { borderRadius: "16px", width: "100%" },
                   startAdornment: (
@@ -193,7 +192,7 @@ const Business = () => {
         <Container maxWidth="lg" sx={{ mt: 5, px: 2 }}>
           {canPostABusiness ? (
             <Button
-              onClick={handleOpenModal} // Opens modal
+              onClick={handleOpenModal} 
               color="primary"
               sx={{
                 mb: 2,
@@ -205,7 +204,7 @@ const Business = () => {
                 "&:hover": { backgroundColor: "#5A52D5" },
               }}
             >
-              Post a Business
+              {t("business.postBusinessButton")} 
             </Button>
           ) : (
             <Typography
@@ -213,72 +212,68 @@ const Business = () => {
               sx={{ marginBottom: 2, color: "#6c63ff" }}
             >
               {user
-                ? "You don't have permission to create a new business."
-                : "You need to login to create a new business."}
+                ? t("business.permissionError.noPermission") 
+                : t("business.permissionError.loginRequired")} 
             </Typography>
           )}
 
           {/* Modal for Business Form */}
           <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
-           
-              <IconButton
-                aria-label="close"
-                onClick={handleCloseModal}
-                sx={{
-                  position: "absolute",
-                  right: 8,
-                  top: 8,
-                  color: (theme) => theme.palette.grey[500],
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseModal}
+              sx={{
+                position: "absolute",
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
             <DialogContent>
-              <BusinessForm /> {/* Display the BusinessForm component */}
+              <BusinessForm />
             </DialogContent>
-            {/* Removed the DialogActions section */}
           </Dialog>
 
-          {/* Business List */}
           <Grid container spacing={2}>
             {filteredBusinesses.map((business) => (
-              <Grid item xs={12} sm={6} md={4} key={business._id}>
-                <a
+              <Grid item key={business.id} xs={12} sm={6} md={4}>
+                 <a
                   href={business.website}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ textDecoration: "none" }}
                 >
-                  <StyledCard>
-                    <StyledCardMedia
-                      component="img"
-                      image={business.image}
-                      alt={business.name}
-                    />
-                    <CardContent>
-                      <Typography variant="h5" sx={{ color: "#000" }}>
-                        {business.name}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                <StyledCard>
+                  <StyledCardMedia
+                    component="img"
+                    image={business.image}
+                    alt={business.name}
+                  />
+                  <CardContent>
+                  <Typography variant="h5" sx={{ color: "#000" }}>
+                     {business.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
                         {business.description}
                       </Typography>
-                      <IconBox>
-                        <Icon>
-                          <LocationOnIcon />
-                        </Icon>
-                        <Typography variant="body2">
-                          {business.address}, {business.city}
-                        </Typography>
-                      </IconBox>
+                    <IconBox>
+                      <Icon>
+                        <LocationOnIcon />
+                      </Icon>
+                      <Typography variant="body2">
+                      {business.address}, {business.city}
+                      </Typography>
+                    </IconBox>
                     </CardContent>
-                      {/* Discount Overlay */}
+                      
                       {business.discount && (
                       <DiscountOverlay>
                         <Typography variant="h6">{business.discount}</Typography>
                       </DiscountOverlay>
                     )}
-                  </StyledCard>
+                </StyledCard>
                 </a>
               </Grid>
             ))}

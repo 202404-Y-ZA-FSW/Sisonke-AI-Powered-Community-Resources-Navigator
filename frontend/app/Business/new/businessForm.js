@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const StyledCard = styled(Card)({
   background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
@@ -52,6 +53,7 @@ const industries = [
 ];
 
 export default function BusinessForm() {
+  const { t } = useTranslation(); 
   const [businessName, setBusinessName] = useState("");
   const [businessEmail, setBusinessEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -70,54 +72,54 @@ export default function BusinessForm() {
     let errorObj = {};
 
     if (!businessName) {
-      errorObj.name = "Business name is required";
+      errorObj.name = t("businessForm.errors.name"); 
       valid = false;
     }
 
     if (!businessEmail) {
-      errorObj.email = "Email is required";
+      errorObj.email = t("businessForm.errors.email");
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(businessEmail)) {
-      errorObj.email = "Invalid email address";
+      errorObj.email = t("businessForm.errors.invalidEmail");
       valid = false;
     }
 
     if (!phone) {
-      errorObj.phone = "Phone is required";
+      errorObj.phone = t("businessForm.errors.phone"); 
       valid = false;
     }
 
     if (!address) {
-      errorObj.address = "Address is required";
+      errorObj.address = t("businessForm.errors.address"); 
       valid = false;
     }
 
     if (!city) {
-      errorObj.city = "City is required";
+      errorObj.city = t("businessForm.errors.city");
       valid = false;
     }
 
     if (!industry) {
-      errorObj.industry = "Industry is required";
+      errorObj.industry = t("businessForm.errors.industry"); 
       valid = false;
     }
 
     if (!description) {
-      errorObj.description = "Description is required";
-      valid = false;
+      errorObj.description = t("businessForm.errors.description");
     }
 
     if (!image) {
-      errorObj.image = "Image URL is required";
+      errorObj.image = t("businessForm.errors.image");
       valid = false;
     }
 
     if (!logo) {
-      errorObj.logo = "Logo URL is required";
+      errorObj.logo = t("businessForm.errors.logo");
       valid = false;
     }
+    
     if (!owner) {
-      errorObj.owner = "Owner is required";
+      errorObj.owner = t("businessForm.errors.owner");
       valid = false;
     }
 
@@ -127,8 +129,6 @@ export default function BusinessForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
-
     if (!validateForm()) {
       return;
     }
@@ -145,7 +145,7 @@ export default function BusinessForm() {
         website,
         image,
         logo,
-        owner: userId,
+        owner,
       });
       console.log("Response:", response.data);
 
@@ -165,7 +165,7 @@ export default function BusinessForm() {
       console.error("Error submitting the form", error);
       setErrors((prevErrors) => ({
         ...prevErrors,
-        general: "Failed to submit. Please try again.",
+        general: t("businessForm.errors.general"),
       }));
     }
   };
@@ -174,14 +174,14 @@ export default function BusinessForm() {
     <StyledCard>
       <CardContent>
         <Typography variant="h5" gutterBottom>
-          Register Your Business
+          {t("businessForm.title")} 
         </Typography>
 
         <form onSubmit={handleSubmit}>
           {errors.general && <Alert severity="error">{errors.general}</Alert>}
 
           <FormField
-            label="Business Name"
+            label={t("businessForm.labels.businessName")}
             value={businessName}
             onChange={(e) => setBusinessName(e.target.value)}
             fullWidth
@@ -190,7 +190,7 @@ export default function BusinessForm() {
           />
 
           <FormField
-            label="Email"
+            label={t("businessForm.labels.email")}
             type="email"
             value={businessEmail}
             onChange={(e) => setBusinessEmail(e.target.value)}
@@ -200,7 +200,7 @@ export default function BusinessForm() {
           />
 
           <FormField
-            label="Phone"
+            label={t("businessForm.labels.phone")} 
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             fullWidth
@@ -209,7 +209,7 @@ export default function BusinessForm() {
           />
 
           <FormField
-            label="Address"
+            label={t("businessForm.labels.address")}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             fullWidth
@@ -218,7 +218,7 @@ export default function BusinessForm() {
           />
 
           <FormField
-            label="City"
+            label={t("businessForm.labels.city")} 
             value={city}
             onChange={(e) => setCity(e.target.value)}
             fullWidth
@@ -228,7 +228,7 @@ export default function BusinessForm() {
 
           <FormField
             select
-            label="Industry"
+            label={t("businessForm.labels.industry")} 
             value={industry}
             onChange={(e) => setIndustry(e.target.value)}
             fullWidth
@@ -243,7 +243,7 @@ export default function BusinessForm() {
           </FormField>
 
           <FormField
-            label="Business Description"
+            label={t("businessForm.labels.description")}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             fullWidth
@@ -254,14 +254,14 @@ export default function BusinessForm() {
           />
 
           <FormField
-            label="Website"
+            label={t("businessForm.labels.website")}
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
             fullWidth
           />
 
           <FormField
-            label="Image URL"
+            label={t("businessForm.labels.image")}
             value={image}
             onChange={(e) => setImage(e.target.value)}
             fullWidth
@@ -270,15 +270,16 @@ export default function BusinessForm() {
           />
 
           <FormField
-            label="Logo URL"
+            label={t("businessForm.labels.logo")}
             value={logo}
             onChange={(e) => setLogo(e.target.value)}
             fullWidth
             error={!!errors.logo}
             helperText={errors.logo}
           />
+          
           <FormField
-            label="Owner"
+            label={t("businessForm.labels.owner")} 
             value={owner}
             onChange={(e) => setOwner(e.target.value)}
             fullWidth
@@ -288,7 +289,7 @@ export default function BusinessForm() {
 
           <FooterContainer>
             <Button type="submit" variant="contained" color="primary">
-              Submit
+              {t("businessForm.submit")} 
             </Button>
           </FooterContainer>
         </form>

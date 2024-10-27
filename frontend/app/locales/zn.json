@@ -79,14 +79,29 @@
     "Close": "Vala"
   },
   "PrivacyPolicy": {
-    "Title": "Inqubomgomo Yobumfihlo",
-    "Intro": "Sihlonipha ubufihlo benu. Nansi indlela esiphatha ngayo idatha yakho:",
-    "DataCollection": "1. Ukuqoqa Idatha: Siqoqa ulwazi oluhlinzekwayo kanye nedatha yokusetshenziswa.",
-    "Usage": "2. Ukusetshenziswa: Sebenzisa ulwazi lwakho ukuthuthukisa ipulatifomu nezinsizakalo.",
-    "Security": "3. Ukuphepha: Sisebenzisa izinyathelo ukuze sivikele idatha yakho.",
-    "ThirdParties": "4. Abanye: Asabeli idatha yakho ngaphandle kwemvume.",
-    "Updates": "5. Izibuyekezo: Singashintsha le nqubomgomo. Ukusebenzisa kuqhubeka kusho ukuvumelana.",
-    "Contact": "Xhumana nathi ku info@sisonke.co.za uma unemibuzo."
+    "Title": "Inqubomgomo Yokuvikeleka",
+    "Introduction": "Le nqubomgomo yokuvikeleka ichaza ukuthi siqoqana kanjani, siyisebenzisa kanjani, futhi siyivikelanisa kanjani.",
+    "DataCollection": {
+      "Title": "Ukuqoqwa Kwemininingwane",
+      "Description": "Siqoqa imininingwane yomuntu ukuze sinikeze izinsiza ez better."
+    },
+    "Usage": {
+      "Title": "Ukusebenzisa",
+      "Description": "Sisebenzisa imininingwane yakho ukuze sithuthukise ulwazi lomsebenzisi."
+    },
+    "Security": {
+      "Title": "Ukuvikeleka",
+      "Description": "Sisebenzisa izinyathelo zokuvikela ukuvikela imininingwane yakho."
+    },
+    "ThirdParties": {
+      "Title": "Abanye Abantu",
+      "Description": "Singabelana ngemininingwane yakho nabanye abantu."
+    },
+    "Updates": {
+      "Title": "Izibuyekezo",
+      "Description": "Sizobuyekeza le nqubomgomo ngezikhathi ezithile."
+    },
+    "Contact": "Uma unemibuzo, sicela uxhumane nathi ku privacy@example.com."
   },
   "Subscribe": {
     "Title": "Bhalisela i-newsletter yethu",
@@ -162,5 +177,203 @@
     "highestSalary": "Holo Ephezulu",
     "lowestSalary": "Holo Eliphansi",
     "postJob": "Vhalela Mushumo"
+  },
+  "dashboard": {
+    "title": "I-Dashboard ye-Sekhukhune",
+    "refreshButton": "Phinda Uthole Idatha",
+    "dataOverview": "Ukubuka Idatha (I-Circle Graph)",
+    "userStatistics": "Izibalo Zabasebenzisi",
+    "totalUsers": "Abasebenzisi Abaningi: {{count}}",
+    "activeUsers": "Abasebenzisi Abasebenzayo: {{count}}",
+    "restrictedUsers": "Abasebenzisi Abavunyelwe: {{count}}"
+  },
+  "error": {
+    "loadData": "Kukhona iphutha ekutholeni idatha"
+  },
+  "BlogDashboard": "I-Blog Dashboard",
+  "TotalBlogs": "Amabhulogi Onke: {{count}}",
+  "SearchBlogs": "Sesha Amabhulogi",
+  "SearchPlaceholder": "Sesha ngendawo noma umqondo",
+  "NoBlogsFound": "Awukho amabhulogi",
+  "ViewBlog": "Bheka Ibhulogi",
+  "EditBlog": "Hlela Ibhulogi",
+  "DeleteBlog": "Susa Ibhulogi",
+  "Close": "Vala",
+  "Save": "Gcine",
+  "ErrorFetchingBlogs": "Kukhona iphutha ekutholeni amabhulogi. Bheka ukuthi ungathola yini",
+  "BlogDeleted": "Ibhulogi isuswe.",
+  "BlogUpdated": "Ibhulogi ibuyekeziwe.",
+  "CreateBlog": "Dala Ibhulogi",
+  "Title": "Isihloko",
+  "Content": "Okuqukethwe",
+  "Author": "Umbhali",
+  "eventDashboard": "I-Event Dashboard",
+  "eventStatistics": "Izibalo Zezenzakalo",
+  "totalEvents": "Izenzakalo Zonke",
+  "searchEvents": "Sesha Izenzakalo",
+  "searchPlaceholder": "Sesha ng ...",
+  "eventManagement": "Ukuphathwa Kwezaziso",
+  "noEventsFound": "Awukho umcimbi.",
+  "event": {
+    "fetchFailed": "Kukhona iphutha ekutholeni umcimbi.",
+    "fetchError": "Iphutha ekutholeni umcimbi. Bheka ukuthi ungathola yini.",
+    "deleteSuccess": "Umcimbi ususiwe.",
+    "deleteFailed": "Kukhona iphutha ekususeni umcimbi.",
+    "deleteError": "Iphutha ekususeni umcimbi. Bheka ukuthi ungathola yini."
+  },
+  "location": "Indawo",
+  "organizer": "Umphakathi",
+  "date": "Usuku",
+  "actions": "Izinyathelo",
+  "description": "Incazelo",
+  "attendees": "Ababekhona",
+  "category": "Isigaba",
+  "ticketPrice": "Intengo Yethikithi",
+  "free": "Mahhala",
+  "uncategorized": "Ayikabikho isigaba",
+  "close": "Vala",
+  "save": "Gcine",
+  "unknown": "Ayaziwa",
+  "noDescription": "Awukho incazelo.",
+  "noAttendees": "Awukho ababekhona.",
+  "businesses": {
+    "dashboardTitle": "I-Business Dashboard",
+    "statistics": "Izibalo",
+    "totalBusinesses": "Amabhizinisi Onke: {{count}}",
+    "searchBusinesses": "Sesha Amabhizinisi",
+    "searchPlaceholder": "Sesha ngabo bonke noma umqondo",
+    "businessManagement": "Ukuphathwa Kwamabhizinisi",
+    "noBusinessesFound": "Awukho amabhizinisi.",
+    "viewBusiness": "Bheka Ibhizinisi",
+    "editBusiness": "Hlela Ibhizinisi",
+    "deleteBusiness": "Susa Ibhizinisi",
+    "deleteSuccess": "Ibhizinisi isuswe.",
+    "deleteFailed": "Kukhona iphutha ekususeni ibhizinisi.",
+    "deleteError": "Iphutha ekususeni ibhizinisi.",
+    "updateSuccess": "Ibhizinisi ibuyekeziwe.",
+    "updateFailed": "Kukhona iphutha ekubuyekezeni ibhizinisi.",
+    "updateError": "Iphutha ekubuyekezeni ibhizinisi.",
+    "fetchFailed": "Kukhona iphutha ekutholeni ibhizinisi.",
+    "fetchError": "Iphutha ekutholeni ibhizinisi.",
+    "createBusiness": "Dala Ibhizinisi",
+    "address": "Ikheli",
+    "phone": "Ucingo",
+    "email": "I-imeyili",
+    "website": "I-website",
+    "description": "Incazelo",
+    "dateCreated": "Usuku Lokudala"
+  },
+  "job": {
+    "browseJobs": "Bheka Imisebenzi",
+    "findJob": "Thola umsebenzi wakho.",
+    "loadMore": "Thola Okuningi",
+    "searchPlaceholder": "Sesha ng ...",
+    "sortBy": "Hlukanisa Nge",
+    "sortOptions": {
+      "recentlyAdded": "Ophume Emuva",
+      "highestSalary": "Imali Ephakeme",
+      "lowestSalary": "Imali Ephansi"
+    },
+    "jobType": "Uhlobo Lomsebenzi",
+    "experienceLevel": "Izinga Lokuhlangenwe Nakho",
+    "location": "Indawo",
+    "description": "Incazelo",
+    "company": "Inkampani",
+    "postedOn": "Iphume Ngalesi"
+  },
+  "JobForm": {
+    "Title": "Dala Umsebenzi",
+    "Close": "Vala",
+    "Fields": {
+      "Title": "Isihloko",
+      "Company": "Inkampani",
+      "Location": "Indawo",
+      "JobType": "Uhlobo Lomsebenzi",
+      "Salary": "Umholo",
+      "ExperienceLevel": "Izinga Lokuhlangenwe Nakho",
+      "Description": "Incazelo",
+      "Qualifications": "Izifundo",
+      "Skills": "Amakhono",
+      "ApplicationLink": "I-Links Yokufaka Isicelo"
+    },
+    "Buttons": {
+      "Cancel": "Khansela",
+      "Create": "Dala"
+    },
+    "Errors": {
+      "TitleRequired": "Isihloko sidinga ukufakwa.",
+      "CompanyRequired": "Inkampani idinga ukufakwa.",
+      "LocationRequired": "Indawo idinga ukufakwa.",
+      "TypeRequired": "Uhlobo lomsebenzi ludinga ukufakwa.",
+      "DescriptionRequired": "Incazelo idinga ukufakwa.",
+      "InvalidURL": "I-URL engalungile."
+    },
+    "SuccessMessage": "Umsebenzi udalwe ngempumelelo!",
+    "ErrorMessage": "Kwakukhona iphutha ekudaleni umsebenzi.",
+    "FailureMessage": "Ukwakha umsebenzi kwahluleka: {{message}}",
+    "UnknownError": "Iphutha elingaziwa."
+  },
+  "job": {
+    "browseJobs": "Bheka Imisebenzi",
+    "findJob": "Thola Umsebenzi",
+    "searchPlaceholder": "Sesha imisebenzi...",
+    "exploreNow": "Hlola Manje",
+    "sortBy": "Hlela Ngendlela",
+    "recentlyAdded": "Okwengeziwe Muva",
+    "highestSalary": "Umholo Ophezulu",
+    "lowestSalary": "Umholo Ophansi",
+    "postJob": "Beka Umsebenzi",
+    "loginToPost": "Ngena ngemvume ukuze ubeke umsebenzi.",
+    "loadMore": "Layisha Okuningi",
+
+  "blog": {
+    "imageURIRequired": "Umfanekiso udingekile",
+    "titleRequired": "Isihloko seBhlog sidinga",
+    "contentRequired": "Okuqukethwe kudingeka",
+    "readTimeRequired": "Isikhathi sokufunda sidinga",
+    "authorRequired": "Umbhali udingeka",
+    "postCreatedSuccess": "Ibhulogi idalwe!",
+    "postCreationFailed": "Kukhona iphutha ekudaleni ibhulogi.",
+    "submitError": "Iphutha lidalwe ekubhaliseni ibhulogi.",
+    "explorePopularBlogs": "Bheka Amabhulogi Aphezulu",
+    "addInsightTips": "Uphinde ucacise uhlobo lwengqondo.",
+    "searchPlaceholder": "Sesha ngisihloko noma umqondo",
+    "createNewPost": "Dala Isithombe Esisha",
+    "noPermissionToCreate": "Unelungelo lokuthi ungadali isithombe.",
+    "loginToCreatePost": "Uphakathi kumele ungene ukuze udale isithombe.",
+    "minutesRead": "Imizuzu",
+    "readMore": "Funda Ngaphezulu",
+    "noPostsAvailable": "Awukho amaphosthu.",
+    "createNewBlogPost": "Dala Isithombe Esisha seBhlog",
+    "authorPlaceholder": "Umbhali",
+    "imageURIPlaceholder": "Umfanekiso udingeka",
+    "contentPlaceholder": "Okuqukethwe",
+    "tagsPlaceholder": "Izimpawu",
+    "submitButton": "Thumela",
+    "cancelButton": "Vala"
   }
+},
+
+  "profileUpdated": "Iphrofayela ibuyekeziwe ngempumelelo!",
+  "dashboard": "Ibhodi lezinzuzo",
+  "home": "Ikhaya",
+  "about": "Mayelana",
+  "jobs": "Imisebenzi",
+  "contact": "Xhumana",
+  "community": "Umphakathi",
+  "blog": "Ibhulogi",
+  "forum": "Iforamu",
+  "events": "Imicimbi",
+  "businesses": "Amabhizinisi",
+  "accountSettings": "Izilungiselelo Ze-akhawunti",
+  "logout": "Phuma",
+  "updateProfile": "Buyekeza Iphrofayela",
+  "name": "Igama",
+  "email": "I-imeyili",
+  "job": "Umsebenzi",
+  "address": "Ikheli",
+  "cancel": "Khansela",
+  "save": "Londoloza"
+
+
 }

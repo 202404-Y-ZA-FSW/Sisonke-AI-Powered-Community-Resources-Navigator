@@ -1,161 +1,153 @@
 {
   "Navbar": {
     "Home": "Tuis",
-    "About": "Oor",
-    "Jobs": "Werksgeleenthede",
+    "About": "Oor Ons",
+    "Jobs": "Werk",
     "Contact": "Kontak",
     "Community": "Gemeenskap",
     "Blog": "Blog",
     "Forum": "Forum",
-    "Events": "Geledere",
-    "Business": "Besighede",
+    "Events": "Geleenthede",
+    "Business": "Besigheid",
     "Login": "Teken In",
     "Register": "Registreer"
   },
-  
   "HeroSection": {
-    "Title": "Ontdek essensiële plaaslike ondersteuning en geleenthede",
-    "Subtitle": "Verken 'n saamgestelde versameling plaaslike hulpbronne wat aangepas is om aan jou gemeenskap se unieke behoeftes te voldoen.",
+    "Title": "Ontdek noodsaaklike plaaslike ondersteuning en geleenthede",
+    "Subtitle": "Verken 'n versorgde versameling plaaslike hulpbronne wat aangepas is om aan jou gemeenskap se unieke behoeftes te voldoen.",
     "Users": "Gebruikers",
-    "JobsCreated": "Geleenthede geskep",
+    "JobsCreated": "Werk Geskep",
     "Businesses": "Besighede",
+    "Forums": "Forums",
     "SupportedBy": "Ons word ondersteun",
-    "SupportSubtitle": "Deur plaaslike regerings, nasionale jeugagentskappe, en die private sektor."
+    "SupportSubtitle": "Deur plaaslike regerings, nasionale jeugagentskappe, en die privaatsektor."
   },
-
   "Blogs": {
-    "LatestNews": "Nuus oor loopbaanadvies",
-    "Insight": "Voeg insig by om loopbaanontwikkeling te bevorder en kyk na wenke oor maatskappy werksgeleenthede",
+    "LatestNews": "Nuutste nuus oor loopbaanadvies",
+    "Insight": "Voeg insig by om loopbaangroei te bevorder en kyk na wenke oor maatskappy werksgeleenthede",
     "MinRead": "min Lees",
     "ReadMore": "Lees Meer",
-    "BrowseAll": "Blaai Deur Alle",
-    "BlogTitle": "Blog Titel: {{title}}",
-    "BlogContent": "Blog Inhoud: {{content}}"
+    "BrowseAll": "Blaai Deur Alles"
   },
-
-  "Blog": {
-    "Author": "Auteur",
-    "Date": "Datum",
-    "ReadMore": "Lees Meer",
-    "NoContent": "Geen inhoud beskikbaar",
-    "Loading": "Laad...",
-    "Error": "Fout: {{message}}"
-  },
-
   "Footer": {
     "Address": "143 Wesstraat, Sandown, Sandton, Gauteng, Suid-Afrika",
     "Community": "Gemeenskap",
     "Blog": "Blog",
     "Forum": "Forum",
-    "Events": "Gebeure",
+    "Events": "Geleenthede",
     "Businesses": "Besighede",
     "Company": "Maatskappy",
     "Home": "Tuis",
     "AboutUs": "Oor Ons",
     "Jobs": "Werk",
-    "FAQs": "Vrae",
+    "FAQs": "Algemene Vrae",
     "Support": "Ondersteuning",
     "ContactUs": "Kontak Ons",
     "PrivacyPolicy": "Privaatheidsbeleid",
-    "TermsOfService": "Diensbepalings"
+    "TermsOfService": "Diensvoorwaardes"
   },
-
   "Jobs": {
     "Title": "Verken die nuutste werksgeleenthede",
-    "Subtitle": "Ontdek werk wat die relevantste vir jou is volgens ervaringsvlak, salaris, ligging, werksoort, ens.",
-    "SearchPlaceholder": "Soek Werk Pos of Maatskappy",
-    "SortBy": "Sorteer Op",
+    "Subtitle": "Ontdek werk wat die mees relevant is vir jou volgens ervaringsvlak, salaris, ligging, werktipe, ens.",
+    "SearchPlaceholder": "Soek Werksposisie of Maatskappy",
+    "SortBy": "Sorteer Volgens",
     "RecentlyAdded": "Onlangs Bygevoeg",
     "HighestSalary": "Hoogste Salaris",
     "LowestSalary": "Laagste Salaris",
-    "Loading": "Laaigoed van werksgeleenthede...",
-    "BrowseAll": "Kyk Alle"
+    "Loading": "Laai werk...",
+    "BrowseAll": "Blaai Deur Alles"
   },
-
   "JobCard": {
-    "JobTitle": "Werk Titel",
+    "JobTitle": "Werkstitel",
     "Company": "Maatskappy",
     "Location": "Ligging",
     "Experience": "Ervaring",
-    "JobType": "Werk Soort",
+    "JobType": "Werktipe",
     "Salary": "Salaris",
     "NoSalary": "R0"
   },
-
   "Events": {
-    "ExploreEvents": "Verken die wonderlike gebeurtenisse wat in jou omgewing gebeur",
-    "EventsInfo": "Gebeurtenisse word gedeel deur plaaslike besighede, organisasies en gemeenskapsgroepe.",
+    "ExploreEvents": "Verken die wonderlike geleenthede wat in jou area plaasvind",
+    "EventsInfo": "Geleenthede word gedeel deur plaaslike besighede, organisasies, en gemeenskapsgroepe.",
     "Date": "Datum",
     "Location": "Ligging",
     "Time": "Tyd",
-    "Close": "Maak toe"
+    "Close": "Sluit"
   },
-
   "Common": {
-    "FailedToLoadEvents": "Dit het misluk om gebeurtenisse te laai. Probeer asseblief weer later."
+    "FailedToLoadEvents": "Kon nie geleenthede laai nie. Probeer asseblief weer later."
   },
-
   "FAQs": {
-    "Title": "Gereelde vrae",
-    "Subtitle": "As u vrae nie hier beantwoord word nie, kontak gerus ons ondersteuning vir hulp.",
-    "LoadError": "Kon nie die vrae laai nie. Probeer asseblief weer later."
+    "Title": "Algemene Vrae",
+    "Subtitle": "As jou vrae nie hier beantwoord word nie, moenie huiwer om ons ondersteuning te kontak vir hulp nie.",
+    "LoadError": "Kon nie algemene vrae laai nie. Probeer asseblief weer later."
   },
-
   "PrivacyPolicy": {
     "Title": "Privaatheidsbeleid",
-    "Intro": "Ons waardeer jou privaatheid. Hier is hoe ons jou data hanteer:",
-    "DataCollection": "1. Data-insameling: Ons verskaf inligting wat jy gee en gebruiksdata.",
-    "Usage": "2. Gebruik: Ons gebruik jou inligting om die platform en dienste te verbeter.",
-    "Security": "3. Sekuriteit: Ons neem stappe om jou data te beskerm.",
-    "ThirdParties": "4. Derde partye: Ons deel nie jou data sonder toestemming nie.",
-    "Updates": "5. Opdaterings: Ons kan hierdie beleid verander. Voortgesette gebruik beteken aanvaarding.",
-    "Contact": "Kontak ons by info@sisonke.co.za vir enige vrae."
+    "Introduction": "Hierdie Privaatheidsbeleid beskryf hoe ons jou inligting versamel, gebruik en beskerm.",
+    "DataCollection": {
+      "Title": "Data Versameling",
+      "Description": "Ons versamel persoonlike data om beter dienste te lewer."
+    },
+    "Usage": {
+      "Title": "Gebruik",
+      "Description": "Ons gebruik jou data om gebruikerservaring te verbeter."
+    },
+    "Security": {
+      "Title": "Sekuriteit",
+      "Description": "Ons implementeer sekuriteitsmaatreëls om jou data te beskerm."
+    },
+    "ThirdParties": {
+      "Title": "Derde Partye",
+      "Description": "Ons mag jou inligting deel met derdeparty vennote."
+    },
+    "Updates": {
+      "Title": "Opdaterings",
+      "Description": "Ons sal hierdie beleid van tyd tot tyd opdateer."
+    },
+    "Contact": "Vir navrae, kontak ons asseblief by privacy@example.com."
   },
-
   "Subscribe": {
     "Title": "Teken in op ons nuusbrief",
-    "Description": "Word ingelig oor nuwe werksgeleenthede, geleenthede en nuwe hulpbronne wat daagliks in jou gemeenskapforums en blogs geplaas word.",
+    "Description": "Bly ingelig oor nuwe werk, geleenthede, en nuwe hulpbronne wat daagliks in jou gemeenskapsforums en blogs geplaas word.",
     "ButtonText": "Teken Nou In",
-    "ModalTitle": "Sisonke Teken In",
+    "ModalTitle": "Sisonke Inskrywing",
     "NamePlaceholder": "Naam",
     "EmailPlaceholder": "E-pos",
     "LocationPlaceholder": "Ligging",
     "SubmitButtonText": "Dien In",
     "Errors": {
-      "NameRequired": "Naam is vereis",
-      "EmailRequired": "E-pos is vereis",
+      "NameRequired": "Naam word vereis",
+      "EmailRequired": "E-pos word vereis",
       "InvalidEmail": "E-pos is ongeldig",
-      "LocationRequired": "Ligging is vereis"
+      "LocationRequired": "Ligging word vereis"
     },
-    "SuccessMessage": "Teken in was suksesvol! Dankie dat jy ingeteken het.",
-    "ErrorMessage": "Teken in het misluk. Probeer asseblief weer.",
-    "ErrorOccurred": "Daar het 'n fout opgetree. Probeer asseblief weer."
+    "SuccessMessage": "Inskrywing suksesvol! Dankie vir jou inskrywing.",
+    "ErrorMessage": "Inskrywing het misluk. Probeer asseblief weer.",
+    "ErrorOccurred": "'n Fout het voorgekom. Probeer asseblief weer."
   },
-
   "Services": {
     "Title": "Wat jy kan doen en kry op ons platform",
-    "Subtitle": "Of jy nou op soek is na ondersteuning, geleenthede, en verbintenisse",
+    "Subtitle": "Of jy nou ondersteuning, geleenthede, of verbindings soek",
     "Community": "Gemeenskap",
-    "CommunityDescription": "Verbind met soortgelyke individue in jou gemeenskap, deel hulpbronne, en bly verbind.",
+    "CommunityDescription": "Verbind met gelyke individue in jou gemeenskap, deel hulpbronne, en bly verbind.",
     "Events": "Gemeenskapsgeleenthede",
-    "EventsDescription": "Mis nooit belangrike gemeenskapsgeleenthede en netwerkgeleenthede nie.",
-    "Jobs": "Werk en Leerplek",
-    "JobsDescription": "Ons NGO's help jou om aansoek te doen vir werk, meer oor loopbane te leer, en jou vaardighede te ontwikkel.",
+    "EventsDescription": "Moenie belangrike gemeenskapsgeleenthede en netwerkgeleenthede misloop nie.",
+    "Jobs": "Werk & Leerlingskappe",
+    "JobsDescription": "Ons NRO's help jou om aansoek te doen vir werk, meer te leer oor loopbane, en jou vaardighede te ontwikkel.",
     "Communication": "Kommunikasie",
-    "CommunicationDescription": "Ons gebruik gemeenskapsblogs en -forums om idees te deel, vrae te vra, en met ander te verbind.",
+    "CommunicationDescription": "Ons gebruik gemeenskapsblogs en forums om idees te deel, vrae te vra, en met ander te verbind.",
     "GetStarted": "Begin"
   },
-
   "Hero": {
-    "GetInTouch": "Kontak ons vir meer inligting",
+    "GetInTouch": "Kom in aanraking met ons vir meer inligting",
     "HelpMessage": "As jy hulp nodig het of 'n vraag het, is ons hier vir jou"
   },
-
   "ContactPage": {
-    "ContactInformation": "Kontakbesonderhede",
-    "FormInstruction": "Vul die vorm in en ons span sal binne 24 uur by u terugkom.",
+    "ContactInformation": "Kontakinligting",
+    "FormInstruction": "Vul die vorm in en ons span sal binne 24 uur terugkom na jou toe.",
     "InvalidEmail": "Voer asseblief 'n geldige e-posadres in",
-    "ShortMessage": "Boodskap moet minstens 10 karakters lank wees",
+    "ShortMessage": "Boodskap moet ten minste 10 karakters lank wees",
     "SuccessMessage": "Boodskap suksesvol gestuur",
     "FailureMessage": "Kon nie boodskap stuur nie",
     "Name": "Naam",
@@ -164,34 +156,335 @@
     "Message": "Boodskap",
     "SendMessage": "Stuur Boodskap"
   },
-  
-  "hero": {
-    "title": "Oor Ons",
-    "subtitle": "By Sisonke is ons trots op ons toewyding aan gemeenskapsbemagtiging, verbinding, en groei in Suid-Afrikaanse dorpe."
-  },
-
   "AboutUs": {
     "WhoWeAre": "Wie Ons Is",
-    "WhoWeAreDescription": "Sisonke is 'n gemeenskapsgedrewe platform wat plaaslike hulpbronne, geleenthede en mense in Suid-Afrikaanse dorpe verbind.",
+    "WhoWeAreDescription": "Sisonke is 'n gemeenskapsgedrewe platform wat plaaslike hulpbronne, geleenthede, en mense in Suid-Afrikaanse townships verbind.",
     "WhatWeDo": "Wat Ons Doen",
-    "WhatWeDoDescription": "Ons bied 'n digitale sentrum vir werklisings, gebeurtenisse, forums, en plaaslike besigheid bevordering om ons gemeenskap te bemagtig.",
+    "WhatWeDoDescription": "Ons verskaf 'n digitale sentrum vir werkslyste, geleenthede, forums, en plaaslike besigheidsbevordering om ons gemeenskap te bemagtig.",
     "HowWeHelp": "Hoe Ons Help",
     "HowWeHelpDescription": "Deur ons platform fasiliteer ons verbindings, deel kennis, en skep geleenthede vir groei en ontwikkeling.",
-    "CreateSuccessStories": "Skep Sukkelstories",
-    "CreateSuccessStoriesDescription":"By bringing together community members, businesses, and resources, we help individuals achieve their goals and thrive."
+    "CreateSuccessStories": "Skep Suksesverhale",
+    "CreateSuccessStoriesDescription": "Deur gemeenskapslede, besighede, en hulpbronne saam te bring, help ons individue om hul doelwitte te bereik en te floreer."
   },
-
+  "dashboard": {
+    "title": "Oorsig Paneelbord",
+    "refreshButton": "Verfris Data",
+    "dataOverview": "Data Oorsig (Sirkelgrafiek)",
+    "userStatistics": "Gebruikerstatistieke",
+    "totalUsers": "Totale Gebruikers: {{count}}",
+    "activeUsers": "Aktiewe Gebruikers: {{count}}",
+    "restrictedUsers": "Beperkte Gebruikers: {{count}}"
+  },
+  "error": {
+    "loadData": "Kon nie data laai nie"
+  },
+  "BlogDashboard": "Blog Paneelbord",
+  "TotalBlogs": "Totale Blogs: {{count}}",
+  "SearchBlogs": "Soek Blogs",
+  "SearchPlaceholder": "Soek volgens titel of skrywer",
+  "NoBlogsFound": "Geen blogs gevind nie",
+  "ViewBlog": "Bekyk Blog",
+  "EditBlog": "Wysig Blog",
+  "DeleteBlog": "Verwyder Blog",
+  "Close": "Sluit",
+  "Save": "Stoor",
+  "ErrorFetchingBlogs": "Fout met die verkryging van blogs. Probeer asseblief weer later.",
+  "BlogDeleted": "Blog suksesvol verwyder.",
+  "BlogUpdated": "Blog suksesvol opgedateer.",
+  "CreateBlog": "Skep Blog",
+  "Title": "Titel",
+  "Content": "Inhoud",
+  "Author": "Skrywer",
+  "eventDashboard": "Geleentheid Paneelbord",
+  "eventStatistics": "Geleentheidstatistieke",
+  "totalEvents": "Totale Geleenthede",
+  "searchEvents": "Soek Geleenthede",
+  "searchPlaceholder": "Soek vir geleenthede...",
+  "eventManagement": "Geleentheidbestuur",
+  "viewEvent": "Bekyk Geleentheid",
+  "editEvent": "Wysig Geleentheid",
+  "deleteEvent": "Verwyder Geleentheid",
+  "noEventsFound": "Geen geleenthede gevind nie.",
+  "event": {
+    "fetchFailed": "Kon nie geleenthede verkry nie.",
+    "fetchError": "Fout met die verkryging van geleenthede. Probeer asseblief weer later.",
+    "deleteSuccess": "Geleentheid suksesvol verwyder.",
+    "deleteFailed": "Kon nie geleentheid verwyder nie.",
+    "deleteError": "Fout met die verwydering van geleentheid. Probeer asseblief weer."
+  },
+  "location": "Ligging",
+  "organizer": "Organiseerder",
+  "date": "Datum",
+  "actions": "Aksies",
+  "description": "Beskrywing",
+  "attendees": "Bywoners",
+  "category": "Kategorie",
+  "ticketPrice": "Kaartjieprys",
+  "free": "Gratis",
+  "uncategorized": "Ongekategoriseerd",
+  "close": "Sluit",
+  "save": "Stoor",
+  "unknown": "Onbekend",
+  "noDescription": "Geen beskrywing beskikbaar nie.",
+  "noAttendees": "Geen bywoners nie.",
+  "businesses": {
+    "dashboardTitle": "Besigheid Paneelbord",
+    "statistics": "Statistieke",
+    "totalBusinesses": "Totale Besighede: {{count}}",
+    "searchBusinesses": "Soek Besighede",
+    "searchPlaceholder": "Soek volgens naam of eienaar",
+    "businessManagement": "Besigheidsbestuur",
+    "noBusinessesFound": "Geen besighede gevind nie.",
+    "viewBusiness": "Bekyk Besigheid",
+    "editBusiness": "Wysig Besigheid",
+    "deleteBusiness": "Verwyder Besigheid",
+    "deleteSuccess": "Besigheid suksesvol verwyder.",
+    "deleteFailed": "Kon nie besigheid verwyder nie.",
+    "deleteError": "'n Fout het voorgekom tydens die verwydering van die besigheid.",
+    "updateSuccess": "Besigheid suksesvol opgedateer.",
+    "updateFailed": "Kon nie besigheid opdateer nie.",
+    "updateError": "'n Fout het voorgekom tydens die opdatering van die besigheid.",
+    "fetchFailed": "Kon nie besighede verkry nie.",
+    "fetchError": "'n Fout het voorgekom tydens die verkryging van besighede.",
+    "createBusiness": "Skep Nuwe Besigheid",
+    "address": "Adres",
+    "phone": "Telefoon",
+    "email": "E-pos",
+    "website": "Webwerf",
+    "description": "Beskrywing",
+    "dateCreated": "Datum Geskep"
+  },
   "job": {
-    "browseJobs": "Verken Werk In U Gemeenskap",
-    "findJob": "Vind die werk van u drome in ons gekurrikeerde lys van werke van geverifieerde maatskappye.",
-    "searchPlaceholder": "Soek vir werke...",
+    "browseJobs": "Blaai Deur Werk In Jou Gemeenskap",
+    "findJob": "Vind die werk van jou drome in ons versorgde lys van werk van geverifieerde maatskappye.",
     "loadMore": "Laai Meer",
-    "sortBy": "Sorteer Deur",
-    "recentlyAdded": "Onlangs Voeg",
-    "highestSalary": "Hoogste Salaris",
-    "lowestSalary": "Laagste Salaris",
-    "postJob": "Plaas 'n Werk",
-    "loginToPost": "Meld aan om 'n werk te plaas."
-  }
-    
+    "searchPlaceholder": "Soek vir werk...",
+    "sortBy": "Sorteer volgens",
+    "sortOptions": {
+      "recentlyAdded": "Onlangs Bygevoeg",
+      "highestSalary": "Hoogste Salaris",
+      "lowestSalary": "Laagste Salaris"
+    },
+    "jobType": "Werktipe",
+    "experienceLevel": "Ervaringsvlak",
+    "location": "Ligging",
+    "description": "Beskrywing",
+    "company": "Maatskappy",
+    "postedOn": "Geplaas op"
+  },
+  
+    "JobForm": {
+      "Title": "Plaas 'n Werk",
+      "Fields": {
+        "Title": "Werk Titel",
+        "Company": "Maatskappy Naam",
+        "Location": "Ligging",
+        "JobType": "Werksoort",
+        "Salary": "Salaris",
+        "ExperienceLevel": "Ervaring Vlak",
+        "Description": "Werk Beskrywing",
+        "Qualifications": "Kwalifikasies (komma geskei)",
+        "Skills": "Vaardighede (komma geskei)",
+        "ApplicationLink": "Aansoek Skakel"
+      },
+      "JobTypes": {
+        "full-time": "Voltyds",
+        "part-time": "Deeltyds",
+        "contract": "Kontrak",
+        "freelance": "Vryskut",
+        "internship": "Internskap"
+      },
+      "ExperienceLevels": {
+        "entry-level": "Ingangsvlak",
+        "mid-level": "Middelvlak",
+        "senior-level": "Seniorvlak"
+      },
+      "Errors": {
+        "TitleRequired": "Werktitel is vereis.",
+        "CompanyRequired": "Maatskappy naam is vereis.",
+        "LocationRequired": "Ligging is vereis.",
+        "TypeRequired": "Werksoort is vereis.",
+        "DescriptionRequired": "Werk beskrywing is vereis.",
+        "InvalidURL": "Voer asseblief 'n geldige URL in."
+      },
+      "SuccessMessage": "Werk suksesvol geplaas!",
+      "ErrorMessage": "Daar was 'n fout met die plasing van die werk.",
+      "FailureMessage": "Kon nie werk plaas nie: {{message}}",
+      "UnknownError": "Onbekende fout het voorgekom.",
+      "Buttons": {
+        "Create": "Skep Werk",
+        "Cancel": "Kanselleer"
+      
+    },
+    "job": {
+      "location": "Ligging",
+      "jobType": "Werksoort",
+      "salary": "Salaris",
+      "experienceLevel": "Ervaring Vlak",
+      "description": "Beskrywing",
+      "qualifications": "Kwalifikasies",
+      "skills": "Vaardighede",
+      "applicationLink": "Aansoek Skakel"
+    },
+  
+    "successMessage": "Werk suksesvol geplaas.",
+    "errorMessage": "Daar was 'n fout met die plasing van die werk.",
+    "failureMessage": "'n Fout het voorgekom: {{message}}",
+    "unknownError": "Onbekende fout het voorgekom",
+
+  "blog": {
+    "imageURIRequired": "Beeldadres word vereis",
+    "titleRequired": "Titel word vereis",
+    "contentRequired": "Inhoud word vereis",
+    "readTimeRequired": "Leestyd word vereis",
+    "authorRequired": "Skrywer word vereis",
+    "postCreatedSuccess": "Blogpos suksesvol geskep!",
+    "postCreationFailed": "Kon nie die blogpos skep nie.",
+    "submitError": "'n Fout het voorgekom tydens die indiening van die blogpos.",
+    "explorePopularBlogs": "Verken Gewilde Blogs",
+    "addInsightTips": "Voeg insig by om loopbaangroei te bevorder en kyk na wenke oor maatskappy werksgeleenthede",
+    "searchPlaceholder": "Soek volgens titel of skrywer",
+    "createNewPost": "Skep Nuwe Pos",
+    "noPermissionToCreate": "Jy het nie toestemming om 'n nuwe pos te skep nie.",
+    "loginToCreatePost": "Jy moet inteken om 'n nuwe pos te skep.",
+    "minutesRead": "Minute Lees",
+    "readMore": "Lees Meer",
+    "noPostsAvailable": "Geen blogposte is tans beskikbaar nie.",
+    "createNewBlogPost": "Skep 'n Nuwe Blogpos",
+    "authorPlaceholder": "Skrywer",
+    "imageURIPlaceholder": "Beeldadres",
+    "blogTitle": "Blogtitel",
+    "readTime": "Leestyd",
+    "readTimePlaceholder": "bv., 5 min",
+    "blogContent": "Bloginhoud",
+    "submitBlogPost": "Dien Blogpos In"
+  },
+  "businessForm": {
+    "title": "Registreer Jou Besigheid",
+    "submit": "Dien In",
+    "labels": {
+      "businessName": "Besigheidsnaam",
+      "email": "E-pos",
+      "phone": "Telefoon",
+      "address": "Adres",
+      "city": "Stad",
+      "industry": "Industrie",
+      "description": "Beskrywing",
+      "website": "Webwerf",
+      "image": "Beeldadres",
+      "logo": "Logo-adres",
+      "owner": "Eienaar Naam"
+    },
+    "errors": {
+      "name": "Besigheidsnaam word vereis",
+      "email": "E-pos word vereis",
+      "invalidEmail": "Voer asseblief 'n geldige e-pos in",
+      "phone": "Telefoonnommer word vereis",
+      "address": "Adres word vereis",
+      "city": "Stad word vereis",
+      "industry": "Industrie word vereis",
+      "description": "Beskrywing word vereis",
+      "image": "Beeldadres word vereis",
+      "logo": "Logo-adres word vereis",
+      "owner": "Eienaar Naam word vereis",
+      "general": "Daar was 'n fout met die indiening van die vorm. Probeer asseblief weer."
+    }
+  },
+  "business": {
+    "title": "Ontdek Plaaslike Besighede",
+    "subtitle": "Vind die beste dienste en produkte in jou gemeenskap, of soek vir 'n spesifieke besigheid volgens naam.",
+    "searchPlaceholder": "Soek",
+    "postBusinessButton": "Plaas 'n Besigheid",
+    "permissionError": {
+      "noPermission": "Jy het nie toestemming om 'n nuwe besigheid te skep nie.",
+      "loginRequired": "Jy moet inteken om 'n nuwe besigheid te skep."
+    },
+    "loading": "Laai...",
+    "error": "Fout: {{error}}"
+  },
+  "userDashboard": {
+    "title": "Gebruiker Paneelbord",
+    "fetchError": "Kon nie gebruikers verkry nie.",
+    "userDeleted": "Gebruiker suksesvol verwyder.",
+    "deleteError": "Kon nie gebruiker verwyder nie.",
+    "userUpdated": "Gebruiker suksesvol opgedateer.",
+    "updateError": "Kon nie gebruiker opdateer nie.",
+    "roleUpdated": "Gebruiker rol suksesvol opgedateer.",
+    "roleUpdateError": "Kon nie gebruiker rol opdateer nie.",
+    "generalError": "Iets het verkeerd gegaan. Probeer asseblief weer.",
+    "activeUsers": "Aktiewe Gebruikers",
+    "restrictedUsers": "Beperkte Gebruikers",
+    "totalUsers": "Totale Gebruikers",
+    "searchUsers": "Soek Gebruikers",
+    "refreshUsers": "Verfris Gebruikers",
+    "role": "Rol",
+    "status": "Status",
+    "all": "Almal",
+    "user": "Gebruiker",
+    "admin": "Admin",
+    "ngo": "NRO",
+    "active": "Aktief",
+    "restricted": "Beperk",
+    "searchPlaceholder": "Soek volgens naam of e-pos",
+    "exporting": "Uitvoer...",
+    "exportCSV": "Voer uit na CSV",
+    "close": "Sluit",
+    "cancel": "Kanselleer",
+    "save": "Stoor",
+    "viewUserDetails": "Gebruiker Besonderhede"
+  },
+  "users": {
+    "exportSuccess": "Gebruikers suksesvol uitgevoer",
+    "exportError": "Fout met die uitvoer van gebruikers."
+  },
+  "sidebar": {
+    "overview": "Oorsig",
+    "users": "Gebruikers",
+    "blogs": "Blogs",
+    "forums": "Forums",
+    "events": "Geleenthede",
+    "businesses": "Besighede",
+    "jobs": "Werk"
+  },
+  "Job Dashboard": "Werk Paneelbord",
+  "Job Statistics": "Werkstatistieke",
+  "Total Jobs": "Totale Werk",
+  "Search Jobs": "Soek Werk",
+  "Search by title or company": "Soek volgens titel of maatskappy",
+  "Job Management": "Werkbestuur",
+  "Title": "Titel",
+  "Company": "Maatskappy",
+  "Date Posted": "Datum Geplaas",
+  "Actions": "Aksies",
+  "View Job": "Bekyk Werk",
+  "Edit Job": "Wysig Werk",
+  "Delete Job": "Verwyder Werk",
+  "No jobs found.": "Geen werk gevind nie.",
+  "Close": "Sluit",
+  "Save": "Stoor",
+  "No description available": "Geen beskrywing beskikbaar nie",
+  "No location specified": "Geen ligging gespesifiseer nie",
+  "Not specified": "Nie gespesifiseer nie",
+
+   "profileUpdated": "Profiel suksesvol opgedateer!",
+  "dashboard": "Paneelbord",
+  "home": "Tuis",
+  "about": "Oor",
+  "jobs": "Werk",
+  "contact": "Kontak",
+  "community": "Gemeenskap",
+  "blog": "Blog",
+  "forum": "Forum",
+  "events": "Gebeure",
+  "businesses": "Besighede",
+  "accountSettings": "Rekeninginstellings",
+  "logout": "Teken uit",
+  "updateProfile": "Opdateer Profiel",
+  "name": "Naam",
+  "email": "E-pos",
+  "job": "Werk",
+  "address": "Adres",
+  "cancel": "Kanselleer",
+  "save": "Stoor"
+}
 }

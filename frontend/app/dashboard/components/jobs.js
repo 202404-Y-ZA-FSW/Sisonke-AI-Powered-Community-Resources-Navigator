@@ -39,6 +39,8 @@ import WorkIcon from '@mui/icons-material/Work';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { styled, keyframes } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
+
 
 const pulseAnimation = keyframes`
   0% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
@@ -82,6 +84,7 @@ const AnimatedIcon = styled('div')({
 });
 
 export default function Jobs() {
+  const { t } = useTranslation(); 
   const [jobs, setJobs] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
@@ -123,10 +126,10 @@ export default function Jobs() {
         setJobs(prevJobs => prevJobs.filter(job => job._id !== id));
         showSnackbar("Job deleted successfully.");
       } else {
-        showSnackbar('Failed to delete job');
+        showSnackbar("Failed to delete job");
       }
     } catch (error) {
-      showSnackbar('Error deleting job. Please try again.');
+      showSnackbar("Error deleting job. Please try again.");
     }
   };
 
@@ -180,11 +183,10 @@ export default function Jobs() {
   }, [filteredAndSortedJobs, currentPage]);
 
   const totalPages = Math.ceil(filteredAndSortedJobs.length / jobsPerPage);
-
+  
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
-
   const totalJobs = jobs.length;
 
   const handleViewJob = (job) => {
@@ -205,8 +207,6 @@ export default function Jobs() {
   };
 
   const handleSaveEdit = async () => {
-    // Implement the logic to save the edited job
-    // This is just a placeholder
     showSnackbar("Job updated successfully.");
     handleCloseDialog();
   };
@@ -221,30 +221,30 @@ export default function Jobs() {
       p: 4
     }}>
       <Fade in={true} timeout={800}>
-        <ColoredPaper elevation={3} sx={{ p: 3, mb: 2 }}>
-          <Grid container spacing={3} alignItems="center">
+      <ColoredPaper elevation={3} sx={{ p: 3, mb: 2 }}>
+      <Grid container spacing={3} alignItems="center">
             <Grid item xs={12} md={6}>
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'white' }}>
-                Job Dashboard
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: 'black' }}>
+                {t("Job Dashboard")}  
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <AnimatedIcon>
+            <AnimatedIcon>
                 <WorkIcon sx={{ fontSize: 40, color: 'white' }} />
               </AnimatedIcon>
-            </Grid>
+           </Grid>
           </Grid>
-        </ColoredPaper>
+      </ColoredPaper>
       </Fade>
 
       <Zoom in={true} timeout={800}>
-        <GlassCard>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>Job Statistics</Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={4}>
-                <Typography variant="body1">Total Jobs: {totalJobs}</Typography>
-              </Grid>
+      <GlassCard>
+      <CardContent>          
+          <Typography variant="h6" gutterBottom>{t("Job Statistics")}</Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="body1">{t("Total Jobs")}: {totalJobs}</Typography> 
+             </Grid>
             </Grid>
           </CardContent>
         </GlassCard>
@@ -252,11 +252,11 @@ export default function Jobs() {
 
       <Fade in={true} timeout={1000}>
         <Paper elevation={3} sx={{ p: 3, mb: 2 }}>
-          <Typography variant="h6" gutterBottom>Search Jobs</Typography>
+          <Typography variant="h6" gutterBottom>{t("Search Jobs")}</Typography> 
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Search by title or company"
+            placeholder={t("Search by title or company")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             sx={{ mb: 2 }}
@@ -275,7 +275,7 @@ export default function Jobs() {
 
       <Fade in={true} timeout={1200}>
         <Paper elevation={3} sx={{ p: 3, flexGrow: 1 }}>
-          <Typography variant="h6" gutterBottom>Job Management</Typography>
+          <Typography variant="h6" gutterBottom>{t("Job Management")}</Typography>
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
               <CircularProgress />
@@ -292,7 +292,7 @@ export default function Jobs() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('title')}
                         >
-                          Title
+                          {t("Title")} 
                         </TableSortLabel>
                       </TableCell>
                       <TableCell>
@@ -301,7 +301,7 @@ export default function Jobs() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('company')}
                         >
-                          Company
+                          {t("Company")} 
                         </TableSortLabel>
                       </TableCell>
                       <TableCell>
@@ -310,10 +310,10 @@ export default function Jobs() {
                           direction={sortConfig.direction}
                           onClick={() => handleSort('posted')}
                         >
-                          Date Posted
-                        </TableSortLabel>
+                          {t("Date Posted")} 
+                          </TableSortLabel>
                       </TableCell>
-                      <TableCell>Actions</TableCell>
+                      <TableCell>{t("Actions")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -324,19 +324,19 @@ export default function Jobs() {
                           <TableCell>{job.company}</TableCell>
                           <TableCell>{new Date(job.posted).toLocaleDateString()}</TableCell>
                           <TableCell>
-                            <Tooltip title="View Job">
-                              <IconButton onClick={() => handleViewJob(job)} color="primary">
-                                <VisibilityIcon />
+                            <Tooltip title={t("View Job")}> 
+                            <IconButton onClick={() => handleViewJob(job)} color="primary">
+                            <VisibilityIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Edit Job">
-                              <IconButton onClick={() => handleEditJob(job)} color="secondary">
-                                <EditIcon />
+                            <Tooltip title={t("Edit Job")}>
+                            <IconButton onClick={() => handleEditJob(job)} color="secondary">
+                            <EditIcon />
                               </IconButton>
                             </Tooltip>
-                            <Tooltip title="Delete Job">
-                              <IconButton onClick={() => removeJob(job._id)} color="error">
-                                <DeleteIcon />
+                            <Tooltip title={t("Delete Job")}> 
+                            <IconButton onClick={() => removeJob(job._id)} color="error">
+                            <DeleteIcon />
                               </IconButton>
                             </Tooltip>
                           </TableCell>
@@ -345,15 +345,17 @@ export default function Jobs() {
                     ) : (
                       <TableRow>
                         <TableCell colSpan={4} align="center">
-                          No jobs found
-                        </TableCell>
+                          {t("No jobs found.")}
+                          </TableCell>
                       </TableRow>
                     )}
                   </TableBody>
                 </Table>
               </TableContainer>
+
               <Stack spacing={2} sx={{ mt: 2, alignItems: 'center' }}>
                 <Pagination count={totalPages} page={currentPage} onChange={handlePageChange} color="primary" />
+
               </Stack>
             </>
           )}
@@ -368,62 +370,62 @@ export default function Jobs() {
       />
 
       <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>{dialogMode === 'view' ? 'View Job' : 'Edit Job'}</DialogTitle>
+        <DialogTitle>{dialogMode === 'view' ? t("View Job") : t("Edit Job")}</DialogTitle> 
         <DialogContent>
-          {selectedJob && (
-            <>
-              <TextField
-                fullWidth
-                label="Title"
-                value={selectedJob.title}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2, mt: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Company"
-                value={selectedJob.company}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Date Posted"
-                value={new Date(selectedJob.posted).toLocaleDateString()}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Description"
-                value={selectedJob.description || "No description available"}
-                disabled={dialogMode === 'view'}
-                multiline
-                rows={4}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Location"
-                value={selectedJob.location || "No location specified"}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-              <TextField
-                fullWidth
-                label="Salary"
-                value={selectedJob.salary || "Not specified"}
-                disabled={dialogMode === 'view'}
-                sx={{ mb: 2 }}
-              />
-            </>
-          )}
+        {selectedJob && (
+  <>
+    <TextField
+      fullWidth
+      label={t('Title')} 
+      value={selectedJob.title}
+      disabled={dialogMode === 'view'}
+      sx={{ mb: 2, mt: 2 }}
+    />
+    <TextField
+      fullWidth
+      label={t('Company')} 
+      value={selectedJob.company}
+      disabled={dialogMode === 'view'}
+      sx={{ mb: 2 }}
+    />
+    <TextField
+      fullWidth
+      label={t('Date Posted')} 
+      value={new Date(selectedJob.posted).toLocaleDateString()}
+      disabled={dialogMode === 'view'}
+      sx={{ mb: 2 }}
+    />
+    <TextField
+      fullWidth
+      label={t('Description')}
+      value={selectedJob.description || t('No description available')}
+      disabled={dialogMode === 'view'}
+      multiline
+      rows={4}
+      sx={{ mb: 2 }}
+    />
+    <TextField
+      fullWidth
+      label={t('Location')} 
+      value={selectedJob.location || t('No location specified')}
+      disabled={dialogMode === 'view'}
+      sx={{ mb: 2 }}
+    />
+    <TextField
+      fullWidth
+      label={t('Salary')}
+      value={selectedJob.salary || t('Not specified')}
+      disabled={dialogMode === 'view'}
+      sx={{ mb: 2 }}
+    />
+  </>
+)}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Close</Button>
-          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>Save</Button>}
+          <Button onClick={handleCloseDialog}>{t("Close")}</Button>
+          {dialogMode === 'edit' && <Button onClick={handleSaveEdit}>{t("Save")}</Button>} {/* Translation key */}
         </DialogActions>
       </Dialog>
     </Box>
   );
-}
+};

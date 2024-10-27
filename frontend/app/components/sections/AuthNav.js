@@ -18,6 +18,7 @@ import {
   TextField,
   styled,
   Avatar,
+  Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -28,8 +29,10 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useRouter } from "next/navigation";
 import { useAuthentication } from "@/app/hooks/useAuthentication";
+import { useTranslation } from 'react-i18next'; // Import useTranslation
+import LanguageSwitcher from '../../next.config/i18n.changeLanguage'; 
 
-const IconButtonStyled = styled(IconButton)( {
+const IconButtonStyled = styled(IconButton)({
   width: 40,
   height: 40,
   backgroundColor: "#D3D3D3",
@@ -49,7 +52,7 @@ const IconButtonStyled = styled(IconButton)( {
   }
 });
 
-const ImageButtonStyled = styled(Button)( {
+const ImageButtonStyled = styled(Button)({
   borderRadius: "15px",
   backgroundColor: "#6c63ff",
   color: "#ffffff",
@@ -61,11 +64,22 @@ const ImageButtonStyled = styled(Button)( {
   },
 });
 
+const NavButtonStyled = styled(Button)(({ isActive }) => ({
+  color: isActive ? "#6c63ff" : "#000000",
+  fontWeight: isActive ? "bold" : "normal",
+  fontSize: "14px",
+  textTransform: "none",
+  '&:hover': {
+    color: "#6c63ff",
+  },
+}));
+
 export default function AuthNav() {
   const { user, logout } = useAuthentication();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const router = useRouter();
+  const { t } = useTranslation(); // Use the translation hook
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [pageAnchorEl, setPageAnchorEl] = useState(null);
@@ -95,7 +109,7 @@ export default function AuthNav() {
     } else {
       setProfileImage(null);
     }
-    setSnackbarMessage('Profile updated successfully!');
+    setSnackbarMessage(t('profileUpdated')); 
     setSnackbarOpen(true);
     closeDialog();
   };
@@ -120,7 +134,11 @@ export default function AuthNav() {
 
   return (
     <AppBar
-      sx={{ background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)" }}
+      sx={{
+        background: "linear-gradient(135deg, #e6f7ff 0%, #fff5e6 100%)",
+        padding: "8px 16px",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+      }}
       position="static"
       color="transparent"
       elevation={0}
@@ -129,7 +147,7 @@ export default function AuthNav() {
         <Typography
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }}
+          sx={{ flexGrow: 1, fontWeight: "bold", color: "#4A4A4A", fontSize: "24px" }}
         >
           SIS<span style={{ color: "#6c63ff" }}>O</span>NKE
         </Typography>
@@ -144,67 +162,44 @@ export default function AuthNav() {
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={closeMenu}
-            >
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={closeMenu}>
+              <LanguageSwitcher />
               {isAdmin ? (
-                <MenuItem onClick={() => router.push("/dashboard")}>
-                  Dashboard
-                </MenuItem>
+                <MenuItem onClick={() => router.push("/dashboard")}>{t('dashboard')}</MenuItem>
               ) : (
-                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+                <MenuItem onClick={() => router.push("/")}>{t('home')}</MenuItem>
               )}
-              <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
-              <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
-              <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>
+              <MenuItem onClick={() => router.push("/about")}>{t('about')}</MenuItem>
+              <MenuItem onClick={() => router.push("/jobs")}>{t('jobs')}</MenuItem>
+              <MenuItem onClick={() => router.push("/contact")}>{t('contact')}</MenuItem>
               <MenuItem onClick={openPageMenu}>
-                Community <KeyboardArrowDownIcon />
+                {t('community')} <KeyboardArrowDownIcon />
               </MenuItem>
-              <Menu
-                anchorEl={pageAnchorEl}
-                open={Boolean(pageAnchorEl)}
-                onClose={closePageMenu}
-              >
-                <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
-                <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
-                <MenuItem onClick={() => router.push("/events")}>
-                  Events
-                </MenuItem>
-                <MenuItem onClick={() => router.push("/Business")}>
-                  Businesses
-                </MenuItem>
+              <Menu anchorEl={pageAnchorEl} open={Boolean(pageAnchorEl)} onClose={closePageMenu}>
+                <MenuItem onClick={() => router.push("/blog")}>{t('blog')}</MenuItem>
+                <MenuItem onClick={() => router.push("/forum")}>{t('forum')}</MenuItem>
+                <MenuItem onClick={() => router.push("/events")}>{t('events')}</MenuItem>
+                <MenuItem onClick={() => router.push("/Business")}>{t('businesses')}</MenuItem>
               </Menu>
-              <MenuItem onClick={() => router.push("/account/login")}>Login</MenuItem>
-              <MenuItem onClick={() => router.push("/account/register")}>Register</MenuItem>
+             
             </Menu>
           </>
         ) : (
           <>
-            <Button onClick={() => router.push("/")} sx={navLinkStyles}>Home</Button>
-            <Button onClick={() => router.push("/about")} sx={navLinkStyles}>About</Button>
-            <Button onClick={() => router.push("/jobs")} sx={navLinkStyles}>Jobs</Button>
-            <Button onClick={() => router.push("/contact")} sx={navLinkStyles}>Contact</Button>
-            <Button
-              sx={navLinkStyles}
-              endIcon={<KeyboardArrowDownIcon />}
-              onClick={openPageMenu}
-            >
-              Community
-            </Button>
-            <Menu
-              anchorEl={pageAnchorEl}
-              open={Boolean(pageAnchorEl)}
-              onClose={closePageMenu}
-            >
-              <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
-              <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
-              <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
-              <MenuItem onClick={() => router.push("/Business")}>
-                Businesses
-              </MenuItem>
-            </Menu>
+            <LanguageSwitcher sx={{ mr: 2 }} />
+            <NavButtonStyled onClick={() => router.push("/")}>{t('home')}</NavButtonStyled>
+            <NavButtonStyled onClick={() => router.push("/about")}>{t('about')}</NavButtonStyled>
+            <NavButtonStyled onClick={() => router.push("/jobs")}>{t('jobs')}</NavButtonStyled>
+            <NavButtonStyled onClick={() => router.push("/contact")}>{t('contact')}</NavButtonStyled>
+            <NavButtonStyled endIcon={<KeyboardArrowDownIcon />} onClick={openPageMenu}>
+              {t('community')}
+            </NavButtonStyled>
+            <Menu anchorEl={pageAnchorEl} open={Boolean(pageAnchorEl)} onClose={closePageMenu}>
+              <MenuItem onClick={() => router.push("/blog")}>{t('blog')}</MenuItem>
+              <MenuItem onClick={() => router.push("/forum")}>{t('forum')}</MenuItem>
+              <MenuItem onClick={() => router.push("/events")}>{t('events')}</MenuItem>
+              <MenuItem onClick={() => router.push("/Business")}>{t('businesses')}</MenuItem>
+            </Menu> 
             <IconButtonStyled onClick={openProfileMenu} sx={{ ml: 1 }}>
               {profileImage ? (
                 <Avatar src={profileImage} sx={{ width: 40, height: 40 }} />
@@ -219,28 +214,26 @@ export default function AuthNav() {
             >
               <MenuItem onClick={openDialog}>
                 <AccountCircleIcon sx={{ mr: 1 }} />
-                Account Settings
+                {t('accountSettings')}
               </MenuItem>
               <MenuItem onClick={logout}>
                 <LogoutIcon sx={{ mr: 1 }} />
-                Logout
+                {t('logout')}
               </MenuItem>
             </Menu>
           </>
         )}
       </Toolbar>
-
       <Snackbar
         open={snackbarOpen}
         onClose={closeSnackbar}
         message={snackbarMessage}
         autoHideDuration={3000}
       />
-
       <Dialog open={dialogOpen} onClose={closeDialog}>
-        <DialogTitle>Account Settings</DialogTitle>
+        <DialogTitle>{t('updateProfile')}</DialogTitle>
         <DialogContent>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
             <Avatar src={newProfileImage} sx={{ width: 100, height: 100, marginRight: 2 }} />
             <div>
               <input
@@ -266,8 +259,10 @@ export default function AuthNav() {
             </div>
           </div>
           <TextField
+            autoFocus
             margin="dense"
-            label="Name"
+            label={t('name')}
+            type="text"
             fullWidth
             variant="outlined"
             value={userInfo.name}
@@ -275,7 +270,8 @@ export default function AuthNav() {
           />
           <TextField
             margin="dense"
-            label="Email"
+            label={t('email')}
+            type="email"
             fullWidth
             variant="outlined"
             value={userInfo.email}
@@ -283,7 +279,8 @@ export default function AuthNav() {
           />
           <TextField
             margin="dense"
-            label="Job"
+            label={t('job')}
+            type="text"
             fullWidth
             variant="outlined"
             value={userInfo.job}
@@ -291,18 +288,34 @@ export default function AuthNav() {
           />
           <TextField
             margin="dense"
-            label="Address"
+            label={t('address')}
+            type="text"
             fullWidth
             variant="outlined"
             value={userInfo.address}
             onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
           />
+          <input type="file" onChange={changeImage} />
+          {newProfileImage && (
+            <Box>
+              <img src={newProfileImage} alt="Profile Preview" style={{ width: "100px", height: "100px" }} />
+              <IconButtonStyled onClick={() => setNewProfileImage(null)}>
+                <RemoveCircleOutlineIcon />
+              </IconButtonStyled>
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog} color="primary">Cancel</Button>
-          <Button onClick={updateProfile} color="primary">Update</Button>
+          <Button onClick={closeDialog}>{t('cancel')}</Button>
+          <Button onClick={updateProfile}>{t('save')}</Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+        message={snackbarMessage}
+      />
     </AppBar>
   );
 }
