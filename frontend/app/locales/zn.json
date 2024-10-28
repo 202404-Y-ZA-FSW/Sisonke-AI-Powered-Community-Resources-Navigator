@@ -373,7 +373,31 @@
   "job": "Umsebenzi",
   "address": "Ikheli",
   "cancel": "Khansela",
-  "save": "Londoloza"
+  "save": "Londoloza",
+
+
+  "dashboard": {
+    "title": "Isibalo Se-Dashboard",
+    "refreshButton": "Buyisela Idatha",
+    "dataOverview": "Uhlolojikelele Lwedatha",
+    "userStatistics": "Izibalo Zabasebenzisi",
+    "totalUsers": "{{count}} Abasebenzisi Abaphelele",
+    "activeUsers": "{{count}} Abasebenzisi Abasebenzayo",
+    "restrictedUsers": "{{count}} Abasebenzisi Abakhawulelwe",
+    "error": {
+      "loadData": "Kukhona iphutha ngesikhathi sokulanda idatha."
+    }
+  },
+
+  "sidebar": {
+    "overview": "Uhlolojikelele",
+    "users": "Abasebenzisi",
+    "blogs": "Amabhulogi",
+    "forums": "Amafomu",
+    "events": "Imicimbi",
+    "businesses": "Amabhizinisi",
+    "jobs": "Imisebenzi"
+  }
 
 
 }

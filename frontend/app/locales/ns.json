@@ -380,7 +380,132 @@
   "job": "Mosebetsi",
   "address": "Aterese",
   "cancel": "Hlakola",
-  "save": "Boloka"
+  "save": "Boloka",
+
+  "dashboard": {
+    "title": "Papanate Oorsig",
+    "refreshButton": "Fetola Data",
+    "dataOverview": "Data Oorsig",
+    "userStatistics": "User Statistieke",
+    "totalUsers": "{{count}} Totaal Basebetsi",
+    "activeUsers": "{{count}} Basebetsi ba Aktiewe",
+    "restrictedUsers": "{{count}} Basebetsi ba Beferwa",
+    "error": {
+      "loadData": "Go na le phoso ya go fetola data."
+    }
+  },
+  "sidebar": {
+    "overview": "Kgetsong",
+    "users": "Bahlahli",
+    "blogs": "Dibloga",
+    "forums": "Dikgwerano",
+    "events": "Mosebetsi",
+    "businesses": "Befase",
+    "jobs": "Mešomo"
+  },
+
+  
+    "job": {
+      "browseJobs": "Hlola mesebetsi ka setšhabeng sa geno",
+      "findJob": "Hwetša mošomo wa ditoro tša gago go lenane la rena la mesebetsi go tšwa dikhamphani tše di netefaditšwego.",
+      "loadMore": "Laetša tše dingwe",
+      "searchPlaceholder": "Nyaka mesebetsi...",
+      "sortBy": "Rulaganya ka",
+      "recentlyAdded": "Tšeo di tšweleditšwego bjale",
+      "highestSalary": "Padi ye phagamego",
+      "lowestSalary": "Padi yeo e tlase",
+      "postJob": "Beakanya Mošomo",
+      "jobType": "Mohuta wa Mošomo",
+      "experienceLevel": "Maemo a Tlaleletšo",
+      "location": "Moo o lego",
+      "description": "Tlhaloso",
+      "company": "Khampani",
+      "postedOn": "Go beakantšwe ka",
+      "exploreNow": "Hlola gona bjale",
+      "loginToPost": "Kena go beakanya mošomo"
+    },
+    "jobForm": {
+      "Title": "Thea Mošomo",
+      "Close": "Tšwelela",
+      "Fields": {
+        "Title": "Leina la Mošomo",
+        "Company": "Leina la Khampani"
+      },
+      "location": "Moo o lego",
+      "jobType": "Mohuta wa Mošomo",
+      "salary": "Padi",
+      "experienceLevel": "Maemo a Tlaleletšo",
+      "description": "Tlhaloso ya Mošomo",
+      "qualifications": "Mangwalo",
+      "skills": "Maitemogelo",
+      "applicationLink": "Kgokagano ya Kgopelo",
+      "Errors": {
+        "titleRequired": "Leina le a nyakega.",
+        "companyRequired": "Khampani e a nyakega.",
+        "locationRequired": "Moo o lego go a nyakega.",
+        "typeRequired": "Mohuta wa mošomo o a nyakega.",
+        "descriptionRequired": "Tlhaloso e a nyakega.",
+        "invalidURL": "Tsenya URL yeo e nepagetšego."
+      },
+      "buttons": {
+        "cancel": "Phumula",
+        "create": "Thea Mošomo"
+      },
+      "successMessage": "Mošomo o beakantšwe ka katlego.",
+      "errorMessage": "Go bile le phošo ka mošomo o beakantšego.",
+      "failureMessage": "Go bile le phošo: {{message}}",
+      "unknownError": "Phošo ye e sa tsebjego e diregile"
+    },
+    "blog": {
+      "imageURIRequired": "Setshwantsho sa URI se a nyakega",
+      "titleRequired": "Leina le a nyakega",
+      "contentRequired": "Diteng di a nyakega",
+      "readTimeRequired": "Nako ya go bala e a nyakega",
+      "authorRequired": "Mongwadi o a nyakega",
+      "postCreatedSuccess": "Pukwana e beakantšwe ka katlego!",
+      "postCreationFailed": "Go paletšwe go thea pukwana.",
+      "submitError": "Go bile le phošo ge o leka go romela pukwana.",
+      "explorePopularBlogs": "Hlola Dipukwana tše di Tumišegago",
+      "addInsightTips": "Tlhahlo ya go laetša go phela ke kgethegela go hwetša mesebetsi",
+      "searchPlaceholder": "Nyaka ka leina goba mongwadi",
+      "createNewPost": "Thea Kgatišo ye mpsha",
+      "noPermissionToCreate": "Ga o na teteelelo ya go hlola kgatišo ye mpsha.",
+      "loginToCreatePost": "O swanetše go tsena go hlola kgatišo ye mpsha.",
+      "minutesRead": "Ditekana tša go bala",
+      "readMore": "Bala Gontši",
+      "noPostsAvailable": "Ga go na dipukwana tše di hwetšagalago bjale.",
+      "createNewBlogPost": "Thea Kgatišo ye mpsha",
+      "authorPlaceholder": "Mongwadi",
+      "imageURIPlaceholder": "Setshwantsho sa URI",
+      "blogTitle": "Leina la Pukwana",
+      "readTime": "Nako ya go Bala",
+      "readTimePlaceholder": "mohlala, metsotswana e 5",
+      "blogContent": "Diteng tša Pukwana",
+      "submitBlogPost": "Romela Kgatišo"
+    },
+    "authnav": {
+      "dashboard": "Letlapa",
+      "home": "Legae",
+      "about": "Mabapi",
+      "jobs": "Mesebetsi",
+      "contact": "Ikgokaganye",
+      "community": "Setšhaba",
+      "blog": "Blog",
+      "forum": "Foramo",
+      "events": "Ditiragalo",
+      "businesses": "Dintlefelo tša Kgwebo",
+      "accountSettings": "Dipepeletso tša Akhaonte",
+      "logout": "Gwa Tšwelela",
+      "profileUpdated": "Profaili e kaonafaditšwe ka katlego!",
+      "updateProfile": "Kaonafatša Profaili",
+      "name": "Leina",
+      "email": "Email",
+      "job": "Mošomo",
+      "address": "Aterese",
+      "cancel": "Phumula",
+      "save": "Boloka"
+    }
+  }
+  
 
 
-}

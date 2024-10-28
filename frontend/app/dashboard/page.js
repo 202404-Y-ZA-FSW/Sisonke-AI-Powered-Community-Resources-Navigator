@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { 
   Box, AppBar, Toolbar, Drawer, useTheme, useMediaQuery, Typography
 } from '@mui/material';
-import Navbar from './components/NavBar';
+import AuthNav from '../components/sections/AuthNav';
 import Sidebar from './components/SideBar';
 import Blogs from './components/blogs';
 import Businesses from './components/businesses';
@@ -57,7 +57,7 @@ function Dashboard() {
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
        <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
-        <Navbar handleDrawerToggle={handleDrawerToggle} />
+        <AuthNav handleDrawerToggle={handleDrawerToggle} />
       </AppBar> 
       
       {/* Sidebar */}

@@ -219,13 +219,13 @@ const JobForm = ({ open, handleClose }) => {
   };
   const validateForm = () => {
     const errors = {};
-    if (!jobData.title) errors.title = t('JobForm.Errors.TitleRequired');
-    if (!jobData.company) errors.company = t('JobForm.Errors.CompanyRequired');
-    if (!jobData.location) errors.location = t('JobForm.Errors.LocationRequired');
-    if (!jobData.type) errors.type = t('JobForm.Errors.TypeRequired');
-    if (!jobData.description) errors.description = t('JobForm.Errors.DescriptionRequired');
+    if (!jobData.title) errors.title = t('jobForm.Errors.titleRequired');
+    if (!jobData.company) errors.company = t('jobForm.Errors.companyRequired');
+    if (!jobData.location) errors.location = t('jobForm.Errors.locationRequired');
+    if (!jobData.type) errors.type = t('jobForm.Errors.typeRequired');
+    if (!jobData.description) errors.description = t('jobForm.Errors.descriptionRequired');
     if (jobData.link && !/^(ftp|http|https):\/\/[^ "]+$/.test(jobData.link)) {
-      errors.link = t('JobForm.Errors.InvalidURL');
+      errors.link = t('jobForm.Errors.invalidURL');
     }
     return errors;
   };
@@ -245,15 +245,15 @@ const JobForm = ({ open, handleClose }) => {
       });
     
       if (response.status === 201) {
-        alert(t('JobForm.SuccessMessage'));
+        alert(t('jobForm.SuccessMessage'));
         router.push('/jobs');
         handleClose();
       } else {
-        alert(t('JobForm.ErrorMessage'));
+        alert(t('jobForm.ErrorMessage'));
       }
     } catch (error) {
       console.error('Error creating job:', error);
-      alert(t('JobForm.FailureMessage', { message: error.response?.data?.message || t('JobForm.UnknownError') }));
+      alert(t('jobForm.FailureMessage', { message: error.response?.data?.message || t('JobForm.UnknownError') }));
     }
   };
 
@@ -265,7 +265,7 @@ const JobForm = ({ open, handleClose }) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>
-        {t('JobForm.Title')}
+        {t('jobForm.Title')}
         <IconButton
           aria-label={t('JobForm.Close')}
           onClick={handleClose}
@@ -284,7 +284,7 @@ const JobForm = ({ open, handleClose }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                label={t('JobForm.Fields.Title')}
+                label={t('jobForm.Fields.Title')}
                 name="title"
                 value={jobData.title}
                 onChange={handleChange}
@@ -296,7 +296,7 @@ const JobForm = ({ open, handleClose }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label={t('JobForm.Fields.Company')}
+                label={t('jobForm.Fields.Company')}
                 name="company"
                 value={jobData.company}
                 onChange={handleChange}
@@ -412,7 +412,7 @@ const JobForm = ({ open, handleClose }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>{t('JobForm.Buttons.Cancel')}</Button>
+        <Button onClick={handleClose}>{t('jobForm.Buttons.Cancel')}</Button>
         <Button
           onClick={handleSubmit}
           variant="contained"
