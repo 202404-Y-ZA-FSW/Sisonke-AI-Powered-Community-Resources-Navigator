@@ -14,16 +14,17 @@ import {
 import { useRouter } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "../../next.config/i18n.changeLanguage"; // Import LanguageSwitcher
 import { useAuthentication } from "@/app/hooks/useAuthentication";
 
 export default function AuthNav() {
+  const { t } = useTranslation();
   const { user, logout } = useAuthentication();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const [pageAnchorEl, setPageAnchorEl] = useState(null);
-
   const router = useRouter();
 
   const handleMenuOpen = (event) => {
@@ -62,7 +63,7 @@ export default function AuthNav() {
           component="div"
           sx={{ flexGrow: 1, fontWeight: "bold", color: "#000000" }}
         >
-          SIS<span style={{ color: "#6c63ff" }}>O</span>NKE
+          {t("authnav.brand", { defaultValue: "SISONKE" })}
         </Typography>
 
         {isMobile ? (
@@ -81,45 +82,43 @@ export default function AuthNav() {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
+              <MenuItem>
+                <LanguageSwitcher /> {/* Add Language Switcher */}
+              </MenuItem>
               {isAdmin ? (
                 <MenuItem onClick={() => router.push("/dashboard")}>
-                  Dashboard
+                  {t("authnav.dashboard")}
                 </MenuItem>
               ) : (
-                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
+                <MenuItem onClick={() => router.push("/")}>
+                  {t("authnav.home")}
+                </MenuItem>
               )}
-              <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
-              <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
-              <MenuItem onClick={() => router.push("/contact")}>
-                Contact
-              </MenuItem>
+              <MenuItem onClick={() => router.push("/about")}>{t("authnav.about")}</MenuItem>
+              <MenuItem onClick={() => router.push("/jobs")}>{t("authnav.jobs")}</MenuItem>
+              <MenuItem onClick={() => router.push("/contact")}>{t("authnav.contact")}</MenuItem>
               <MenuItem onClick={handlePageOpen}>
-                Community <KeyboardArrowDownIcon />
+                {t("authnav.community")} <KeyboardArrowDownIcon />
               </MenuItem>
               <Menu
                 anchorEl={pageAnchorEl}
                 open={Boolean(pageAnchorEl)}
                 onClose={handlePageClose}
               >
-                <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
-                <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
-                <MenuItem onClick={() => router.push("/events")}>
-                  Events
-                </MenuItem>
-                <MenuItem onClick={() => router.push("/Business")}>
-                  Businesses
-                </MenuItem>
+                <MenuItem onClick={() => router.push("/blog")}>{t("authnav.blog")}</MenuItem>
+                <MenuItem onClick={() => router.push("/forum")}>{t("authnav.forum")}</MenuItem>
+                <MenuItem onClick={() => router.push("/events")}>{t("authnav.events")}</MenuItem>
+                <MenuItem onClick={() => router.push("/Business")}>{t("authnav.businesses")}</MenuItem>
               </Menu>
-
               {user ? (
-                <MenuItem onClick={logout}>Logout</MenuItem>
+                <MenuItem onClick={logout}>{t("authnav.logout")}</MenuItem>
               ) : (
                 <>
                   <MenuItem onClick={() => router.push("/account/login")}>
-                    Login
+                    {t("authnav.login")}
                   </MenuItem>
                   <MenuItem onClick={() => router.push("/account/register")}>
-                    Register
+                    {t("authnav.register")}
                   </MenuItem>
                 </>
               )}
@@ -127,44 +126,45 @@ export default function AuthNav() {
           </>
         ) : (
           <>
+            <LanguageSwitcher /> {/* Add Language Switcher */}
             {isAdmin ? (
               <Button
                 onClick={() => router.push("/dashboard")}
                 sx={navLinksStyles}
               >
-                Dashboard
+                {t("authnav.dashboard")}
               </Button>
             ) : (
               <Button onClick={() => router.push("/")} sx={navLinksStyles}>
-                Home
+                {t("authnav.home")}
               </Button>
             )}
             <Button onClick={() => router.push("/about")} sx={navLinksStyles}>
-              About
+              {t("authnav.about")}
             </Button>
             <Button onClick={() => router.push("/jobs")} sx={navLinksStyles}>
-              Jobs
+              {t("authnav.jobs")}
             </Button>
             <Button onClick={() => router.push("/contact")} sx={navLinksStyles}>
-              Contact
+              {t("authnav.contact")}
             </Button>
             <Button
               sx={navLinksStyles}
               endIcon={<KeyboardArrowDownIcon />}
               onClick={handlePageOpen}
             >
-              Community
+              {t("authnav.community")}
             </Button>
             <Menu
               anchorEl={pageAnchorEl}
               open={Boolean(pageAnchorEl)}
               onClose={handlePageClose}
             >
-              <MenuItem onClick={() => router.push("/blog")}>Blog</MenuItem>
-              <MenuItem onClick={() => router.push("/forum")}>Forum</MenuItem>
-              <MenuItem onClick={() => router.push("/events")}>Events</MenuItem>
+              <MenuItem onClick={() => router.push("/blog")}>{t("authnav.blog")}</MenuItem>
+              <MenuItem onClick={() => router.push("/forum")}>{t("authnav.forum")}</MenuItem>
+              <MenuItem onClick={() => router.push("/events")}>{t("authnav.events")}</MenuItem>
               <MenuItem onClick={() => router.push("/Business")}>
-                Businesses
+                {t("authnav.businesses")}
               </MenuItem>
             </Menu>
             {user ? (
@@ -182,7 +182,7 @@ export default function AuthNav() {
                   },
                 }}
               >
-                Logout
+                {t("authnav.logout")}
               </Button>
             ) : (
               <>
@@ -190,13 +190,13 @@ export default function AuthNav() {
                   onClick={() => router.push("/account/login")}
                   sx={navLinksStyles}
                 >
-                  Login
+                  {t("authnav.login")}
                 </Button>
                 <Button
                   onClick={() => router.push("/account/register")}
                   sx={navLinksStyles}
                 >
-                  Register
+                  {t("authnav.register")}
                 </Button>
               </>
             )}
