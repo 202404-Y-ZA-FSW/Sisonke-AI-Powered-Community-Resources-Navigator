@@ -464,10 +464,10 @@ export default function UserDashboard() {
 
       <Paper elevation={3} sx={{ p: 4, flexGrow: 1, display: 'flex', flexDirection: 'column', borderRadius: '20px', background: '#ffffff' }}>
   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-    <Typography variant="h5" gutterBottom>{t('UserManagement.title')}</Typography>
+    <Typography variant="h5" gutterBottom>{t('title')}</Typography>
     {selectedUsers.length > 0 && (
       <Box>
-        <Tooltip title={t('UserManagement.deleteSelected')}>
+        <Tooltip title={t('deleteSelected')}>
           <IconButton onClick={() => {
             selectedUsers.forEach(id => removeUser(id));
             setSelectedUsers([]);
@@ -475,7 +475,7 @@ export default function UserDashboard() {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title={t('UserManagement.lockSelected')}>
+        <Tooltip title={t('lockSelected')}>
           <IconButton onClick={() => {
             selectedUsers.forEach(id => toggleUser(id, 'restricted', null));
             setSelectedUsers([]);
@@ -483,7 +483,7 @@ export default function UserDashboard() {
             <LockIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title={t('UserManagement.unlockSelected')}>
+        <Tooltip title={t('unlockSelected')}>
           <IconButton onClick={() => {
             selectedUsers.forEach(id => toggleUser(id, 'active', null));
             setSelectedUsers([]);
@@ -517,7 +517,7 @@ export default function UserDashboard() {
                   direction={sortConfig.direction}
                   onClick={() => handleSort('username')}
                 >
-                  {t('UserManagement.username')}
+                  {t('username')}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -526,7 +526,7 @@ export default function UserDashboard() {
                   direction={sortConfig.direction}
                   onClick={() => handleSort('email')}
                 >
-                  {t('UserManagement.email')}
+                  {t('email')}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -535,7 +535,7 @@ export default function UserDashboard() {
                   direction={sortConfig.direction}
                   onClick={() => handleSort('role')}
                 >
-                  {t('UserManagement.role')}
+                  {t('role')}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -544,11 +544,11 @@ export default function UserDashboard() {
                   direction={sortConfig.direction}
                   onClick={() => handleSort('status')}
                 >
-                  {t('UserManagement.status')}
+                  {t('status')}
                 </TableSortLabel>
               </TableCell>
               <TableCell>
-                {t('UserManagement.actions')}
+                {t('actions')}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -579,9 +579,9 @@ export default function UserDashboard() {
                           onChange={(e) => changeUserRole(user._id, e.target.value)}
                           sx={{ ml: 1 }}
                         >
-                          <MenuItem value="user">{t('UserManagement.user')}</MenuItem>
-                          <MenuItem value="administrator">{t('UserManagement.admin')}</MenuItem>
-                          <MenuItem value="ngo">{t('UserManagement.ngo')}</MenuItem>
+                          <MenuItem value="user">{t('user')}</MenuItem>
+                          <MenuItem value="administrator">{t('admin')}</MenuItem>
+                          <MenuItem value="ngo">{t('ngo')}</MenuItem>
                         </Select>
                       </Box>
                     </TableCell>
@@ -593,12 +593,12 @@ export default function UserDashboard() {
                       />
                     </TableCell>
                     <TableCell>
-                      <Tooltip title={t('UserManagement.viewUserDetails')}>
+                      <Tooltip title={t('viewUserDetails')}>
                         <IconButton onClick={() => handleViewClick(user)} color="info">
                           <VisibilityIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title={t('UserManagement.editUser')}>
+                      <Tooltip title={t('editUser')}>
                         <IconButton onClick={() => handleEditClick(user)} color="primary">
                           <EditIcon />
                         </IconButton>
@@ -611,7 +611,7 @@ export default function UserDashboard() {
                         size="small"
                         sx={{ mr: 1 }}
                       >
-                        {user.status === 'active' ? t('UserManagement.lock') : t('UserManagement.unlock')}
+                        {user.status === 'active' ? t('lock') : t('unlock')}
                       </Button>
                       <Button
                         startIcon={<DeleteIcon />}
@@ -620,7 +620,7 @@ export default function UserDashboard() {
                         variant="contained"
                         size="small"
                       >
-                        {t('UserManagement.delete')}
+                        {t('delete')}
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -628,7 +628,7 @@ export default function UserDashboard() {
               })
             ) : (
               <TableRow>
-                <TableCell colSpan={6} align="center">{t('UserManagement.noUsersFound')}</TableCell>
+                <TableCell colSpan={6} align="center">{t('noUsersFound')}</TableCell>
               </TableRow>
             )}
           </TableBody>
@@ -643,77 +643,77 @@ export default function UserDashboard() {
 
 {/* Edit User Dialog */}
 <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
-  <DialogTitle>{t('UserManagement.editUser')}</DialogTitle>
+  <DialogTitle>{t('editUser')}</DialogTitle>
   <DialogContent>
     {currentEditUser && (
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
 
       
         <TextField
-          label={t('UserManagement.username')}
+          label={t('username')}
           value={currentEditUser.username}
           onChange={(e) => setCurrentEditUser({ ...currentEditUser, username: e.target.value })}
           fullWidth
         />
         <TextField
-          label={t('UserManagement.email')}
+          label={t('email')}
           value={currentEditUser.email}
           onChange={(e) => setCurrentEditUser({ ...currentEditUser, email: e.target.value })}
           fullWidth
         />
         
         <FormControl fullWidth>
-  <InputLabel id="edit-role-label">{t('UserManagement.role')}</InputLabel>
+  <InputLabel id="edit-role-label">{t('role')}</InputLabel>
   <Select
     labelId="edit-role-label"
     value={currentEditUser.role}
-    label={t('UserManagement.role')}
+    label={t('role')}
     onChange={(e) => setCurrentEditUser({ ...currentEditUser, role: e.target.value })}
   >
-    <MenuItem value="user">{t('UserManagement.user')}</MenuItem>
-    <MenuItem value="administrator">{t('UserManagement.admin')}</MenuItem>
-    <MenuItem value="ngo">{t('UserManagement.ngo')}</MenuItem>
+    <MenuItem value="user">{t('user')}</MenuItem>
+    <MenuItem value="administrator">{t('admin')}</MenuItem>
+    <MenuItem value="ngo">{t('ngo')}</MenuItem>
   </Select>
 </FormControl>
 <FormControl fullWidth>
-  <InputLabel id="edit-status-label">{t('UserManagement.status')}</InputLabel>
+  <InputLabel id="edit-status-label">{t('status')}</InputLabel>
   <Select
     labelId="edit-status-label"
     value={currentEditUser.status}
-    label={t('UserManagement.status')}
+    label={t('status')}
     onChange={(e) => setCurrentEditUser({ ...currentEditUser, status: e.target.value })}
   >
-    <MenuItem value="active">{t('UserManagement.active')}</MenuItem>
-    <MenuItem value="restricted">{t('UserManagement.restricted')}</MenuItem>
+    <MenuItem value="active">{t('active')}</MenuItem>
+    <MenuItem value="restricted">{t('restricted')}</MenuItem>
   </Select>
 </FormControl>
 </Box>
 )}
 </DialogContent>
 <DialogActions>
-  <Button onClick={() => setEditDialogOpen(false)}>{t('UserManagement.cancel')}</Button>
-  <Button onClick={handleEditSave} variant="contained" color="primary">{t('UserManagement.save')}</Button>
+  <Button onClick={() => setEditDialogOpen(false)}>{t('cancel')}</Button>
+  <Button onClick={handleEditSave} variant="contained" color="primary">{t('save')}</Button>
 </DialogActions>
 </Dialog>
 
 {/* View User Details Dialog */}
 <Dialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} fullWidth maxWidth="md">
-  <DialogTitle>{t('UserManagement.viewUserDetails')}</DialogTitle>
+  <DialogTitle>{t('viewUserDetails')}</DialogTitle>
   <DialogContent>
     {viewUser && (
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Typography variant="h6">{t('UserManagement.username')}: {viewUser.username}</Typography>
-        <Typography variant="body1">{t('UserManagement.email')}: {viewUser.email}</Typography>
-        <Typography variant="body1">{t('UserManagement.role')}: {viewUser.role}</Typography>
-        <Typography variant="body1">{t('UserManagement.status')}: {viewUser.status}</Typography>
-        <Typography variant="body1">{t('UserManagement.createdAt')}: {new Date(viewUser.createdAt).toLocaleString()}</Typography>
-        <Typography variant="body1">{t('UserManagement.lastUpdated')}: {new Date(viewUser.updatedAt).toLocaleString()}</Typography>
+        <Typography variant="h6">{t('username')}: {viewUser.username}</Typography>
+        <Typography variant="body1">{t('email')}: {viewUser.email}</Typography>
+        <Typography variant="body1">{t('role')}: {viewUser.role}</Typography>
+        <Typography variant="body1">{t('status')}: {viewUser.status}</Typography>
+        <Typography variant="body1">{t('createdAt')}: {new Date(viewUser.createdAt).toLocaleString()}</Typography>
+        <Typography variant="body1">{t('lastUpdated')}: {new Date(viewUser.updatedAt).toLocaleString()}</Typography>
         
       </Box>
     )}
   </DialogContent>
   <DialogActions>
-    <Button onClick={() => setViewDialogOpen(false)}>{t('UserManagement.close')}</Button>
+    <Button onClick={() => setViewDialogOpen(false)}>{t('close')}</Button>
   </DialogActions>
 </Dialog>
 
