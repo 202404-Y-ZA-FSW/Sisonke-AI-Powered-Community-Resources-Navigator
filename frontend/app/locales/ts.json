@@ -378,7 +378,133 @@
   "job": "Misebenzi",
   "address": "Adirese",
   "cancel": "Hoxisa",
-  "save": "Hlayisa"
+  "save": "Hlayisa",
+
+  "dashboard": {
+    "title": "Xihundla xa Dashboard",
+    "refreshButton": "Vulavula Data",
+    "dataOverview": "Xihundla xa Data",
+    "userStatistics": "Swakudya swa Vhalawuriwa",
+    "totalUsers": "{{count}} Vhalawuriwa Vhukulu",
+    "activeUsers": "{{count}} Vhalawuriwa Vahuwi",
+    "restrictedUsers": "{{count}} Vhalawuriwa Va Lwana",
+    "error": {
+      "loadData": "Ku na na ku hunguta loko ku lavisa data."
+    }
+  },
+
+  "sidebar": {
+    "overview": "Nhlamulo",
+    "users": "Vahlayi",
+    "blogs": "Mablog",
+    "forums": "Maforum",
+    "events": "Mihlangano",
+    "businesses": "Mabindzu",
+    "jobs": "Mihanga"
+  },
+
+  
+    "job": {
+      "browseJobs": "Languta Mintirho Ya Miganga",
+      "findJob": "Kuma ntirho wa milorho ya wena eka nhlengeletano wa mintirho ya khampani leti tiyisiweke.",
+      "loadMore": "Tlakusa Swo Tala",
+      "searchPlaceholder": "Lavisisa mintirho...",
+      "sortBy": "Hlela hi",
+      "recentlyAdded": "Swi engeterile Nkarhi Lawa Hundzeke",
+      "highestSalary": "Muholo Lowa Nkulu",
+      "lowestSalary": "Muholo Lowa Tlase",
+      "postJob": "Rhumela Ntirho",
+      "jobType": "Muhlovo wa Ntirho",
+      "experienceLevel": "Nhlayo wa Vutivi",
+      "location": "Ndhawu",
+      "description": "Nhlamuselo",
+      "company": "Khampani",
+      "postedOn": "Ri vekiwe hi",
+      "exploreNow": "Languta Sweswi",
+      "loginToPost": "Nghena ku rhumela ntirho"
+    },
+    "jobForm": {
+      "Title": "Endla Ntirho",
+      "Close": "Pfala",
+      "Fields": {
+        "Title": "Xivulavulelo xa Ntirho",
+        "Company": "Vito ra Khampani"
+      },
+      "location": "Ndhawu",
+      "jobType": "Muhlovo wa Ntirho",
+      "salary": "Muholo",
+      "experienceLevel": "Nhlayo wa Vutivi",
+      "description": "Nhlamuselo ya Ntirho",
+      "qualifications": "Vumakhatelo",
+      "skills": "Vutivi",
+      "applicationLink": "Khadi ra Ku Tirhisa",
+      "Errors": {
+        "titleRequired": "Xivulavulelo xi laveka.",
+        "companyRequired": "Vito ra khampani ri laveka.",
+        "locationRequired": "Ndhawu yi laveka.",
+        "typeRequired": "Muhlovo wa ntirho wa laveka.",
+        "descriptionRequired": "Nhlamuselo yi laveka.",
+        "invalidURL": "Tiya hi khadi ya URL leyi nga yona."
+      },
+      "buttons": {
+        "cancel": "Herisa",
+        "create": "Endla Ntirho"
+      },
+      "successMessage": "Ntirho wu rhumeriwe hi ku humelela.",
+      "errorMessage": "Ku humelele xihoxo loko ku rhumeriwa ntirho.",
+      "failureMessage": "Ku humelele xihoxo: {{message}}",
+      "unknownError": "Ku humelele xihoxo lexi nga tiviwiki"
+    },
+    "blog": {
+      "imageURIRequired": "Xifaniso xa URI xa laveka",
+      "titleRequired": "Xivulavulelo xa laveka",
+      "contentRequired": "Nhlamuselo ya laveka",
+      "readTimeRequired": "Nkarhi wa ku hlaya wa laveka",
+      "authorRequired": "Mutlangeri wa laveka",
+      "postCreatedSuccess": "Posi ya blog yi endleke hi ku humelela!",
+      "postCreationFailed": "Ku tsandzekile ku endla posi ya blog.",
+      "submitError": "Ku humelele xihoxo loko ku rhumeriwa posi ya blog.",
+      "explorePopularBlogs": "Languta Mablog Ya Tiviwaka",
+      "addInsightTips": "Engetela vutivi ku antswisa nkateko wa ntirho na ku languta swiringaniwa swa mabasa ya tiphurofesa.",
+      "searchPlaceholder": "Lavisisa hi xivulavulelo kumbe mutlangeri",
+      "createNewPost": "Endla Posi Leyintshwa",
+      "noPermissionToCreate": "A wu na mpfumelelo wo endla posi leyintshwa.",
+      "loginToCreatePost": "U fanele ku nghena ku endla posi leyintshwa.",
+      "minutesRead": "Tinkota ta Ku Hlaya",
+      "readMore": "Hlaya Swotala",
+      "noPostsAvailable": "A ku na mablog ya posi nkarhi wa sweswi.",
+      "createNewBlogPost": "Endla Posi ya Blog Leyintshwa",
+      "authorPlaceholder": "Mutlangeri",
+      "imageURIPlaceholder": "Xifaniso xa URI",
+      "blogTitle": "Xivulavulelo xa Blog",
+      "readTime": "Nkarhi wa Ku Hlaya",
+      "readTimePlaceholder": "ex., 5 min",
+      "blogContent": "Nhlamuselo ya Blog",
+      "submitBlogPost": "Rhumela Posi ya Blog"
+    },
+    "authnav": {
+      "dashboard": "Deshibodo",
+      "home": "Yindlu",
+      "about": "Hi Ku Tirha",
+      "jobs": "Mintirho",
+      "contact": "Kombisano",
+      "community": "Miganga",
+      "blog": "Blog",
+      "forum": "Foramu",
+      "events": "Mikhenseli",
+      "businesses": "Mabhizinisi",
+      "accountSettings": "Switirhisiwa Swa Akhawunti",
+      "logout": "Humesa",
+      "profileUpdated": "Akhawunti yi hanyisiwile hi humelela!",
+      "updateProfile": "Hanyisa Akhawunti",
+      "name": "Vito",
+      "email": "Imele",
+      "job": "Ntirho",
+      "address": "Ndhawu",
+      "cancel": "Herisa",
+      "save": "Hlayisa"
+    }
+    
 
 
 }

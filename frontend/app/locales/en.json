@@ -373,19 +373,7 @@
           "failureMessage": "An error occurred: {{message}}",
           "unknownError": "Unknown error occurred"
         },                    
-        "job": {
-    "sortBy": "Sort By",
-    "recentlyAdded": "Recently Added",
-    "highestSalary": "Highest Salary",
-    "lowestSalary": "Lowest Salary",
-    "postJob": "Post a Job",
-    "loginToPost": "Please log in to post a job",
-    "browseJobs": "Browse Jobs In Your Community",
-    "findJob": "Find the job of your dreams in our curated list of jobs from verified companies, or search for a specific job title or company.",
-    "searchPlaceholder": "Search for",
-    "exploreNow": "Explore Now",
-    "loadMore":"Load More"
-  },
+   
 
   "blog": {
     "imageURIRequired": "Image URI is required",
@@ -526,7 +514,179 @@
   "Save": "Save",
   "No description available": "No description available",
   "No location specified": "No location specified",
-  "Not specified": "Not specified"
+  "Not specified": "Not specified",
+  
+    "profileUpdated": "Profile updated successfully!",
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "about": "About",
+    "jobs": "Jobs",
+    "contact": "Contact",
+    "community": "Community",
+    "blog": "Blog",
+    "forum": "Forum",
+    "events": "Events",
+    "businesses": "Businesses",
+    "accountSettings": "Account Settings",
+    "logout": "Logout",
+    "updateProfile": "Update Profile",
+    "name": "Name",
+    "email": "Email",
+    "job": "Job",
+    "address": "Address",
+    "cancel": "Cancel",
+    "save": "Save",
+
+    "dashboard": {
+      "title": "Dashboard Overview",
+      "refreshButton": "Refresh Data",
+      "dataOverview": "Data Overview",
+      "userStatistics": "User Statistics",
+      "totalUsers": "{{count}} Total Users",
+      "activeUsers": "{{count}} Active Users",
+      "restrictedUsers": "{{count}} Restricted Users",
+      "error": {
+        "loadData": "An error occurred while loading data."
+      }
+    },
+    "businesses": {
+    "dashboardTitle": "Business Management Dashboard",
+    "statistics": "Business Statistics",
+    "totalBusinesses": "Total Businesses: {{count}}",
+    "searchBusinesses": "Search Businesses",
+    "searchPlaceholder": "Search by business name or owner...",
+    "businessManagement": "Business List",
+    "noBusinessesFound": "No businesses found",
+    "fetchFailed": "Failed to fetch businesses",
+    "fetchError": "Error fetching businesses",
+    "deleteSuccess": "Business deleted successfully",
+    "deleteFailed": "Failed to delete business",
+    "deleteError": "Error deleting business",
+    "updateSuccess": "Business updated successfully",
+    "updateFailed": "Failed to update business",
+    "updateError": "Error updating business",
+    "viewBusiness": "View Business",
+    "editBusiness": "Edit Business",
+    "deleteBusiness": "Delete Business",
+    "close": "Close",
+    "save": "Save Changes",
+    "name": "Business Name",
+    "owner": "Owner",
+    "dateCreated": "Date Created",
+    "description": "Description",
+    "address": "Address",
+    "phone": "Phone Number",
+    "email": "Email Address",
+    "website": "Website"
+    },
+    
+    "job": {
+      "browseJobs": "Browse Jobs In Your Community",
+      "findJob": "Find the job of your dreams in our curated list of jobs from verified companies.",
+      "loadMore": "Load More",
+      "searchPlaceholder": "Search for jobs...",
+      "sortBy": "Sort by",
+      "recentlyAdded": "Recently Added",
+      "highestSalary": "Highest Salary",
+      "lowestSalary": "Lowest Salary",
+      "postJob":"Post A Job",      
+      "jobType": "Job Type",
+      "experienceLevel": "Experience Level",
+      "location": "Location",
+      "description": "Description",
+      "company": "Company",
+      "postedOn": "Posted on",
+      "exploreNow":"Explore Now",
+      "loginToPost":"Log in to post a job"
+    },
+    "jobForm": {
+      "Title": "Create Job",
+      "Close": "Close",
+      "Fields": {
+        "Title": "Job Title",
+        "Company": "Company Name"
+      },
+        "location": "Location",
+        "jobType": "Job Type",
+        "salary": "Salary",
+        "experienceLevel": "Experience Level",
+        "description": "Job Description",
+        "qualifications": "Qualifications",
+        "skills": "Skills",
+        "applicationLink": "Application Link",
+      
+      "Errors": {
+        "titleRequired": "Title is required.",
+        "companyRequired": "Company is required.",
+        "locationRequired": "Location is required.",
+        "typeRequired": "Job type is required.",
+        "descriptionRequired": "Description is required.",
+        "invalidURL": "Please enter a valid URL."
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "create": "Create Job"
+      },
+      "successMessage": "Job posted successfully.",
+      "errorMessage": "There was an error posting the job.",
+      "failureMessage": "An error occurred: {{message}}",
+      "unknownError": "Unknown error occurred"
+    },
+    "blog": {
+    "imageURIRequired": "Image URI is required",
+    "titleRequired": "Title is required",
+    "contentRequired": "Content is required",
+    "readTimeRequired": "Read time is required",
+    "authorRequired": "Author is required",
+    "postCreatedSuccess": "Blog post created successfully!",
+    "postCreationFailed": "Failed to create the blog post.",
+    "submitError": "An error occurred while submitting the blog post.",
+    "explorePopularBlogs": "Explore Popular Blogs",
+    "addInsightTips": "Add insight to boost career growth and check out tips on company job vacancies",
+    "searchPlaceholder": "Search by title or author",
+    "createNewPost": "Create New Post",
+    "noPermissionToCreate": "You don't have permission to create a new post.",
+    "loginToCreatePost": "You need to login to create a new post.",
+    "minutesRead": "Minutes Read",
+    "readMore": "Read More",
+    "noPostsAvailable": "No blog posts available at the moment.",
+    "createNewBlogPost": "Create a New Blog Post",
+    "authorPlaceholder": "Author",
+    "imageURIPlaceholder": "Image URI",
+    "blogTitle": "Blog Title",
+    "readTime": "Read Time",
+    "readTimePlaceholder": "e.g., 5 min",
+    "blogContent": "Blog Content",
+    "submitBlogPost": "Submit Blog Post"
+    
+  },
+  
+    "authnav": {
+      "dashboard": "Dashboard",
+      "home": "Home",
+      "about": "About",
+      "jobs": "Jobs",
+      "contact": "Contact",
+      "community": "Community",
+      "blog": "Blog",
+      "forum": "Forum",
+      "events": "Events",
+      "businesses": "Businesses",
+      "accountSettings": "Account Settings",
+      "logout": "Logout",
+      "profileUpdated": "Profile updated successfully!",
+      "updateProfile": "Update Profile",
+      "name": "Name",
+      "email": "Email",
+      "job": "Job",
+      "address": "Address",
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  
+}               
+
+  
         
       
       
@@ -541,5 +701,4 @@
 
     
 
-  }
   

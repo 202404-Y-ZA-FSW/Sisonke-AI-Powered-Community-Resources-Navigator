@@ -112,7 +112,7 @@ export default function Navbar() {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
               >
-                <MenuItem onClick={() => router.push("/dashboard")}>Dashboard</MenuItem>
+                <MenuItem onClick={() => router.push("/")}>Home</MenuItem>
                 <MenuItem onClick={() => router.push("/about")}>About</MenuItem>
                 <MenuItem onClick={() => router.push("/jobs")}>Jobs</MenuItem>
                 <MenuItem onClick={() => router.push("/contact")}>Contact</MenuItem>

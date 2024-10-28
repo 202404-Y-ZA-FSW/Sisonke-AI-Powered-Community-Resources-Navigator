@@ -378,7 +378,30 @@
   "job": "Mushumo",
   "address": "Kheli",
   "cancel": "Khansele",
-  "save": "Vhulunga"
+  "save": "Vhulunga",
+
+  "dashboard": {
+    "title": "Dashboard Overview",
+    "refreshButton": "Vhulunga Data",
+    "dataOverview": "Nḓila ya Vhathu",
+    "userStatistics": "Mizamo ya Vhathu",
+    "totalUsers": "{{count}} Vhathu Vhadi",
+    "activeUsers": "{{count}} Vhathu Vhasi",
+    "restrictedUsers": "{{count}} Vhathu Vha Shumiswa",
+    "error": {
+      "loadData": "Ho na le phoso nakong ya ho lata data."
+    }
+  },
+
+  "sidebar": {
+    "overview": "Nḓivho",
+    "users": "Vhathu",
+    "blogs": "Mablog",
+    "forums": "Ma-forum",
+    "events": "Zviitiko",
+    "businesses": "Mabindau",
+    "jobs": "Mishumo"
+  }
   
   
 }
